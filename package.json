@@ -1,0 +1,26 @@
+{
+  "name": "equipoise",
+  "version": "0.0.1",
+  "private": true,
+  "engines": {
+    "node": "*",
+    "npm": "*"
+  },
+  "dependencies": {
+    "body-parser": "^1.4.3",
+    "express": "*",
+    "jade": "*",
+    "stylus": "*",
+    "nib": "*",
+    "normalize.css": "*",
+    "lodash": "^3.10.1",
+    "react": "*",
+    "redux": "^2.0.0",
+    "react-redux": "^2.1.0",
+    "immutable": "*",
+    "react-immutable-proptypes": "^1.2.0"
+  },
+  "scripts": {
+    "start": "node --harmony server.js"
+  }
+}

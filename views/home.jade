@@ -1,0 +1,19 @@
+extends layout
+
+block headscripts
+    //- script(src="https://cdnjs.cloudflare.com/ajax/libs/react/0.13.3/react.js")
+    script(src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js")
+    //- script(src="https://cdnjs.cloudflare.com/ajax/libs/marked/0.3.2/marked.min.js")
+    //- script(src="//code.jquery.com/jquery-migrate-1.2.1.min.js")
+    script(src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js")
+    //- script(src="/scripts/vendor/ancient-oak/ancient-oak-0.3.4.min.js")
+block scripts
+    script(src="/bundle.js")
+block stylesheets
+    link(rel="stylesheet", href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css")
+    link(rel="stylesheet", href="stylesheets/style.css")
+
+//- block app
+//-     #root
+//-     p Hello #{sayHelloTo}.
+//-     button(onclick="trial();")
