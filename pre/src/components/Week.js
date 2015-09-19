@@ -1,11 +1,13 @@
 var React = require('react');
+var I = require('immutable');
+var List = I.List;
 
 var Week = React.createClass({
 	render: function () {
 		return (
 			<div className="dropdown">
 				<button className="btn btn-default dropdown-toggle" type="button" id="dropdownWeek" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-					{{this.props.index}}
+					<span>Week</span>
 					<span className="caret"></span>
 				</button>
 				<ul className="dropdown-menu" aria-labelledby="dropdownWeek">
@@ -16,13 +18,17 @@ var Week = React.createClass({
 	}
 	,
 	items: function () {
-		var arr = new Array(this.props.count);
-		return arr.forEach(function (empty, i) {
+		var that = this;
+		return List().setSize(that.props.count).map(function (empty, i) {
 			return (
-				<li><a href="#">i</a></li>
+				<li key={i+1}><a href={"/admin/week/"+(i+1).toString()}>{i+1}</a></li>
 			)
-		})
+		});
+	}
+	,
+	handleClick: function (e) {
+		this.props.onWeekChoice(Number(e.target.innerHTML));
 	}
 });
 
-module.exports = Potential;
+module.exports = Week;

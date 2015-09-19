@@ -7,9 +7,8 @@ var connect = ReactRedux.connect; // Connect react container to redux.
 // TODO: Add proptypes to components (in their files).
 var Week = require('../components/Week'); // Explain...
 var Tribes = require('../components/Tribes'); // Explain...
-var Questions = require('../components/Questions'); // Explain...
+// var Questions = require('../components/Questions'); // Explain...
 var act = require('../actions'); // Give dispatch an action payload.
-var dummyDB = require('../dummyDB'); // The dummy for a JSON database.
 // TODO: Do I need `immutable`?
 var I = require('immutable');
 var ImmutablePropTypes = require('react-immutable-proptypes');
@@ -21,37 +20,43 @@ var Fantasy = React.createClass({
 		return (
 			<div>
 				<Week
-					index={p.week}
-					count={p.weekCount}
+					index={p.week.get('selected')}
+					count={p.week.get('count')}
 					key="week"
 					onWeekChoice={function (index) {
-						return dispatch(act.week(index));
+						return dispatch(act.selectWeekView(index));
 					}}
 				/>
 				<Tribes
-					content={p.tribes}
+					tribes={p.tribes}
+					achievements={p.achievements}
+					toggleAchievement={function (achievementCode, contestantId) {
+						return dispatch(act.toggleAchievement(achievementCode, contestantId));
+					}}
 					key="tribes"
 					onSetTribe={function (tribes) {
 						return dispatch(act.setTribes(tribes));
 					}}
 				/>
-				<Questions
-					content={p.questions}
-					key="questions"
-					onAnswer={function (qAndA) {
-						return dispatch(act.answer(qAndA));
-					}}
-				/>
 			</div>
 		);
 	}
+	// <Questions
+	// 	content={p.questions}
+	// 	key="questions"
+	// 	onAnswer={function (qAndA) {
+	// 		return dispatch(act.answer(qAndA));
+	// 	}}
+	// />
 	,
 	propTypes: {
-		week: PropTypes.number.isRequired
+		week: ImmutablePropTypes.map.isRequired
 		,
-		tribes: ImmutablePropTypes.Map.isRequired
+		tribes: ImmutablePropTypes.map.isRequired
 		,
-		questions: ImmutablePropTypes.List.isRequired
+		questions: ImmutablePropTypes.map.isRequired
+		,
+		achievements: ImmutablePropTypes.map.isRequired
 	}
 });
 
@@ -60,11 +65,13 @@ var Fantasy = React.createClass({
 // the state.
 var select = function (state) {
 	return {
-		week: ?
+		week: state.week
 		,
-		tribes: ?
+		tribes: state.tribes
 		,
-		questions: ?
+		questions: state.questions
+		,
+		achievements: state.achievements
 	}
 };
 
