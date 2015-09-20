@@ -72,7 +72,17 @@ app.get('/', function(req, res){
 // });
 
 app.get('/ajax', function (req, res) {
-  res.status(200);
+  console.log(req.query);
+  console.log(req.meta);
+  if (true) {
+    res.status(200).send(req.query);
+  }
+  if (!true) {
+    res.status(500).send('not removed');
+  }
+  if (!true) {
+    // timeout
+  }
 });
 
 // TODO: Understand this.

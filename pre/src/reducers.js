@@ -107,30 +107,43 @@ var questions = function (prev, action) {
 			question: '',
 			type: 'boolean'
 		}));
-		case 'UPDATE-QUESTION':
-		return prev.set(action.payload.questionId, Map({
+		// UPDATE
+		case 'UPDATE-QUESTION-PEND':
+		return prev.setIn([
+			'pending',
+			action.payload.questionId
+		], Map({
 			question: action.payload.question,
 			answer: action.payload.answer,
 			type: action.payload.type,
 			isEditing: false
 		}));
+		case 'UPDATE-QUESTION-DONE':
+		return prev.set(action.payload.questionId, prev.getIn([
+			'pending',
+			action.payload.questionId
+		]));
+		case 'UPDATE-QUESTION-FAIL':
+		return prev.delete('pending');
 		case 'EDIT-QUESTION':
 		return prev.setIn([
 			action.payload.questionId,
 			'isEditing'
 		], !action.payload.isEditing);
+		// REMOVE
 		case 'REMOVE-QUESTION-PEND':
 		return prev.setIn([
-			action.payload,
+			action.payload.questionId,
 			'removed'
-		], true).set('removed', action.payload);
+		], true);
 		case 'REMOVE-QUESTION-DONE':
-		return prev.delete(action.payload).delete('removed');
+		return prev.delete(action.payload.questionId);
 		case 'REMOVE-QUESTION-FAIL':
 		return prev.deleteIn([
 			prev.get('removed'),
 			'removed'
 		]).delete('removed');
+		// ANSWER
 		case 'ANSWER':
 		return prev.setIn([
 			action.payload.questionId,

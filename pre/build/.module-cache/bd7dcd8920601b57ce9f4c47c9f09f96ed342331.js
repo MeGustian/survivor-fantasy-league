@@ -107,7 +107,6 @@ var questions = function (prev, action) {
 			question: '',
 			type: 'boolean'
 		}));
-		// UPDATE
 		case 'UPDATE-QUESTION-PEND':
 		return prev.setIn([
 			'pending',
@@ -124,26 +123,24 @@ var questions = function (prev, action) {
 			action.payload.questionId
 		]));
 		case 'UPDATE-QUESTION-FAIL':
-		return prev.delete('pending');
+		return prev.deleteIn(['pending', action.payload.questionId]);
 		case 'EDIT-QUESTION':
 		return prev.setIn([
 			action.payload.questionId,
 			'isEditing'
 		], !action.payload.isEditing);
-		// REMOVE
 		case 'REMOVE-QUESTION-PEND':
 		return prev.setIn([
-			action.payload.questionId,
+			action.payload,
 			'removed'
-		], true);
+		], true).set('removed', action.payload);
 		case 'REMOVE-QUESTION-DONE':
-		return prev.delete(action.payload.questionId);
+		return prev.delete(action.payload).delete('removed');
 		case 'REMOVE-QUESTION-FAIL':
 		return prev.deleteIn([
 			prev.get('removed'),
 			'removed'
 		]).delete('removed');
-		// ANSWER
 		case 'ANSWER':
 		return prev.setIn([
 			action.payload.questionId,

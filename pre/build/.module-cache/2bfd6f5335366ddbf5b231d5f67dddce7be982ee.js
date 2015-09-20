@@ -47,8 +47,6 @@ act.removeQuestion = function (questionId) {
 		questionId: questionId
 	};
 	return {
-		meta: data.meta
-		,
 		types: promiseTypes('REMOVE-QUESTION')
 		,
 		payload: {

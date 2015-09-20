@@ -39,8 +39,8 @@ var Questions = React.createClass({displayName: "Questions",
 	,
 	questions: function () {
 		var p = this.props;
-		return p.questions.filter(function (details, id) {
-			return (id !== 'removed') && !details.get('removed');
+		return p.questions.filter(function (details) {
+			return !p.details.get('removed');
 		}).map(function (details, id) {
 			return (
 				React.createElement(Question, {

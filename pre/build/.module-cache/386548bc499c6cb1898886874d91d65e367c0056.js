@@ -43,16 +43,14 @@ act.createQuestion = function () {
 // Admin removes question.
 act.removeQuestion = function (questionId) {
 	var data = {
-		meta: 'REMOVE-QUESTION',
 		questionId: questionId
 	};
 	return {
-		meta: data.meta
-		,
 		types: promiseTypes('REMOVE-QUESTION')
 		,
 		payload: {
 			promise: $.ajax({
+				meta: 'REMOVE-QUESTION',
 				url: '/ajax',
 				data: data,
 				timeout: 1000

@@ -42,16 +42,23 @@ act.createQuestion = function () {
 
 // Admin removes question.
 act.removeQuestion = function (questionId) {
+	var data = {
+		meta: 'REMOVE-QUESTION',
+		questionId: questionId
+	};
 	return {
+		meta: data.meta
+		,
 		types: promiseTypes('REMOVE-QUESTION')
 		,
 		payload: {
 			promise: $.ajax({
 				url: '/ajax',
+				data: data,
 				timeout: 1000
 			})
 			,
-			data: questionId
+			data: data
 		}
 	}
 };
@@ -70,14 +77,23 @@ act.editQuestion = function (questionId, isEditing) {
 
 // Admin submits question details.
 act.updateQuestion = function (questionId, question, answer, type) {
+	var data = {
+		questionId: questionId,
+		question: question,
+		answer: answer,
+		type: type
+	};
 	return {
-		type: 'UPDATE-QUESTION'
+		types: promiseTypes('UPDATE-QUESTION')
 		,
 		payload: {
-			questionId: questionId,
-			question: question,
-			answer: answer,
-			type: type
+			promise: $.ajax({
+				url: '/ajax',
+				data: data,
+				timeout: 1000
+			})
+			,
+			data: data
 		}
 	}
 };
