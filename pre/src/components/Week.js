@@ -21,7 +21,9 @@ var Week = React.createClass({
 		var that = this;
 		return List().setSize(that.props.count).map(function (empty, i) {
 			return (
-				<li key={i+1}><a href={"/admin/week/"+(i+1).toString()}>{i+1}</a></li>
+				<li key={i+1}>
+					<a href={"/admin/week/"+(i+1).toString()}>{i+1}</a>
+				</li>
 			)
 		});
 	}

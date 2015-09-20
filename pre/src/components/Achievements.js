@@ -29,29 +29,45 @@ var Achievements = React.createClass({
 	,
 	items: function (alignment) {
 		var that = this;
+		var alignmentToLabelType = {
+			good: 'success',
+			bad: 'danger'
+		};
 		var marked = this.props.marked.filter(function (isAchieved) {
 			return isAchieved;
 		}).keySeq();
 		var relevant = AchievementsObj.filter(function (theAchievement) {
 			return theAchievement.get('alignment') === alignment;
 		});
-		return relevant.map(function (theAchievement, achievementCode) {
-			var badge;
-			if (marked.indexOf(achievementCode)<0) {
-				badge = 0;
-			} else {
-				badge = 1;
-			}
-			return (
-				<li className="list-group-item">
-					<span
-						className="badge"
-						onClick={that.toggleAchievement.bind(null, achievementCode)}
-					>
-						{badge}
-					</span>
-					{theAchievement.get('text')}
-				</li>
+		return relevant
+			.filter(function (theAchievement, achievementCode) {
+				var isAdmin = that.props.isAdmin;
+				var hasAchieved = !(marked.indexOf(achievementCode)<0);
+				return isAdmin || hasAchieved;
+			})
+			.map(function (theAchievement, achievementCode) {
+				var labelType;
+				var hasAchieved = marked.indexOf(achievementCode)<0;
+				if (hasAchieved) {
+					labelType = 'default';
+					labelGlyph = 'remove-sign';
+				} else {
+					labelType = alignmentToLabelType[alignment];
+					labelGlyph = 'ok-sign';
+				}
+				return (
+					<li className="list-group-item">
+						<span
+							className={"pull-right label label-" + labelType}
+							onClick={that.toggleAchievement.bind(that, achievementCode)}
+							style={{fontFamily: 'monospace'}}
+						>
+							<span className={"glyphicon glyphicon-" + labelGlyph}></span>
+						</span>
+						<span style={{marginRight: '1em'}}>
+							{theAchievement.get('text')}
+						</span>
+					</li>
 			);
 		})
 	}

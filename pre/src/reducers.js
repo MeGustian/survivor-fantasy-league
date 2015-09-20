@@ -6,62 +6,39 @@ var List = I.List;
 var Map = I.Map;
 
 var initialState = {};
-// TODO: Install react-router (and react-redux-router) to change this
+initialState.user = Map({userId: undefined, isAdmin: false})
+// TODO: Install react-router (and react-redux-router) to change week switches
 // to URL path's.
-initialState.week = Map({selected: 1, count: dummyDB.Weeks.size});
-initialState.tribes = dummyDB.Weeks.get(0).get("tribes");
-initialState.questions = Map({});
-initialState.achievements = Map({
-	"1A1": Map({
-		"CRIED": true,
-		"TREE-MAIL": true,
-		"HASHTAG": false
+initialState.week = Map({selected: 1, count: 4});
+initialState.contestants = Map({
+	"id:1": Map({
+		name: "Spencer",
+		tribe: "Abu",
+		votedFor: "Kass",
+		achievements: Map({
+			"CRIED": true,
+			"HASHTAG": false
+		}),
+	}),
+	"id:2": Map({
+		name: "Kass",
+		tribe: "Abu",
+		votedFor: "Spencer",
+		achievements: Map({
+			"TREE-MAIL": true
+		}),
 	})
-	,
-	"1A2": Map({
-		"CRIED": true,
-		"TREE-MAIL": true,
-		"HASHTAG": false
+});
+initialState.questions = Map({
+	"123624": Map({
+		question: 'Will Mike eat a banana?',
+		type: 'boolean',
+		answer: false,
 	}),
-	"1B1": Map({
-		"DESTROYED-GOODS": true,
-		"TREE-MAIL": true,
-		"HASHTAG": false
-	}),
-	"1B2": Map({
-		"CRIED": true,
-		"TREE-MAIL": true,
-		"HASHTAG": false
-	}),
-	"1B3": Map({
-		"CRIED": true,
-		"TREE-MAIL": true,
-		"HASHTAG": false
-	}),
-	"2A1": Map({
-		"CRIED": true,
-		"TREE-MAIL": true,
-		"HASHTAG": false
-	}),
-	"2A2": Map({
-		"CRIED": true,
-		"TREE-MAIL": true,
-		"HASHTAG": false
-	}),
-	"2B1": Map({
-		"CRIED": true,
-		"TREE-MAIL": true,
-		"HASHTAG": false
-	}),
-	"2B2": Map({
-		"CRIED": true,
-		"TREE-MAIL": true,
-		"HASHTAG": false
-	}),
-	"2B3": Map({
-		"CRIED": true,
-		"TREE-MAIL": true,
-		"HASHTAG": false
+	"1373457": Map({
+		question: 'Who is the one they were talking about?',
+		type: 'contestant',
+		answer: 'Oren'
 	})
 });
 
@@ -69,33 +46,51 @@ initialState.achievements = Map({
 // store, and returns a new state of the store. It will only return something
 // different if the action was relevant.
 
-/**
- * The state parameters:
- * @var selected is the week selected. -1 indicates none.
- * @var count is the number of weeks that exist.
- */
+// State represents log-in status.
+var user = function (prev, action) {
+	if (typeof prev === 'undefined') {
+		return initialState.user;
+	}
+	switch (action.type) {
+		case 'LOG-OUT':
+		return initialState.user
+		case 'LOG-IN':
+		// TODO: Request authorization from server.
+		return Map({user: userId, isAdmin: checkAdminStatus(userId)})
+		default:
+		return prev;
+	}
+};
+var checkAdminStatus = function (userId) {
+	// TODO: Request from server. Default to `false`.
+	return false;
+};
+
+// State represents week.
 var week = function (prev, action) {
 	if (typeof prev === 'undefined') {
 		return initialState.week;
 	}
 	switch (action.type) {
-		case 'WEEK-VIEW-SELECT':
-		return prev.set('selected', action.payload);
-		case 'WEEK-EDIT-NEW':
-		return prev.update('count', function (v) {return v+1});
 		default:
 		return prev;
 	}
 };
 
-// State represents the tribes.
-var tribes = function (prev, action) {
+// State represents the contestants.
+var contestants = function (prev, action) {
 	if (typeof prev === 'undefined') {
-		return initialState.tribes;
+		return initialState.contestants;
 	}
 	switch (action.type) {
-		case 'WEEK-VIEW-SELECT':
-		return dummyDB.Weeks.has(action.payload) ? dummyDB.Weeks.get(action.payload).get("tribes") : prev;
+		case 'TOGGLE-ACHIEVEMENT':
+		return prev.updateIn([
+			action.payload.contestant,
+			'achievements',
+			action.payload.achievement
+		], function (isAchieved) {
+			return !isAchieved;
+		});
 		default:
 		return prev;
 	}
@@ -107,40 +102,60 @@ var questions = function (prev, action) {
 		return initialState.questions;
 	}
 	switch (action.type) {
-		case 'QUESTION':
-		return prev.set(action.payload, null);
+		case 'NEW-QUESTION':
+		return prev.set(Math.random(), Map({
+			question: '',
+			type: 'boolean'
+		}));
+		case 'UPDATE-QUESTION':
+		return prev.set(action.payload.questionId, Map({
+			question: action.payload.question,
+			answer: action.payload.answer,
+			type: action.payload.type,
+			isEditing: false
+		}));
+		case 'EDIT-QUESTION':
+		return prev.setIn([
+			action.payload.questionId,
+			'isEditing'
+		], !action.payload.isEditing);
+		case 'REMOVE-QUESTION':
+		return prev.delete(action.payload);
 		case 'ANSWER':
-		return prev.set(action.payload.question, action.payload.answer);
+		return prev.setIn([
+			action.payload.questionId,
+			'answer'
+		], action.payload.answer);
 		default:
 		return prev;
 	}
 };
 
 // State represents all achievements of the selected week.
-var achievements = function (prev, action) {
-	if (typeof prev === 'undefined') {
-		return initialState.achievements;
-	}
-	switch (action.type) {
-		case 'TOGGLE-ACHIEVEMENT':
-		return prev.updateIn([
-			action.payload.contestant,
-			action.payload.achievement
-		], function (isAchieved) {
-			return !isAchieved;
-		});
-		case 'WEEK-VIEW-SELECT':
-		return prev; // TODO: match the achievements.
-		default:
-		return prev;
-	}
-}
+// var achievements = function (prev, action) {
+// 	if (typeof prev === 'undefined') {
+// 		return initialState.achievements;
+// 	}
+// 	switch (action.type) {
+// 		case 'TOGGLE-ACHIEVEMENT':
+// 		return prev.updateIn([
+// 			action.payload.contestant,
+// 			action.payload.achievement
+// 		], function (isAchieved) {
+// 			return !isAchieved;
+// 		});
+// 		case 'WEEK-VIEW-SELECT':
+// 		return prev; // TODO: match the achievements.
+// 		default:
+// 		return prev;
+// 	}
+// }
 
 var reducers = combineReducers({
 	week,
-	tribes,
+	contestants,
 	questions,
-	achievements
+	user
 });
 
 module.exports = reducers;

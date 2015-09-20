@@ -17748,7 +17748,7 @@ function createConnect(React) {
 module.exports = exports['default'];
 }).call(this,require('_process'))
 
-},{"../utils/createStoreShape":8,"../utils/isPlainObject":9,"../utils/shallowEqual":10,"../utils/wrapActionCreators":11,"_process":190,"invariant":12}],6:[function(require,module,exports){
+},{"../utils/createStoreShape":8,"../utils/isPlainObject":9,"../utils/shallowEqual":10,"../utils/wrapActionCreators":11,"_process":192,"invariant":12}],6:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -18046,7 +18046,7 @@ module.exports = invariant;
 
 }).call(this,require('_process'))
 
-},{"_process":190}],13:[function(require,module,exports){
+},{"_process":192}],13:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -18876,7 +18876,7 @@ module.exports = CSSPropertyOperations;
 
 }).call(this,require('_process'))
 
-},{"./CSSProperty":15,"./ExecutionEnvironment":32,"./camelizeStyleName":120,"./dangerousStyleValue":125,"./hyphenateStyleName":145,"./memoizeStringOnly":155,"./warning":166,"_process":190}],17:[function(require,module,exports){
+},{"./CSSProperty":15,"./ExecutionEnvironment":32,"./camelizeStyleName":120,"./dangerousStyleValue":125,"./hyphenateStyleName":145,"./memoizeStringOnly":155,"./warning":166,"_process":192}],17:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -18977,7 +18977,7 @@ module.exports = CallbackQueue;
 
 }).call(this,require('_process'))
 
-},{"./Object.assign":38,"./PooledClass":39,"./invariant":147,"_process":190}],18:[function(require,module,exports){
+},{"./Object.assign":38,"./PooledClass":39,"./invariant":147,"_process":192}],18:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -19523,7 +19523,7 @@ module.exports = DOMChildrenOperations;
 
 }).call(this,require('_process'))
 
-},{"./Danger":23,"./ReactMultiChildUpdateTypes":84,"./invariant":147,"./setTextContent":161,"_process":190}],21:[function(require,module,exports){
+},{"./Danger":23,"./ReactMultiChildUpdateTypes":84,"./invariant":147,"./setTextContent":161,"_process":192}],21:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -19823,7 +19823,7 @@ module.exports = DOMProperty;
 
 }).call(this,require('_process'))
 
-},{"./invariant":147,"_process":190}],22:[function(require,module,exports){
+},{"./invariant":147,"_process":192}],22:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -20016,7 +20016,7 @@ module.exports = DOMPropertyOperations;
 
 }).call(this,require('_process'))
 
-},{"./DOMProperty":21,"./quoteAttributeValueForBrowser":159,"./warning":166,"_process":190}],23:[function(require,module,exports){
+},{"./DOMProperty":21,"./quoteAttributeValueForBrowser":159,"./warning":166,"_process":192}],23:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -20204,7 +20204,7 @@ module.exports = Danger;
 
 }).call(this,require('_process'))
 
-},{"./ExecutionEnvironment":32,"./createNodesFromMarkup":124,"./emptyFunction":126,"./getMarkupWrap":139,"./invariant":147,"_process":190}],24:[function(require,module,exports){
+},{"./ExecutionEnvironment":32,"./createNodesFromMarkup":124,"./emptyFunction":126,"./getMarkupWrap":139,"./invariant":147,"_process":192}],24:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -20546,7 +20546,7 @@ module.exports = EventListener;
 
 }).call(this,require('_process'))
 
-},{"./emptyFunction":126,"_process":190}],28:[function(require,module,exports){
+},{"./emptyFunction":126,"_process":192}],28:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -20825,7 +20825,7 @@ module.exports = EventPluginHub;
 
 }).call(this,require('_process'))
 
-},{"./EventPluginRegistry":29,"./EventPluginUtils":30,"./accumulateInto":117,"./forEachAccumulated":132,"./invariant":147,"_process":190}],29:[function(require,module,exports){
+},{"./EventPluginRegistry":29,"./EventPluginUtils":30,"./accumulateInto":117,"./forEachAccumulated":132,"./invariant":147,"_process":192}],29:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -21106,7 +21106,7 @@ module.exports = EventPluginRegistry;
 
 }).call(this,require('_process'))
 
-},{"./invariant":147,"_process":190}],30:[function(require,module,exports){
+},{"./invariant":147,"_process":192}],30:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -21328,7 +21328,7 @@ module.exports = EventPluginUtils;
 
 }).call(this,require('_process'))
 
-},{"./EventConstants":26,"./invariant":147,"_process":190}],31:[function(require,module,exports){
+},{"./EventConstants":26,"./invariant":147,"_process":192}],31:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -21471,7 +21471,7 @@ module.exports = EventPropagators;
 
 }).call(this,require('_process'))
 
-},{"./EventConstants":26,"./EventPluginHub":28,"./accumulateInto":117,"./forEachAccumulated":132,"_process":190}],32:[function(require,module,exports){
+},{"./EventConstants":26,"./EventPluginHub":28,"./accumulateInto":117,"./forEachAccumulated":132,"_process":192}],32:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -21974,7 +21974,7 @@ module.exports = LinkedValueUtils;
 
 }).call(this,require('_process'))
 
-},{"./ReactPropTypes":90,"./invariant":147,"_process":190}],36:[function(require,module,exports){
+},{"./ReactPropTypes":90,"./invariant":147,"_process":192}],36:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2014-2015, Facebook, Inc.
@@ -22032,7 +22032,7 @@ module.exports = LocalEventTrapMixin;
 
 }).call(this,require('_process'))
 
-},{"./ReactBrowserEventEmitter":42,"./accumulateInto":117,"./forEachAccumulated":132,"./invariant":147,"_process":190}],37:[function(require,module,exports){
+},{"./ReactBrowserEventEmitter":42,"./accumulateInto":117,"./forEachAccumulated":132,"./invariant":147,"_process":192}],37:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -22256,7 +22256,7 @@ module.exports = PooledClass;
 
 }).call(this,require('_process'))
 
-},{"./invariant":147,"_process":190}],40:[function(require,module,exports){
+},{"./invariant":147,"_process":192}],40:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -22409,7 +22409,7 @@ module.exports = React;
 
 }).call(this,require('_process'))
 
-},{"./EventPluginUtils":30,"./ExecutionEnvironment":32,"./Object.assign":38,"./ReactChildren":44,"./ReactClass":45,"./ReactComponent":46,"./ReactContext":50,"./ReactCurrentOwner":51,"./ReactDOM":52,"./ReactDOMTextComponent":63,"./ReactDefaultInjection":66,"./ReactElement":69,"./ReactElementValidator":70,"./ReactInstanceHandles":78,"./ReactMount":82,"./ReactPerf":87,"./ReactPropTypes":90,"./ReactReconciler":93,"./ReactServerRendering":96,"./findDOMNode":129,"./onlyChild":156,"_process":190}],41:[function(require,module,exports){
+},{"./EventPluginUtils":30,"./ExecutionEnvironment":32,"./Object.assign":38,"./ReactChildren":44,"./ReactClass":45,"./ReactComponent":46,"./ReactContext":50,"./ReactCurrentOwner":51,"./ReactDOM":52,"./ReactDOMTextComponent":63,"./ReactDefaultInjection":66,"./ReactElement":69,"./ReactElementValidator":70,"./ReactInstanceHandles":78,"./ReactMount":82,"./ReactPerf":87,"./ReactPropTypes":90,"./ReactReconciler":93,"./ReactServerRendering":96,"./findDOMNode":129,"./onlyChild":156,"_process":192}],41:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -23074,7 +23074,7 @@ module.exports = ReactChildren;
 
 }).call(this,require('_process'))
 
-},{"./PooledClass":39,"./ReactFragment":75,"./traverseAllChildren":165,"./warning":166,"_process":190}],45:[function(require,module,exports){
+},{"./PooledClass":39,"./ReactFragment":75,"./traverseAllChildren":165,"./warning":166,"_process":192}],45:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -24021,7 +24021,7 @@ module.exports = ReactClass;
 
 }).call(this,require('_process'))
 
-},{"./Object.assign":38,"./ReactComponent":46,"./ReactCurrentOwner":51,"./ReactElement":69,"./ReactErrorUtils":72,"./ReactInstanceMap":79,"./ReactLifeCycle":80,"./ReactPropTypeLocationNames":88,"./ReactPropTypeLocations":89,"./ReactUpdateQueue":98,"./invariant":147,"./keyMirror":152,"./keyOf":153,"./warning":166,"_process":190}],46:[function(require,module,exports){
+},{"./Object.assign":38,"./ReactComponent":46,"./ReactCurrentOwner":51,"./ReactElement":69,"./ReactErrorUtils":72,"./ReactInstanceMap":79,"./ReactLifeCycle":80,"./ReactPropTypeLocationNames":88,"./ReactPropTypeLocations":89,"./ReactUpdateQueue":98,"./invariant":147,"./keyMirror":152,"./keyOf":153,"./warning":166,"_process":192}],46:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -24176,7 +24176,7 @@ module.exports = ReactComponent;
 
 }).call(this,require('_process'))
 
-},{"./ReactUpdateQueue":98,"./invariant":147,"./warning":166,"_process":190}],47:[function(require,module,exports){
+},{"./ReactUpdateQueue":98,"./invariant":147,"./warning":166,"_process":192}],47:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -24285,7 +24285,7 @@ module.exports = ReactComponentEnvironment;
 
 }).call(this,require('_process'))
 
-},{"./invariant":147,"_process":190}],49:[function(require,module,exports){
+},{"./invariant":147,"_process":192}],49:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -25199,7 +25199,7 @@ module.exports = ReactCompositeComponent;
 
 }).call(this,require('_process'))
 
-},{"./Object.assign":38,"./ReactComponentEnvironment":48,"./ReactContext":50,"./ReactCurrentOwner":51,"./ReactElement":69,"./ReactElementValidator":70,"./ReactInstanceMap":79,"./ReactLifeCycle":80,"./ReactNativeComponent":85,"./ReactPerf":87,"./ReactPropTypeLocationNames":88,"./ReactPropTypeLocations":89,"./ReactReconciler":93,"./ReactUpdates":99,"./emptyObject":127,"./invariant":147,"./shouldUpdateReactComponent":163,"./warning":166,"_process":190}],50:[function(require,module,exports){
+},{"./Object.assign":38,"./ReactComponentEnvironment":48,"./ReactContext":50,"./ReactCurrentOwner":51,"./ReactElement":69,"./ReactElementValidator":70,"./ReactInstanceMap":79,"./ReactLifeCycle":80,"./ReactNativeComponent":85,"./ReactPerf":87,"./ReactPropTypeLocationNames":88,"./ReactPropTypeLocations":89,"./ReactReconciler":93,"./ReactUpdates":99,"./emptyObject":127,"./invariant":147,"./shouldUpdateReactComponent":163,"./warning":166,"_process":192}],50:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -25278,7 +25278,7 @@ module.exports = ReactContext;
 
 }).call(this,require('_process'))
 
-},{"./Object.assign":38,"./emptyObject":127,"./warning":166,"_process":190}],51:[function(require,module,exports){
+},{"./Object.assign":38,"./emptyObject":127,"./warning":166,"_process":192}],51:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -25492,7 +25492,7 @@ module.exports = ReactDOM;
 
 }).call(this,require('_process'))
 
-},{"./ReactElement":69,"./ReactElementValidator":70,"./mapObject":154,"_process":190}],53:[function(require,module,exports){
+},{"./ReactElement":69,"./ReactElementValidator":70,"./mapObject":154,"_process":192}],53:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -26067,7 +26067,7 @@ module.exports = ReactDOMComponent;
 
 }).call(this,require('_process'))
 
-},{"./CSSPropertyOperations":16,"./DOMProperty":21,"./DOMPropertyOperations":22,"./Object.assign":38,"./ReactBrowserEventEmitter":42,"./ReactComponentBrowserEnvironment":47,"./ReactMount":82,"./ReactMultiChild":83,"./ReactPerf":87,"./escapeTextContentForBrowser":128,"./invariant":147,"./isEventSupported":148,"./keyOf":153,"./warning":166,"_process":190}],55:[function(require,module,exports){
+},{"./CSSPropertyOperations":16,"./DOMProperty":21,"./DOMPropertyOperations":22,"./Object.assign":38,"./ReactBrowserEventEmitter":42,"./ReactComponentBrowserEnvironment":47,"./ReactMount":82,"./ReactMultiChild":83,"./ReactPerf":87,"./escapeTextContentForBrowser":128,"./invariant":147,"./isEventSupported":148,"./keyOf":153,"./warning":166,"_process":192}],55:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -26285,7 +26285,7 @@ module.exports = ReactDOMIDOperations;
 
 }).call(this,require('_process'))
 
-},{"./CSSPropertyOperations":16,"./DOMChildrenOperations":20,"./DOMPropertyOperations":22,"./ReactMount":82,"./ReactPerf":87,"./invariant":147,"./setInnerHTML":160,"_process":190}],57:[function(require,module,exports){
+},{"./CSSPropertyOperations":16,"./DOMChildrenOperations":20,"./DOMPropertyOperations":22,"./ReactMount":82,"./ReactPerf":87,"./invariant":147,"./setInnerHTML":160,"_process":192}],57:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -26554,7 +26554,7 @@ module.exports = ReactDOMInput;
 
 }).call(this,require('_process'))
 
-},{"./AutoFocusMixin":13,"./DOMPropertyOperations":22,"./LinkedValueUtils":35,"./Object.assign":38,"./ReactBrowserComponentMixin":41,"./ReactClass":45,"./ReactElement":69,"./ReactMount":82,"./ReactUpdates":99,"./invariant":147,"_process":190}],60:[function(require,module,exports){
+},{"./AutoFocusMixin":13,"./DOMPropertyOperations":22,"./LinkedValueUtils":35,"./Object.assign":38,"./ReactBrowserComponentMixin":41,"./ReactClass":45,"./ReactElement":69,"./ReactMount":82,"./ReactUpdates":99,"./invariant":147,"_process":192}],60:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -26607,7 +26607,7 @@ module.exports = ReactDOMOption;
 
 }).call(this,require('_process'))
 
-},{"./ReactBrowserComponentMixin":41,"./ReactClass":45,"./ReactElement":69,"./warning":166,"_process":190}],61:[function(require,module,exports){
+},{"./ReactBrowserComponentMixin":41,"./ReactClass":45,"./ReactElement":69,"./warning":166,"_process":192}],61:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -27256,7 +27256,7 @@ module.exports = ReactDOMTextarea;
 
 }).call(this,require('_process'))
 
-},{"./AutoFocusMixin":13,"./DOMPropertyOperations":22,"./LinkedValueUtils":35,"./Object.assign":38,"./ReactBrowserComponentMixin":41,"./ReactClass":45,"./ReactElement":69,"./ReactUpdates":99,"./invariant":147,"./warning":166,"_process":190}],65:[function(require,module,exports){
+},{"./AutoFocusMixin":13,"./DOMPropertyOperations":22,"./LinkedValueUtils":35,"./Object.assign":38,"./ReactBrowserComponentMixin":41,"./ReactClass":45,"./ReactElement":69,"./ReactUpdates":99,"./invariant":147,"./warning":166,"_process":192}],65:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -27489,7 +27489,7 @@ module.exports = {
 
 }).call(this,require('_process'))
 
-},{"./BeforeInputEventPlugin":14,"./ChangeEventPlugin":18,"./ClientReactRootIndex":19,"./DefaultEventPluginOrder":24,"./EnterLeaveEventPlugin":25,"./ExecutionEnvironment":32,"./HTMLDOMPropertyConfig":34,"./MobileSafariClickEventPlugin":37,"./ReactBrowserComponentMixin":41,"./ReactClass":45,"./ReactComponentBrowserEnvironment":47,"./ReactDOMButton":53,"./ReactDOMComponent":54,"./ReactDOMForm":55,"./ReactDOMIDOperations":56,"./ReactDOMIframe":57,"./ReactDOMImg":58,"./ReactDOMInput":59,"./ReactDOMOption":60,"./ReactDOMSelect":61,"./ReactDOMTextComponent":63,"./ReactDOMTextarea":64,"./ReactDefaultBatchingStrategy":65,"./ReactDefaultPerf":67,"./ReactElement":69,"./ReactEventListener":74,"./ReactInjection":76,"./ReactInstanceHandles":78,"./ReactMount":82,"./ReactReconcileTransaction":92,"./SVGDOMPropertyConfig":100,"./SelectEventPlugin":101,"./ServerReactRootIndex":102,"./SimpleEventPlugin":103,"./createFullPageComponent":123,"_process":190}],67:[function(require,module,exports){
+},{"./BeforeInputEventPlugin":14,"./ChangeEventPlugin":18,"./ClientReactRootIndex":19,"./DefaultEventPluginOrder":24,"./EnterLeaveEventPlugin":25,"./ExecutionEnvironment":32,"./HTMLDOMPropertyConfig":34,"./MobileSafariClickEventPlugin":37,"./ReactBrowserComponentMixin":41,"./ReactClass":45,"./ReactComponentBrowserEnvironment":47,"./ReactDOMButton":53,"./ReactDOMComponent":54,"./ReactDOMForm":55,"./ReactDOMIDOperations":56,"./ReactDOMIframe":57,"./ReactDOMImg":58,"./ReactDOMInput":59,"./ReactDOMOption":60,"./ReactDOMSelect":61,"./ReactDOMTextComponent":63,"./ReactDOMTextarea":64,"./ReactDefaultBatchingStrategy":65,"./ReactDefaultPerf":67,"./ReactElement":69,"./ReactEventListener":74,"./ReactInjection":76,"./ReactInstanceHandles":78,"./ReactMount":82,"./ReactReconcileTransaction":92,"./SVGDOMPropertyConfig":100,"./SelectEventPlugin":101,"./ServerReactRootIndex":102,"./SimpleEventPlugin":103,"./createFullPageComponent":123,"_process":192}],67:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -28270,7 +28270,7 @@ module.exports = ReactElement;
 
 }).call(this,require('_process'))
 
-},{"./Object.assign":38,"./ReactContext":50,"./ReactCurrentOwner":51,"./warning":166,"_process":190}],70:[function(require,module,exports){
+},{"./Object.assign":38,"./ReactContext":50,"./ReactCurrentOwner":51,"./warning":166,"_process":192}],70:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2014-2015, Facebook, Inc.
@@ -28736,7 +28736,7 @@ module.exports = ReactElementValidator;
 
 }).call(this,require('_process'))
 
-},{"./ReactCurrentOwner":51,"./ReactElement":69,"./ReactFragment":75,"./ReactNativeComponent":85,"./ReactPropTypeLocationNames":88,"./ReactPropTypeLocations":89,"./getIteratorFn":138,"./invariant":147,"./warning":166,"_process":190}],71:[function(require,module,exports){
+},{"./ReactCurrentOwner":51,"./ReactElement":69,"./ReactFragment":75,"./ReactNativeComponent":85,"./ReactPropTypeLocationNames":88,"./ReactPropTypeLocations":89,"./getIteratorFn":138,"./invariant":147,"./warning":166,"_process":192}],71:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2014-2015, Facebook, Inc.
@@ -28832,7 +28832,7 @@ module.exports = ReactEmptyComponent;
 
 }).call(this,require('_process'))
 
-},{"./ReactElement":69,"./ReactInstanceMap":79,"./invariant":147,"_process":190}],72:[function(require,module,exports){
+},{"./ReactElement":69,"./ReactInstanceMap":79,"./invariant":147,"_process":192}],72:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -29283,7 +29283,7 @@ module.exports = ReactFragment;
 
 }).call(this,require('_process'))
 
-},{"./ReactElement":69,"./warning":166,"_process":190}],76:[function(require,module,exports){
+},{"./ReactElement":69,"./warning":166,"_process":192}],76:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -29797,7 +29797,7 @@ module.exports = ReactInstanceHandles;
 
 }).call(this,require('_process'))
 
-},{"./ReactRootIndex":95,"./invariant":147,"_process":190}],79:[function(require,module,exports){
+},{"./ReactRootIndex":95,"./invariant":147,"_process":192}],79:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -30823,7 +30823,7 @@ module.exports = ReactMount;
 
 }).call(this,require('_process'))
 
-},{"./DOMProperty":21,"./ReactBrowserEventEmitter":42,"./ReactCurrentOwner":51,"./ReactElement":69,"./ReactElementValidator":70,"./ReactEmptyComponent":71,"./ReactInstanceHandles":78,"./ReactInstanceMap":79,"./ReactMarkupChecksum":81,"./ReactPerf":87,"./ReactReconciler":93,"./ReactUpdateQueue":98,"./ReactUpdates":99,"./containsNode":121,"./emptyObject":127,"./getReactRootElementInContainer":141,"./instantiateReactComponent":146,"./invariant":147,"./setInnerHTML":160,"./shouldUpdateReactComponent":163,"./warning":166,"_process":190}],83:[function(require,module,exports){
+},{"./DOMProperty":21,"./ReactBrowserEventEmitter":42,"./ReactCurrentOwner":51,"./ReactElement":69,"./ReactElementValidator":70,"./ReactEmptyComponent":71,"./ReactInstanceHandles":78,"./ReactInstanceMap":79,"./ReactMarkupChecksum":81,"./ReactPerf":87,"./ReactReconciler":93,"./ReactUpdateQueue":98,"./ReactUpdates":99,"./containsNode":121,"./emptyObject":127,"./getReactRootElementInContainer":141,"./instantiateReactComponent":146,"./invariant":147,"./setInnerHTML":160,"./shouldUpdateReactComponent":163,"./warning":166,"_process":192}],83:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -31394,7 +31394,7 @@ module.exports = ReactNativeComponent;
 
 }).call(this,require('_process'))
 
-},{"./Object.assign":38,"./invariant":147,"_process":190}],86:[function(require,module,exports){
+},{"./Object.assign":38,"./invariant":147,"_process":192}],86:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -31507,7 +31507,7 @@ module.exports = ReactOwner;
 
 }).call(this,require('_process'))
 
-},{"./invariant":147,"_process":190}],87:[function(require,module,exports){
+},{"./invariant":147,"_process":192}],87:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -31612,7 +31612,7 @@ module.exports = ReactPerf;
 
 }).call(this,require('_process'))
 
-},{"_process":190}],88:[function(require,module,exports){
+},{"_process":192}],88:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -31641,7 +31641,7 @@ module.exports = ReactPropTypeLocationNames;
 
 }).call(this,require('_process'))
 
-},{"_process":190}],89:[function(require,module,exports){
+},{"_process":192}],89:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -32371,7 +32371,7 @@ module.exports = ReactReconciler;
 
 }).call(this,require('_process'))
 
-},{"./ReactElementValidator":70,"./ReactRef":94,"_process":190}],94:[function(require,module,exports){
+},{"./ReactElementValidator":70,"./ReactRef":94,"_process":192}],94:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -32556,7 +32556,7 @@ module.exports = {
 
 }).call(this,require('_process'))
 
-},{"./ReactElement":69,"./ReactInstanceHandles":78,"./ReactMarkupChecksum":81,"./ReactServerRenderingTransaction":97,"./emptyObject":127,"./instantiateReactComponent":146,"./invariant":147,"_process":190}],97:[function(require,module,exports){
+},{"./ReactElement":69,"./ReactInstanceHandles":78,"./ReactMarkupChecksum":81,"./ReactServerRenderingTransaction":97,"./emptyObject":127,"./instantiateReactComponent":146,"./invariant":147,"_process":192}],97:[function(require,module,exports){
 /**
  * Copyright 2014-2015, Facebook, Inc.
  * All rights reserved.
@@ -32969,7 +32969,7 @@ module.exports = ReactUpdateQueue;
 
 }).call(this,require('_process'))
 
-},{"./Object.assign":38,"./ReactCurrentOwner":51,"./ReactElement":69,"./ReactInstanceMap":79,"./ReactLifeCycle":80,"./ReactUpdates":99,"./invariant":147,"./warning":166,"_process":190}],99:[function(require,module,exports){
+},{"./Object.assign":38,"./ReactCurrentOwner":51,"./ReactElement":69,"./ReactInstanceMap":79,"./ReactLifeCycle":80,"./ReactUpdates":99,"./invariant":147,"./warning":166,"_process":192}],99:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -33252,7 +33252,7 @@ module.exports = ReactUpdates;
 
 }).call(this,require('_process'))
 
-},{"./CallbackQueue":17,"./Object.assign":38,"./PooledClass":39,"./ReactCurrentOwner":51,"./ReactPerf":87,"./ReactReconciler":93,"./Transaction":115,"./invariant":147,"./warning":166,"_process":190}],100:[function(require,module,exports){
+},{"./CallbackQueue":17,"./Object.assign":38,"./PooledClass":39,"./ReactCurrentOwner":51,"./ReactPerf":87,"./ReactReconciler":93,"./Transaction":115,"./invariant":147,"./warning":166,"_process":192}],100:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -34001,7 +34001,7 @@ module.exports = SimpleEventPlugin;
 
 }).call(this,require('_process'))
 
-},{"./EventConstants":26,"./EventPluginUtils":30,"./EventPropagators":31,"./SyntheticClipboardEvent":104,"./SyntheticDragEvent":106,"./SyntheticEvent":107,"./SyntheticFocusEvent":108,"./SyntheticKeyboardEvent":110,"./SyntheticMouseEvent":111,"./SyntheticTouchEvent":112,"./SyntheticUIEvent":113,"./SyntheticWheelEvent":114,"./getEventCharCode":134,"./invariant":147,"./keyOf":153,"./warning":166,"_process":190}],104:[function(require,module,exports){
+},{"./EventConstants":26,"./EventPluginUtils":30,"./EventPropagators":31,"./SyntheticClipboardEvent":104,"./SyntheticDragEvent":106,"./SyntheticEvent":107,"./SyntheticFocusEvent":108,"./SyntheticKeyboardEvent":110,"./SyntheticMouseEvent":111,"./SyntheticTouchEvent":112,"./SyntheticUIEvent":113,"./SyntheticWheelEvent":114,"./getEventCharCode":134,"./invariant":147,"./keyOf":153,"./warning":166,"_process":192}],104:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -34962,7 +34962,7 @@ module.exports = Transaction;
 
 }).call(this,require('_process'))
 
-},{"./invariant":147,"_process":190}],116:[function(require,module,exports){
+},{"./invariant":147,"_process":192}],116:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -35058,7 +35058,7 @@ module.exports = accumulateInto;
 
 }).call(this,require('_process'))
 
-},{"./invariant":147,"_process":190}],118:[function(require,module,exports){
+},{"./invariant":147,"_process":192}],118:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -35359,7 +35359,7 @@ module.exports = createFullPageComponent;
 
 }).call(this,require('_process'))
 
-},{"./ReactClass":45,"./ReactElement":69,"./invariant":147,"_process":190}],124:[function(require,module,exports){
+},{"./ReactClass":45,"./ReactElement":69,"./invariant":147,"_process":192}],124:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -35450,7 +35450,7 @@ module.exports = createNodesFromMarkup;
 
 }).call(this,require('_process'))
 
-},{"./ExecutionEnvironment":32,"./createArrayFromMixed":122,"./getMarkupWrap":139,"./invariant":147,"_process":190}],125:[function(require,module,exports){
+},{"./ExecutionEnvironment":32,"./createArrayFromMixed":122,"./getMarkupWrap":139,"./invariant":147,"_process":192}],125:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -35567,7 +35567,7 @@ module.exports = emptyObject;
 
 }).call(this,require('_process'))
 
-},{"_process":190}],128:[function(require,module,exports){
+},{"_process":192}],128:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -35681,7 +35681,7 @@ module.exports = findDOMNode;
 
 }).call(this,require('_process'))
 
-},{"./ReactCurrentOwner":51,"./ReactInstanceMap":79,"./ReactMount":82,"./invariant":147,"./isNode":149,"./warning":166,"_process":190}],130:[function(require,module,exports){
+},{"./ReactCurrentOwner":51,"./ReactInstanceMap":79,"./ReactMount":82,"./invariant":147,"./isNode":149,"./warning":166,"_process":192}],130:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -35740,7 +35740,7 @@ module.exports = flattenChildren;
 
 }).call(this,require('_process'))
 
-},{"./traverseAllChildren":165,"./warning":166,"_process":190}],131:[function(require,module,exports){
+},{"./traverseAllChildren":165,"./warning":166,"_process":192}],131:[function(require,module,exports){
 /**
  * Copyright 2014-2015, Facebook, Inc.
  * All rights reserved.
@@ -36228,7 +36228,7 @@ module.exports = getMarkupWrap;
 
 }).call(this,require('_process'))
 
-},{"./ExecutionEnvironment":32,"./invariant":147,"_process":190}],140:[function(require,module,exports){
+},{"./ExecutionEnvironment":32,"./invariant":147,"_process":192}],140:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -36628,7 +36628,7 @@ module.exports = instantiateReactComponent;
 
 }).call(this,require('_process'))
 
-},{"./Object.assign":38,"./ReactCompositeComponent":49,"./ReactEmptyComponent":71,"./ReactNativeComponent":85,"./invariant":147,"./warning":166,"_process":190}],147:[function(require,module,exports){
+},{"./Object.assign":38,"./ReactCompositeComponent":49,"./ReactEmptyComponent":71,"./ReactNativeComponent":85,"./invariant":147,"./warning":166,"_process":192}],147:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -36686,7 +36686,7 @@ module.exports = invariant;
 
 }).call(this,require('_process'))
 
-},{"_process":190}],148:[function(require,module,exports){
+},{"_process":192}],148:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -36902,7 +36902,7 @@ module.exports = keyMirror;
 
 }).call(this,require('_process'))
 
-},{"./invariant":147,"_process":190}],153:[function(require,module,exports){
+},{"./invariant":147,"_process":192}],153:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -37065,7 +37065,7 @@ module.exports = onlyChild;
 
 }).call(this,require('_process'))
 
-},{"./ReactElement":69,"./invariant":147,"_process":190}],157:[function(require,module,exports){
+},{"./ReactElement":69,"./invariant":147,"_process":192}],157:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -37429,7 +37429,7 @@ module.exports = shouldUpdateReactComponent;
 
 }).call(this,require('_process'))
 
-},{"./warning":166,"_process":190}],164:[function(require,module,exports){
+},{"./warning":166,"_process":192}],164:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2014-2015, Facebook, Inc.
@@ -37502,7 +37502,7 @@ module.exports = toArray;
 
 }).call(this,require('_process'))
 
-},{"./invariant":147,"_process":190}],165:[function(require,module,exports){
+},{"./invariant":147,"_process":192}],165:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -37756,7 +37756,7 @@ module.exports = traverseAllChildren;
 
 }).call(this,require('_process'))
 
-},{"./ReactElement":69,"./ReactFragment":75,"./ReactInstanceHandles":78,"./getIteratorFn":138,"./invariant":147,"./warning":166,"_process":190}],166:[function(require,module,exports){
+},{"./ReactElement":69,"./ReactFragment":75,"./ReactInstanceHandles":78,"./getIteratorFn":138,"./invariant":147,"./warning":166,"_process":192}],166:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2014-2015, Facebook, Inc.
@@ -37820,7 +37820,7 @@ module.exports = warning;
 
 }).call(this,require('_process'))
 
-},{"./emptyFunction":126,"_process":190}],167:[function(require,module,exports){
+},{"./emptyFunction":126,"_process":192}],167:[function(require,module,exports){
 module.exports = require('./lib/React');
 
 },{"./lib/React":40}],168:[function(require,module,exports){
@@ -38243,7 +38243,7 @@ function combineReducers(reducers) {
 module.exports = exports['default'];
 }).call(this,require('_process'))
 
-},{"../createStore":168,"../utils/isPlainObject":174,"../utils/mapValues":175,"../utils/pick":176,"_process":190}],173:[function(require,module,exports){
+},{"../createStore":168,"../utils/isPlainObject":174,"../utils/mapValues":175,"../utils/pick":176,"_process":192}],173:[function(require,module,exports){
 /**
  * Composes single-argument functions from right to left.
  *
@@ -38318,6 +38318,24 @@ module.exports = exports["default"];
 },{}],177:[function(require,module,exports){
 var act = {};
 
+// Log in.
+act.logIn = function (userId) {
+	return {
+		type: 'LOG-IN'
+		,
+		payload: userId
+	}
+};
+
+// Log out.
+act.logOut = function () {
+	return {
+		type: 'LOG-OUT'
+		,
+		payload: undefined
+	}
+};
+
 // Player/Admin chose a week to view.
 act.selectWeekView = function (index) {
 	return {
@@ -38327,27 +38345,63 @@ act.selectWeekView = function (index) {
 	};
 };
 
-// Submit question.
-act.question = function (questionStr) {
+// Admin creates question.
+act.createQuestion = function () {
 	return {
-		type: 'QUESTION'
+		type: 'NEW-QUESTION'
 		,
-		payload: questionStr
+		payload: undefined
 	}
-}
+};
 
-// Submit answer to questions.
-act.answer = function (questionId, answer) {
+// Admin removes question.
+act.removeQuestion = function (questionId) {
+	return {
+		type: 'REMOVE-QUESTION'
+		,
+		payload: questionId
+	}
+};
+
+// Admin enters edit mode.
+act.editQuestion = function (questionId, isEditing) {
+	return {
+		type: 'EDIT-QUESTION'
+		,
+		payload: {
+			questionId: questionId,
+			isEditing: isEditing
+		}
+	}
+};
+
+// Admin submits question details.
+act.updateQuestion = function (questionId, question, answer, type) {
+	return {
+		type: 'UPDATE-QUESTION'
+		,
+		payload: {
+			questionId: questionId,
+			question: question,
+			answer: answer,
+			type: type
+		}
+	}
+};
+
+// User submit answer to questions.
+act.userAnswer = function (questionId, answer) {
 	return {
 		type: 'ANSWER'
 		,
 		payload: {
-			id: questionId,
+			questionId: questionId,
 			answer: answer
 		}
 	};
 };
 
+// Admin toggles achievement of contestant.
 act.toggleAchievement = function (achievement, contestant) {
 	return {
 		type: 'TOGGLE-ACHIEVEMENT'
@@ -38357,7 +38411,7 @@ act.toggleAchievement = function (achievement, contestant) {
 			contestant: contestant,
 		}
 	}
-}
+};
 
 // Player choses contestants.
 act.choose = function (listOfContestants) {
@@ -38365,15 +38419,6 @@ act.choose = function (listOfContestants) {
 		type: 'PLAYER-CHOOSE-CONTESTANTS'
 		,
 		payload: listOfContestants
-	};
-};
-
-// Admin answers the questions.
-act.answerAll = function (qAndA) {
-	return {
-		type: 'ADMIN-ANSWER-ALL'
-		,
-		payload: qAndA
 	};
 };
 
@@ -38420,29 +38465,45 @@ var Achievements = React.createClass({displayName: "Achievements",
 	,
 	items: function (alignment) {
 		var that = this;
+		var alignmentToLabelType = {
+			good: 'success',
+			bad: 'danger'
+		};
 		var marked = this.props.marked.filter(function (isAchieved) {
 			return isAchieved;
 		}).keySeq();
 		var relevant = AchievementsObj.filter(function (theAchievement) {
 			return theAchievement.get('alignment') === alignment;
 		});
-		return relevant.map(function (theAchievement, achievementCode) {
-			var badge;
-			if (marked.indexOf(achievementCode)<0) {
-				badge = 0;
-			} else {
-				badge = 1;
-			}
-			return (
-				React.createElement("li", {className: "list-group-item"}, 
-					React.createElement("span", {
-						className: "badge", 
-						onClick: that.toggleAchievement.bind(null, achievementCode)
-					}, 
-						badge
-					), 
-					theAchievement.get('text')
-				)
+		return relevant
+			.filter(function (theAchievement, achievementCode) {
+				var isAdmin = that.props.isAdmin;
+				var hasAchieved = !(marked.indexOf(achievementCode)<0);
+				return isAdmin || hasAchieved;
+			})
+			.map(function (theAchievement, achievementCode) {
+				var labelType;
+				var hasAchieved = marked.indexOf(achievementCode)<0;
+				if (hasAchieved) {
+					labelType = 'default';
+					labelGlyph = 'remove-sign';
+				} else {
+					labelType = alignmentToLabelType[alignment];
+					labelGlyph = 'ok-sign';
+				}
+				return (
+					React.createElement("li", {className: "list-group-item"}, 
+						React.createElement("span", {
+							className: "pull-right label label-" + labelType, 
+							onClick: that.toggleAchievement.bind(that, achievementCode), 
+							style: {fontFamily: 'monospace'}
+						}, 
+							React.createElement("span", {className: "glyphicon glyphicon-" + labelGlyph})
+						), 
+						React.createElement("span", {style: {marginRight: '1em'}}, 
+							theAchievement.get('text')
+						)
+					)
 			);
 		})
 	}
@@ -38454,59 +38515,326 @@ var Achievements = React.createClass({displayName: "Achievements",
 
 module.exports = Achievements;
 
-},{"../objects/Achievements":186,"react":167}],179:[function(require,module,exports){
+},{"../objects/Achievements":188,"react":167}],179:[function(require,module,exports){
+var React = require('react');
+
+var toolToGlyphcon = {
+	'edit': "pencil",
+	'remove': "remove",
+	'add': "plus",
+	'approve': "ok",
+	'discard': "pencil"
+}
+
+var AdminToolbox = React.createClass({displayName: "AdminToolbox",
+	render: function () {
+		var glyphicon = toolToGlyphcon[this.props.tool];
+		return (
+			React.createElement("button", {type: "button", className: "btn btn-default btn-sm", onClick: this.props.handleClick}, 
+				React.createElement("span", {className: "glyphicon glyphicon-" + glyphicon, "aria-hidden": "true"})
+			)
+		);
+	}
+});
+
+module.exports = AdminToolbox;
+
+},{"react":167}],180:[function(require,module,exports){
 var React = require('react');
 var ContestantObj = require('../objects/Contestant');
 var Achievements = require('./Achievements');
 
 var Contestant = React.createClass({displayName: "Contestant",
 	render: function () {
-		var me = new ContestantObj(this.props.contestantId);
+		var me = new ContestantObj(this.props.contestant);
 		return (
 			React.createElement("div", {className: "tribe-mate"}, 
-				React.createElement("div", {className: "tribe-mate-name"}, 
-					me.getName()
-				), 
-				React.createElement("div", {className: "tribe-mate-image"}, 
-					React.createElement("img", {src: "/images/" + me.getName() + ".png", alt: "INSERT IMAGE"})
-				), 
-				React.createElement("div", {className: "tribe-mate-achievements"}, 
-					React.createElement(Achievements, {
-						contestantName: me.getName(), 
-						marked: this.props.achievements, 
-						toggleAchievement: this.toggleAchievement}
-					)
+				this.renderName(me), 
+				this.renderImage(me), 
+				this.renderAchievements(me)
+			)
+		);
+	}
+	,
+	renderName: function (me) {
+		return (
+			React.createElement("h3", {className: "tribe-mate-name"}, 
+				me.getName()
+			)
+		);
+	}
+	,
+	renderImage: function (me) {
+		return (
+			React.createElement("div", {className: "tribe-mate-image"}, 
+				React.createElement("img", {src: "/images/" + me.getName() + ".png", alt: "INSERT IMAGE"})
+			)
+		);
+	}
+	,
+	renderAchievements: function (me) {
+		if (typeof this.props.achievements === 'undefined') {
+			return;
+		}
+		return (
+			React.createElement("div", {className: "tribe-mate-achievements"}, 
+				React.createElement(Achievements, {
+					contestantName: me.getName(), 
+					marked: this.props.achievements, 
+					isAdmin: this.props.isAdmin, 
+					toggleAchievement: this.toggleAchievement}
 				)
 			)
 		);
 	}
 	,
 	toggleAchievement: function (achievementCode) {
-		var id = this.props.contestantId;
-		this.props.toggleAchievement(achievementCode, id);
+		var p = this.props;
+		if (p.isAdmin) p.toggleAchievement(achievementCode, p.contestant);
 	}
 });
 
 module.exports = Contestant;
 
-},{"../objects/Contestant":187,"./Achievements":178,"react":167}],180:[function(require,module,exports){
+},{"../objects/Contestant":189,"./Achievements":178,"react":167}],181:[function(require,module,exports){
+var React = require('react');
+var AdminToolbox = require('./AdminToolbox');
+
+var Questions = React.createClass({displayName: "Questions",
+	render: function () {
+		var style = {
+			display: 'flex',
+			flexDirection: 'row',
+			justifyContent: 'space-around',
+			alignItems: 'flex-basis'
+		};
+		return (
+			React.createElement("div", {className: "questions-container", style: style}, 
+				this.newQuestion(), 
+				this.questions()
+			)
+		);
+	}
+	,
+	newQuestion: function () {
+		var isAdmin = this.props.user.get('isAdmin');
+		if (!isAdmin) {
+			return;
+		}
+		return (
+			React.createElement("div", {className: "new-question"}, 
+				React.createElement(AdminToolbox, {
+					tool: "add", 
+					handleClick: this.create}
+				)
+			)
+		);
+	}
+	,
+	create: function () {
+		this.props.dispatcher.create
+
+	}
+	,
+	questions: function () {
+		var p = this.props;
+		return p.questions.map(function (details, id) {
+			return (
+				React.createElement(Question, {
+					key: id, 
+					questionId: id, 
+					details: details, 
+					contestants: p.contestants, 
+					user: p.user, 
+					handlers: p.dispatcher}
+				)
+			);
+		});
+	}
+});
+
+var Question = React.createClass({displayName: "Question",
+	getInitialState: function () {
+		// State represents the editing mode.
+		return this.props.details.toJS();
+	}
+	,
+	render: function () {
+		var style = {
+			width: '40%'
+		};
+		return (
+			React.createElement("div", {className: "question", style: style}, 
+				React.createElement("div", {className: "panel panel-default"}, 
+					React.createElement("div", {className: "panel-heading"}, 
+						this.questionRender(), 
+						this.tools()
+					), 
+					React.createElement("div", {className: "panel-body"}, 
+						this.bodyRender()
+					)
+				)
+			)
+		);
+	}
+	,
+	questionRender: function () {
+		var details = this.props.details;
+		if (!details.get('isEditing')) {
+			return React.createElement("span", null, details.get('question'));
+		} else {
+			return (
+				React.createElement("div", {className: "input-group"}, 
+					React.createElement("input", {
+						type: "text", 
+						className: "form-control", 
+						placeholder: "question", 
+						value: this.state.question, 
+						onChange: this.onText}
+					)
+				)
+			);
+		}
+	}
+	,
+	bodyRender: function () {
+		var details = this.props.details;
+		var isEditing = details.get('isEditing');
+		var answer = isEditing ? this.state.answer : details.get('answer');
+		// NOTE: Changing the type is supported, but not implemented here.
+		switch (details.get('type')) {
+			case 'boolean':
+				var yes = answer ? " active" : "",
+					no = !answer ? " active" : "";
+				return (
+					React.createElement("div", {className: "btn-group btn-group-lg", role: "group"}, 
+						React.createElement("button", {type: "button", className: "btn btn-success" + yes, onClick: this.changeAnswer.bind(this, true)}, "Yes"), 
+						React.createElement("button", {type: "button", className: "btn btn-danger" + no, onClick: this.changeAnswer.bind(this, false)}, "No")
+					)
+				);
+			case 'contestant':
+				var nobody = !answer ? " active" : "";
+				return (
+					React.createElement("div", {className: "btn-group btn-group-lg", role: "group"}, 
+						React.createElement("button", {
+							type: "button", 
+							className: "btn btn-default" + nobody, 
+							onClick: this.changeAnswer.bind(this, null)
+						}, 
+							React.createElement("span", {className: "glyphicon glyphicon-remove"})
+						), 
+						React.createElement("button", {type: "button", className: "btn btn-default dropdown-toggle", "data-toggle": "dropdown", "aria-haspopup": "true", "aria-expanded": "false"}, 
+							(answer || "Nobody") + " ", 
+							React.createElement("span", {className: "caret"})
+						), 
+						React.createElement("ul", {className: "dropdown-menu"}, 
+							this.answerContestants()
+						)
+					)
+				);
+			default:
+				return React.createElement("div", null, "Bad type specified")
+		}
+	}
+	,
+	answerContestants: function () {
+		var that = this;
+		return this.props.contestants.map(function (contestant) {
+			return (
+				React.createElement("li", {onClick: that.changeAnswer.bind(that, contestant.get('name'))}, React.createElement("a", null, 
+					contestant.get('name')
+				))
+			);
+		})
+	}
+	,
+	tools: function () {
+		var handlers = this.props.handlers;
+		var questionId = this.props.questionId;
+		var isAdmin = this.props.user.get('isAdmin');
+		var isEditing = this.props.details.get('isEditing');
+		if (!isAdmin) {
+			return;
+		}
+		if (!isEditing) {
+			return (
+				React.createElement("span", {className: "toolbox-container pull-right"}, 
+					React.createElement(AdminToolbox, {
+						tool: "edit", 
+						handleClick: handlers.edit.bind(null, questionId, isEditing)}
+					), 
+					React.createElement(AdminToolbox, {
+						tool: "remove", 
+						handleClick: handlers.remove.bind(null, questionId)}
+					)
+				)
+			);
+		} else {
+			return (
+				React.createElement("span", {className: "toolbox-container pull-right"}, 
+					React.createElement(AdminToolbox, {
+						tool: "discard", 
+						handleClick: handlers.edit.bind(null, questionId, isEditing)}
+					), 
+					React.createElement(AdminToolbox, {
+						tool: "approve", 
+						handleClick: handlers.update.bind(null, questionId, this.state.question, this.state.answer, this.state.type)}
+					)
+				)
+			);
+		}
+	}
+	,
+	onText: function (e) {
+		this.setState({question: e.target.value});
+	}
+	,
+	changeAnswer: function (answer, e) {
+		var handlers = this.props.handlers;
+		var questionId = this.props.questionId;
+		var isAdmin = this.props.user.get('isAdmin');
+		var isEditing = this.props.details.get('isEditing');
+		var adminEdit = isAdmin && isEditing;
+		var userEdit = !isAdmin;
+		if (adminEdit) this.setState({answer: answer});
+		if (userEdit) handlers.userAnswer(questionId, answer);
+	}
+});
+
+module.exports = Questions;
+
+},{"./AdminToolbox":179,"react":167}],182:[function(require,module,exports){
 var React = require('react');
 var Contestant = require('./Contestant');
 
 var Tribes = React.createClass({displayName: "Tribes",
 	render: function () {
+		var style = {
+			display: 'flex',
+			flexDirection: 'row',
+			justifyContent: 'space-around',
+			alignItems: 'baseline'
+		};
 		return (
-			React.createElement("div", {className: "tribes-container"}, 
+			React.createElement("div", {className: "tribes-container", style: style}, 
 				this.tribes()
 			)
 		);
 	}
 	,
 	tribes: function () {
+		var style = {
+			display: 'flex',
+			flexDirection: 'column',
+			justifyContent: 'flex-start',
+			alignItems: 'center'
+		};
 		var that = this;
+		console.log(this.props.tribes);
 		return this.props.tribes.map(function (tribe, tribeName) {
 			return (
-				React.createElement("div", {className: "tribe", key: tribeName}, 
+				React.createElement("div", {className: "tribe", style: style, key: tribeName}, 
+					React.createElement("h2", null, tribeName), 
 					that.membersOf(tribe)
 				)
 			);
@@ -38515,14 +38843,12 @@ var Tribes = React.createClass({displayName: "Tribes",
 	,
 	membersOf: function (tribe) {
 		var that = this;
-		return tribe.map(function (val) {
-			var contestant = val.get('contestant');
-			// var achievements = val.get('achievements');
-			var achievements = that.props.achievements.get(contestant);
+		return tribe.map(function (content, contestant) {
 			return (
 				React.createElement(Contestant, {
-					contestantId: contestant, 
-					achievements: achievements, 
+					isAdmin: that.props.user.get('isAdmin'), 
+					contestant: contestant, 
+					achievements: content.get('achievements'), 
 					toggleAchievement: that.props.toggleAchievement, 
 					key: contestant}
 				)
@@ -38533,7 +38859,7 @@ var Tribes = React.createClass({displayName: "Tribes",
 
 module.exports = Tribes;
 
-},{"./Contestant":179,"react":167}],181:[function(require,module,exports){
+},{"./Contestant":180,"react":167}],183:[function(require,module,exports){
 var React = require('react');
 var I = require('immutable');
 var List = I.List;
@@ -38557,7 +38883,9 @@ var Week = React.createClass({displayName: "Week",
 		var that = this;
 		return List().setSize(that.props.count).map(function (empty, i) {
 			return (
-				React.createElement("li", {key: i+1}, React.createElement("a", {href: "/admin/week/"+(i+1).toString()}, i+1))
+				React.createElement("li", {key: i+1}, 
+					React.createElement("a", {href: "/admin/week/"+(i+1).toString()}, i+1)
+				)
 			)
 		});
 	}
@@ -38569,7 +38897,7 @@ var Week = React.createClass({displayName: "Week",
 
 module.exports = Week;
 
-},{"immutable":1,"react":167}],182:[function(require,module,exports){
+},{"immutable":1,"react":167}],184:[function(require,module,exports){
 var React = require('react');
 var Fantasy = require('./Fantasy');
 var createStore = require('redux').createStore;
@@ -38608,7 +38936,7 @@ var App = React.createClass({displayName: "App",
 
 module.exports = App;
 
-},{"../reducers":188,"./Fantasy":183,"react":167,"react-redux":7,"redux":169}],183:[function(require,module,exports){
+},{"../reducers":190,"./Fantasy":185,"react":167,"react-redux":7,"redux":169}],185:[function(require,module,exports){
 var React = require('react');
 var PropTypes = React.PropTypes;
 // TODO: Do I need `bindActionCreators`? Should I use it?
@@ -38618,7 +38946,7 @@ var connect = ReactRedux.connect; // Connect react container to redux.
 // TODO: Add proptypes to components (in their files).
 var Week = require('../components/Week'); // Explain...
 var Tribes = require('../components/Tribes'); // Explain...
-// var Questions = require('../components/Questions'); // Explain...
+var Questions = require('../components/Questions'); // Explain...
 var act = require('../actions'); // Give dispatch an action payload.
 // TODO: Do I need `immutable`?
 var I = require('immutable');
@@ -38638,8 +38966,34 @@ var Fantasy = React.createClass({displayName: "Fantasy",
 						return dispatch(act.selectWeekView(index));
 					}}
 				), 
+				React.createElement(Questions, {
+					user: p.user, 
+					questions: p.questions, 
+					contestants: p.contestants, 
+					key: "questions", 
+					dispatcher: {
+						userAnswer: function (questionId, answer) {
+							return dispatch(act.userAnswer(questionId, answer));
+						},
+						create: function (questionId, answer) {
+							return dispatch(act.createQuestion(questionId, answer));
+						},
+						update: function (questionId, question, answer, type) {
+							return dispatch(act.updateQuestion(questionId, question, answer, type));
+						},
+						edit: function (questionId, isEditing) {
+							return dispatch(act.editQuestion(questionId, isEditing));
+						},
+						remove: function (questionId) {
+							return dispatch(act.removeQuestion(questionId));
+						}
+					}}
+				), 
 				React.createElement(Tribes, {
-					tribes: p.tribes, 
+					user: p.user, 
+					tribes: p.contestants.groupBy(function (contestant) {
+						return contestant.get('tribe');
+					}), 
 					achievements: p.achievements, 
 					toggleAchievement: function (achievementCode, contestantId) {
 						return dispatch(act.toggleAchievement(achievementCode, contestantId));
@@ -38652,22 +39006,15 @@ var Fantasy = React.createClass({displayName: "Fantasy",
 			)
 		);
 	}
-	// <Questions
-	// 	content={p.questions}
-	// 	key="questions"
-	// 	onAnswer={function (qAndA) {
-	// 		return dispatch(act.answer(qAndA));
-	// 	}}
-	// />
 	,
 	propTypes: {
 		week: ImmutablePropTypes.map.isRequired
 		,
-		tribes: ImmutablePropTypes.map.isRequired
+		contestants: ImmutablePropTypes.map.isRequired
 		,
 		questions: ImmutablePropTypes.map.isRequired
 		,
-		achievements: ImmutablePropTypes.map.isRequired
+		user: ImmutablePropTypes.map.isRequired
 	}
 });
 
@@ -38678,17 +39025,17 @@ var select = function (state) {
 	return {
 		week: state.week
 		,
-		tribes: state.tribes
+		contestants: state.contestants
 		,
 		questions: state.questions
 		,
-		achievements: state.achievements
+		user: state.user
 	}
 };
 
 module.exports = connect(select)(Fantasy);
 
-},{"../actions":177,"../components/Tribes":180,"../components/Week":181,"immutable":1,"react":167,"react-immutable-proptypes":3,"react-redux":7,"redux":169}],184:[function(require,module,exports){
+},{"../actions":177,"../components/Questions":181,"../components/Tribes":182,"../components/Week":183,"immutable":1,"react":167,"react-immutable-proptypes":3,"react-redux":7,"redux":169}],186:[function(require,module,exports){
 var I = require('immutable');
 var Map = I.Map;
 var List = I.List;
@@ -38701,108 +39048,30 @@ dummyDB.Weeks = List.of(
 			"idOf-1q1:boolean": true,
 			"idOf-1q2:Contestant": "1q2"
 		}),
-		"tribes": Map({
-			"A": List.of(
-				Map({
-					"contestant": "1A1",
-					"achievements": List.of(
-						"1A1a1",
-						"1A1a2"
-					),
-					"voted-for": "1A1v"
-				}),
-				Map({
-					"contestant": "1A2",
-					"achievements": List.of(
-						"1A2a1",
-						"1A2a2"
-					),
-					"voted-for": "1A2v"
-				})
-			),
-			"B": List.of(
-				Map({
-					"contestant": "1B1",
-					"achievements": List.of(
-						"1B1a1",
-						"1B1a2"
-					),
-					"voted-for": "1B1v"
-				}),
-				Map({
-					"contestant": "1B2",
-					"achievements": List.of(
-						"1B2a1",
-						"1B2a2"
-					),
-					"voted-for": "1B2v"
-				}),
-				Map({
-					"contestant": "1B3",
-					"achievements": List.of(
-						"1B3a1",
-						"1B3a2"
-					),
-					"voted-for": "1B3v"
-				})
-			),
-		})
-	}),
-	Map({
-		"questions": Map({
-			"idOf-2q1:boolean": true,
-			"idOf-2q2:Contestant": "2q2"
-		}),
-		"tribes": Map({
-			"A": List.of(
-				Map({
-					"contestant": "2A1",
-					"achievements": List.of(
-						"2A1a1",
-						"2A1a2"
-					),
-					"voted-for": "2A1v"
-				}),
-				Map({
-					"contestant": "2A2",
-					"achievements": List.of(
-						"2A2a1",
-						"2A2a2"
-					),
-					"voted-for": "2A2v"
-				})
-			),
-			"B": List.of(
-				Map({
-					"contestant": "2B1",
-					"achievements": List.of(
-						"2B1a1",
-						"2B1a2"
-					),
-					"voted-for": "2B1v"
-				}),
-				Map({
-					"contestant": "2B2",
-					"achievements": List.of(
-						"1B2a1",
-						"1B2a2"
-					),
-					"voted-for": "1B2v"
-				}),
-				Map({
-					"contestant": "1B3",
-					"achievements": List.of(
-						"2B3a1",
-						"2B3a2"
-					),
-					"voted-for": "2B3v"
-				})
-			),
+		"contestants": Map({
+			"id:1": Map({
+				name: "Spencer",
+				tribe: "Abu",
+				votedFor: "Kass",
+				"achievements": List.of(
+					"CRIED",
+					"HASHTAG"
+				),
+			}),
+			"id:2": Map({
+				name: "Kass",
+				tribe: "Abu",
+				votedFor: "Spencer",
+				"achievements": List.of(
+					"CRIED",
+					"HASHTAG"
+				),
+			}),
 		})
 	})
 );
-dummyDB.Players = List.of(
-	Map({
+dummyDB.Players = Map({
+	'id:135325': Map({
 		"player": "P1",
 		"answers": List.of(
 			Map({
@@ -38811,7 +39080,7 @@ dummyDB.Players = List.of(
 			})
 		)
 	}),
-	Map({
+	'id:13508': Map({
 		"player": "P2",
 		"answers": List.of(
 			Map({
@@ -38820,11 +39089,11 @@ dummyDB.Players = List.of(
 			})
 		)
 	})
-);
+});
 
 module.exports = dummyDB;
 
-},{"immutable":1}],185:[function(require,module,exports){
+},{"immutable":1}],187:[function(require,module,exports){
 var React = require('react');
 var App = require('./containers/App');
 
@@ -38837,7 +39106,7 @@ React.render(
 	root
 );
 
-},{"./containers/App":182,"react":167}],186:[function(require,module,exports){
+},{"./containers/App":184,"react":167}],188:[function(require,module,exports){
 var I = require('immutable');
 var Map = I.Map;
 
@@ -38869,50 +39138,27 @@ var Achievements = Map({
 
 module.exports = Achievements;
 
-},{"immutable":1}],187:[function(require,module,exports){
+},{"immutable":1}],189:[function(require,module,exports){
 var I = require('immutable');
 var Map = I.Map;
 
 var contestants = Map({
-	"1A1": Map({
-		name: 'Jack',
-		gender: 'm'
+	"id:1": Map({
+		name: "Spencer",
+		tribe: "Abu",
+		votedFor: "Kass",
+		achievements: Map({
+			"CRIED": true,
+			"HASHTAG": false
+		}),
 	}),
-	"1A2": Map({
-		name: 'Karen',
-		gender: 'f'
-	}),
-	"1B1": Map({
-		name: 'Oren',
-		gender: 'm'
-	}),
-	"1B2": Map({
-		name: 'Alex',
-		gender: 'm'
-	}),
-	"1B3": Map({
-		name: 'Rachel',
-		gender: 'f'
-	}),
-	"2A1": Map({
-		name: 'Jack',
-		gender: 'm'
-	}),
-	"2A2": Map({
-		name: 'Karen',
-		gender: 'f'
-	}),
-	"2B1": Map({
-		name: 'Oren',
-		gender: 'm'
-	}),
-	"2B2": Map({
-		name: 'Alex',
-		gender: 'm'
-	}),
-	"2B3": Map({
-		name: 'Rachel',
-		gender: 'f'
+	"id:2": Map({
+		name: "Kass",
+		tribe: "Abu",
+		votedFor: "Spencer",
+		achievements: Map({
+			"TREE-MAIL": true
+		}),
 	})
 });
 
@@ -38956,7 +39202,7 @@ Contestant.prototype.getName = function () {
 
 module.exports = Contestant;
 
-},{"immutable":1}],188:[function(require,module,exports){
+},{"immutable":1}],190:[function(require,module,exports){
 var combineReducers = require('redux').combineReducers;
 var dummyDB = require('./dummyDB'); // The dummy for a JSON database.
 var _ = require('lodash');
@@ -38965,62 +39211,39 @@ var List = I.List;
 var Map = I.Map;
 
 var initialState = {};
-// TODO: Install react-router (and react-redux-router) to change this
+initialState.user = Map({userId: undefined, isAdmin: false})
+// TODO: Install react-router (and react-redux-router) to change week switches
 // to URL path's.
-initialState.week = Map({selected: 1, count: dummyDB.Weeks.size});
-initialState.tribes = dummyDB.Weeks.get(0).get("tribes");
-initialState.questions = Map({});
-initialState.achievements = Map({
-	"1A1": Map({
-		"CRIED": true,
-		"TREE-MAIL": true,
-		"HASHTAG": false
+initialState.week = Map({selected: 1, count: 4});
+initialState.contestants = Map({
+	"id:1": Map({
+		name: "Spencer",
+		tribe: "Abu",
+		votedFor: "Kass",
+		achievements: Map({
+			"CRIED": true,
+			"HASHTAG": false
+		}),
+	}),
+	"id:2": Map({
+		name: "Kass",
+		tribe: "Abu",
+		votedFor: "Spencer",
+		achievements: Map({
+			"TREE-MAIL": true
+		}),
 	})
-	,
-	"1A2": Map({
-		"CRIED": true,
-		"TREE-MAIL": true,
-		"HASHTAG": false
+});
+initialState.questions = Map({
+	"123624": Map({
+		question: 'Will Mike eat a banana?',
+		type: 'boolean',
+		answer: false,
 	}),
-	"1B1": Map({
-		"DESTROYED-GOODS": true,
-		"TREE-MAIL": true,
-		"HASHTAG": false
-	}),
-	"1B2": Map({
-		"CRIED": true,
-		"TREE-MAIL": true,
-		"HASHTAG": false
-	}),
-	"1B3": Map({
-		"CRIED": true,
-		"TREE-MAIL": true,
-		"HASHTAG": false
-	}),
-	"2A1": Map({
-		"CRIED": true,
-		"TREE-MAIL": true,
-		"HASHTAG": false
-	}),
-	"2A2": Map({
-		"CRIED": true,
-		"TREE-MAIL": true,
-		"HASHTAG": false
-	}),
-	"2B1": Map({
-		"CRIED": true,
-		"TREE-MAIL": true,
-		"HASHTAG": false
-	}),
-	"2B2": Map({
-		"CRIED": true,
-		"TREE-MAIL": true,
-		"HASHTAG": false
-	}),
-	"2B3": Map({
-		"CRIED": true,
-		"TREE-MAIL": true,
-		"HASHTAG": false
+	"1373457": Map({
+		question: 'Who is the one they were talking about?',
+		type: 'contestant',
+		answer: 'Oren'
 	})
 });
 
@@ -39028,33 +39251,51 @@ initialState.achievements = Map({
 // store, and returns a new state of the store. It will only return something
 // different if the action was relevant.
 
-/**
- * The state parameters:
- * @var selected is the week selected. -1 indicates none.
- * @var count is the number of weeks that exist.
- */
+// State represents log-in status.
+var user = function (prev, action) {
+	if (typeof prev === 'undefined') {
+		return initialState.user;
+	}
+	switch (action.type) {
+		case 'LOG-OUT':
+		return initialState.user
+		case 'LOG-IN':
+		// TODO: Request authorization from server.
+		return Map({user: userId, isAdmin: checkAdminStatus(userId)})
+		default:
+		return prev;
+	}
+};
+var checkAdminStatus = function (userId) {
+	// TODO: Request from server. Default to `false`.
+	return false;
+};
+
+// State represents week.
 var week = function (prev, action) {
 	if (typeof prev === 'undefined') {
 		return initialState.week;
 	}
 	switch (action.type) {
-		case 'WEEK-VIEW-SELECT':
-		return prev.set('selected', action.payload);
-		case 'WEEK-EDIT-NEW':
-		return prev.update('count', function (v) {return v+1});
 		default:
 		return prev;
 	}
 };
 
-// State represents the tribes.
-var tribes = function (prev, action) {
+// State represents the contestants.
+var contestants = function (prev, action) {
 	if (typeof prev === 'undefined') {
-		return initialState.tribes;
+		return initialState.contestants;
 	}
 	switch (action.type) {
-		case 'WEEK-VIEW-SELECT':
-		return dummyDB.Weeks.has(action.payload) ? dummyDB.Weeks.get(action.payload).get("tribes") : prev;
+		case 'TOGGLE-ACHIEVEMENT':
+		return prev.updateIn([
+			action.payload.contestant,
+			'achievements',
+			action.payload.achievement
+		], function (isAchieved) {
+			return !isAchieved;
+		});
 		default:
 		return prev;
 	}
@@ -39066,50 +39307,70 @@ var questions = function (prev, action) {
 		return initialState.questions;
 	}
 	switch (action.type) {
-		case 'QUESTION':
-		return prev.set(action.payload, null);
+		case 'NEW-QUESTION':
+		return prev.set(Math.random(), Map({
+			question: '',
+			type: 'boolean'
+		}));
+		case 'UPDATE-QUESTION':
+		return prev.set(action.payload.questionId, Map({
+			question: action.payload.question,
+			answer: action.payload.answer,
+			type: action.payload.type,
+			isEditing: false
+		}));
+		case 'EDIT-QUESTION':
+		return prev.setIn([
+			action.payload.questionId,
+			'isEditing'
+		], !action.payload.isEditing);
+		case 'REMOVE-QUESTION':
+		return prev.delete(action.payload);
 		case 'ANSWER':
-		return prev.set(action.payload.question, action.payload.answer);
+		return prev.setIn([
+			action.payload.questionId,
+			'answer'
+		], action.payload.answer);
 		default:
 		return prev;
 	}
 };
 
 // State represents all achievements of the selected week.
-var achievements = function (prev, action) {
-	if (typeof prev === 'undefined') {
-		return initialState.achievements;
-	}
-	switch (action.type) {
-		case 'TOGGLE-ACHIEVEMENT':
-		return prev.updateIn([
-			action.payload.contestant,
-			action.payload.achievement
-		], function (isAchieved) {
-			return !isAchieved;
-		});
-		case 'WEEK-VIEW-SELECT':
-		return prev; // TODO: match the achievements.
-		default:
-		return prev;
-	}
-}
+// var achievements = function (prev, action) {
+// 	if (typeof prev === 'undefined') {
+// 		return initialState.achievements;
+// 	}
+// 	switch (action.type) {
+// 		case 'TOGGLE-ACHIEVEMENT':
+// 		return prev.updateIn([
+// 			action.payload.contestant,
+// 			action.payload.achievement
+// 		], function (isAchieved) {
+// 			return !isAchieved;
+// 		});
+// 		case 'WEEK-VIEW-SELECT':
+// 		return prev; // TODO: match the achievements.
+// 		default:
+// 		return prev;
+// 	}
+// }
 
 var reducers = combineReducers({
 	week,
-	tribes,
+	contestants,
 	questions,
-	achievements
+	user
 });
 
 module.exports = reducers;
 
-},{"./dummyDB":184,"immutable":1,"lodash":2,"redux":169}],189:[function(require,module,exports){
+},{"./dummyDB":186,"immutable":1,"lodash":2,"redux":169}],191:[function(require,module,exports){
 console.log('requiring...');
 require('./build/index');
 console.log('required!');
 
-},{"./build/index":185}],190:[function(require,module,exports){
+},{"./build/index":187}],192:[function(require,module,exports){
 // shim for using process in browser
 
 var process = module.exports = {};
@@ -39201,5 +39462,5 @@ process.chdir = function (dir) {
 };
 process.umask = function() { return 0; };
 
-},{}]},{},[189])
+},{}]},{},[191])
 //# sourceMappingURL=bundle.js.map

@@ -1,5 +1,23 @@
 var act = {};
 
+// Log in.
+act.logIn = function (userId) {
+	return {
+		type: 'LOG-IN'
+		,
+		payload: userId
+	}
+};
+
+// Log out.
+act.logOut = function () {
+	return {
+		type: 'LOG-OUT'
+		,
+		payload: undefined
+	}
+};
+
 // Player/Admin chose a week to view.
 act.selectWeekView = function (index) {
 	return {
@@ -9,27 +27,63 @@ act.selectWeekView = function (index) {
 	};
 };
 
-// Submit question.
-act.question = function (questionStr) {
+// Admin creates question.
+act.createQuestion = function () {
 	return {
-		type: 'QUESTION'
+		type: 'NEW-QUESTION'
 		,
-		payload: questionStr
+		payload: undefined
 	}
-}
+};
 
-// Submit answer to questions.
-act.answer = function (questionId, answer) {
+// Admin removes question.
+act.removeQuestion = function (questionId) {
+	return {
+		type: 'REMOVE-QUESTION'
+		,
+		payload: questionId
+	}
+};
+
+// Admin enters edit mode.
+act.editQuestion = function (questionId, isEditing) {
+	return {
+		type: 'EDIT-QUESTION'
+		,
+		payload: {
+			questionId: questionId,
+			isEditing: isEditing
+		}
+	}
+};
+
+// Admin submits question details.
+act.updateQuestion = function (questionId, question, answer, type) {
+	return {
+		type: 'UPDATE-QUESTION'
+		,
+		payload: {
+			questionId: questionId,
+			question: question,
+			answer: answer,
+			type: type
+		}
+	}
+};
+
+// User submit answer to questions.
+act.userAnswer = function (questionId, answer) {
 	return {
 		type: 'ANSWER'
 		,
 		payload: {
-			id: questionId,
+			questionId: questionId,
 			answer: answer
 		}
 	};
 };
 
+// Admin toggles achievement of contestant.
 act.toggleAchievement = function (achievement, contestant) {
 	return {
 		type: 'TOGGLE-ACHIEVEMENT'
@@ -39,7 +93,7 @@ act.toggleAchievement = function (achievement, contestant) {
 			contestant: contestant,
 		}
 	}
-}
+};
 
 // Player choses contestants.
 act.choose = function (listOfContestants) {
@@ -47,15 +101,6 @@ act.choose = function (listOfContestants) {
 		type: 'PLAYER-CHOOSE-CONTESTANTS'
 		,
 		payload: listOfContestants
-	};
-};
-
-// Admin answers the questions.
-act.answerAll = function (qAndA) {
-	return {
-		type: 'ADMIN-ANSWER-ALL'
-		,
-		payload: qAndA
 	};
 };
 

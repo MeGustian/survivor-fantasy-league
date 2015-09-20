@@ -3,18 +3,32 @@ var Contestant = require('./Contestant');
 
 var Tribes = React.createClass({
 	render: function () {
+		var style = {
+			display: 'flex',
+			flexDirection: 'row',
+			justifyContent: 'space-around',
+			alignItems: 'baseline'
+		};
 		return (
-			<div className="tribes-container">
+			<div className="tribes-container" style={style}>
 				{this.tribes()}
 			</div>
 		);
 	}
 	,
 	tribes: function () {
+		var style = {
+			display: 'flex',
+			flexDirection: 'column',
+			justifyContent: 'flex-start',
+			alignItems: 'center'
+		};
 		var that = this;
+		console.log(this.props.tribes);
 		return this.props.tribes.map(function (tribe, tribeName) {
 			return (
-				<div className="tribe" key={tribeName}>
+				<div className="tribe" style={style} key={tribeName}>
+					<h2>{tribeName}</h2>
 					{that.membersOf(tribe)}
 				</div>
 			);
@@ -23,14 +37,12 @@ var Tribes = React.createClass({
 	,
 	membersOf: function (tribe) {
 		var that = this;
-		return tribe.map(function (val) {
-			var contestant = val.get('contestant');
-			// var achievements = val.get('achievements');
-			var achievements = that.props.achievements.get(contestant);
+		return tribe.map(function (content, contestant) {
 			return (
 				<Contestant
-					contestantId={contestant}
-					achievements={achievements}
+					isAdmin={that.props.user.get('isAdmin')}
+					contestant={contestant}
+					achievements={content.get('achievements')}
 					toggleAchievement={that.props.toggleAchievement}
 					key={contestant}
 				/>

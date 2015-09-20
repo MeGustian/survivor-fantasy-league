@@ -7,7 +7,7 @@ var connect = ReactRedux.connect; // Connect react container to redux.
 // TODO: Add proptypes to components (in their files).
 var Week = require('../components/Week'); // Explain...
 var Tribes = require('../components/Tribes'); // Explain...
-// var Questions = require('../components/Questions'); // Explain...
+var Questions = require('../components/Questions'); // Explain...
 var act = require('../actions'); // Give dispatch an action payload.
 // TODO: Do I need `immutable`?
 var I = require('immutable');
@@ -27,8 +27,34 @@ var Fantasy = React.createClass({
 						return dispatch(act.selectWeekView(index));
 					}}
 				/>
+				<Questions
+					user={p.user}
+					questions={p.questions}
+					contestants={p.contestants}
+					key="questions"
+					dispatcher={{
+						userAnswer: function (questionId, answer) {
+							return dispatch(act.userAnswer(questionId, answer));
+						},
+						create: function (questionId, answer) {
+							return dispatch(act.createQuestion(questionId, answer));
+						},
+						update: function (questionId, question, answer, type) {
+							return dispatch(act.updateQuestion(questionId, question, answer, type));
+						},
+						edit: function (questionId, isEditing) {
+							return dispatch(act.editQuestion(questionId, isEditing));
+						},
+						remove: function (questionId) {
+							return dispatch(act.removeQuestion(questionId));
+						}
+					}}
+				/>
 				<Tribes
-					tribes={p.tribes}
+					user={p.user}
+					tribes={p.contestants.groupBy(function (contestant) {
+						return contestant.get('tribe');
+					})}
 					achievements={p.achievements}
 					toggleAchievement={function (achievementCode, contestantId) {
 						return dispatch(act.toggleAchievement(achievementCode, contestantId));
@@ -41,22 +67,15 @@ var Fantasy = React.createClass({
 			</div>
 		);
 	}
-	// <Questions
-	// 	content={p.questions}
-	// 	key="questions"
-	// 	onAnswer={function (qAndA) {
-	// 		return dispatch(act.answer(qAndA));
-	// 	}}
-	// />
 	,
 	propTypes: {
 		week: ImmutablePropTypes.map.isRequired
 		,
-		tribes: ImmutablePropTypes.map.isRequired
+		contestants: ImmutablePropTypes.map.isRequired
 		,
 		questions: ImmutablePropTypes.map.isRequired
 		,
-		achievements: ImmutablePropTypes.map.isRequired
+		user: ImmutablePropTypes.map.isRequired
 	}
 });
 
@@ -67,11 +86,11 @@ var select = function (state) {
 	return {
 		week: state.week
 		,
-		tribes: state.tribes
+		contestants: state.contestants
 		,
 		questions: state.questions
 		,
-		achievements: state.achievements
+		user: state.user
 	}
 };
 
