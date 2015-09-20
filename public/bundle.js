@@ -38880,8 +38880,8 @@ var Week = React.createClass({displayName: "Week",
 		return List().setSize(that.props.count).map(function (empty, i) {
 			var key = i+1;
 			return (
-				React.createElement("li", {key: key}, 
-					React.createElement("a", {href: "/admin/"+(key).toString()}, key)
+				React.createElement("li", {key: key, className: (that.props.index === key) ? "active" : ""}, 
+					React.createElement("a", {href: "/" + that.props.user.userId + "/"+(key).toString()}, key)
 				)
 			)
 		});
@@ -38952,6 +38952,7 @@ var Fantasy = React.createClass({displayName: "Fantasy",
 		return (
 			React.createElement("div", null, 
 				React.createElement(Week, {
+					user: p.user, 
 					index: p.week.get('selected'), 
 					count: p.week.get('count'), 
 					key: "week", 

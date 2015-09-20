@@ -20,6 +20,7 @@ var Fantasy = React.createClass({
 		return (
 			<div>
 				<Week
+					user={p.user}
 					index={p.week.get('selected')}
 					count={p.week.get('count')}
 					key="week"

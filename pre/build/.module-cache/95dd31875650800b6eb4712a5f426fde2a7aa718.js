@@ -18,8 +18,8 @@ var Week = React.createClass({displayName: "Week",
 		return List().setSize(that.props.count).map(function (empty, i) {
 			var key = i+1;
 			return (
-				React.createElement("li", {key: key, className: (that.props.index === key) ? "active" : ""}, 
-					React.createElement("a", {href: "/" + that.props.user.userId + "/"+(key).toString()}, key)
+				React.createElement("li", {key: key, className: "active"}, 
+					React.createElement("a", {href: "/admin/"+(key).toString()}, key)
 				)
 			)
 		});

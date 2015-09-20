@@ -18,8 +18,8 @@ var Week = React.createClass({
 		return List().setSize(that.props.count).map(function (empty, i) {
 			var key = i+1;
 			return (
-				<li key={key}>
-					<a href={"/admin/"+(key).toString()}>{key}</a>
+				<li key={key} className={(that.props.index === key) ? "active" : ""}>
+					<a href={"/" + that.props.user.userId + "/"+(key).toString()}>{key}</a>
 				</li>
 			)
 		});

@@ -19,7 +19,7 @@ var Week = React.createClass({displayName: "Week",
 			var key = i+1;
 			return (
 				React.createElement("li", {key: key, className: (that.props.index === key) ? "active" : ""}, 
-					React.createElement("a", {href: "/" + that.props.user.userId + "/"+(key).toString()}, key)
+					React.createElement("a", {href: "/admin/"+(key).toString()}, key)
 				)
 			)
 		});
