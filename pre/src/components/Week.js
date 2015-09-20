@@ -19,9 +19,9 @@ var Week = React.createClass({
 			var key = i+1;
 			return (
 				<li key={key} className={(that.props.index === key) ? "active" : ""}>
-					<a href={"/" + that.props.user.userId + "/"+(key).toString()}>{key}</a>
+					<a href={"/" + that.props.user.get('userId') + "/"+(key).toString()}>{key}</a>
 				</li>
-			)
+			);
 		});
 	}
 });

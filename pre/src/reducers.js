@@ -6,7 +6,7 @@ var List = I.List;
 var Map = I.Map;
 
 var initialState = {};
-initialState.user = Map({userId: undefined, isAdmin: true})
+initialState.user = Map({userId: "47901", isAdmin: true})
 // TODO: Install react-router (and react-redux-router) to change week switches
 // to URL path's.
 initialState.week = Map({selected: 1, count: 4});

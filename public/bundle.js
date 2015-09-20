@@ -38318,19 +38318,19 @@ module.exports = exports["default"];
 },{}],177:[function(require,module,exports){
 var act = {};
 
-// Log in.
-act.logIn = function (userId) {
+// Sign in.
+act.signIn = function (userId) {
 	return {
-		type: 'LOG-IN'
+		type: 'SIGN-IN'
 		,
 		payload: userId
 	}
 };
 
-// Log out.
-act.logOut = function () {
+// Sign out.
+act.signOut = function () {
 	return {
-		type: 'LOG-OUT'
+		type: 'SIGN-OUT'
 		,
 		payload: undefined
 	}
@@ -38881,9 +38881,9 @@ var Week = React.createClass({displayName: "Week",
 			var key = i+1;
 			return (
 				React.createElement("li", {key: key, className: (that.props.index === key) ? "active" : ""}, 
-					React.createElement("a", {href: "/" + that.props.user.userId + "/"+(key).toString()}, key)
+					React.createElement("a", {href: "/" + that.props.user.get('userId') + "/"+(key).toString()}, key)
 				)
-			)
+			);
 		});
 	}
 });
@@ -39205,7 +39205,7 @@ var List = I.List;
 var Map = I.Map;
 
 var initialState = {};
-initialState.user = Map({userId: undefined, isAdmin: true})
+initialState.user = Map({userId: "47901", isAdmin: true})
 // TODO: Install react-router (and react-redux-router) to change week switches
 // to URL path's.
 initialState.week = Map({selected: 1, count: 4});

@@ -1,18 +1,18 @@
 var act = {};
 
-// Log in.
-act.logIn = function (userId) {
+// Sign in.
+act.signIn = function (userId) {
 	return {
-		type: 'LOG-IN'
+		type: 'SIGN-IN'
 		,
 		payload: userId
 	}
 };
 
-// Log out.
-act.logOut = function () {
+// Sign out.
+act.signOut = function () {
 	return {
-		type: 'LOG-OUT'
+		type: 'SIGN-OUT'
 		,
 		payload: undefined
 	}
