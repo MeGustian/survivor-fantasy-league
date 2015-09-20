@@ -71,6 +71,10 @@ app.get('/', function(req, res){
 //   });
 // });
 
+app.get('/ajax', function (req, res) {
+  res.status(200);
+});
+
 // TODO: Understand this.
 if (!module.parent) {
   app.listen(app.get('port'), function() {

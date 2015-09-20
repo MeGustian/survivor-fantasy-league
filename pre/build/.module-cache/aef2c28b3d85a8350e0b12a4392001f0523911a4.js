@@ -1,6 +1,6 @@
 var act = {};
 
-var promiseTypes = function (type) {
+var typeToPromiseType = function (type) {
 	return [type + '-PEND', type + '-DONE', type + '-FAIL'];
 }
 
@@ -36,23 +36,26 @@ act.createQuestion = function () {
 	return {
 		type: 'NEW-QUESTION'
 		,
-		payload: undefined
+		payload: {
+			promise: $.ajax({
+				url: '/ajax'
+			}).done(function () {
+
+			}).fail(function () {
+
+			})
+			,
+			data: undefined
+		}
 	}
 };
 
 // Admin removes question.
 act.removeQuestion = function (questionId) {
 	return {
-		types: promiseTypes('REMOVE-QUESTION')
+		type: 'REMOVE-QUESTION'
 		,
-		payload: {
-			promise: $.ajax({
-				url: '/ajax',
-				timeout: 1000
-			})
-			,
-			data: questionId
-		}
+		payload: questionId
 	}
 };
 

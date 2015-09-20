@@ -2,7 +2,7 @@ var React = require('react');
 var Fantasy = require('./Fantasy');
 var createStore = require('redux').createStore;
 var applyMiddleware = require('redux').applyMiddleware;
-var promiseMiddleware = require('redux-promise-middleware');
+var thunk = require('react-thunk');
 var Provider = require('react-redux').Provider;
 var reducers = require('../reducers');
 
@@ -18,19 +18,19 @@ var logger = function (store) {
 			return result;
 		}
 	}
-};
-var createStoreWithMiddleware = applyMiddleware(promiseMiddleware, logger)(createStore)
+}
+var createStoreWithMiddleware = applyMiddleware(logger, thunk)(createStore)
 var store = createStoreWithMiddleware(reducers);
 
 // We wrap the root component in a `Provider` component which provides the
 // store. Pathways will select from the store what it needs, as dictated
 // by the `select` function connected to it.
-var App = React.createClass({
+var App = React.createClass({displayName: "App",
 	render: function () {
 		return (
-			<Provider store={store}>
-				{function () {return <Fantasy />; }}
-			</Provider>
+			React.createElement(Provider, {store: store}, 
+				function () {return React.createElement(Fantasy, null); }
+			)
 		);
 	}
 });

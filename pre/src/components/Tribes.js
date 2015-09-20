@@ -24,7 +24,6 @@ var Tribes = React.createClass({
 			alignItems: 'center'
 		};
 		var that = this;
-		console.log(this.props.tribes);
 		return this.props.tribes.map(function (tribe, tribeName) {
 			return (
 				<div className="tribe" style={style} key={tribeName}>

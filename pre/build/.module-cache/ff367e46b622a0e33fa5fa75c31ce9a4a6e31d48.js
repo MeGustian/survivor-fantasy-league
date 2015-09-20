@@ -34,16 +34,7 @@ act.selectWeekView = function (index) {
 // Admin creates question.
 act.createQuestion = function () {
 	return {
-		type: 'NEW-QUESTION'
-		,
-		payload: undefined
-	}
-};
-
-// Admin removes question.
-act.removeQuestion = function (questionId) {
-	return {
-		types: promiseTypes('REMOVE-QUESTION')
+		types: promiseTypes('NEW-QUESTION')
 		,
 		payload: {
 			promise: $.ajax({
@@ -51,8 +42,17 @@ act.removeQuestion = function (questionId) {
 				timeout: 1000
 			})
 			,
-			data: questionId
+			data: undefined
 		}
+	}
+};
+
+// Admin removes question.
+act.removeQuestion = function (questionId) {
+	return {
+		type: 'REMOVE-QUESTION'
+		,
+		payload: questionId
 	}
 };
 

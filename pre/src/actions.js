@@ -1,5 +1,9 @@
 var act = {};
 
+var promiseTypes = function (type) {
+	return [type + '-PEND', type + '-DONE', type + '-FAIL'];
+}
+
 // Sign in.
 act.signIn = function (userId) {
 	return {
@@ -39,9 +43,16 @@ act.createQuestion = function () {
 // Admin removes question.
 act.removeQuestion = function (questionId) {
 	return {
-		type: 'REMOVE-QUESTION'
+		types: promiseTypes('REMOVE-QUESTION')
 		,
-		payload: questionId
+		payload: {
+			promise: $.ajax({
+				url: '/ajax',
+				timeout: 1000
+			})
+			,
+			data: questionId
+		}
 	}
 };
 

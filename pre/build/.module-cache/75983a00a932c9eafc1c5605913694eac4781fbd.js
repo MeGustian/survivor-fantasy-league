@@ -34,7 +34,7 @@ act.selectWeekView = function (index) {
 // Admin creates question.
 act.createQuestion = function () {
 	return {
-		type: 'NEW-QUESTION'
+		types: promiseTypes('NEW-QUESTION')
 		,
 		payload: undefined
 	}
@@ -43,7 +43,7 @@ act.createQuestion = function () {
 // Admin removes question.
 act.removeQuestion = function (questionId) {
 	return {
-		types: promiseTypes('REMOVE-QUESTION')
+		type: 'REMOVE-QUESTION'
 		,
 		payload: {
 			promise: $.ajax({

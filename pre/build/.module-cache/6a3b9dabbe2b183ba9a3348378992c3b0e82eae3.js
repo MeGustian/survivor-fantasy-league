@@ -128,7 +128,7 @@ var questions = function (prev, action) {
 		return prev.delete(action.payload).delete('removed');
 		case 'REMOVE-QUESTION-FAIL':
 		return prev.deleteIn([
-			prev.get('removed'),
+			action.payload,
 			'removed'
 		]).delete('removed');
 		case 'ANSWER':

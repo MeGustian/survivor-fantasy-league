@@ -123,14 +123,14 @@ var questions = function (prev, action) {
 		return prev.setIn([
 			action.payload,
 			'removed'
-		], true).set('removed', action.payload);
+		], true);
 		case 'REMOVE-QUESTION-DONE':
-		return prev.delete(action.payload).delete('removed');
+		return prev.delete(action.payload);
 		case 'REMOVE-QUESTION-FAIL':
 		return prev.deleteIn([
-			prev.get('removed'),
+			action.payload,
 			'removed'
-		]).delete('removed');
+		]);
 		case 'ANSWER':
 		return prev.setIn([
 			action.payload.questionId,

@@ -39,7 +39,9 @@ var Questions = React.createClass({
 	,
 	questions: function () {
 		var p = this.props;
-		return p.questions.map(function (details, id) {
+		return p.questions.filter(function (details) {
+			return !details.get('removed');
+		}).map(function (details, id) {
 			return (
 				<Question
 					key={id}

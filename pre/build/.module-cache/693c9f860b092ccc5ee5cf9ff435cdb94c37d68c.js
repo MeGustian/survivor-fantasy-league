@@ -119,18 +119,8 @@ var questions = function (prev, action) {
 			action.payload.questionId,
 			'isEditing'
 		], !action.payload.isEditing);
-		case 'REMOVE-QUESTION-PEND':
-		return prev.setIn([
-			action.payload,
-			'removed'
-		], true).set('removed', action.payload);
-		case 'REMOVE-QUESTION-DONE':
-		return prev.delete(action.payload).delete('removed');
-		case 'REMOVE-QUESTION-FAIL':
-		return prev.deleteIn([
-			prev.get('removed'),
-			'removed'
-		]).delete('removed');
+		case 'REMOVE-QUESTION':
+		return prev.delete(action.payload);
 		case 'ANSWER':
 		return prev.setIn([
 			action.payload.questionId,
