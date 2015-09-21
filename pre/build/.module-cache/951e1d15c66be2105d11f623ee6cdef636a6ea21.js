@@ -13,7 +13,7 @@ var requestParser = function (data, requestType, url) {
 	}
 	switch (requestType) {
 		case 'POST':
-		return request('POST', url)
+		return request(requestType, url)
 			.send(data)
 			.timeout(1000)
 			.end();
@@ -34,7 +34,7 @@ var actionParser = function (data, requestType, url) {
 		types: [data.meta + '-PEND', data.meta + '-DONE', data.meta + '-FAIL']
 		,
 		payload: {
-			promise: requestParser(data, requestType, url)
+			promise: requestParser(data, requestType)
 			,
 			data: data
 		}

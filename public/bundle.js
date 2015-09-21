@@ -40682,33 +40682,38 @@ var request = require('superagent-promise')(require('superagent'), Promise);
 
 var act = {};
 
-var requestParser = function (data, requestType) {
+var requestParser = function (data, requestType, url) {
+	if (['GET', 'POST'].indexOf(requestType)<0) {
+		console.warn('requestType is ' + requestType + '. Defaulted to \'Get\'');
+		requestType = 'GET';
+	}
+	if (typeof url === 'undefined') {
+		url = '/ajax';
+	}
 	switch (requestType) {
 		case 'POST':
-		return request(requestType, '/ajax')
+		return request('POST', url)
 			.send(data)
 			.timeout(1000)
 			.end();
 		case 'GET':
-		default:
-		if (requestType !== 'GET') {
-			console.warn('requestType is ' + requestType + '. Defaulted to \'Get\'');
-		}
-		return request('GET', '/ajax')
+		return request('GET', url)
 			.query(data)
 			.timeout(1000)
 			.end();
+		default:
+		throw 'requestParser unknown error';
 	}
 };
 
-var actionParser = function (data, requestType) {
+var actionParser = function (data, requestType, url) {
 	return {
 		meta: data.meta
 		,
 		types: [data.meta + '-PEND', data.meta + '-DONE', data.meta + '-FAIL']
 		,
 		payload: {
-			promise: requestParser(data, requestType)
+			promise: requestParser(data, requestType, url)
 			,
 			data: data
 		}
@@ -40722,7 +40727,7 @@ act.signIn = function (username, password, isAdmin) {
 		username: username,
 		password: password,
 		isAdmin: isAdmin
-	}, 'POST');
+	}, 'POST', '/sign-in');
 };
 
 // Sign out.
@@ -41245,7 +41250,7 @@ var SignIn = React.createClass({displayName: "SignIn",
 	failAlert: function () {
 		var p = this.props;
 		if (p.user.has('error')) {
-			return React.createElement("div", {className: "alert alert-danger", role: "alert"}, "p.user.get('error')")
+			return React.createElement("div", {className: "alert alert-danger", role: "alert"}, p.user.get('error'))
 		}
 	}
 })
@@ -41425,8 +41430,8 @@ var Fantasy = React.createClass({displayName: "Fantasy",
 	render: function () {
 		var p = this.props;
 		var dispatch = p.dispatch;
-		if (!p.user.userId) {
-			return React.createElement(SignIn, {user: p.user, submit: function (username, password) {
+		if (!p.user.get('userId')) {
+			return React.createElement(SignIn, {user: p.user, submit: function (username, password, isAdmin) {
 				return dispatch(act.signIn(username, password, isAdmin));
 			}})
 		}
@@ -41632,7 +41637,7 @@ var initialState = {};
 initialState.user = Map({userId: null, isAdmin: false, attempting: false});
 // TODO: Install react-router (and react-redux-router) to change week switches
 // to URL path's.
-initialState.week = Map({selected: null, count: 0});
+initialState.week = Map({selected: 1, count: 4});
 /* initialState.contestants example:
 initialState.contestants = Map({
 	"id:1": Map({
@@ -41699,15 +41704,15 @@ var user = function (prev, action) {
 		case 'SIGN-OUT':
 		return initialState.user
 		case 'SIGN-IN-PEND':
-		return initialState
-			.set(attempting, true);
+		return initialState.user
+			.set('attempting', true);
 		case 'SIGN-IN-DONE':
-		return initialState
-			.set(userId, payload.username)
-			.set(isAdmin, payload.isAdmin);
+		return initialState.user
+			.set('userId', action.payload.username)
+			.set('isAdmin', action.payload.isAdmin);
 		case 'SIGN-IN-FAIL':
-		return initialState
-			.set(error, 'Sign-in failed!');
+		return initialState.user
+			.set('error', 'Sign-in failed!');
 		default:
 		return prev;
 	}

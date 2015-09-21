@@ -14,32 +14,33 @@ var act = require('../actions'); // Give dispatch an action payload.
 var I = require('immutable');
 var ImmutablePropTypes = require('react-immutable-proptypes');
 
-var Fantasy = React.createClass({
+var Fantasy = React.createClass({displayName: "Fantasy",
 	render: function () {
 		var p = this.props;
 		var dispatch = p.dispatch;
-		if (!p.user.get('userId')) {
-			return <SignIn user={p.user} submit={function (username, password, isAdmin) {
+		console.log(p.user.userId);
+		if (!p.user.userId) {
+			return React.createElement(SignIn, {user: p.user, submit: function (username, password, isAdmin) {
 				return dispatch(act.signIn(username, password, isAdmin));
-			}}/>
+			}})
 		}
 		return (
-			<div>
-				<Week
-					user={p.user}
-					index={p.week.get('selected')}
-					count={p.week.get('count')}
-					key="week"
-					onWeekChoice={function (index) {
+			React.createElement("div", null, 
+				React.createElement(Week, {
+					user: p.user, 
+					index: p.week.get('selected'), 
+					count: p.week.get('count'), 
+					key: "week", 
+					onWeekChoice: function (index) {
 						return dispatch(act.selectWeekView(index));
 					}}
-				/>
-				<Questions
-					user={p.user}
-					questions={p.questions}
-					contestants={p.contestants}
-					key="questions"
-					dispatcher={{
+				), 
+				React.createElement(Questions, {
+					user: p.user, 
+					questions: p.questions, 
+					contestants: p.contestants, 
+					key: "questions", 
+					dispatcher: {
 						userAnswer: function (questionId, answer) {
 							return dispatch(act.userAnswer(questionId, answer));
 						},
@@ -56,22 +57,22 @@ var Fantasy = React.createClass({
 							return dispatch(act.removeQuestion(questionId));
 						}
 					}}
-				/>
-				<Tribes
-					user={p.user}
-					tribes={p.contestants.groupBy(function (contestant) {
+				), 
+				React.createElement(Tribes, {
+					user: p.user, 
+					tribes: p.contestants.groupBy(function (contestant) {
 						return contestant.get('tribe');
-					})}
-					achievements={p.achievements}
-					toggleAchievement={function (achievementCode, contestantId) {
+					}), 
+					achievements: p.achievements, 
+					toggleAchievement: function (achievementCode, contestantId) {
 						return dispatch(act.toggleAchievement(achievementCode, contestantId));
-					}}
-					key="tribes"
-					onSetTribe={function (tribes) {
+					}, 
+					key: "tribes", 
+					onSetTribe: function (tribes) {
 						return dispatch(act.setTribes(tribes));
 					}}
-				/>
-			</div>
+				)
+			)
 		);
 	}
 	,

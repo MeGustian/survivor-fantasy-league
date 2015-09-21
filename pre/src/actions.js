@@ -8,12 +8,12 @@ var requestParser = function (data, requestType, url) {
 		console.warn('requestType is ' + requestType + '. Defaulted to \'Get\'');
 		requestType = 'GET';
 	}
-	if (type url === 'undefined') {
+	if (typeof url === 'undefined') {
 		url = '/ajax';
 	}
 	switch (requestType) {
 		case 'POST':
-		return request(requestType, url)
+		return request('POST', url)
 			.send(data)
 			.timeout(1000)
 			.end();
@@ -34,7 +34,7 @@ var actionParser = function (data, requestType, url) {
 		types: [data.meta + '-PEND', data.meta + '-DONE', data.meta + '-FAIL']
 		,
 		payload: {
-			promise: requestParser(data, requestType)
+			promise: requestParser(data, requestType, url)
 			,
 			data: data
 		}

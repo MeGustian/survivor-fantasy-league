@@ -13,7 +13,7 @@ var requestParser = function (data, requestType, url) {
 	}
 	switch (requestType) {
 		case 'POST':
-		return request('POST', url)
+		return request(requestType, url)
 			.send(data)
 			.timeout(1000)
 			.end();

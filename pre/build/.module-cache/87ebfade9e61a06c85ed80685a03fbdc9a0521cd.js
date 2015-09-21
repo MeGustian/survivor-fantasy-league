@@ -80,9 +80,7 @@ var user = function (prev, action) {
 		return initialState.user
 			.set('attempting', true);
 		case 'SIGN-IN-DONE':
-		return initialState.user
-			.set('userId', action.payload.username)
-			.set('isAdmin', action.payload.isAdmin);
+		return initialState.user;
 		case 'SIGN-IN-FAIL':
 		return initialState.user
 			.set('error', 'Sign-in failed!');

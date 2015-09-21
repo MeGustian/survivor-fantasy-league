@@ -10,7 +10,7 @@ var initialState = {};
 initialState.user = Map({userId: null, isAdmin: false, attempting: false});
 // TODO: Install react-router (and react-redux-router) to change week switches
 // to URL path's.
-initialState.week = Map({selected: 1, count: 4});
+initialState.week = Map({selected: null, count: 0});
 /* initialState.contestants example:
 initialState.contestants = Map({
 	"id:1": Map({
@@ -80,9 +80,10 @@ var user = function (prev, action) {
 		return initialState.user
 			.set('attempting', true);
 		case 'SIGN-IN-DONE':
+		console.log(reduce);
 		return initialState.user
-			.set('userId', action.payload.username)
-			.set('isAdmin', action.payload.isAdmin);
+			.set('userId', payload.username)
+			.set('isAdmin', payload.isAdmin);
 		case 'SIGN-IN-FAIL':
 		return initialState.user
 			.set('error', 'Sign-in failed!');

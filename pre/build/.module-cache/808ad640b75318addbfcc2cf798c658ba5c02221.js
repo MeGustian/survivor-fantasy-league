@@ -4,6 +4,7 @@ var request = require('superagent-promise')(require('superagent'), Promise);
 var act = {};
 
 var requestParser = function (data, requestType, url) {
+	console.log(url);
 	if (['GET', 'POST'].indexOf(requestType)<0) {
 		console.warn('requestType is ' + requestType + '. Defaulted to \'Get\'');
 		requestType = 'GET';
@@ -13,7 +14,7 @@ var requestParser = function (data, requestType, url) {
 	}
 	switch (requestType) {
 		case 'POST':
-		return request('POST', url)
+		return request(requestType, url)
 			.send(data)
 			.timeout(1000)
 			.end();
@@ -34,7 +35,7 @@ var actionParser = function (data, requestType, url) {
 		types: [data.meta + '-PEND', data.meta + '-DONE', data.meta + '-FAIL']
 		,
 		payload: {
-			promise: requestParser(data, requestType, url)
+			promise: requestParser(data, requestType)
 			,
 			data: data
 		}
