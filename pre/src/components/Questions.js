@@ -164,7 +164,7 @@ var Question = React.createClass({
 				<span className="toolbox-container pull-right">
 					<AdminToolbox
 						tool="edit"
-						handleClick={handlers.edit.bind(null, questionId, isEditing)}
+						handleClick={handlers.edit.bind(null, questionId, !!isEditing)}
 					/>
 					<AdminToolbox
 						tool="remove"
@@ -177,7 +177,7 @@ var Question = React.createClass({
 				<span className="toolbox-container pull-right">
 					<AdminToolbox
 						tool="discard"
-						handleClick={handlers.edit.bind(null, questionId, isEditing)}
+						handleClick={handlers.edit.bind(null, questionId, !!isEditing)}
 					/>
 					<AdminToolbox
 						tool="approve"

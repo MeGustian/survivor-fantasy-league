@@ -1,16 +1,54 @@
+var Promise = this.Promise || require('promise');
+var request = require('superagent-promise')(require('superagent'), Promise);
+
 var act = {};
 
-var promiseTypes = function (type) {
-	return [type + '-PEND', type + '-DONE', type + '-FAIL'];
-}
+var requestParser = function (data, requestType, url) {
+	if (['GET', 'POST'].indexOf(requestType)<0) {
+		console.warn('requestType is ' + requestType + '. Defaulted to \'Get\'');
+		requestType = 'GET';
+	}
+	if (type url === 'undefined') {
+		url = '/ajax';
+	}
+	switch (requestType) {
+		case 'POST':
+		return request(requestType, url)
+			.send(data)
+			.timeout(1000)
+			.end();
+		case 'GET':
+		return request('GET', url)
+			.query(data)
+			.timeout(1000)
+			.end();
+		default:
+		throw 'requestParser unknown error';
+	}
+};
+
+var actionParser = function (data, requestType, url) {
+	return {
+		meta: data.meta
+		,
+		types: [data.meta + '-PEND', data.meta + '-DONE', data.meta + '-FAIL']
+		,
+		payload: {
+			promise: requestParser(data, requestType)
+			,
+			data: data
+		}
+	};
+};
 
 // Sign in.
-act.signIn = function (userId) {
-	return {
-		type: 'SIGN-IN'
-		,
-		payload: userId
-	}
+act.signIn = function (username, password, isAdmin) {
+	return actionParser({
+		meta: 'SIGN-IN',
+		username: username,
+		password: password,
+		isAdmin: isAdmin
+	}, 'POST', '/sign-in');
 };
 
 // Sign out.
@@ -19,48 +57,30 @@ act.signOut = function () {
 		type: 'SIGN-OUT'
 		,
 		payload: undefined
-	}
+	};
 };
 
 // Player/Admin chose a week to view.
 act.selectWeekView = function (index) {
-	return {
-		type: 'WEEK-VIEW-SELECT'
-		,
-		payload: index
-	};
+	return actionParser({
+		meta: 'WEEK-VIEW-SELECT',
+		index: index
+	}, 'GET');
 };
 
 // Admin creates question.
 act.createQuestion = function () {
-	return {
-		type: 'NEW-QUESTION'
-		,
-		payload: undefined
-	}
+	return actionParser({
+		meta: 'CREATE-QUESTION'
+	}, 'POST');
 };
 
 // Admin removes question.
 act.removeQuestion = function (questionId) {
-	var data = {
+	return actionParser({
 		meta: 'REMOVE-QUESTION',
 		questionId: questionId
-	};
-	return {
-		meta: data.meta
-		,
-		types: promiseTypes('REMOVE-QUESTION')
-		,
-		payload: {
-			promise: $.ajax({
-				url: '/ajax',
-				data: data,
-				timeout: 1000
-			})
-			,
-			data: data
-		}
-	}
+	}, 'GET');
 };
 
 // Admin enters edit mode.
@@ -72,54 +92,36 @@ act.editQuestion = function (questionId, isEditing) {
 			questionId: questionId,
 			isEditing: isEditing
 		}
-	}
+	};
 };
 
 // Admin submits question details.
 act.updateQuestion = function (questionId, question, answer, type) {
-	var data = {
+	return actionParser({
+		meta: 'UPDATE-QUESTION',
 		questionId: questionId,
 		question: question,
 		answer: answer,
 		type: type
-	};
-	return {
-		types: promiseTypes('UPDATE-QUESTION')
-		,
-		payload: {
-			promise: $.ajax({
-				url: '/ajax',
-				data: data,
-				timeout: 1000
-			})
-			,
-			data: data
-		}
-	}
+	}, 'POST');
 };
 
 // User submit answer to questions.
 act.userAnswer = function (questionId, answer) {
-	return {
-		type: 'ANSWER'
-		,
-		payload: {
-			questionId: questionId,
-			answer: answer
-		}
-	};
+	return actionParser({
+		meta: 'ANSWER',
+		questionId: questionId,
+		answer: answer
+	}, 'POST');
 };
 
 // Admin toggles achievement of contestant.
 act.toggleAchievement = function (achievement, contestant) {
-	return {
-		type: 'TOGGLE-ACHIEVEMENT'
-		,
-		payload: {
-			achievement: achievement,
-			contestant: contestant,
-		}
-	}
+	return actionParser({
+		meta: 'TOGGLE-ACHIEVEMENT',
+		achievement: achievement,
+		contestant: contestant
+	}, 'POST');
 };
 
 // Player choses contestants.
