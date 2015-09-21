@@ -1,15 +1,37 @@
 var combineReducers = require('redux').combineReducers;
-var dummyDB = require('./dummyDB'); // The dummy for a JSON database.
 var _ = require('lodash');
 var I = require('immutable');
 var List = I.List;
 var Map = I.Map;
+var Promise = this.Promise || require('promise');
+var request = require('superagent-promise')(require('superagent'), Promise);
 
 var initialState = {};
-initialState.user = Map({userId: "47901", isAdmin: true})
+initialState.user = Map({userId: null, isAdmin: false, attempting: false});
 // TODO: Install react-router (and react-redux-router) to change week switches
 // to URL path's.
 initialState.week = Map({selected: 1, count: 4});
+/* initialState.contestants example:
+initialState.contestants = Map({
+	"id:1": Map({
+		name: "Spencer",
+		tribe: "Abu",
+		votedFor: "Kass",
+		achievements: Map({
+			"CRIED": true,
+			"HASHTAG": false
+		}),
+	}),
+	"id:2": Map({
+		name: "Kass",
+		tribe: "Abu",
+		votedFor: "Spencer",
+		achievements: Map({
+			"TREE-MAIL": true
+		}),
+	})
+});
+*/
 initialState.contestants = Map({
 	"id:1": Map({
 		name: "Spencer",
@@ -52,11 +74,18 @@ var user = function (prev, action) {
 		return initialState.user;
 	}
 	switch (action.type) {
-		case 'LOG-OUT':
+		case 'SIGN-OUT':
 		return initialState.user
-		case 'LOG-IN':
-		// TODO: Request authorization from server.
-		return Map({user: userId, isAdmin: checkAdminStatus(userId)})
+		case 'SIGN-IN-PEND':
+		return initialState.user
+			.set('attempting', true);
+		case 'SIGN-IN-DONE':
+		return initialState.user
+			.set('userId', action.payload.username)
+			.set('isAdmin', action.payload.isAdmin);
+		case 'SIGN-IN-FAIL':
+		return initialState.user
+			.set('error', 'Sign-in failed!');
 		default:
 		return prev;
 	}
@@ -103,52 +132,84 @@ var questions = function (prev, action) {
 	}
 	switch (action.type) {
 		case 'CREATE-QUESTION':
-		return prev.set(Math.random(), Map({
-			question: '',
-			type: 'boolean'
-		}));
-		// UPDATE
+		return prev
+			.set(Math.random(), Map({
+				question: '',
+				type: 'boolean'
+			}));
+		// UPDATE // TODO: Add undo functionality.
 		case 'UPDATE-QUESTION-PEND':
-		return prev.setIn([
-			'pending',
-			action.payload.questionId
-		], Map({
-			question: action.payload.question,
-			answer: action.payload.answer,
-			type: action.payload.type,
-			isEditing: false
-		}));
+		return prev
+			.setIn([
+				action.payload.questionId,
+				'prev'
+			], prev.get(action.payload.questionId))
+			.mergeDeep(Map()
+				.set(action.payload.questionId, Map({
+					question: action.payload.question,
+					answer: action.payload.answer,
+					type: action.payload.type,
+					isEditing: false
+				})
+			));
 		case 'UPDATE-QUESTION-DONE':
-		return prev.set(action.payload.questionId, prev.getIn([
-			'pending',
-			action.payload.questionId
-		]));
+		return prev;
 		case 'UPDATE-QUESTION-FAIL':
-		return prev.delete('pending');
+		return prev
+			.set(action.payload.questionId, prev.getIn([
+				action.payload.questionId,
+				'prev'
+			]));
+		// EDIT
 		case 'EDIT-QUESTION':
-		return prev.setIn([
-			action.payload.questionId,
-			'isEditing'
-		], !action.payload.isEditing);
+		return prev
+			.setIn([
+				action.payload.questionId,
+				'isEditing'
+			], !action.payload.isEditing);
 		// REMOVE
 		case 'REMOVE-QUESTION-PEND':
-		return prev.setIn([
-			action.payload.questionId,
-			'removed'
-		], true);
+		return prev
+			.setIn([
+				action.payload.questionId,
+				'removed'
+			], true);
 		case 'REMOVE-QUESTION-DONE':
-		return prev.delete(action.payload.questionId);
+		return prev
+			.delete(action.payload.questionId);
 		case 'REMOVE-QUESTION-FAIL':
-		return prev.deleteIn([
-			prev.get('removed'),
-			'removed'
-		]).delete('removed');
+		return prev
+			.deleteIn([
+				action.payload.questionId,
+				'removed'
+			]);
 		// ANSWER
-		case 'ANSWER':
-		return prev.setIn([
-			action.payload.questionId,
-			'answer'
-		], action.payload.answer);
+		case 'ANSWER-PEND':
+		return prev
+			.setIn([
+				action.payload.questionId,
+				'prevAnswer'
+			], prev.getIn[action.payload.questionId, 'answer'])
+			.setIn([
+				action.payload.questionId,
+				'answer'
+			], action.payload.answer);
+		case 'ANSWER-DONE':
+		return prev
+			.deleteIn([
+				action.payload.questionId,
+				'prevAnswer'
+			]);
+		case 'ANSWER-FAIL':
+		return prev
+			.setIn([
+				action.payload.questionId,
+				'answer'
+			], prev.getIn[action.payload.questionId, 'prevAnswer'])
+			.deleteIn([
+				action.payload.questionId,
+				'prevAnswer'
+			]);
 		default:
 		return prev;
 	}

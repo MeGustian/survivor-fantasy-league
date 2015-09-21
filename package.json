@@ -1,5 +1,5 @@
 {
-  "name": "equipoise",
+  "name": "survivor-fantasy-league",
   "version": "0.0.1",
   "private": true,
   "engines": {
@@ -20,7 +20,8 @@
     "redux": "^2.0.0",
     "redux-promise-middleware": "^0.2.1",
     "redux-thunk": "^1.0.0",
-    "stylus": "*"
+    "stylus": "*",
+    "superagent-promise": "^1.0.3"
   },
   "scripts": {
     "start": "node --harmony server.js"

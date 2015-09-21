@@ -5,6 +5,7 @@ var bindActionCreators = require('redux').bindActionCreators;
 var ReactRedux = require('react-redux');
 var connect = ReactRedux.connect; // Connect react container to redux.
 // TODO: Add proptypes to components (in their files).
+var SignIn = require('../components/SignIn'); // Explain...
 var Week = require('../components/Week'); // Explain...
 var Tribes = require('../components/Tribes'); // Explain...
 var Questions = require('../components/Questions'); // Explain...
@@ -17,6 +18,11 @@ var Fantasy = React.createClass({
 	render: function () {
 		var p = this.props;
 		var dispatch = p.dispatch;
+		if (!p.user.get('userId')) {
+			return <SignIn user={p.user} submit={function (username, password, isAdmin) {
+				return dispatch(act.signIn(username, password, isAdmin));
+			}}/>
+		}
 		return (
 			<div>
 				<Week
