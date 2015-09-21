@@ -9,7 +9,7 @@ var requestParser = function (data, requestType, url) {
 		requestType = 'GET';
 	}
 	if (typeof url === 'undefined') {
-		url = '/ajax';
+		url = '/admin/1';
 	}
 	switch (requestType) {
 		case 'POST':
@@ -80,7 +80,7 @@ act.removeQuestion = function (questionId) {
 	return actionParser({
 		meta: 'REMOVE-QUESTION',
 		questionId: questionId
-	}, 'GET');
+	}, 'GET', '/admin/1');
 };
 
 // Admin enters edit mode.
