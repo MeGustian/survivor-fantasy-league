@@ -33,8 +33,8 @@ var Achievements = React.createClass({
 			good: 'success',
 			bad: 'danger'
 		};
-		var marked = this.props.marked.filter(function (isAchieved) {
-			return isAchieved;
+		var marked = this.props.marked.filter(function (hasAchieved) {
+			return hasAchieved;
 		}).keySeq();
 		var relevant = AchievementsObj.filter(function (theAchievement) {
 			return theAchievement.get('alignment') === alignment;

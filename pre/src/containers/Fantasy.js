@@ -16,6 +16,10 @@ var ImmutablePropTypes = require('react-immutable-proptypes');
 
 var Fantasy = React.createClass({
 	render: function () {
+		// console.log(this.props.contestants.toString());
+		// console.log(this.props.week.toString());
+		// console.log(this.props.questions.toString());
+		// console.log(this.props.user.toString());
 		var p = this.props;
 		var dispatch = p.dispatch;
 		var fullContestants = p.week.get('contestantStatus').mergeDeep(p.contestants);
@@ -23,6 +27,7 @@ var Fantasy = React.createClass({
 			weekNumber: p.week.get('selected'),
 			userId: p.user.get('userId')
 		};
+		// console.log(fullContestants.toString());
 		if (!p.user.get('userId')) {
 			return <SignIn user={p.user} submit={function (username, password, isAdmin) {
 				return dispatch(act.signIn(username, password, isAdmin));
@@ -48,8 +53,8 @@ var Fantasy = React.createClass({
 						userAnswer: function (questionId, answer) {
 							return dispatch(act.userAnswer(circumstances, questionId, answer));
 						},
-						create: function (questionId, answer) {
-							return dispatch(act.createQuestion(circumstances));
+						create: function (type) {
+							return dispatch(act.createQuestion(circumstances, type));
 						},
 						update: function (questionId, question, answer, type) {
 							return dispatch(act.updateQuestion(circumstances, questionId, question, answer, type));
@@ -65,7 +70,6 @@ var Fantasy = React.createClass({
 				<Tribes
 					user={p.user}
 					contestants={fullContestants}
-					achievements={p.achievements}
 					toggleAchievement={function (achievementCode, contestantId) {
 						return dispatch(act.toggleAchievement(circumstances, achievementCode, contestantId));
 					}}

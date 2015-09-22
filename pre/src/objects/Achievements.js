@@ -2,7 +2,7 @@ var I = require('immutable');
 var Map = I.Map;
 
 var Achievements = Map({
-	"MALE-CRIED": Map({
+	"CRIED": Map({
 		text: 'Cried at least once during the episode.',
 		alignment: 'bad',
 		points: -20

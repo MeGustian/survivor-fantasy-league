@@ -171,8 +171,9 @@ app.post('/sign-in', function (req, res) {
 	}
 	// timeout...
 });
-app.get('/v/2', function (req, res) {
-	res.status(200).send(week(req, 2));
+app.post('/v/1', function (req, res) {
+	console.log('post v1');
+	res.status(200).send(req.body);
 });
 
 // TODO: Understand this.

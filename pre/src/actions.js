@@ -70,9 +70,10 @@ act.selectWeekView = function (circumstances, number) {
 };
 
 // Admin creates question.
-act.createQuestion = function (circumstances) {
+act.createQuestion = function (circumstances, type) {
 	return actionParser({
-		meta: 'CREATE-QUESTION'
+		meta: 'CREATE-QUESTION',
+		type: type
 	}, 'POST', circumstances);
 };
 
@@ -117,11 +118,11 @@ act.userAnswer = function (circumstances, questionId, answer) {
 };
 
 // Admin toggles achievement of contestant.
-act.toggleAchievement = function (circumstances, achievement, contestant) {
+act.toggleAchievement = function (circumstances, achievement, contestantId) {
 	return actionParser({
 		meta: 'TOGGLE-ACHIEVEMENT',
 		achievement: achievement,
-		contestant: contestant
+		contestantId: contestantId
 	}, 'POST', circumstances);
 };
 

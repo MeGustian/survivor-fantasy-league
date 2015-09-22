@@ -88,18 +88,23 @@
 			weekNumber: <Number>
 		}
 	}
-	// ,
-	// 'TOGGLE-ACHIEVEMENT': {
-	// 	url: '/:userId/:weekNumber'
-	// 	,
-	// 	req: {
-	// 		contestantId: <ContestantId>
-	// 		,
-	// 		achievement: <String>
-	// 		,
-	// 		value: <Boolean>
-	// 	}
-	// }
+	,
+	'TOGGLE-ACHIEVEMENT': {
+		url: '/:userId/:weekNumber'
+		,
+		req: {
+			contestantId: <ContestantId>
+			,
+			achievement: <String>
+		}
+		res: {
+			contestantId: <ContestantId>
+			,
+			achievement: <String>
+			// ,
+			// value: <Boolean>
+		}
+	}
 	,
 	'USER-ANSWER': {
 		method: 'POST'
@@ -116,14 +121,19 @@
 			questionId: <QuestionId>
 		}
 	}
-	// ,
-	// 'CREATE-QUESTION': {
-	// 	url: '/:userId/:weekNumber'
-	// 	,
-	// 	res: {
-	// 		questionId: <QuestionId>
-	// 	}
-	// }
+	,
+	'CREATE-QUESTION': {
+		url: '/:userId/:weekNumber'
+		,
+		req: {
+			type: <String>
+		}
+		res: {
+			questionId: <QuestionId>
+			,
+			type: <String>
+		}
+	}
 	,
 	'REMOVE-QUESTION': {
 		method: 'POST'

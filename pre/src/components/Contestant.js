@@ -1,5 +1,4 @@
 var React = require('react');
-var ContestantObj = require('../objects/Contestant');
 var Achievements = require('./Achievements');
 
 var Contestant = React.createClass({
