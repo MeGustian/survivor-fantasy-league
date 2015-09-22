@@ -5,10 +5,12 @@ var List = I.List;
 var Week = React.createClass({
 	render: function () {
 		return (
-			<nav>
-				<ul className="pagination">
-					{this.items()}
-				</ul>
+			<nav className="navbar navbar-default navbar-fixed-top" role="navigation">
+				<div className="container-fluid">
+					<ul className="pagination">
+						{this.items()}
+					</ul>
+				</div>
 			</nav>
 		);
 	}

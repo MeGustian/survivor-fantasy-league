@@ -108,6 +108,14 @@ var week = function (req, number) {
 					"HASHTAG": false
 				}
 			},
+			"7": {
+				tribe: "Abu",
+				votedFor: "3",
+				achievements: {
+					"TREE-MAIL": true,
+					"HASHTAG": true
+				}
+			},
 			"2": {
 				tribe: "Abu",
 				votedFor: "3",
@@ -157,6 +165,7 @@ var week = function (req, number) {
 			"4": {name: "Adam"},
 			"5": {name: "Tom"},
 			"6": {name: "Parvati"},
+			"7": {name: "Sandra"}
 		}
 	};
 };
