@@ -50,14 +50,28 @@ var week = function (prev, action) {
 		return prev
 			.set('selected', action.payload.weekNumber)
 			.set('contestantStatus', I.fromJS(action.payload.contestantStatus));
-		// case 'TOGGLE-ACHIEVEMENT':
-		// return prev.updateIn([
-		// 	action.payload.contestant,
-		// 	'achievements',
-		// 	action.payload.achievement
-		// ], function (isAchieved) {
-		// 	return !isAchieved;
-		// });
+		case 'TOGGLE-ACHIEVEMENT-PEND':
+		return prev
+			.updateIn([
+				'contestantStatus',
+				action.payload.contestantId,
+				'achievements',
+				action.payload.achievement
+			], function (hasAchieved) {
+				return !hasAchieved;
+			});
+		case 'TOGGLE-ACHIEVEMENT-DONE':
+		return prev;
+		case 'TOGGLE-ACHIEVEMENT-FAIL':
+		return prev
+			.updateIn([
+				'contestantStatus',
+				action.payload.contestantId,
+				'achievements',
+				action.payload.achievement
+			], function (hasAchieved) {
+				return !hasAchieved;
+			});
 		default:
 		return prev;
 	}
@@ -93,13 +107,20 @@ var questions = function (prev, action) {
 		return initialState.questions;
 	}
 	switch (action.type) {
-		case 'CREATE-QUESTION':
+		// case 'CREATE-QUESTION-PEND':
+		// return prev
+		// 	.set('pending', Map({
+		// 		question: '',
+		// 		type: action.payload.type
+		// 	}));
+		case 'CREATE-QUESTION-DONE':
 		return prev
-			.set(Math.random(), Map({
+			.set(action.payload.questionId, Map({
 				question: '',
-				type: 'boolean'
+				type: action.payload.type,
+				isEditing: true
 			}));
-		// UPDATE // TODO: Add undo functionality.
+		// UPDATE // NOTE: This is undo-ready (using the prevs).
 		case 'UPDATE-QUESTION-PEND':
 		return prev
 			.setIn([

@@ -3,11 +3,11 @@ var React = require('react');
 var SignIn = React.createClass({
 	getInitialState: function () {
 		return {
-			username: ''
+			username: 'v'
 			,
 			password: ''
 			,
-			isAdmin: false
+			isAdmin: true
 		};
 	}
 	,

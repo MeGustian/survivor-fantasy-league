@@ -23,17 +23,15 @@ var Questions = React.createClass({
 			return;
 		}
 		return (
-			<div className="new-question">
-				<AdminToolbox
-					tool="add"
-					handleClick={this.create}
-				/>
-			</div>
+			<AdminToolbox
+				tool="add"
+				handleClick={this.create}
+			/>
 		);
 	}
 	,
-	create: function () {
-		// this.props.dispatcher.create
+	create: function (type) {
+		this.props.dispatcher.create(type);
 	}
 	,
 	questions: function () {

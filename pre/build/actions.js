@@ -70,9 +70,10 @@ act.selectWeekView = function (circumstances, number) {
 };
 
 // Admin creates question.
-act.createQuestion = function (circumstances) {
+act.createQuestion = function (circumstances, type) {
 	return actionParser({
-		meta: 'CREATE-QUESTION'
+		meta: 'CREATE-QUESTION',
+		type: type
 	}, 'POST', circumstances);
 };
 
@@ -116,22 +117,13 @@ act.userAnswer = function (circumstances, questionId, answer) {
 	}, 'POST', circumstances);
 };
 
-// Admin toggles achievement of contestant.
-<<<<<<< HEAD
-act.toggleAchievement = function (achievement, contestant) {
-	console.log('hello');
-=======
-act.toggleAchievement = function (circumstances, achievement, contestant) {
->>>>>>> yotam/master
+
+act.toggleAchievement = function (circumstances, achievement, contestantId) {
 	return actionParser({
 		meta: 'TOGGLE-ACHIEVEMENT',
 		achievement: achievement,
-		contestant: contestant
-<<<<<<< HEAD
-	}, 'POST', '/admin/1');
-=======
+		contestantId: contestantId
 	}, 'POST', circumstances);
->>>>>>> yotam/master
 };
 
 // Player choses contestants.
