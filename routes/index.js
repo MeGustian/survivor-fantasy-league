@@ -6,26 +6,12 @@ var weekCount = 1;
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  var db = req.db;
-  var collection = db.get('test');
-  query = { 'test' : 'succeeded'};
-  collection.insert(query);
+
   res.render('home', { title: 'Survivor Fantasy League' });
 
 });
 
-/*
- * TESTING /ajax with redirects
- */
-router.get('/addTest', function(req, res){
-  var data = req.body;
-  var db = req.db;
-  var users = db.get('week1');
-  users.insert({ 'test' : 'pending'});
-  res.send('done');
-});
-
-
+/* Sign in */
 router.post('/sign-in', function (req, res) {
   console.log('sign-in');
   var data = req.body;
@@ -65,7 +51,6 @@ router.post('/sign-in', function (req, res) {
 
 
   })
-
 
 });
 

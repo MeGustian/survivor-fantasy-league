@@ -4,7 +4,9 @@ var AchievementsObj = require('../objects/Achievements');
 var Achievements = React.createClass({
 	render: function () {
 		return (
-			<div>
+			<div className="col-xs-8">
+			<div className="row">
+			<div className="col-xs-6">
 				<div className="panel panel-success">
 					<div className="panel-heading">Good achievements</div>
 					<div className="panel-body">
@@ -14,6 +16,8 @@ var Achievements = React.createClass({
 						{this.items('good')}
 					</ul>
 				</div>
+			</div>
+			<div className="col-xs-6">
 				<div className="panel panel-danger">
 					<div className="panel-heading">Bad achievements</div>
 					<div className="panel-body">
@@ -23,6 +27,8 @@ var Achievements = React.createClass({
 						{this.items('bad')}
 					</ul>
 				</div>
+			</div>
+			</div>
 			</div>
 		);
 	}
@@ -68,12 +74,13 @@ var Achievements = React.createClass({
 							{theAchievement.get('text')}
 						</span>
 					</li>
-			);
-		})
+				);
+			});
 	}
 	,
 	toggleAchievement: function (achievementCode) {
-		this.props.toggleAchievement(achievementCode);
+		var p = this.props;
+		if (p.isAdmin) p.toggleAchievement(achievementCode, p.contestant);
 	}
 });
 

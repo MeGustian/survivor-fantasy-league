@@ -4,22 +4,24 @@ var Fantasy = require('./Fantasy');
 var createStore = require('redux').createStore;
 var applyMiddleware = require('redux').applyMiddleware;
 var promiseMiddleware = require('redux-promise-middleware');
+var loggerMiddlewareCreator = require('redux-logger');
 var Provider = require('react-redux').Provider;
 var reducers = require('../reducers');
 
 // Middleware: log each action.
-var logger = function (store) {
-	return function (next) {
-		return function (action) {
-			console.group(action.type);
-			console.log('dispatching', action);
-			var result = next(action);
-			console.log('next state', store.getState());
-			console.groupEnd();
-			return result;
-		};
-	};
-};
+var logger = loggerMiddlewareCreator();
+// var logger = function (store) {
+// 	return function (next) {
+// 		return function (action) {
+// 			console.group(action.type);
+// 			console.log('dispatching', action);
+// 			var result = next(action);
+// 			console.log('next state', store.getState());
+// 			console.groupEnd();
+// 			return result;
+// 		};
+// 	};
+// };
 // Middleware: patch promises according to superagent done/fail returns from
 // Ajax call.
 var patchPromiseWithSuperagent = function (store) {

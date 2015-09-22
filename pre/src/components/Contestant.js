@@ -4,24 +4,15 @@ var Achievements = require('./Achievements');
 var Contestant = React.createClass({
 	render: function () {
 		return (
-			<div className="tribe-mate">
-				<h3 className="tribe-mate-name">
-					{this.props.name}
-				</h3>
+			<div className="col-xs-4">
+			<div className="thumbnail">
 				<img src={"/images/" + this.props.name + ".png"} alt={this.props.name} />
-				<Achievements
-					contestantName={this.props.name}
-					marked={this.props.achievements}
-					isAdmin={this.props.isAdmin}
-					toggleAchievement={this.toggleAchievement}
-				/>
+				<div className="caption">
+					<h3>{this.props.name}</h3>
+				</div>
+			</div>
 			</div>
 		);
-	}
-	,
-	toggleAchievement: function (achievementCode) {
-		var p = this.props;
-		if (p.isAdmin) p.toggleAchievement(achievementCode, p.contestant);
 	}
 });
 
