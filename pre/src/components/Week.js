@@ -16,13 +16,17 @@ var Week = React.createClass({
 	items: function () {
 		var that = this;
 		return List().setSize(that.props.count).map(function (empty, i) {
-			var key = i+1;
+			var number = i+1;
 			return (
-				<li key={key} className={(that.props.index === key) ? "active" : ""}>
-					<a href={"/" + that.props.user.get('userId') + "/"+(key).toString()}>{key}</a>
+				<li onClick={that.onWeekChoice.bind(null, number)} key={number} className={(that.props.selected === number) ? "active" : ""}>
+					<a>{number}</a>
 				</li>
 			);
 		});
+	}
+	,
+	onWeekChoice: function (number) {
+		this.props.onWeekChoice(number);
 	}
 });
 

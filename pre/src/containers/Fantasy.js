@@ -18,6 +18,11 @@ var Fantasy = React.createClass({
 	render: function () {
 		var p = this.props;
 		var dispatch = p.dispatch;
+		var fullContestants = p.week.get('contestantStatus').mergeDeep(p.contestants);
+		var circumstances = {
+			weekNumber: p.week.get('selected'),
+			userId: p.user.get('userId')
+		};
 		if (!p.user.get('userId')) {
 			return <SignIn user={p.user} submit={function (username, password, isAdmin) {
 				return dispatch(act.signIn(username, password, isAdmin));
@@ -27,49 +32,44 @@ var Fantasy = React.createClass({
 			<div>
 				<Week
 					user={p.user}
-					index={p.week.get('selected')}
+					selected={p.week.get('selected')}
 					count={p.week.get('count')}
 					key="week"
-					onWeekChoice={function (index) {
-						return dispatch(act.selectWeekView(index));
+					onWeekChoice={function (number) {
+						return dispatch(act.selectWeekView(circumstances, number));
 					}}
 				/>
 				<Questions
 					user={p.user}
 					questions={p.questions}
-					contestants={p.contestants}
+					contestants={fullContestants}
 					key="questions"
 					dispatcher={{
 						userAnswer: function (questionId, answer) {
-							return dispatch(act.userAnswer(questionId, answer));
+							return dispatch(act.userAnswer(circumstances, questionId, answer));
 						},
 						create: function (questionId, answer) {
-							return dispatch(act.createQuestion(questionId, answer));
+							return dispatch(act.createQuestion(circumstances));
 						},
 						update: function (questionId, question, answer, type) {
-							return dispatch(act.updateQuestion(questionId, question, answer, type));
+							return dispatch(act.updateQuestion(circumstances, questionId, question, answer, type));
 						},
 						edit: function (questionId, isEditing) {
 							return dispatch(act.editQuestion(questionId, isEditing));
 						},
 						remove: function (questionId) {
-							return dispatch(act.removeQuestion(questionId));
+							return dispatch(act.removeQuestion(circumstances, questionId));
 						}
 					}}
 				/>
 				<Tribes
 					user={p.user}
-					tribes={p.contestants.groupBy(function (contestant) {
-						return contestant.get('tribe');
-					})}
+					contestants={fullContestants}
 					achievements={p.achievements}
 					toggleAchievement={function (achievementCode, contestantId) {
-						return dispatch(act.toggleAchievement(achievementCode, contestantId));
+						return dispatch(act.toggleAchievement(circumstances, achievementCode, contestantId));
 					}}
 					key="tribes"
-					onSetTribe={function (tribes) {
-						return dispatch(act.setTribes(tribes));
-					}}
 				/>
 			</div>
 		);
