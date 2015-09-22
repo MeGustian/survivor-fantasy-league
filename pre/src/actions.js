@@ -9,11 +9,7 @@ var requestParser = function (data, requestType, url) {
 		requestType = 'GET';
 	}
 	if (typeof url === 'undefined') {
-<<<<<<< HEAD
-		url = '/admin/1';
-=======
 		throw 'url undefined';
->>>>>>> yotam/master
 	}
 	switch (requestType) {
 		case 'POST':
@@ -86,11 +82,7 @@ act.removeQuestion = function (circumstances, questionId) {
 	return actionParser({
 		meta: 'REMOVE-QUESTION',
 		questionId: questionId
-<<<<<<< HEAD
-	}, 'GET', '/admin/1');
-=======
 	}, 'POST', circumstances);
->>>>>>> yotam/master
 };
 
 // Admin enters edit mode.

@@ -1,39 +1,80 @@
 var express = require('express');
 var router = express.Router();
+var _ = require('lodash');
+var weekCount = 1;
+
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  console.log('I got here!');
-  res.redirect('ajax');
-  //var db = req.db;
-  //var collection = db.get('test');
-  //query = { 'test' : 'succeeded'};
-  //collection.insert(query);
-  //res.render('home', { title: 'Survivor Fantasy League' });
+  var db = req.db;
+  var collection = db.get('test');
+  query = { 'test' : 'succeeded'};
+  collection.insert(query);
+  res.render('home', { title: 'Survivor Fantasy League' });
 
 });
 
 /*
  * TESTING /ajax with redirects
  */
-router.get('/ajax', function(req, res){
-  console.log('here');
-  res.redirect('/admin/1');
-})
+router.get('/addTest', function(req, res){
+  var data = req.body;
+  var db = req.db;
+  var users = db.get('week1');
+  users.insert({ 'test' : 'pending'});
+  res.send('done');
+});
 
 
 router.post('/sign-in', function (req, res) {
   console.log('sign-in');
-  console.log(req.body);
-  if (true) {
-    res.status(200).send(req.body);
-  }
-  if (!true) {
-    res.status(500).send({error: req.body});
-  }
-  // timeout...
+  var data = req.body;
+  var responseData = {};
+  var db = req.db;
+  var users = db.get('users');
+  var week = db.get('week' + weekCount);
+  var survivors = db.get('survivors');
+  users.findOne( { 'username' : data['username']}, function(err, userData){
+    if (userData.password === data['password']){
+      responseData['username'] = data['username'];
+      responseData['isAdmin'] = userData.isAdmin;
+      //responseData['contestantStatus'] = {};
+      week.find({}, {}, function(err, docs){
+        console.log('inserting contestant status week' + weekCount);
+        var weekData = toObject(docs);
+        weekData = _.mapKeys(weekData, function(value, key){
+          return value['_id'].toHexString();
+        });
+        responseData['contestantStatus'] = weekData;
+        responseData['weekNumber'] = weekCount;
+        survivors.find({}, {}, function(err, docs) {
+          console.log('inserting all contestants');
+          var survivorData = toObject(docs);
+          survivorData = _.mapKeys(survivorData, function (value, key) {
+            return value['_id'].toHexString();
+          });
+          responseData['allContestants'] = survivorData;
+          console.log('sending ')
+          res.json(responseData);
+        });
+      });
+
+
+    };
+
+
+
+  })
+
+
 });
 
+function toObject(arr) {
+  var rv = {};
+  for (var i = 0; i < arr.length; ++i)
+    if (arr[i] !== undefined) rv[i] = arr[i];
+  return rv;
+}
 
 /* GET user page.
 router.get('/:username', function(req, res, next) {

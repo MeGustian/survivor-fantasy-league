@@ -29,7 +29,6 @@ router.get('/', function(req, res) {
  * GET weekly achievements
  */
 router.get('/:weekNumber', function(req, res) {
-    console.log('and here');
     var db = req.db;
     var collection = db.get('week' + req.params.weekNumber);
     collection.find({},{},function(e,docs){
