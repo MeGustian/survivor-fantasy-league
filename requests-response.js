@@ -1,100 +1,159 @@
 /**
 * Contract: request-response.
-* The name is the meta tag (both in request and response).
-* The url specified is the url of the request.
+* The primary property is the meta tag of both in request and response.
+* Three dots after only entry in object mean there are multiple entries like
+* it of the same shape.
 */
 {
 	'SIGN-IN': {
 		method: 'POST'
 		,
-		url: '/'
+		url: '/sign-in'
 		,
 		req: {
-			username:
+			username: <String>
 			,
-			password:
+			password: <String>
 		}
 		,
 		res: {
-			username:
+			username: <String>
 			,
-			allContestants:
+			isAdmin: <Boolean>
 			,
-			weekNumber:
+			contestantStatus: {
+				<ContestantId>: {
+					tribe: <String>,
+					votedFor: <contestantId>,
+					achievements: {
+						<String>: <Boolean>
+						.
+						.
+						.
+					}
+				}
+				.
+				.
+				.
+			})
 			,
-			tribes:
+			weekNumber: <Number>
+			,
+			allContestants: {
+				<ContestantId>: {
+					name: <String>,
+					// age: <Number>,
+					// profession: <String>,
+					// pastSeason: {
+					// 	number: <Number>,
+					// 	name: <String>,
+					// 	place: <Number>
+					// }
+				}
+				.
+				.
+				.
+			}
 		}
 	}
+	// ,
+	// 'SIGN-OUT': {
+	// 	method: 'POST'
+	// 	,
+	// 	url: '/sign-out'
+	// }
 	,
-	'SIGN-OUT': {
-		method: 'POST'
+	'WEEK-VIEW-SELECT': {
+		method: 'GET'
 		,
-		url: '/userId/sign-out'
-	}
-	,
-	'TOGGLE-ACHIEVEMENT': {
-		url: '/userId/weekNumber'
+		url: '/:userId/:weekNumber'
 		,
-		req: {
-			contestantId:
+		res: {
+			contestantStatus: {
+				<ContestantId>: {
+					tribe: <String>,
+					votedFor: <ContestantId>,
+					achievements: {
+						<String>: <Boolean>
+						.
+						.
+						.
+					}
+				}
+				.
+				.
+				.
+			})
 			,
-			achievement:
-			,
-			value:
+			weekNumber: <Number>
 		}
 	}
+	// ,
+	// 'TOGGLE-ACHIEVEMENT': {
+	// 	url: '/:userId/:weekNumber'
+	// 	,
+	// 	req: {
+	// 		contestantId: <ContestantId>
+	// 		,
+	// 		achievement: <String>
+	// 		,
+	// 		value: <Boolean>
+	// 	}
+	// }
 	,
 	'USER-ANSWER': {
-		url: '/userId/weekNumber'
+		method: 'POST'
+		,
+		url: '/:userId/:weekNumber'
 		,
 		req: {
-			questionId:
+			questionId: <QuestionId>
 			,
-			answer:
+			answer: <String>
 		}
-	}
-	,
-	'CREATE-QUESTION': {
-		url: '/userId/weekNumber'
 		,
 		res: {
-			questionId:
+			questionId: <QuestionId>
 		}
 	}
+	// ,
+	// 'CREATE-QUESTION': {
+	// 	url: '/:userId/:weekNumber'
+	// 	,
+	// 	res: {
+	// 		questionId: <QuestionId>
+	// 	}
+	// }
 	,
 	'REMOVE-QUESTION': {
-		url: '/userId/weekNumber'
+		method: 'POST'
+		,
+		url: '/:userId/:weekNumber'
 		,
 		req: {
-			questionId:
+			questionId: <QuestionId>
 		}
 		,
 		res: {
-			questionId:
+			questionId: <QuestionId>
 		}
 	}
 	,
 	'UPDATE-QUESTION': {
-		url: '/userId/weekNumber'
+		method: 'POST'
+		,
+		url: '/:userId/:weekNumber'
 		,
 		req: {
-			questionId:
+			questionId: <QuestionId>
 			,
-			question: // Optional.
+			question: [String]
 			,
-			answer: // Optional.
+			answer: [String]
 		}
 		,
 		res: {
-			questionId:
-		}
-	}
-	,
-	'ALL-CONTESTANTS': {
-		url: '/'
-		,
-		res: {
-			contestantCollection:
+			questionId: <QuestionId>
 		}
 	}
 }

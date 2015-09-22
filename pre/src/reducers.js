@@ -7,68 +7,15 @@ var Promise = this.Promise || require('promise');
 var request = require('superagent-promise')(require('superagent'), Promise);
 
 var initialState = {};
-initialState.user = Map({userId: null, isAdmin: false, attempting: false});
 // TODO: Install react-router (and react-redux-router) to change week switches
 // to URL path's.
-initialState.week = Map({selected: 1, count: 4});
-/* initialState.contestants example:
-initialState.contestants = Map({
-	"id:1": Map({
-		name: "Spencer",
-		tribe: "Abu",
-		votedFor: "Kass",
-		achievements: Map({
-			"CRIED": true,
-			"HASHTAG": false
-		}),
-	}),
-	"id:2": Map({
-		name: "Kass",
-		tribe: "Abu",
-		votedFor: "Spencer",
-		achievements: Map({
-			"TREE-MAIL": true
-		}),
-	})
-});
-*/
-initialState.contestants = Map({
-	"id:1": Map({
-		name: "Spencer",
-		tribe: "Abu",
-		votedFor: "Kass",
-		achievements: Map({
-			"CRIED": true,
-			"HASHTAG": false
-		}),
-	}),
-	"id:2": Map({
-		name: "Kass",
-		tribe: "Abu",
-		votedFor: "Spencer",
-		achievements: Map({
-			"TREE-MAIL": true
-		}),
-	})
-});
-initialState.questions = Map({
-	"123624": Map({
-		question: 'Will Mike eat a banana?',
-		type: 'boolean',
-		answer: false,
-	}),
-	"1373457": Map({
-		question: 'Who is the one they were talking about?',
-		type: 'contestant',
-		answer: 'Oren'
-	})
-});
 
 // A reducer, which takes the state of the store an action passed from the
 // store, and returns a new state of the store. It will only return something
 // different if the action was relevant.
 
-// State represents log-in status.
+// State represents sign-in status.
+initialState.user = Map({userId: null, isAdmin: false, attempting: false});
 var user = function (prev, action) {
 	if (typeof prev === 'undefined') {
 		return initialState.user;
@@ -90,42 +37,57 @@ var user = function (prev, action) {
 		return prev;
 	}
 };
-var checkAdminStatus = function (userId) {
-	// TODO: Request from server. Default to `false`.
-	return false;
-};
 
 // State represents week.
+initialState.week = Map({selected: null, count: 16, contestantStatus: Map()});
 var week = function (prev, action) {
 	if (typeof prev === 'undefined') {
 		return initialState.week;
 	}
 	switch (action.type) {
+		case 'SIGN-IN-DONE':
+		case 'WEEK-VIEW-SELECT-DONE':
+		return prev
+			.set('selected', action.payload.weekNumber)
+			.set('contestantStatus', I.fromJS(action.payload.contestantStatus));
+		// case 'TOGGLE-ACHIEVEMENT':
+		// return prev.updateIn([
+		// 	action.payload.contestant,
+		// 	'achievements',
+		// 	action.payload.achievement
+		// ], function (isAchieved) {
+		// 	return !isAchieved;
+		// });
 		default:
 		return prev;
 	}
 };
 
 // State represents the contestants.
+initialState.contestants = Map();
 var contestants = function (prev, action) {
 	if (typeof prev === 'undefined') {
 		return initialState.contestants;
 	}
 	switch (action.type) {
-		case 'TOGGLE-ACHIEVEMENT':
-		return prev.updateIn([
-			action.payload.contestant,
-			'achievements',
-			action.payload.achievement
-		], function (isAchieved) {
-			return !isAchieved;
-		});
+		case 'SIGN-IN-DONE':
+		return I.fromJS(action.payload.allContestants);
 		default:
 		return prev;
 	}
 };
 
 // State represents the questions and answers.
+initialState.questions = Map({
+	"124124": Map({
+		question: 'Bool?',
+		type: 'boolean'
+	}),
+	"35732": Map({
+		question: 'Contestant?',
+		type: 'contestant'
+	})
+});
 var questions = function (prev, action) {
 	if (typeof prev === 'undefined') {
 		return initialState.questions;

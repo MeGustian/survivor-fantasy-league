@@ -40688,7 +40688,7 @@ var requestParser = function (data, requestType, url) {
 		requestType = 'GET';
 	}
 	if (typeof url === 'undefined') {
-		url = '/ajax';
+		throw 'url undefined';
 	}
 	switch (requestType) {
 		case 'POST':
@@ -40706,13 +40706,15 @@ var requestParser = function (data, requestType, url) {
 	}
 };
 
-var actionParser = function (data, requestType, url) {
+var actionParser = function (data, requestType, circumstances) {
+	var url = circumstances.url || '/' + circumstances.userId + '/' + circumstances.weekNumber;
 	return {
 		meta: data.meta
 		,
 		types: [data.meta + '-PEND', data.meta + '-DONE', data.meta + '-FAIL']
 		,
 		payload: {
+			// promise: requestParser(data, requestType)
 			promise: requestParser(data, requestType, url)
 			,
 			data: data
@@ -40727,7 +40729,7 @@ act.signIn = function (username, password, isAdmin) {
 		username: username,
 		password: password,
 		isAdmin: isAdmin
-	}, 'POST', '/sign-in');
+	}, 'POST', {url: '/sign-in'});
 };
 
 // Sign out.
@@ -40740,26 +40742,25 @@ act.signOut = function () {
 };
 
 // Player/Admin chose a week to view.
-act.selectWeekView = function (index) {
+act.selectWeekView = function (circumstances, number) {
 	return actionParser({
-		meta: 'WEEK-VIEW-SELECT',
-		index: index
-	}, 'GET');
+		meta: 'WEEK-VIEW-SELECT'
+	}, 'GET', {userId: circumstances.userId, weekNumber: number});
 };
 
 // Admin creates question.
-act.createQuestion = function () {
+act.createQuestion = function (circumstances) {
 	return actionParser({
 		meta: 'CREATE-QUESTION'
-	}, 'POST');
+	}, 'POST', circumstances);
 };
 
 // Admin removes question.
-act.removeQuestion = function (questionId) {
+act.removeQuestion = function (circumstances, questionId) {
 	return actionParser({
 		meta: 'REMOVE-QUESTION',
 		questionId: questionId
-	}, 'GET');
+	}, 'POST', circumstances);
 };
 
 // Admin enters edit mode.
@@ -40775,32 +40776,32 @@ act.editQuestion = function (questionId, isEditing) {
 };
 
 // Admin submits question details.
-act.updateQuestion = function (questionId, question, answer, type) {
+act.updateQuestion = function (circumstances, questionId, question, answer, type) {
 	return actionParser({
 		meta: 'UPDATE-QUESTION',
 		questionId: questionId,
 		question: question,
 		answer: answer,
 		type: type
-	}, 'POST');
+	}, 'POST', circumstances);
 };
 
 // User submit answer to questions.
-act.userAnswer = function (questionId, answer) {
+act.userAnswer = function (circumstances, questionId, answer) {
 	return actionParser({
 		meta: 'ANSWER',
 		questionId: questionId,
 		answer: answer
-	}, 'POST');
+	}, 'POST', circumstances);
 };
 
 // Admin toggles achievement of contestant.
-act.toggleAchievement = function (achievement, contestant) {
+act.toggleAchievement = function (circumstances, achievement, contestant) {
 	return actionParser({
 		meta: 'TOGGLE-ACHIEVEMENT',
 		achievement: achievement,
 		contestant: contestant
-	}, 'POST');
+	}, 'POST', circumstances);
 };
 
 // Player choses contestants.
@@ -40809,15 +40810,6 @@ act.choose = function (listOfContestants) {
 		type: 'PLAYER-CHOOSE-CONTESTANTS'
 		,
 		payload: listOfContestants
-	};
-};
-
-// Admin sets the tribes.
-act.setTribes = function (tribes) {
-	return {
-		type: 'ADMIN-SET-TRIBES'
-		,
-		payload: tribes
 	};
 };
 
@@ -40936,40 +40928,14 @@ var Achievements = require('./Achievements');
 
 var Contestant = React.createClass({displayName: "Contestant",
 	render: function () {
-		var me = new ContestantObj(this.props.contestant);
 		return (
 			React.createElement("div", {className: "tribe-mate"}, 
-				this.renderName(me), 
-				this.renderImage(me), 
-				this.renderAchievements(me)
-			)
-		);
-	}
-	,
-	renderName: function (me) {
-		return (
-			React.createElement("h3", {className: "tribe-mate-name"}, 
-				me.getName()
-			)
-		);
-	}
-	,
-	renderImage: function (me) {
-		return (
-			React.createElement("div", {className: "tribe-mate-image"}, 
-				React.createElement("img", {src: "/images/" + me.getName() + ".png", alt: "INSERT IMAGE"})
-			)
-		);
-	}
-	,
-	renderAchievements: function (me) {
-		if (typeof this.props.achievements === 'undefined') {
-			return;
-		}
-		return (
-			React.createElement("div", {className: "tribe-mate-achievements"}, 
+				React.createElement("h3", {className: "tribe-mate-name"}, 
+					this.props.name
+				), 
+				React.createElement("img", {src: "/images/" + this.props.name + ".png", alt: this.props.name}), 
 				React.createElement(Achievements, {
-					contestantName: me.getName(), 
+					contestantName: this.props.name, 
 					marked: this.props.achievements, 
 					isAdmin: this.props.isAdmin, 
 					toggleAchievement: this.toggleAchievement}
@@ -41022,8 +40988,7 @@ var Questions = React.createClass({displayName: "Questions",
 	}
 	,
 	create: function () {
-		this.props.dispatcher.create
-
+		// this.props.dispatcher.create
 	}
 	,
 	questions: function () {
@@ -41036,7 +41001,7 @@ var Questions = React.createClass({displayName: "Questions",
 					key: id, 
 					questionId: id, 
 					details: details, 
-					contestants: p.contestants, 
+					tribes: p.contestants, 
 					user: p.user, 
 					handlers: p.dispatcher}
 				)
@@ -41131,7 +41096,7 @@ var Question = React.createClass({displayName: "Question",
 	,
 	answerContestants: function () {
 		var that = this;
-		return this.props.contestants.map(function (contestant) {
+		return this.props.tribes.map(function (contestant, id) {
 			return (
 				React.createElement("li", {onClick: that.changeAnswer.bind(that, contestant.get('name'))}, React.createElement("a", null, 
 					contestant.get('name')
@@ -41150,7 +41115,7 @@ var Question = React.createClass({displayName: "Question",
 		}
 		if (!isEditing) {
 			return (
-				React.createElement("span", {className: "toolbox-container pull-right"}, 
+				React.createElement("div", {className: "btn-group", role: "group", "aria-label": "..."}, 
 					React.createElement(AdminToolbox, {
 						tool: "edit", 
 						handleClick: handlers.edit.bind(null, questionId, !!isEditing)}
@@ -41163,7 +41128,7 @@ var Question = React.createClass({displayName: "Question",
 			);
 		} else {
 			return (
-				React.createElement("span", {className: "toolbox-container pull-right"}, 
+				React.createElement("div", {className: "btn-group", role: "group", "aria-label": "..."}, 
 					React.createElement(AdminToolbox, {
 						tool: "discard", 
 						handleClick: handlers.edit.bind(null, questionId, !!isEditing)}
@@ -41284,26 +41249,30 @@ var Tribes = React.createClass({displayName: "Tribes",
 			alignItems: 'center'
 		};
 		var that = this;
-		return this.props.tribes.map(function (tribe, tribeName) {
-			return (
-				React.createElement("div", {className: "tribe", style: style, key: tribeName}, 
-					React.createElement("h2", null, tribeName), 
-					that.membersOf(tribe)
-				)
-			);
-		});
+		return this.props.contestants
+			.groupBy(function (contestant) {
+				return contestant.get('tribe');
+			}).map(function (tribe, name) {
+				return (
+					React.createElement("div", {className: "tribe", style: style, key: name}, 
+						React.createElement("h2", null, name), 
+						that.membersOf(tribe)
+					)
+				);
+			});
 	}
 	,
 	membersOf: function (tribe) {
 		var that = this;
-		return tribe.map(function (content, contestant) {
+		return tribe.map(function (contestant, id) {
 			return (
 				React.createElement(Contestant, {
 					isAdmin: that.props.user.get('isAdmin'), 
-					contestant: contestant, 
-					achievements: content.get('achievements'), 
+					contestant: id, 
+					name: contestant.get('name'), 
+					achievements: contestant.get('achievements'), 
 					toggleAchievement: that.props.toggleAchievement, 
-					key: contestant}
+					key: id}
 				)
 			);
 		});
@@ -41331,13 +41300,17 @@ var Week = React.createClass({displayName: "Week",
 	items: function () {
 		var that = this;
 		return List().setSize(that.props.count).map(function (empty, i) {
-			var key = i+1;
+			var number = i+1;
 			return (
-				React.createElement("li", {key: key, className: (that.props.index === key) ? "active" : ""}, 
-					React.createElement("a", {href: "/" + that.props.user.get('userId') + "/"+(key).toString()}, key)
+				React.createElement("li", {onClick: that.onWeekChoice.bind(null, number), key: number, className: (that.props.selected === number) ? "active" : ""}, 
+					React.createElement("a", null, number)
 				)
 			);
 		});
+	}
+	,
+	onWeekChoice: function (number) {
+		this.props.onWeekChoice(number);
 	}
 });
 
@@ -41430,6 +41403,11 @@ var Fantasy = React.createClass({displayName: "Fantasy",
 	render: function () {
 		var p = this.props;
 		var dispatch = p.dispatch;
+		var fullContestants = p.week.get('contestantStatus').mergeDeep(p.contestants);
+		var circumstances = {
+			weekNumber: p.week.get('selected'),
+			userId: p.user.get('userId')
+		};
 		if (!p.user.get('userId')) {
 			return React.createElement(SignIn, {user: p.user, submit: function (username, password, isAdmin) {
 				return dispatch(act.signIn(username, password, isAdmin));
@@ -41439,49 +41417,44 @@ var Fantasy = React.createClass({displayName: "Fantasy",
 			React.createElement("div", null, 
 				React.createElement(Week, {
 					user: p.user, 
-					index: p.week.get('selected'), 
+					selected: p.week.get('selected'), 
 					count: p.week.get('count'), 
 					key: "week", 
-					onWeekChoice: function (index) {
-						return dispatch(act.selectWeekView(index));
+					onWeekChoice: function (number) {
+						return dispatch(act.selectWeekView(circumstances, number));
 					}}
 				), 
 				React.createElement(Questions, {
 					user: p.user, 
 					questions: p.questions, 
-					contestants: p.contestants, 
+					contestants: fullContestants, 
 					key: "questions", 
 					dispatcher: {
 						userAnswer: function (questionId, answer) {
-							return dispatch(act.userAnswer(questionId, answer));
+							return dispatch(act.userAnswer(circumstances, questionId, answer));
 						},
 						create: function (questionId, answer) {
-							return dispatch(act.createQuestion(questionId, answer));
+							return dispatch(act.createQuestion(circumstances));
 						},
 						update: function (questionId, question, answer, type) {
-							return dispatch(act.updateQuestion(questionId, question, answer, type));
+							return dispatch(act.updateQuestion(circumstances, questionId, question, answer, type));
 						},
 						edit: function (questionId, isEditing) {
 							return dispatch(act.editQuestion(questionId, isEditing));
 						},
 						remove: function (questionId) {
-							return dispatch(act.removeQuestion(questionId));
+							return dispatch(act.removeQuestion(circumstances, questionId));
 						}
 					}}
 				), 
 				React.createElement(Tribes, {
 					user: p.user, 
-					tribes: p.contestants.groupBy(function (contestant) {
-						return contestant.get('tribe');
-					}), 
+					contestants: fullContestants, 
 					achievements: p.achievements, 
 					toggleAchievement: function (achievementCode, contestantId) {
-						return dispatch(act.toggleAchievement(achievementCode, contestantId));
+						return dispatch(act.toggleAchievement(circumstances, achievementCode, contestantId));
 					}, 
-					key: "tribes", 
-					onSetTribe: function (tribes) {
-						return dispatch(act.setTribes(tribes));
-					}}
+					key: "tribes"}
 				)
 			)
 		);
@@ -41634,68 +41607,15 @@ var Promise = this.Promise || require('promise');
 var request = require('superagent-promise')(require('superagent'), Promise);
 
 var initialState = {};
-initialState.user = Map({userId: null, isAdmin: false, attempting: false});
 // TODO: Install react-router (and react-redux-router) to change week switches
 // to URL path's.
-initialState.week = Map({selected: 1, count: 4});
-/* initialState.contestants example:
-initialState.contestants = Map({
-	"id:1": Map({
-		name: "Spencer",
-		tribe: "Abu",
-		votedFor: "Kass",
-		achievements: Map({
-			"CRIED": true,
-			"HASHTAG": false
-		}),
-	}),
-	"id:2": Map({
-		name: "Kass",
-		tribe: "Abu",
-		votedFor: "Spencer",
-		achievements: Map({
-			"TREE-MAIL": true
-		}),
-	})
-});
-*/
-initialState.contestants = Map({
-	"id:1": Map({
-		name: "Spencer",
-		tribe: "Abu",
-		votedFor: "Kass",
-		achievements: Map({
-			"CRIED": true,
-			"HASHTAG": false
-		}),
-	}),
-	"id:2": Map({
-		name: "Kass",
-		tribe: "Abu",
-		votedFor: "Spencer",
-		achievements: Map({
-			"TREE-MAIL": true
-		}),
-	})
-});
-initialState.questions = Map({
-	"123624": Map({
-		question: 'Will Mike eat a banana?',
-		type: 'boolean',
-		answer: false,
-	}),
-	"1373457": Map({
-		question: 'Who is the one they were talking about?',
-		type: 'contestant',
-		answer: 'Oren'
-	})
-});
 
 // A reducer, which takes the state of the store an action passed from the
 // store, and returns a new state of the store. It will only return something
 // different if the action was relevant.
 
-// State represents log-in status.
+// State represents sign-in status.
+initialState.user = Map({userId: null, isAdmin: false, attempting: false});
 var user = function (prev, action) {
 	if (typeof prev === 'undefined') {
 		return initialState.user;
@@ -41717,42 +41637,57 @@ var user = function (prev, action) {
 		return prev;
 	}
 };
-var checkAdminStatus = function (userId) {
-	// TODO: Request from server. Default to `false`.
-	return false;
-};
 
 // State represents week.
+initialState.week = Map({selected: null, count: 16, contestantStatus: Map()});
 var week = function (prev, action) {
 	if (typeof prev === 'undefined') {
 		return initialState.week;
 	}
 	switch (action.type) {
+		case 'SIGN-IN-DONE':
+		case 'WEEK-VIEW-SELECT-DONE':
+		return prev
+			.set('selected', action.payload.weekNumber)
+			.set('contestantStatus', I.fromJS(action.payload.contestantStatus));
+		// case 'TOGGLE-ACHIEVEMENT':
+		// return prev.updateIn([
+		// 	action.payload.contestant,
+		// 	'achievements',
+		// 	action.payload.achievement
+		// ], function (isAchieved) {
+		// 	return !isAchieved;
+		// });
 		default:
 		return prev;
 	}
 };
 
 // State represents the contestants.
+initialState.contestants = Map();
 var contestants = function (prev, action) {
 	if (typeof prev === 'undefined') {
 		return initialState.contestants;
 	}
 	switch (action.type) {
-		case 'TOGGLE-ACHIEVEMENT':
-		return prev.updateIn([
-			action.payload.contestant,
-			'achievements',
-			action.payload.achievement
-		], function (isAchieved) {
-			return !isAchieved;
-		});
+		case 'SIGN-IN-DONE':
+		return I.fromJS(action.payload.allContestants);
 		default:
 		return prev;
 	}
 };
 
 // State represents the questions and answers.
+initialState.questions = Map({
+	"124124": Map({
+		question: 'Bool?',
+		type: 'boolean'
+	}),
+	"35732": Map({
+		question: 'Contestant?',
+		type: 'contestant'
+	})
+});
 var questions = function (prev, action) {
 	if (typeof prev === 'undefined') {
 		return initialState.questions;

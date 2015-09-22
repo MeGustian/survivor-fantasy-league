@@ -33,8 +33,7 @@ var Questions = React.createClass({
 	}
 	,
 	create: function () {
-		this.props.dispatcher.create
-
+		// this.props.dispatcher.create
 	}
 	,
 	questions: function () {
@@ -47,7 +46,7 @@ var Questions = React.createClass({
 					key={id}
 					questionId={id}
 					details={details}
-					contestants={p.contestants}
+					tribes={p.contestants}
 					user={p.user}
 					handlers={p.dispatcher}
 				/>
@@ -142,7 +141,7 @@ var Question = React.createClass({
 	,
 	answerContestants: function () {
 		var that = this;
-		return this.props.contestants.map(function (contestant) {
+		return this.props.tribes.map(function (contestant, id) {
 			return (
 				<li onClick={that.changeAnswer.bind(that, contestant.get('name'))}><a>
 					{contestant.get('name')}
@@ -161,7 +160,7 @@ var Question = React.createClass({
 		}
 		if (!isEditing) {
 			return (
-				<span className="toolbox-container pull-right">
+				<div className="btn-group" role="group" aria-label="...">
 					<AdminToolbox
 						tool="edit"
 						handleClick={handlers.edit.bind(null, questionId, !!isEditing)}
@@ -170,11 +169,11 @@ var Question = React.createClass({
 						tool="remove"
 						handleClick={handlers.remove.bind(null, questionId)}
 					/>
-				</span>
+				</div>
 			);
 		} else {
 			return (
-				<span className="toolbox-container pull-right">
+				<div className="btn-group" role="group" aria-label="...">
 					<AdminToolbox
 						tool="discard"
 						handleClick={handlers.edit.bind(null, questionId, !!isEditing)}
@@ -183,7 +182,7 @@ var Question = React.createClass({
 						tool="approve"
 						handleClick={handlers.update.bind(null, questionId, this.state.question, this.state.answer, this.state.type)}
 					/>
-				</span>
+				</div>
 			);
 		}
 	}

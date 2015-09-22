@@ -24,26 +24,30 @@ var Tribes = React.createClass({
 			alignItems: 'center'
 		};
 		var that = this;
-		return this.props.tribes.map(function (tribe, tribeName) {
-			return (
-				<div className="tribe" style={style} key={tribeName}>
-					<h2>{tribeName}</h2>
-					{that.membersOf(tribe)}
-				</div>
-			);
-		});
+		return this.props.contestants
+			.groupBy(function (contestant) {
+				return contestant.get('tribe');
+			}).map(function (tribe, name) {
+				return (
+					<div className="tribe" style={style} key={name}>
+						<h2>{name}</h2>
+						{that.membersOf(tribe)}
+					</div>
+				);
+			});
 	}
 	,
 	membersOf: function (tribe) {
 		var that = this;
-		return tribe.map(function (content, contestant) {
+		return tribe.map(function (contestant, id) {
 			return (
 				<Contestant
 					isAdmin={that.props.user.get('isAdmin')}
-					contestant={contestant}
-					achievements={content.get('achievements')}
+					contestant={id}
+					name={contestant.get('name')}
+					achievements={contestant.get('achievements')}
 					toggleAchievement={that.props.toggleAchievement}
-					key={contestant}
+					key={id}
 				/>
 			);
 		});
