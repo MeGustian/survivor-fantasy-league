@@ -4,13 +4,23 @@ var router = express.Router();
 /* GET home page. */
 router.get('/', function(req, res, next) {
   console.log('I got here!');
-  var db = req.db;
-  var collection = db.get('test');
-  query = { 'test' : 'succeeded'};
-  collection.insert(query);
-  res.render('home', { title: 'Survivor Fantasy League' });
+  res.redirect('ajax');
+  //var db = req.db;
+  //var collection = db.get('test');
+  //query = { 'test' : 'succeeded'};
+  //collection.insert(query);
+  //res.render('home', { title: 'Survivor Fantasy League' });
 
 });
+
+/*
+ * TESTING /ajax with redirects
+ */
+router.get('/ajax', function(req, res){
+  console.log('here');
+  res.redirect('/admin/1');
+})
+
 
 router.post('/sign-in', function (req, res) {
   console.log('sign-in');

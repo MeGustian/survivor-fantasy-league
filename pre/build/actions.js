@@ -117,11 +117,12 @@ act.userAnswer = function (questionId, answer) {
 
 // Admin toggles achievement of contestant.
 act.toggleAchievement = function (achievement, contestant) {
+	console.log('hello');
 	return actionParser({
 		meta: 'TOGGLE-ACHIEVEMENT',
 		achievement: achievement,
 		contestant: contestant
-	}, 'POST');
+	}, 'POST', '/admin/1');
 };
 
 // Player choses contestants.
