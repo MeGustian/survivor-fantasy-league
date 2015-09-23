@@ -41,12 +41,12 @@
 			,
 			allContestants: {
 				<ContestantId>: {
-					name: <String>,
-					// age: <Number>,
-					// profession: <String>,
-					// pastSeason: {
-					// 	number: <Number>,
-					// 	name: <String>,
+					firstName: <String>,
+					lastName: <String>,
+					age: <Number>,
+					occupation: <String>,
+					previousSeason: <String>,
+					place: <String>
 					// 	place: <Number>
 					// }
 				}
@@ -136,6 +136,52 @@
 			type: <String>
 		}
 	}
+	'CREATE-WEEK': {
+		url: '/:userId/:weekNumber'
+		,
+		req: {
+			contestantStatus: {
+				<ContestantId>: {
+					tribe: <String>,
+					votedFor: <ContestantId>,
+					achievements: {
+						<String>: <Boolean>
+						.
+						.
+						.
+						}
+					}
+				.
+				.
+				.
+				}
+			,
+			weekNumber: <Number>
+			,
+			votedOut: <ContestantId>
+		}
+
+	}
+	res: {
+		contestantStatus: {
+			<ContestantId>: {
+					tribe: <String>,
+						votedFor: <ContestantId>,
+						achievements: {
+					<String>: <Boolean>
+					.
+					.
+					.
+					}
+				}
+			.
+			.
+			.
+			}
+		,
+		newWeekNumber: <Number>
+	}
+}
 	,
 	'REMOVE-QUESTION': {
 		method: 'POST'

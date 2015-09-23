@@ -1,29 +1,66 @@
 var express = require('express');
 var router = express.Router();
 var _ = require('lodash');
+var passport = require('passport');
 var weekCount = 1;
 
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
 
-  res.render('home', { title: 'Survivor Fantasy League' });
+  res.render('index');
 
 });
 
-/* Sign in */
+/* GET user page */
+router.get('/home', function(req, res, next) {
+
+  res.render('home');
+
+});
+
+/* GET Login page */
+router.get('/login', function(req, res) {
+
+  // render the page and pass in any flash data if it exists
+  res.render('login', { message: req.flash('loginMessage') });
+});
+
+
+/* POST Login credentials */
+router.post('/login', passport.authenticate('local-login', {
+  successRedirect : '/home', // redirect to the secure profile section
+  failureRedirect : '/login', // redirect back to the signup page if there is an error
+  failureFlash : true // allow flash messages
+}));
+
+/* GET Signup page */
+router.get('/signup', function(req, res) {
+
+  // render the page and pass in any flash data if it exists
+  res.render('signup', { message: req.flash('signupMessage') });
+});
+
+/* POST Signup credentials */
+router.post('/signup', passport.authenticate('local-signup', {
+  successRedirect : '/home', // redirect to the secure profile section
+  failureRedirect : '/signup', // redirect back to the signup page if there is an error
+  failureFlash : true // allow flash messages
+}));
+
+/* Retrieve initial data */
 router.post('/sign-in', function (req, res) {
-  console.log('sign-in');
-  var data = req.body;
+  console.log('initial');
   var responseData = {};
   var db = req.db;
   var users = db.get('users');
   var week = db.get('week' + weekCount);
   var survivors = db.get('survivors');
-  users.findOne( { 'username' : data['username']}, function(err, userData){
-    if (userData.password === data['password']){
-      responseData['username'] = data['username'];
-      responseData['isAdmin'] = userData.isAdmin;
+  users.findOne( { 'local.username' : req.user.local.username}, function(err, userData){
+      console.dir(userData);
+      console.dir(req.user.local.username);
+      responseData['username'] = userData.local.username;
+      responseData['isAdmin'] = userData.local.isAdmin;
       //responseData['contestantStatus'] = {};
       week.find({}, {}, function(err, docs){
         console.log('inserting contestant status week' + weekCount);
@@ -40,15 +77,11 @@ router.post('/sign-in', function (req, res) {
             return value['_id'].toHexString();
           });
           responseData['allContestants'] = survivorData;
-          console.log('sending ')
+          console.log('sending');
+          console.log(responseData);
           res.status(200).json(responseData);
         });
       });
-
-
-    };
-
-
 
   })
 
@@ -80,7 +113,7 @@ router.post('/:userId/:weekNumber', function(req, res) {
       var db = req.db;
       var week = db.get('week' + req.params.weekNumber);
       week.find({}, {}, function(err, docs) {
-        console.log('inserting contestant status week' + weekCount);
+        console.log('inserting contestant status week' + req.params.weekNumber);
         var weekData = toObject(docs);
         weekData = _.mapKeys(weekData, function (value, key) {
           return value['contestandId'];
@@ -111,9 +144,9 @@ router.post('/:userId/:weekNumber', function(req, res) {
     case 'CREATE-QUESTION':
       var db = req.db;
       var collection = db.get('questions');
-      collection.insert({'week': req.params.weekNumber}, function(err, doc){
+      collection.insert({'week': req.params.weekNumber, 'type': data['type']}, function(err, doc){
         if (err) return;
-        res.json({ '_id' : doc['_id'], 'type' : data['type']});
+        res.json({ 'questionId' : doc['_id'], 'type' : data['type']});
       });
       break;
 
@@ -121,7 +154,7 @@ router.post('/:userId/:weekNumber', function(req, res) {
       console.log('Inside REMOVE-QUESTION');
       var db = req.db;
       var collection = db.get('questions');
-      query['_id'] = data['questionId']
+      query['_id'] = data['questionId'];
       collection.remove(query);
       res.send(data);
       break;
@@ -186,6 +219,18 @@ router.post('/:username/:weekNumber', function(req, res, next){
                     { '_id' : data['questionId']},
                     { $set : query}
                    )
+});
+
+router.post('/createWeek1', function(req, res, next){
+  var db = req.db;
+  var data = req.body;
+  var week = db.get('week1');
+  week.insert({ 'contestantId' : data['contestantId'],
+                'tribe' : data['tribe'],
+                'votedFor' : ' ',
+                'achievements' : { }
+  });
+  res.send('ok!');
 });
 
 

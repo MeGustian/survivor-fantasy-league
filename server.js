@@ -9,10 +9,14 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var passport = require('passport');
+var flash = require('connect-flash');
+var session = require('express-session');
 
 // Database
 var mongo = require('mongodb');
 var monk = require('monk');
+var mongoose = require('mongoose');
 var db = monk('survivoradmin:survivorpass@ds051853.mongolab.com:51853/survivor-fantasy-league');
 
 var routes = require('./routes/index');
@@ -21,8 +25,11 @@ var admin = require('./routes/admin');
 
 var app = express();
 
-// The name of the dummy JSON file.
-// var jsonFileName = 'possibles';
+// ==============CONFIGURARTIONS=============================
+
+mongoose.connect('survivoradmin:survivorpass@ds051853.mongolab.com:51853/survivor-fantasy-league');
+require('./config/passport')(passport); // pass passport for configuration
+//require('./routes/index.js')(passport);
 
 function compile(str, path) {
 	return stylus(str)
@@ -51,15 +58,29 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 // TODO: Understand this.
 // app.use(app.router);
+app.use(cookieParser()); // read cookies (needed for auth)
+// required for passport
+app.use(session({ secret: 'thisisasecrettest' })); // session secret
+app.use(passport.initialize());
+app.use(passport.session()); // persistent login sessions
+app.use(flash()); // use connect-flash for flash messages stored in session
 
+// Connect to DB
 app.use(function(req,res,next){
   req.db = db;
   next();
 });
 
+
 app.use('/', routes);
 app.use('/users', users);
 app.use('/admin', admin);
+
+
+
+
+// ==============END CONFIGURARTIONS=============================
+
 
 
 // catch 404 and forward to error handler

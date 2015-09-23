@@ -29,9 +29,19 @@
     "serve-favicon": "*",
     "mongodb": "*",
     "monk": "*",
+    "mongoose" : "~3.8.1",
     "promise": "*",
     "superagent": "*",
-    "superagent-promise": "^1.0.3"
+    "superagent-promise": "^1.0.3",
+    "passport" : "~0.1.17",
+    "passport-local" : "~0.1.6",
+    "passport-facebook" : "~1.0.2",
+    "passport-twitter" : "~1.0.2",
+    "passport-google-oauth" : "~0.1.5",
+    "connect-flash" : "*",
+    "bcrypt-nodejs" : "latest",
+    "method-override": "~1.0.0",
+    "express-session": "~1.0.0"
   },
   "scripts": {
     "start": "node --harmony ./bin/www"
