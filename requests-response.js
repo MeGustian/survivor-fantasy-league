@@ -14,8 +14,12 @@
 		res: {
 			isAdmin: <Boolean>
 			,
-			questions: {
-				<QuestionId>: <String>
+			questions: {ddddd
+				<QuestionId>: {
+					question: <String>,
+					answer: <String>,
+					type: <String>
+			}
 				.
 				.
 				.

@@ -3,6 +3,11 @@ extends layout
 block headscripts
     script(src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js")
     script(src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js")
+    script(type='text/javascript').
+        if (window.location.hash && window.location.hash == '#_=_') {
+            console.log('here');
+            window.location.hash = '';
+        }
 block scripts
     script(src="/bundle.js")
 block stylesheets

@@ -48,17 +48,30 @@ router.post('/signup', passport.authenticate('local-signup', {
   failureFlash : true // allow flash messages
 }));
 
+//// =====================================
+//// FACEBOOK ROUTES =====================
+//// =====================================
+//// route for facebook authentication and login
+//router.get('/auth/facebook', passport.authenticate('facebook', { scope : 'email' }));
+//
+//// handle the callback after facebook has authenticated the user
+//router.get('/auth/facebook/callback',
+//    passport.authenticate('facebook', {
+//      successRedirect : '/home',
+//      failureRedirect : '/'
+//    }));
+
+
 /* Retrieve initial data */
-router.post('/sign-in', function (req, res) {
+router.get('/initial', function (req, res) {
   console.log('initial');
   var responseData = {};
   var db = req.db;
   var users = db.get('users');
   var week = db.get('week' + weekCount);
   var survivors = db.get('survivors');
+  var questions = db.get('questions')
   users.findOne( { 'local.username' : req.user.local.username}, function(err, userData){
-      console.dir(userData);
-      console.dir(req.user.local.username);
       responseData['username'] = userData.local.username;
       responseData['isAdmin'] = userData.local.isAdmin;
       //responseData['contestantStatus'] = {};
@@ -77,9 +90,17 @@ router.post('/sign-in', function (req, res) {
             return value['_id'].toHexString();
           });
           responseData['allContestants'] = survivorData;
-          console.log('sending');
-          console.log(responseData);
-          res.status(200).json(responseData);
+          questions.find({'week': weekCount}, function(err, docs){
+            console.log('inserting weekly questions');
+            var questionData = toObject(docs);
+            questionData = _.mapKeys(questionData, function(value, key){
+              return value['_id'];
+            });
+            responseData['questions'] = questionData;
+            console.log('sending');
+            res.status(200).send(responseData);
+          })
+
         });
       });
 
@@ -88,7 +109,7 @@ router.post('/sign-in', function (req, res) {
 });
 
 
-router.post('/:userId/:weekNumber', function(req, res) {
+router.post('/:weekNumber', function(req, res) {
   console.log('testing server...');
   var data = req.body;
   console.log(data['meta']);
