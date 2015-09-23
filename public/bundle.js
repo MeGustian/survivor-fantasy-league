@@ -41020,23 +41020,17 @@ var Achievements = React.createClass({displayName: "Achievements",
 		return (
 			React.createElement("div", {className: "col-xs-8"}, 
 			React.createElement("div", {className: "row"}, 
-			React.createElement("div", {className: "col-xs-6"}, 
+			React.createElement("div", {className: "col-xs-12 col-md-6"}, 
 				React.createElement("div", {className: "panel panel-success"}, 
 					React.createElement("div", {className: "panel-heading"}, "Good achievements"), 
-					React.createElement("div", {className: "panel-body"}, 
-						React.createElement("p", null, "Listed below are ", this.props.contestantName+'\'s', " good achievments.")
-					), 
 					React.createElement("ul", {className: "list-group"}, 
 						this.items('good')
 					)
 				)
 			), 
-			React.createElement("div", {className: "col-xs-6"}, 
+			React.createElement("div", {className: "col-xs-12 col-md-6"}, 
 				React.createElement("div", {className: "panel panel-danger"}, 
 					React.createElement("div", {className: "panel-heading"}, "Bad achievements"), 
-					React.createElement("div", {className: "panel-body"}, 
-						React.createElement("p", null, "Listed below are ", this.props.contestantName+'\'s', " bad achievments.")
-					), 
 					React.createElement("ul", {className: "list-group"}, 
 						this.items('bad')
 					)
@@ -41164,7 +41158,7 @@ var Contestant = React.createClass({displayName: "Contestant",
 		return (
 			React.createElement("div", {className: "col-xs-4"}, 
 			React.createElement("div", {className: "thumbnail"}, 
-				React.createElement("img", {src: "/images/" + this.props.name + ".png", alt: this.props.name}), 
+				React.createElement("img", {src: "/images/contestants/" + this.props.name + ".jpg", alt: this.props.name}), 
 				React.createElement("div", {className: "caption"}, 
 					React.createElement("h3", null, this.props.name)
 				)
@@ -41239,15 +41233,23 @@ var Question = React.createClass({displayName: "Question",
 	}
 	,
 	render: function () {
-		var style = {
+		var styleQuestion = {
 			width: '40%'
 		};
+		var stylePanelHeadingInner = {
+			display: 'flex',
+			flexDirection: 'row',
+			justifyContent: 'space-between',
+			alignItems: 'center'
+		};
 		return (
-			React.createElement("div", {className: "question", style: style}, 
+			React.createElement("div", {className: "question", style: styleQuestion}, 
 				React.createElement("div", {className: "panel panel-default"}, 
 					React.createElement("div", {className: "panel-heading"}, 
-						this.questionRender(), 
-						this.tools()
+						React.createElement("div", {style: stylePanelHeadingInner}, 
+							this.questionRender(), 
+							this.tools()
+						)
 					), 
 					React.createElement("div", {className: "panel-body"}, 
 						this.bodyRender()
@@ -41259,18 +41261,21 @@ var Question = React.createClass({displayName: "Question",
 	,
 	questionRender: function () {
 		var details = this.props.details;
+		var style = {
+			flexGrow: '2',
+			marginRight: '10px'
+		}
 		if (!details.get('isEditing')) {
-			return React.createElement("span", null, details.get('question'));
+			return React.createElement("h3", {className: "panel-title", style: style}, details.get('question'));
 		} else {
 			return (
-				React.createElement("div", {className: "input-group"}, 
-					React.createElement("input", {
-						type: "text", 
-						className: "form-control", 
-						placeholder: "question", 
-						value: this.state.question, 
-						onChange: this.onText}
-					)
+				React.createElement("input", {
+					type: "text", 
+					className: "form-control", 
+					placeholder: "question", 
+					style: style, 
+					value: this.state.question, 
+					onChange: this.onText}
 				)
 			);
 		}
@@ -41332,36 +41337,26 @@ var Question = React.createClass({displayName: "Question",
 		var questionId = this.props.questionId;
 		var isAdmin = this.props.user.get('isAdmin');
 		var isEditing = this.props.details.get('isEditing');
+		var style = {
+			flexGrow: '0',
+			flexShrink: '0',
+			alignSelf: 'flex-start'
+		}
 		if (!isAdmin) {
 			return;
 		}
-		if (!isEditing) {
-			return (
-				React.createElement("div", {className: "btn-group", role: "group", "aria-label": "..."}, 
-					React.createElement(AdminToolbox, {
-						tool: "edit", 
-						handleClick: handlers.edit.bind(null, questionId, !!isEditing)}
-					), 
-					React.createElement(AdminToolbox, {
-						tool: "remove", 
-						handleClick: handlers.remove.bind(null, questionId)}
-					)
+		return (
+			React.createElement("div", {className: "btn-group", role: "group", "aria-label": "...", style: style}, 
+				React.createElement(AdminToolbox, {
+					tool: isEditing ? "discard" : "edit", 
+					handleClick: handlers.edit.bind(null, questionId, !!isEditing)}
+				), 
+				React.createElement(AdminToolbox, {
+					tool: isEditing ? "approve" : "remove", 
+					handleClick: isEditing ? handlers.update.bind(null, questionId, this.state.question, this.state.answer, this.state.type) : handlers.remove.bind(null, questionId)}
 				)
-			);
-		} else {
-			return (
-				React.createElement("div", {className: "btn-group", role: "group", "aria-label": "..."}, 
-					React.createElement(AdminToolbox, {
-						tool: "discard", 
-						handleClick: handlers.edit.bind(null, questionId, !!isEditing)}
-					), 
-					React.createElement(AdminToolbox, {
-						tool: "approve", 
-						handleClick: handlers.update.bind(null, questionId, this.state.question, this.state.answer, this.state.type)}
-					)
-				)
-			);
-		}
+			)
+		);
 	}
 	,
 	onText: function (e) {
@@ -41388,26 +41383,32 @@ var React = require('react');
 var SignIn = React.createClass({displayName: "SignIn",
 	getInitialState: function () {
 		return {
-			username: 'v'
+			username: 'some_user'
 			,
-			password: ''
+			password: 'a_password'
 			,
-			isAdmin: true
+			isAdmin: false
 		};
 	}
 	,
 	render: function () {
+		var style = {
+			margin: 'auto',
+			maxWidth: '480px',
+			display: 'flex',
+			flexDirection: 'column'
+		}
 		return (
-			React.createElement("div", null, 
-				React.createElement("div", {className: "input-group"}, 
+			React.createElement("div", {style: style}, 
+				React.createElement("div", {className: "input-group input-group-lg"}, 
 					React.createElement("span", {className: "input-group-addon", id: "username-addon"}, "@"), 
 					React.createElement("input", {type: "text", value: this.state.username, className: "form-control", placeholder: "Username", "aria-describedby": "username-addon", onChange: this.onTextUser}), 
 					React.createElement("span", {className: "input-group-btn"}, 
 						React.createElement("button", {className: "btn btn-danger" + (this.state.isAdmin ? " active" : ""), type: "button", onClick: this.toggleAdmin}, "Admin")
 					)
 				), 
-				React.createElement("div", {className: "input-group"}, 
-					React.createElement("span", {className: "input-group-addon", id: "password-addon"}, "P"), 
+				React.createElement("div", {className: "input-group input-group-lg"}, 
+					React.createElement("span", {className: "input-group-addon", id: "password-addon"}, "§"), 
 					React.createElement("input", {type: "text", value: this.state.password, className: "form-control", placeholder: "Password", "aria-describedby": "password-addon", onChange: this.onTextPass})
 				), 
 				React.createElement("button", {className: "btn btn-success", type: "button", disabled: this.props.user.get('attempting'), onClick: this.submit}, "Submit"), 
@@ -41451,12 +41452,6 @@ var Achievements = require('./Achievements');
 
 var Tribes = React.createClass({displayName: "Tribes",
 	render: function () {
-		// var style = {
-		// 	display: 'flex',
-		// 	flexDirection: 'row',
-		// 	justifyContent: 'space-around',
-		// 	alignItems: 'baseline'
-		// };
 		return (
 			React.createElement("div", {className: "row"}, 
 				this.tribes()
@@ -41465,12 +41460,6 @@ var Tribes = React.createClass({displayName: "Tribes",
 	}
 	,
 	tribes: function () {
-		// var style = {
-		// 	display: 'flex',
-		// 	flexDirection: 'column',
-		// 	justifyContent: 'flex-start',
-		// 	alignItems: 'center'
-		// };
 		var that = this;
 		return this.props.contestants
 			.groupBy(function (contestant) {
@@ -41487,6 +41476,21 @@ var Tribes = React.createClass({displayName: "Tribes",
 	,
 	membersOf: function (tribe) {
 		var that = this;
+		// var gotVotesFrom = tribe
+		// 	.groupBy(function (contestant) {
+		// 		return contestant.get('votedFor');
+		// 	})
+		// 	.map(function (voteOrigins) {
+		// 		return voteOrigins.keySeq();
+		// 	});
+		// var votedOut = gotVotesFrom
+		// 	.maxBy(function (voteOrigins) {
+		// 		return voteOrigin.count();
+		// 	}, function (a, b) {
+		// 		a > b;
+		// 	});
+		// console.log(gotVotesFrom.toString());
+		// console.log(votedOut);
 		return tribe.map(function (contestant, id) {
 			return (
 				React.createElement("div", {className: "row", key: id}, 
@@ -41633,10 +41637,10 @@ var ImmutablePropTypes = require('react-immutable-proptypes');
 
 var Fantasy = React.createClass({displayName: "Fantasy",
 	render: function () {
-		console.log(this.props.contestants.toString());
-		console.log(this.props.week.toString());
-		console.log(this.props.questions.toString());
-		console.log(this.props.user.toString());
+		// console.log(this.props.contestants.toString());
+		// console.log(this.props.week.toString());
+		// console.log(this.props.questions.toString());
+		// console.log(this.props.user.toString());
 		var p = this.props;
 		var dispatch = p.dispatch;
 		var fullContestants = p.week.get('contestantStatus').mergeDeep(p.contestants);
@@ -41697,13 +41701,37 @@ var Fantasy = React.createClass({displayName: "Fantasy",
 	}
 	,
 	propTypes: {
-		week: ImmutablePropTypes.map.isRequired
+		week: ImmutablePropTypes.contains({
+			selected: PropTypes.number,
+			count: PropTypes.number,
+			contestantStatus: ImmutablePropTypes.mapOf(
+				ImmutablePropTypes.contains({
+					tribe: PropTypes.string.isRequired,
+					votedFor: PropTypes.string.isRequired,
+					achievements: ImmutablePropTypes.mapOf(PropTypes.bool).isRequired
+				})
+			)
+		}).isRequired
 		,
-		contestants: ImmutablePropTypes.map.isRequired
+		contestants: ImmutablePropTypes.mapOf(
+			ImmutablePropTypes.contains({
+				name: PropTypes.string.isRequired
+			})
+		).isRequired
 		,
-		questions: ImmutablePropTypes.map.isRequired
+		questions: ImmutablePropTypes.mapOf(
+			ImmutablePropTypes.contains({
+				question: PropTypes.string.isRequired,
+				answer: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
+				type: PropTypes.string.isRequired
+			})
+		).isRequired
 		,
-		user: ImmutablePropTypes.map.isRequired
+		user: ImmutablePropTypes.contains({
+			userId: PropTypes.string,
+			isAdmin: PropTypes.bool.isRequired,
+			attempting: PropTypes.bool.isRequired
+		}).isRequired
 	}
 });
 
@@ -41787,7 +41815,7 @@ var initialState = {};
 // different if the action was relevant.
 
 // State represents sign-in status.
-initialState.user = Map({userId: null, isAdmin: false, attempting: false});
+initialState.user = Map({userId: undefined, isAdmin: false, attempting: false});
 var user = function (prev, action) {
 	if (typeof prev === 'undefined') {
 		return initialState.user;
@@ -41811,7 +41839,7 @@ var user = function (prev, action) {
 };
 
 // State represents week.
-initialState.week = Map({selected: null, count: 16, contestantStatus: Map()});
+initialState.week = Map({selected: undefined, count: 16, contestantStatus: Map()});
 var week = function (prev, action) {
 	if (typeof prev === 'undefined') {
 		return initialState.week;
@@ -41879,12 +41907,6 @@ var questions = function (prev, action) {
 		return initialState.questions;
 	}
 	switch (action.type) {
-		// case 'CREATE-QUESTION-PEND':
-		// return prev
-		// 	.set('pending', Map({
-		// 		question: '',
-		// 		type: action.payload.type
-		// 	}));
 		case 'CREATE-QUESTION-DONE':
 		return prev
 			.set(action.payload.questionId, Map({
@@ -41969,26 +41991,6 @@ var questions = function (prev, action) {
 		return prev;
 	}
 };
-
-// State represents all achievements of the selected week.
-// var achievements = function (prev, action) {
-// 	if (typeof prev === 'undefined') {
-// 		return initialState.achievements;
-// 	}
-// 	switch (action.type) {
-// 		case 'TOGGLE-ACHIEVEMENT':
-// 		return prev.updateIn([
-// 			action.payload.contestant,
-// 			action.payload.achievement
-// 		], function (isAchieved) {
-// 			return !isAchieved;
-// 		});
-// 		case 'WEEK-VIEW-SELECT':
-// 		return prev; // TODO: match the achievements.
-// 		default:
-// 		return prev;
-// 	}
-// }
 
 var reducers = combineReducers({
 	week,

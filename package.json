@@ -28,7 +28,10 @@
     "morgan": "*",
     "serve-favicon": "*",
     "mongodb": "*",
-    "monk": "*"
+    "monk": "*",
+    "promise": "*",
+    "superagent": "*",
+    "superagent-promise": "^1.0.3"
   },
   "scripts": {
     "start": "node --harmony ./bin/www"

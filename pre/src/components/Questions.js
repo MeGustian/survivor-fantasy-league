@@ -60,15 +60,23 @@ var Question = React.createClass({
 	}
 	,
 	render: function () {
-		var style = {
+		var styleQuestion = {
 			width: '40%'
 		};
+		var stylePanelHeadingInner = {
+			display: 'flex',
+			flexDirection: 'row',
+			justifyContent: 'space-between',
+			alignItems: 'center'
+		};
 		return (
-			<div className="question" style={style}>
+			<div className="question" style={styleQuestion}>
 				<div className="panel panel-default">
 					<div className="panel-heading">
-						{this.questionRender()}
-						{this.tools()}
+						<div style={stylePanelHeadingInner}>
+							{this.questionRender()}
+							{this.tools()}
+						</div>
 					</div>
 					<div className="panel-body">
 						{this.bodyRender()}
@@ -80,19 +88,22 @@ var Question = React.createClass({
 	,
 	questionRender: function () {
 		var details = this.props.details;
+		var style = {
+			flexGrow: '2',
+			marginRight: '10px'
+		}
 		if (!details.get('isEditing')) {
-			return <span>{details.get('question')}</span>;
+			return <h3 className="panel-title" style={style}>{details.get('question')}</h3>;
 		} else {
 			return (
-				<div className="input-group">
-					<input
-						type="text"
-						className="form-control"
-						placeholder="question"
-						value={this.state.question}
-						onChange={this.onText}
-					/>
-				</div>
+				<input
+					type="text"
+					className="form-control"
+					placeholder="question"
+					style={style}
+					value={this.state.question}
+					onChange={this.onText}
+				/>
 			);
 		}
 	}
@@ -153,36 +164,26 @@ var Question = React.createClass({
 		var questionId = this.props.questionId;
 		var isAdmin = this.props.user.get('isAdmin');
 		var isEditing = this.props.details.get('isEditing');
+		var style = {
+			flexGrow: '0',
+			flexShrink: '0',
+			alignSelf: 'flex-start'
+		}
 		if (!isAdmin) {
 			return;
 		}
-		if (!isEditing) {
-			return (
-				<div className="btn-group" role="group" aria-label="...">
-					<AdminToolbox
-						tool="edit"
-						handleClick={handlers.edit.bind(null, questionId, !!isEditing)}
-					/>
-					<AdminToolbox
-						tool="remove"
-						handleClick={handlers.remove.bind(null, questionId)}
-					/>
-				</div>
-			);
-		} else {
-			return (
-				<div className="btn-group" role="group" aria-label="...">
-					<AdminToolbox
-						tool="discard"
-						handleClick={handlers.edit.bind(null, questionId, !!isEditing)}
-					/>
-					<AdminToolbox
-						tool="approve"
-						handleClick={handlers.update.bind(null, questionId, this.state.question, this.state.answer, this.state.type)}
-					/>
-				</div>
-			);
-		}
+		return (
+			<div className="btn-group" role="group" aria-label="..." style={style}>
+				<AdminToolbox
+					tool={isEditing ? "discard" : "edit"}
+					handleClick={handlers.edit.bind(null, questionId, !!isEditing)}
+				/>
+				<AdminToolbox
+					tool={isEditing ? "approve" : "remove"}
+					handleClick={isEditing ? handlers.update.bind(null, questionId, this.state.question, this.state.answer, this.state.type) : handlers.remove.bind(null, questionId)}
+				/>
+			</div>
+		);
 	}
 	,
 	onText: function (e) {

@@ -52,7 +52,6 @@ app.use(bodyParser.urlencoded({extended: true}));
 // TODO: Understand this.
 // app.use(app.router);
 
-
 app.use(function(req,res,next){
   req.db = db;
   next();

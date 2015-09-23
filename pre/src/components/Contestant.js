@@ -6,7 +6,7 @@ var Contestant = React.createClass({
 		return (
 			<div className="col-xs-4">
 			<div className="thumbnail">
-				<img src={"/images/" + this.props.name + ".png"} alt={this.props.name} />
+				<img src={"/images/contestants/" + this.props.name + ".jpg"} alt={this.props.name} />
 				<div className="caption">
 					<h3>{this.props.name}</h3>
 				</div>

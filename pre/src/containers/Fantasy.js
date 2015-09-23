@@ -16,10 +16,10 @@ var ImmutablePropTypes = require('react-immutable-proptypes');
 
 var Fantasy = React.createClass({
 	render: function () {
-		console.log(this.props.contestants.toString());
-		console.log(this.props.week.toString());
-		console.log(this.props.questions.toString());
-		console.log(this.props.user.toString());
+		// console.log(this.props.contestants.toString());
+		// console.log(this.props.week.toString());
+		// console.log(this.props.questions.toString());
+		// console.log(this.props.user.toString());
 		var p = this.props;
 		var dispatch = p.dispatch;
 		var fullContestants = p.week.get('contestantStatus').mergeDeep(p.contestants);
@@ -80,13 +80,37 @@ var Fantasy = React.createClass({
 	}
 	,
 	propTypes: {
-		week: ImmutablePropTypes.map.isRequired
+		week: ImmutablePropTypes.contains({
+			selected: PropTypes.number,
+			count: PropTypes.number,
+			contestantStatus: ImmutablePropTypes.mapOf(
+				ImmutablePropTypes.contains({
+					tribe: PropTypes.string.isRequired,
+					votedFor: PropTypes.string.isRequired,
+					achievements: ImmutablePropTypes.mapOf(PropTypes.bool).isRequired
+				})
+			)
+		}).isRequired
 		,
-		contestants: ImmutablePropTypes.map.isRequired
+		contestants: ImmutablePropTypes.mapOf(
+			ImmutablePropTypes.contains({
+				name: PropTypes.string.isRequired
+			})
+		).isRequired
 		,
-		questions: ImmutablePropTypes.map.isRequired
+		questions: ImmutablePropTypes.mapOf(
+			ImmutablePropTypes.contains({
+				question: PropTypes.string.isRequired,
+				answer: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
+				type: PropTypes.string.isRequired
+			})
+		).isRequired
 		,
-		user: ImmutablePropTypes.map.isRequired
+		user: ImmutablePropTypes.contains({
+			userId: PropTypes.string,
+			isAdmin: PropTypes.bool.isRequired,
+			attempting: PropTypes.bool.isRequired
+		}).isRequired
 	}
 });
 

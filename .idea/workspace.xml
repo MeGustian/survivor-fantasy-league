@@ -2,137 +2,170 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="efde706e-1f32-4343-952a-6666e0ccd61a" name="Default" comment="Merge branch 'master' of https://github.com/yotamDvir/survivor-fantasy-league&#10;&#10;Conflicts:&#10;&#9;pre/build/actions.js&#10;&#9;server.js&#10;">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/redux-logger/.babelrc" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/redux-logger/.eslintignore" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/redux-logger/.eslintrc" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/redux-logger/.npmignore" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/redux-logger/.travis.yml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pre/build/.module-cache/0ac6e6e27fbfd0e949dfaffd59ea60032f477ac8.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pre/build/.module-cache/manifest/0ac6e6e27fbfd0e949dfaffd59ea60032f477ac8.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pre/build/.module-cache/0bbb15960791ff1bd3eff6b0d3caf4d9e3fee926.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pre/build/.module-cache/manifest/0bbb15960791ff1bd3eff6b0d3caf4d9e3fee926.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pre/build/.module-cache/0d41f806ba93e25fef46cdd6deceb9d63479a4fe.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pre/build/.module-cache/manifest/0d41f806ba93e25fef46cdd6deceb9d63479a4fe.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pre/build/.module-cache/0f4406108d3884a50c4f20a44a544c181fcba07d.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pre/build/.module-cache/manifest/0f4406108d3884a50c4f20a44a544c181fcba07d.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pre/build/.module-cache/100a6fd462297a52cc7febc3af6b6efbe2ca705d.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pre/build/.module-cache/manifest/100a6fd462297a52cc7febc3af6b6efbe2ca705d.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pre/build/.module-cache/101a5a32dc0b8f97f11a5646090576885ce59062.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pre/build/.module-cache/manifest/101a5a32dc0b8f97f11a5646090576885ce59062.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pre/build/.module-cache/196ce8c71410dd0400cf9c9b7dce5a23626bff22.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pre/build/.module-cache/manifest/196ce8c71410dd0400cf9c9b7dce5a23626bff22.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pre/build/.module-cache/1cfe0ce9817eef0495d9fc3bb5acf051c216bea8.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pre/build/.module-cache/manifest/1cfe0ce9817eef0495d9fc3bb5acf051c216bea8.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pre/build/.module-cache/216ed56ab1bdcbca66903b31beb3fa237746bb1b.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pre/build/.module-cache/manifest/216ed56ab1bdcbca66903b31beb3fa237746bb1b.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pre/build/.module-cache/2c1b7b190fd2bb2336767740a0258d4fda73fead.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pre/build/.module-cache/manifest/2c1b7b190fd2bb2336767740a0258d4fda73fead.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pre/build/.module-cache/30a4a52f1f0e41daa6f42d0716687988a95b774e.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pre/build/.module-cache/manifest/30a4a52f1f0e41daa6f42d0716687988a95b774e.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pre/build/.module-cache/3bd7439bd73f83ee2543633d53182e4706bea0a5.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pre/build/.module-cache/manifest/3bd7439bd73f83ee2543633d53182e4706bea0a5.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pre/build/.module-cache/40003914e5feb3663eebacaa154d27bfe00ac175.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pre/build/.module-cache/manifest/40003914e5feb3663eebacaa154d27bfe00ac175.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pre/build/.module-cache/40806cfecc566b1b3b0af2c651d1824a0f402ba9.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pre/build/.module-cache/manifest/40806cfecc566b1b3b0af2c651d1824a0f402ba9.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pre/build/.module-cache/4818e9ebcd392aabbf238a0a8059bd9a0d79ac00.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pre/build/.module-cache/manifest/4818e9ebcd392aabbf238a0a8059bd9a0d79ac00.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pre/build/.module-cache/52d9c201c579ab78d26e5901649b924443663e4d.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pre/build/.module-cache/manifest/52d9c201c579ab78d26e5901649b924443663e4d.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pre/build/.module-cache/5ac449bb83f225ff170330b55d8fa9d51df8bc74.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pre/build/.module-cache/manifest/5ac449bb83f225ff170330b55d8fa9d51df8bc74.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pre/build/.module-cache/6370432344b6860c0b0948325d180e41277ce457.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pre/build/.module-cache/manifest/6370432344b6860c0b0948325d180e41277ce457.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pre/build/.module-cache/6857d9c463ad65875b77520f94899d0c8588f0df.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pre/build/.module-cache/manifest/6857d9c463ad65875b77520f94899d0c8588f0df.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pre/build/.module-cache/6b0d88b4e3752c8685e748f31d4b90371d065c2b.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pre/build/.module-cache/manifest/6b0d88b4e3752c8685e748f31d4b90371d065c2b.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pre/build/.module-cache/6d48e3f85de8d4c83bac492783d65d93b75ffded.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pre/build/.module-cache/manifest/6d48e3f85de8d4c83bac492783d65d93b75ffded.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pre/build/.module-cache/743d717d699368e32ac3c3015bbda785a01a6013.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pre/build/.module-cache/manifest/743d717d699368e32ac3c3015bbda785a01a6013.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pre/build/.module-cache/843be7d89cae71499111be43083a6decb494c202.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pre/build/.module-cache/manifest/843be7d89cae71499111be43083a6decb494c202.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pre/build/.module-cache/91372f70eaaa485815906c53eb68bb56157461b2.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pre/build/.module-cache/manifest/91372f70eaaa485815906c53eb68bb56157461b2.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pre/build/.module-cache/manifest/938f985e8a582388b4d4c6f51e92e28417fa39d7.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/redux-logger/README.md" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pre/build/.module-cache/a1e5c85dfc851f931f42ae3b06d3e407e9eab1e6.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pre/build/.module-cache/manifest/a1e5c85dfc851f931f42ae3b06d3e407e9eab1e6.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pre/build/.module-cache/a7f97b0917ee43b7bbd17ff5026a12fb7b5db110.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pre/build/.module-cache/manifest/a7f97b0917ee43b7bbd17ff5026a12fb7b5db110.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pre/build/.module-cache/a99cd00bb1d1c7873e3ff63e61d63b968efa50c6.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pre/build/.module-cache/manifest/a99cd00bb1d1c7873e3ff63e61d63b968efa50c6.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pre/build/.module-cache/a9ddbceeead7b619077ebf3787af53cfbd36beab.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pre/build/.module-cache/manifest/a9ddbceeead7b619077ebf3787af53cfbd36beab.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pre/build/.module-cache/abd947115b5c020ebf0b51718e74f47eecbd9665.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pre/build/.module-cache/manifest/abd947115b5c020ebf0b51718e74f47eecbd9665.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pre/build/.module-cache/ae8cb830813b6fec90f9d6a3a319b61e767b2456.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pre/build/.module-cache/manifest/ae8cb830813b6fec90f9d6a3a319b61e767b2456.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/redux-logger/example/app.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/redux-logger/example/actions/auth.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/redux-logger/example/constants/auth.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/redux-logger/example/reducers/auth.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pre/build/.module-cache/b0074bf2cc7d17700f4f0eebf566c0f4bcbc28c0.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pre/build/.module-cache/manifest/b0074bf2cc7d17700f4f0eebf566c0f4bcbc28c0.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pre/build/.module-cache/b7dc2c6f84e19772d00236ffaf59dcf46df78a9b.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pre/build/.module-cache/manifest/b7dc2c6f84e19772d00236ffaf59dcf46df78a9b.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pre/build/.module-cache/b80180d1ea5845ff53d0ffc496020a079b63ddbf.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pre/build/.module-cache/manifest/b80180d1ea5845ff53d0ffc496020a079b63ddbf.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pre/build/.module-cache/ba64cb89539289b88e602ceaf215701d75fbed9f.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pre/build/.module-cache/manifest/ba64cb89539289b88e602ceaf215701d75fbed9f.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/redux-logger/example/dist/bundle.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pre/build/.module-cache/c1b948f0ea7ce4becb1e8100e36730aca41e8091.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pre/build/.module-cache/manifest/c1b948f0ea7ce4becb1e8100e36730aca41e8091.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pre/build/.module-cache/c4a5d5f815ffb798c6235c8b648b07ac2bb2d687.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pre/build/.module-cache/manifest/c4a5d5f815ffb798c6235c8b648b07ac2bb2d687.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pre/build/.module-cache/cfea60153bdf870434300e8e9ee5d0b122c76400.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pre/build/.module-cache/manifest/cfea60153bdf870434300e8e9ee5d0b122c76400.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/redux-logger/build/createLogger.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/redux-logger/src/createLogger.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/redux-logger/example/styles/default.scss" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pre/build/.module-cache/ee6140584d16963c5cf834e8e195b65d29ca7db9.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pre/build/.module-cache/manifest/ee6140584d16963c5cf834e8e195b65d29ca7db9.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/redux-logger/example/containers/example.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pre/build/.module-cache/f264aeb2b6247187fd0ac0864809e51e709d7419.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pre/build/.module-cache/manifest/f264aeb2b6247187fd0ac0864809e51e709d7419.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pre/build/.module-cache/f410dda72031f5844dd5194c33b48c61e078b77f.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pre/build/.module-cache/manifest/f410dda72031f5844dd5194c33b48c61e078b77f.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/redux-logger/example/dist/index.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/redux-logger/build/index.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/redux-logger/example/reducers/index.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/redux-logger/src/index.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/redux-logger/build/logger.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/redux-logger/src/logger.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/redux-logger/package.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/redux-logger/example/package.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/redux-logger/example/actions/properties.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/redux-logger/example/constants/properties.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/redux-logger/example/reducers/properties.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/redux-logger/example/webpack.config.dev.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/redux-logger/example/webpack.config.production.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/redux-logger/example/webpack.server.js" />
-      <change type="DELETED" beforePath="C:\Projects\Survivor\survivor-fantasy-league\npm-debug.log" afterPath="" />
-      <change type="MOVED" beforePath="C:\Projects\Survivor\survivor-fantasy-league\pre\build\components\Contestant.js" afterPath="$PROJECT_DIR$/pre/build/.module-cache/938f985e8a582388b4d4c6f51e92e28417fa39d7.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/contestants/Spencer.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pre/build/.module-cache/0959b06f9e942bc4f3ef85a2504b76bd256153a7.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pre/build/.module-cache/manifest/0959b06f9e942bc4f3ef85a2504b76bd256153a7.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pre/build/.module-cache/0bf83e9a6bff96b2a9bf094545fa2cd150c68994.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pre/build/.module-cache/manifest/0bf83e9a6bff96b2a9bf094545fa2cd150c68994.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pre/build/.module-cache/0c11e3b48b98269aa95851072143138003dd7bbb.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pre/build/.module-cache/manifest/0c11e3b48b98269aa95851072143138003dd7bbb.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pre/build/.module-cache/0ce6744d08c6d3f89226fa38109d5d637411579e.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pre/build/.module-cache/manifest/0ce6744d08c6d3f89226fa38109d5d637411579e.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pre/build/.module-cache/14cc0d873c40932d527c65e58095193907445872.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pre/build/.module-cache/manifest/14cc0d873c40932d527c65e58095193907445872.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pre/build/.module-cache/192f2fa7270231c8282e8cf111c7ac5a69ae1737.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pre/build/.module-cache/manifest/192f2fa7270231c8282e8cf111c7ac5a69ae1737.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pre/build/.module-cache/1d3ed2727fe053ab8e0a8e2f56fd00d069108f77.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pre/build/.module-cache/manifest/1d3ed2727fe053ab8e0a8e2f56fd00d069108f77.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pre/build/.module-cache/1f4481d883a0f68625a2a4244f40a72003cf4a4d.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pre/build/.module-cache/manifest/1f4481d883a0f68625a2a4244f40a72003cf4a4d.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pre/build/.module-cache/20996c14e0cb2d575fbc22734d8c64690d3dc166.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pre/build/.module-cache/manifest/20996c14e0cb2d575fbc22734d8c64690d3dc166.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pre/build/.module-cache/21eb55fc74669ec5b6238cba9dee185b2e41f5a9.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pre/build/.module-cache/manifest/21eb55fc74669ec5b6238cba9dee185b2e41f5a9.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pre/build/.module-cache/230152084788edc3d63b3c1a73c15cbe32eb0bb3.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pre/build/.module-cache/manifest/230152084788edc3d63b3c1a73c15cbe32eb0bb3.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pre/build/.module-cache/2993610865e26cce45dfc8312d770b7c78548717.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pre/build/.module-cache/manifest/2993610865e26cce45dfc8312d770b7c78548717.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pre/build/.module-cache/2b6ba7b36f4308e3ce3c0c27f685a2efc02ce5eb.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pre/build/.module-cache/manifest/2b6ba7b36f4308e3ce3c0c27f685a2efc02ce5eb.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pre/build/.module-cache/315d40dcfedb3b541b4927edbe08670ea72ce714.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pre/build/.module-cache/manifest/315d40dcfedb3b541b4927edbe08670ea72ce714.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pre/build/.module-cache/342870b5e4110eadfc7f763727372bac210b8382.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pre/build/.module-cache/manifest/342870b5e4110eadfc7f763727372bac210b8382.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pre/build/.module-cache/353b5650fc33254ba65f8107ac3a9cb9f7099161.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pre/build/.module-cache/manifest/353b5650fc33254ba65f8107ac3a9cb9f7099161.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pre/build/.module-cache/36ae2af0070552fb2c112d7c732e7162b0cb309b.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pre/build/.module-cache/manifest/36ae2af0070552fb2c112d7c732e7162b0cb309b.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pre/build/.module-cache/39ddfd56aa4e11e5a61812578901dffab3cb2d6f.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pre/build/.module-cache/manifest/39ddfd56aa4e11e5a61812578901dffab3cb2d6f.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pre/build/.module-cache/3ca7dd9650400bc352719468cf5ae8676e558065.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pre/build/.module-cache/manifest/3ca7dd9650400bc352719468cf5ae8676e558065.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pre/build/.module-cache/3d4eac0d593fdeffc38f301ccf308e5b2de733b7.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pre/build/.module-cache/manifest/3d4eac0d593fdeffc38f301ccf308e5b2de733b7.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pre/build/.module-cache/3f8725fb9a81ad5f873a24b7872f83d0693d76e4.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pre/build/.module-cache/manifest/3f8725fb9a81ad5f873a24b7872f83d0693d76e4.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pre/build/.module-cache/462b17f5f4bbc3c93c6cffb45dcffaca6da993bf.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pre/build/.module-cache/manifest/462b17f5f4bbc3c93c6cffb45dcffaca6da993bf.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pre/build/.module-cache/46b20a61f7f671b81cb7e6c70eef983ca2d2d089.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pre/build/.module-cache/manifest/46b20a61f7f671b81cb7e6c70eef983ca2d2d089.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pre/build/.module-cache/5001db9aa47d6f7b02ddeb32d0e09a8abc0d31c6.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pre/build/.module-cache/manifest/5001db9aa47d6f7b02ddeb32d0e09a8abc0d31c6.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pre/build/.module-cache/5663f69dd7a3b2f94b98bf4a506f2e026406ed57.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pre/build/.module-cache/manifest/5663f69dd7a3b2f94b98bf4a506f2e026406ed57.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pre/build/.module-cache/59fe0c2272c98270ca689ec160b9cc4948c30fa4.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pre/build/.module-cache/manifest/59fe0c2272c98270ca689ec160b9cc4948c30fa4.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pre/build/.module-cache/5da424ea574a1ed9af1ba85bd1efaad96506bc24.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pre/build/.module-cache/manifest/5da424ea574a1ed9af1ba85bd1efaad96506bc24.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pre/build/.module-cache/68a9d65cf6d66e2dbdf62088af31c13273add304.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pre/build/.module-cache/manifest/68a9d65cf6d66e2dbdf62088af31c13273add304.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pre/build/.module-cache/6ac9a2d5d7da0c04e4d9e0582be9d3a6594de768.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pre/build/.module-cache/manifest/6ac9a2d5d7da0c04e4d9e0582be9d3a6594de768.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pre/build/.module-cache/70f2d379f5fde6b19f92511289c76f6dfbd1c60b.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pre/build/.module-cache/manifest/70f2d379f5fde6b19f92511289c76f6dfbd1c60b.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pre/build/.module-cache/7235db21561af7063c55860ed7a6d391a7790f6b.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pre/build/.module-cache/manifest/7235db21561af7063c55860ed7a6d391a7790f6b.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pre/build/.module-cache/7270c8fadced351b7769f2612a90556302d4d4c2.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pre/build/.module-cache/manifest/7270c8fadced351b7769f2612a90556302d4d4c2.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pre/build/.module-cache/7c1563f6e677030a75fad00d1545618a7288632f.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pre/build/.module-cache/manifest/7c1563f6e677030a75fad00d1545618a7288632f.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pre/build/.module-cache/7c70850ae9e1937621a700a4320a0dca101e0686.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pre/build/.module-cache/manifest/7c70850ae9e1937621a700a4320a0dca101e0686.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pre/build/.module-cache/7e13953e2df4f9c469a3f3a45ea95d8822f24637.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pre/build/.module-cache/manifest/7e13953e2df4f9c469a3f3a45ea95d8822f24637.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pre/build/.module-cache/7e7c8702b5f890b2475b9c9e861497a8119368c1.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pre/build/.module-cache/manifest/7e7c8702b5f890b2475b9c9e861497a8119368c1.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pre/build/.module-cache/82be7835661a47be560170f389a1de9297e99a6b.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pre/build/.module-cache/manifest/82be7835661a47be560170f389a1de9297e99a6b.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pre/build/.module-cache/85826c42ad98cc35b483a6532b824da23ad15806.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pre/build/.module-cache/manifest/85826c42ad98cc35b483a6532b824da23ad15806.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pre/build/.module-cache/89172e2bf7e9ae2c93c0d2daa19c6ba59ae36ac6.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pre/build/.module-cache/manifest/89172e2bf7e9ae2c93c0d2daa19c6ba59ae36ac6.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pre/build/.module-cache/97d2978f161455e6e0314abd2cf0e6a9ae2d7572.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pre/build/.module-cache/manifest/97d2978f161455e6e0314abd2cf0e6a9ae2d7572.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pre/build/.module-cache/9aa3ff30ca31f8beac9ed0c5257049e7927fb3df.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pre/build/.module-cache/manifest/9aa3ff30ca31f8beac9ed0c5257049e7927fb3df.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pre/build/.module-cache/9d108de71724fccb098765c46b0457e0769285e4.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pre/build/.module-cache/manifest/9d108de71724fccb098765c46b0457e0769285e4.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pre/build/.module-cache/9e4025fc6383955126b16245e031bc64ea86bd1a.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pre/build/.module-cache/manifest/9e4025fc6383955126b16245e031bc64ea86bd1a.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pre/build/.module-cache/a34051e9d1a4668f1bce6970ea67fdf9280697e9.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pre/build/.module-cache/manifest/a34051e9d1a4668f1bce6970ea67fdf9280697e9.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pre/build/.module-cache/a77cf5b213669746e67c80e03d21da77d251453b.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pre/build/.module-cache/manifest/a77cf5b213669746e67c80e03d21da77d251453b.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pre/build/.module-cache/a8ec7804015fcafb48f70275073d57c15613bbc4.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pre/build/.module-cache/manifest/a8ec7804015fcafb48f70275073d57c15613bbc4.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pre/build/.module-cache/ae79e57f43a6bfb6f5316350e2d479bc14e74d98.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pre/build/.module-cache/manifest/ae79e57f43a6bfb6f5316350e2d479bc14e74d98.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pre/build/.module-cache/b28a857a21b1d76b1409ea21e7ecfd8213e2376f.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pre/build/.module-cache/manifest/b28a857a21b1d76b1409ea21e7ecfd8213e2376f.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pre/build/.module-cache/b44d6a947da9f3e2d8d4f351659e856b12acf8c7.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pre/build/.module-cache/manifest/b44d6a947da9f3e2d8d4f351659e856b12acf8c7.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pre/build/.module-cache/b4e14a93da6446e6455089194b58cfb361fcb28f.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pre/build/.module-cache/manifest/b4e14a93da6446e6455089194b58cfb361fcb28f.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pre/build/.module-cache/b80a1315b4d322b7ebba657b2b98ad3089b3d49a.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pre/build/.module-cache/manifest/b80a1315b4d322b7ebba657b2b98ad3089b3d49a.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pre/build/.module-cache/c00008371abd2866378851737f5eb8c316f78d3f.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pre/build/.module-cache/manifest/c00008371abd2866378851737f5eb8c316f78d3f.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pre/build/.module-cache/c4b454a5dc01f598d11251e8bd5dacc1277620c6.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pre/build/.module-cache/manifest/c4b454a5dc01f598d11251e8bd5dacc1277620c6.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pre/build/.module-cache/c940070c94a45c15c0e0a7defa091db58588e01d.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pre/build/.module-cache/manifest/c940070c94a45c15c0e0a7defa091db58588e01d.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pre/build/.module-cache/caa24de16bff629d8b3e698ef671c122d217d45c.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pre/build/.module-cache/manifest/caa24de16bff629d8b3e698ef671c122d217d45c.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pre/build/.module-cache/d5e10898ca790596a2e84cba6a06844fea5c3b6a.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pre/build/.module-cache/manifest/d5e10898ca790596a2e84cba6a06844fea5c3b6a.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pre/build/.module-cache/d7f9a6da70c4f0207669ac12d0835ceace7d2a10.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pre/build/.module-cache/manifest/d7f9a6da70c4f0207669ac12d0835ceace7d2a10.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pre/build/.module-cache/deead32c5f2259928793635f7ae44141f360a5d5.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pre/build/.module-cache/manifest/deead32c5f2259928793635f7ae44141f360a5d5.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pre/build/.module-cache/ea1d1d23613ed25f435955837b51d260de6d0d24.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pre/build/.module-cache/manifest/ea1d1d23613ed25f435955837b51d260de6d0d24.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pre/build/.module-cache/f04394961d50ee42360b46d77fab8ee896bcaae0.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pre/build/.module-cache/manifest/f04394961d50ee42360b46d77fab8ee896bcaae0.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pre/build/.module-cache/f2d1760c2b52efc6d089a84d289146e0ac9b2845.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pre/build/.module-cache/manifest/f2d1760c2b52efc6d089a84d289146e0ac9b2845.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pre/build/.module-cache/f456beead54ae4d752e5e9dfc3703c6b8a57054d.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pre/build/.module-cache/manifest/f456beead54ae4d752e5e9dfc3703c6b8a57054d.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pre/build/.module-cache/f5cd995e72a64d274a48ae7f028494598f5d66c2.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pre/build/.module-cache/manifest/f5cd995e72a64d274a48ae7f028494598f5d66c2.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pre/build/.module-cache/f644e6bd6b60df8dfdd1dff94872b3c1a4702b2a.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pre/build/.module-cache/manifest/f644e6bd6b60df8dfdd1dff94872b3c1a4702b2a.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pre/build/.module-cache/f8e1e9b6913bfae341fff5982afaf823c38ebb1a.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pre/build/.module-cache/manifest/f8e1e9b6913bfae341fff5982afaf823c38ebb1a.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pre/build/.module-cache/fe949ed23a5af661e875c4aa507f365a160e476d.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pre/build/.module-cache/manifest/fe949ed23a5af661e875c4aa507f365a160e476d.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pre/build/.module-cache/ffca557b7f268a59c86b5336f4035718ed588ee2.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pre/build/.module-cache/manifest/ffca557b7f268a59c86b5336f4035718ed588ee2.json" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/pre/build/components/Achievements.js" afterPath="$PROJECT_DIR$/pre/build/components/Achievements.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/pre/src/components/Achievements.js" afterPath="$PROJECT_DIR$/pre/src/components/Achievements.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/pre/build/containers/App.js" afterPath="$PROJECT_DIR$/pre/build/containers/App.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/pre/src/containers/App.js" afterPath="$PROJECT_DIR$/pre/src/containers/App.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/pre/build/components/Contestant.js" afterPath="$PROJECT_DIR$/pre/build/components/Contestant.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/pre/src/components/Contestant.js" afterPath="$PROJECT_DIR$/pre/src/components/Contestant.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/pre/build/containers/Fantasy.js" afterPath="$PROJECT_DIR$/pre/build/containers/Fantasy.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/pre/src/containers/Fantasy.js" afterPath="$PROJECT_DIR$/pre/src/containers/Fantasy.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/pre/build/components/Questions.js" afterPath="$PROJECT_DIR$/pre/build/components/Questions.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/pre/src/components/Questions.js" afterPath="$PROJECT_DIR$/pre/src/components/Questions.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/pre/build/components/SignIn.js" afterPath="$PROJECT_DIR$/pre/build/components/SignIn.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/pre/src/components/SignIn.js" afterPath="$PROJECT_DIR$/pre/src/components/SignIn.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/pre/build/components/Tribes.js" afterPath="$PROJECT_DIR$/pre/build/components/Tribes.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/pre/src/components/Tribes.js" afterPath="$PROJECT_DIR$/pre/src/components/Tribes.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/pre/build/components/Week.js" afterPath="$PROJECT_DIR$/pre/build/components/Week.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/pre/src/components/Week.js" afterPath="$PROJECT_DIR$/pre/src/components/Week.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/bundle.js.map" afterPath="$PROJECT_DIR$/public/bundle.js.map" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/bundle.js" afterPath="$PROJECT_DIR$/public/bundle.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/routes/index.js" afterPath="$PROJECT_DIR$/routes/index.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/package.json" afterPath="$PROJECT_DIR$/package.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/body-parser/package.json" afterPath="$PROJECT_DIR$/node_modules/body-parser/package.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/body-parser/node_modules/depd/package.json" afterPath="$PROJECT_DIR$/node_modules/body-parser/node_modules/depd/package.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/body-parser/node_modules/iconv-lite/package.json" afterPath="$PROJECT_DIR$/node_modules/body-parser/node_modules/iconv-lite/package.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/body-parser/node_modules/qs/package.json" afterPath="$PROJECT_DIR$/node_modules/body-parser/node_modules/qs/package.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/body-parser/node_modules/type-is/node_modules/mime-types/package.json" afterPath="$PROJECT_DIR$/node_modules/body-parser/node_modules/type-is/node_modules/mime-types/package.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/body-parser/node_modules/type-is/node_modules/mime-types/node_modules/mime-db/package.json" afterPath="$PROJECT_DIR$/node_modules/body-parser/node_modules/type-is/node_modules/mime-types/node_modules/mime-db/package.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/react-immutable-proptypes/package.json" afterPath="$PROJECT_DIR$/node_modules/react-immutable-proptypes/package.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/superagent/package.json" afterPath="$PROJECT_DIR$/node_modules/superagent/package.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/superagent/node_modules/methods/package.json" afterPath="$PROJECT_DIR$/node_modules/superagent/node_modules/methods/package.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/superagent/node_modules/mime/package.json" afterPath="$PROJECT_DIR$/node_modules/superagent/node_modules/mime/package.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/pre/build/reducers.js" afterPath="$PROJECT_DIR$/pre/build/reducers.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/pre/src/reducers.js" afterPath="$PROJECT_DIR$/pre/src/reducers.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server.js" afterPath="$PROJECT_DIR$/server.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/stylesheets/style.css" afterPath="$PROJECT_DIR$/public/stylesheets/style.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/stylesheets/style.styl" afterPath="$PROJECT_DIR$/public/stylesheets/style.styl" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="survivor-fantasy-league.iws" />
@@ -169,7 +202,7 @@
         <entry file="file://$PROJECT_DIR$/requests-response.js">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="51" column="17" selection-start-line="41" selection-start-column="12" selection-end-line="41" selection-end-column="26" />
+              <caret line="105" column="12" selection-start-line="105" selection-start-column="12" selection-end-line="105" selection-end-column="12" />
               <folding>
                 <element signature="n#!!doc" expanded="true" />
               </folding>
@@ -181,17 +214,7 @@
         <entry file="file://$PROJECT_DIR$/routes/index.js">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="53" column="0" selection-start-line="53" selection-start-column="0" selection-end-line="53" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="package.json" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/package.json">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-18.961538">
-              <caret line="31" column="4" selection-start-line="30" selection-start-column="13" selection-end-line="30" selection-end-column="14" />
+              <caret line="31" column="34" selection-start-line="31" selection-start-column="34" selection-end-line="31" selection-end-column="34" />
               <folding />
             </state>
           </provider>
@@ -201,7 +224,7 @@
         <entry file="file://$PROJECT_DIR$/routes/admin.js">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="43" column="4" selection-start-line="43" selection-start-column="4" selection-end-line="43" selection-end-column="24" />
+              <caret line="98" column="0" selection-start-line="41" selection-start-column="0" selection-end-line="98" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -217,14 +240,24 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="server.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="server.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/server.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-0.3196347">
+            <state vertical-scroll-proportion="0.0">
               <caret line="53" column="0" selection-start-line="53" selection-start-column="0" selection-end-line="53" selection-end-column="0" />
               <folding>
                 <element signature="n#!!doc" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="package.json" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/package.json">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.59587955">
+              <caret line="30" column="16" selection-start-line="30" selection-start-column="16" selection-end-line="30" selection-end-column="16" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -245,7 +278,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/package.json" />
         <option value="$PROJECT_DIR$/bin/www" />
         <option value="$PROJECT_DIR$/views/error.jade" />
         <option value="$PROJECT_DIR$/Procfile" />
@@ -253,8 +285,10 @@
         <option value="$PROJECT_DIR$/routes/admin.js" />
         <option value="$PROJECT_DIR$/pre/src/actions.js" />
         <option value="$PROJECT_DIR$/pre/build/actions.js" />
+        <option value="$PROJECT_DIR$/requests-response.js" />
         <option value="$PROJECT_DIR$/routes/index.js" />
         <option value="$PROJECT_DIR$/server.js" />
+        <option value="$PROJECT_DIR$/package.json" />
       </list>
     </option>
   </component>
@@ -908,7 +942,7 @@
       <created>1442855657342</created>
       <option name="number" value="Default" />
       <updated>1442855657342</updated>
-      <workItem from="1442855659225" duration="34415000" />
+      <workItem from="1442855659225" duration="45357000" />
     </task>
     <task id="LOCAL-00001" summary="merging codes together">
       <created>1442857447003</created>
@@ -934,15 +968,21 @@
       <option name="project" value="LOCAL" />
       <updated>1442933281082</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="pushing index.js">
+      <created>1442999299948</created>
+      <option name="number" value="00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1442999299949</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="34415000" />
+    <option name="totallyTimeSpent" value="45357000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -956,7 +996,7 @@
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.25945947" sideWeight="0.4978678" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.25" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.25" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32972974" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -989,7 +1029,8 @@
     <MESSAGE value="connected to mongolab success" />
     <MESSAGE value="preparing for pull from yotam" />
     <MESSAGE value="Merge branch 'master' of https://github.com/yotamDvir/survivor-fantasy-league&#10;&#10;Conflicts:&#10;&#9;pre/build/actions.js&#10;&#9;server.js&#10;" />
-    <option name="LAST_COMMIT_MESSAGE" value="Merge branch 'master' of https://github.com/yotamDvir/survivor-fantasy-league&#10;&#10;Conflicts:&#10;&#9;pre/build/actions.js&#10;&#9;server.js&#10;" />
+    <MESSAGE value="pushing index.js" />
+    <option name="LAST_COMMIT_MESSAGE" value="pushing index.js" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -1083,26 +1124,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/package.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-18.961538">
-          <caret line="31" column="4" selection-start-line="30" selection-start-column="13" selection-end-line="30" selection-end-column="14" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/routes/users.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/routes/admin.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="43" column="4" selection-start-line="43" selection-start-column="4" selection-end-line="43" selection-end-column="24" />
           <folding />
         </state>
       </provider>
@@ -1115,10 +1140,18 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/routes/admin.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="98" column="0" selection-start-line="41" selection-start-column="0" selection-end-line="98" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/requests-response.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="51" column="17" selection-start-line="41" selection-start-column="12" selection-end-line="41" selection-end-column="26" />
+          <caret line="105" column="12" selection-start-line="105" selection-start-column="12" selection-end-line="105" selection-end-column="12" />
           <folding>
             <element signature="n#!!doc" expanded="true" />
           </folding>
@@ -1128,18 +1161,26 @@
     <entry file="file://$PROJECT_DIR$/routes/index.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="53" column="0" selection-start-line="53" selection-start-column="0" selection-end-line="53" selection-end-column="0" />
+          <caret line="31" column="34" selection-start-line="31" selection-start-column="34" selection-end-line="31" selection-end-column="34" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/server.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-0.3196347">
+        <state vertical-scroll-proportion="0.0">
           <caret line="53" column="0" selection-start-line="53" selection-start-column="0" selection-end-line="53" selection-end-column="0" />
           <folding>
             <element signature="n#!!doc" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/package.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.59587955">
+          <caret line="30" column="16" selection-start-line="30" selection-start-column="16" selection-end-line="30" selection-end-column="16" />
+          <folding />
         </state>
       </provider>
     </entry>
