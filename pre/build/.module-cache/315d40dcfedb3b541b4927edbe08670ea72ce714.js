@@ -12,23 +12,17 @@ var SignIn = React.createClass({displayName: "SignIn",
 	}
 	,
 	render: function () {
-		var style = {
-			margin: 'auto',
-			maxWidth: '480px',
-			display: 'flex',
-			flexDirection: 'column'
-		}
 		return (
-			React.createElement("div", {style: style}, 
-				React.createElement("div", {className: "input-group input-group-lg"}, 
+			React.createElement("div", null, 
+				React.createElement("div", {className: "input-group"}, 
 					React.createElement("span", {className: "input-group-addon", id: "username-addon"}, "@"), 
 					React.createElement("input", {type: "text", value: this.state.username, className: "form-control", placeholder: "Username", "aria-describedby": "username-addon", onChange: this.onTextUser}), 
 					React.createElement("span", {className: "input-group-btn"}, 
 						React.createElement("button", {className: "btn btn-danger" + (this.state.isAdmin ? " active" : ""), type: "button", onClick: this.toggleAdmin}, "Admin")
 					)
 				), 
-				React.createElement("div", {className: "input-group input-group-lg"}, 
-					React.createElement("span", {className: "input-group-addon", id: "password-addon"}, "§"), 
+				React.createElement("div", {className: "input-group"}, 
+					React.createElement("span", {className: "input-group-addon", id: "password-addon"}, "P"), 
 					React.createElement("input", {type: "text", value: this.state.password, className: "form-control", placeholder: "Password", "aria-describedby": "password-addon", onChange: this.onTextPass})
 				), 
 				React.createElement("button", {className: "btn btn-success", type: "button", disabled: this.props.user.get('attempting'), onClick: this.submit}, "Submit"), 

@@ -3,26 +3,32 @@ var React = require('react');
 var SignIn = React.createClass({
 	getInitialState: function () {
 		return {
-			username: 'v'
+			username: 'some_user'
 			,
-			password: ''
+			password: 'a_password'
 			,
-			isAdmin: true
+			isAdmin: false
 		};
 	}
 	,
 	render: function () {
+		var style = {
+			margin: 'auto',
+			maxWidth: '480px',
+			display: 'flex',
+			flexDirection: 'column'
+		}
 		return (
-			<div>
-				<div className="input-group">
+			<div style={style}>
+				<div className="input-group input-group-lg">
 					<span className="input-group-addon" id="username-addon">@</span>
 					<input type="text" value={this.state.username} className="form-control" placeholder="Username" aria-describedby="username-addon" onChange={this.onTextUser} />
 					<span className="input-group-btn">
 						<button className={"btn btn-danger" + (this.state.isAdmin ? " active" : "")} type="button" onClick={this.toggleAdmin}>Admin</button>
 					</span>
 				</div>
-				<div className="input-group">
-					<span className="input-group-addon" id="password-addon">P</span>
+				<div className="input-group input-group-lg">
+					<span className="input-group-addon" id="password-addon">§</span>
 					<input type="text" value={this.state.password} className="form-control" placeholder="Password" aria-describedby="password-addon" onChange={this.onTextPass} />
 				</div>
 				<button className={"btn btn-success"} type="button" disabled={this.props.user.get('attempting')} onClick={this.submit}>Submit</button>

@@ -28,7 +28,7 @@ var SignIn = React.createClass({displayName: "SignIn",
 					)
 				), 
 				React.createElement("div", {className: "input-group input-group-lg"}, 
-					React.createElement("span", {className: "input-group-addon", id: "password-addon"}, "§"), 
+					React.createElement("span", {className: "input-group-addon", id: "password-addon"}, "P"), 
 					React.createElement("input", {type: "text", value: this.state.password, className: "form-control", placeholder: "Password", "aria-describedby": "password-addon", onChange: this.onTextPass})
 				), 
 				React.createElement("button", {className: "btn btn-success", type: "button", disabled: this.props.user.get('attempting'), onClick: this.submit}, "Submit"), 
