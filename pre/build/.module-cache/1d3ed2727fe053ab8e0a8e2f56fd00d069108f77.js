@@ -89,20 +89,20 @@ var Question = React.createClass({displayName: "Question",
 	questionRender: function () {
 		var details = this.props.details;
 		var style = {
-			flexGrow: '2',
-			marginRight: '10px'
+			flex: '1 0'
 		}
 		if (!details.get('isEditing')) {
 			return React.createElement("h3", {className: "panel-title", style: style}, details.get('question'));
 		} else {
 			return (
-				React.createElement("input", {
-					type: "text", 
-					className: "form-control", 
-					placeholder: "question", 
-					style: style, 
-					value: this.state.question, 
-					onChange: this.onText}
+				React.createElement("div", {className: "input-group", style: style}, 
+					React.createElement("input", {
+						type: "text", 
+						className: "form-control", 
+						placeholder: "question", 
+						value: this.state.question, 
+						onChange: this.onText}
+					)
 				)
 			);
 		}
@@ -165,15 +165,14 @@ var Question = React.createClass({displayName: "Question",
 		var isAdmin = this.props.user.get('isAdmin');
 		var isEditing = this.props.details.get('isEditing');
 		var style = {
-			flexGrow: '0',
-			flexShrink: '0',
+			flex: '0 1',
 			alignSelf: 'flex-start'
 		}
 		if (!isAdmin) {
 			return;
 		}
 		return (
-			React.createElement("div", {className: "btn-group", role: "group", "aria-label": "...", style: style}, 
+			React.createElement("div", {className: "btn-group", role: "group", "aria-label": "..."}, 
 				React.createElement(AdminToolbox, {
 					tool: isEditing ? "discard" : "edit", 
 					handleClick: handlers.edit.bind(null, questionId, !!isEditing)}

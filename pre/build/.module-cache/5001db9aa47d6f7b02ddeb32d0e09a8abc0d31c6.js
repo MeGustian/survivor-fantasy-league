@@ -89,8 +89,8 @@ var Question = React.createClass({displayName: "Question",
 	questionRender: function () {
 		var details = this.props.details;
 		var style = {
-			flexGrow: '2',
-			marginRight: '10px'
+			flexBasis: '100%',
+			flexShrink: '2'
 		}
 		if (!details.get('isEditing')) {
 			return React.createElement("h3", {className: "panel-title", style: style}, details.get('question'));
@@ -166,7 +166,6 @@ var Question = React.createClass({displayName: "Question",
 		var isEditing = this.props.details.get('isEditing');
 		var style = {
 			flexGrow: '0',
-			flexShrink: '0',
 			alignSelf: 'flex-start'
 		}
 		if (!isAdmin) {

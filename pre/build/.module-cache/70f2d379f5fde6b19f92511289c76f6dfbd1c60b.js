@@ -166,7 +166,6 @@ var Question = React.createClass({displayName: "Question",
 		var isEditing = this.props.details.get('isEditing');
 		var style = {
 			flexGrow: '0',
-			flexShrink: '0',
 			alignSelf: 'flex-start'
 		}
 		if (!isAdmin) {

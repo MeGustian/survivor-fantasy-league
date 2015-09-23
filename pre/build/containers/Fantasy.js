@@ -16,10 +16,10 @@ var ImmutablePropTypes = require('react-immutable-proptypes');
 
 var Fantasy = React.createClass({displayName: "Fantasy",
 	render: function () {
-		console.log(this.props.contestants.toString());
-		console.log(this.props.week.toString());
-		console.log(this.props.questions.toString());
-		console.log(this.props.user.toString());
+		// console.log(this.props.contestants.toString());
+		// console.log(this.props.week.toString());
+		// console.log(this.props.questions.toString());
+		// console.log(this.props.user.toString());
 		var p = this.props;
 		var dispatch = p.dispatch;
 		var fullContestants = p.week.get('contestantStatus').mergeDeep(p.contestants);

@@ -66,17 +66,15 @@ var Question = React.createClass({displayName: "Question",
 		var stylePanelHeadingInner = {
 			display: 'flex',
 			flexDirection: 'row',
-			justifyContent: 'space-between',
-			alignItems: 'center'
+			justifyContent: 'space-around',
+			alignItems: 'flex-basis'
 		};
 		return (
 			React.createElement("div", {className: "question", style: styleQuestion}, 
 				React.createElement("div", {className: "panel panel-default"}, 
 					React.createElement("div", {className: "panel-heading"}, 
-						React.createElement("div", {style: stylePanelHeadingInner}, 
-							this.questionRender(), 
-							this.tools()
-						)
+						this.tools(), 
+						this.questionRender()
 					), 
 					React.createElement("div", {className: "panel-body"}, 
 						this.bodyRender()
@@ -88,21 +86,18 @@ var Question = React.createClass({displayName: "Question",
 	,
 	questionRender: function () {
 		var details = this.props.details;
-		var style = {
-			flexGrow: '2',
-			marginRight: '10px'
-		}
 		if (!details.get('isEditing')) {
-			return React.createElement("h3", {className: "panel-title", style: style}, details.get('question'));
+			return React.createElement("h3", {className: "panel-title"}, details.get('question'));
 		} else {
 			return (
-				React.createElement("input", {
-					type: "text", 
-					className: "form-control", 
-					placeholder: "question", 
-					style: style, 
-					value: this.state.question, 
-					onChange: this.onText}
+				React.createElement("div", {className: "input-group"}, 
+					React.createElement("input", {
+						type: "text", 
+						className: "form-control", 
+						placeholder: "question", 
+						value: this.state.question, 
+						onChange: this.onText}
+					)
 				)
 			);
 		}
@@ -164,16 +159,11 @@ var Question = React.createClass({displayName: "Question",
 		var questionId = this.props.questionId;
 		var isAdmin = this.props.user.get('isAdmin');
 		var isEditing = this.props.details.get('isEditing');
-		var style = {
-			flexGrow: '0',
-			flexShrink: '0',
-			alignSelf: 'flex-start'
-		}
 		if (!isAdmin) {
 			return;
 		}
 		return (
-			React.createElement("div", {className: "btn-group", role: "group", "aria-label": "...", style: style}, 
+			React.createElement("div", {className: "btn-group", role: "group", "aria-label": "..."}, 
 				React.createElement(AdminToolbox, {
 					tool: isEditing ? "discard" : "edit", 
 					handleClick: handlers.edit.bind(null, questionId, !!isEditing)}

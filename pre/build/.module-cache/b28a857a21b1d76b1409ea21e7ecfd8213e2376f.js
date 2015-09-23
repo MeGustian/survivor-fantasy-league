@@ -89,20 +89,21 @@ var Question = React.createClass({displayName: "Question",
 	questionRender: function () {
 		var details = this.props.details;
 		var style = {
-			flexGrow: '2',
-			marginRight: '10px'
+			flexBasis: '60%',
+			flexGrow: '2'
 		}
 		if (!details.get('isEditing')) {
 			return React.createElement("h3", {className: "panel-title", style: style}, details.get('question'));
 		} else {
 			return (
-				React.createElement("input", {
-					type: "text", 
-					className: "form-control", 
-					placeholder: "question", 
-					style: style, 
-					value: this.state.question, 
-					onChange: this.onText}
+				React.createElement("div", {className: "input-group", style: style}, 
+					React.createElement("input", {
+						type: "text", 
+						className: "form-control", 
+						placeholder: "question", 
+						value: this.state.question, 
+						onChange: this.onText}
+					)
 				)
 			);
 		}
@@ -166,7 +167,6 @@ var Question = React.createClass({displayName: "Question",
 		var isEditing = this.props.details.get('isEditing');
 		var style = {
 			flexGrow: '0',
-			flexShrink: '0',
 			alignSelf: 'flex-start'
 		}
 		if (!isAdmin) {
