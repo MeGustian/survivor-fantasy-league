@@ -22,6 +22,8 @@
     "redux-promise-middleware": "^0.2.1",
     "redux-thunk": "^1.0.0",
     "stylus": "*",
+    "promise": "*",
+    "superagent": "*",
     "superagent-promise": "^1.0.3"
   },
   "scripts": {

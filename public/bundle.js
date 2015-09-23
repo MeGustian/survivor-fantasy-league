@@ -41020,23 +41020,17 @@ var Achievements = React.createClass({displayName: "Achievements",
 		return (
 			React.createElement("div", {className: "col-xs-8"}, 
 			React.createElement("div", {className: "row"}, 
-			React.createElement("div", {className: "col-xs-6"}, 
+			React.createElement("div", {className: "col-xs-12 col-md-6"}, 
 				React.createElement("div", {className: "panel panel-success"}, 
 					React.createElement("div", {className: "panel-heading"}, "Good achievements"), 
-					React.createElement("div", {className: "panel-body"}, 
-						React.createElement("p", null, "Listed below are ", this.props.contestantName+'\'s', " good achievments.")
-					), 
 					React.createElement("ul", {className: "list-group"}, 
 						this.items('good')
 					)
 				)
 			), 
-			React.createElement("div", {className: "col-xs-6"}, 
+			React.createElement("div", {className: "col-xs-12 col-md-6"}, 
 				React.createElement("div", {className: "panel panel-danger"}, 
 					React.createElement("div", {className: "panel-heading"}, "Bad achievements"), 
-					React.createElement("div", {className: "panel-body"}, 
-						React.createElement("p", null, "Listed below are ", this.props.contestantName+'\'s', " bad achievments.")
-					), 
 					React.createElement("ul", {className: "list-group"}, 
 						this.items('bad')
 					)
@@ -41164,7 +41158,7 @@ var Contestant = React.createClass({displayName: "Contestant",
 		return (
 			React.createElement("div", {className: "col-xs-4"}, 
 			React.createElement("div", {className: "thumbnail"}, 
-				React.createElement("img", {src: "/images/" + this.props.name + ".png", alt: this.props.name}), 
+				React.createElement("img", {src: "/images/contestants/" + this.props.name + ".jpg", alt: this.props.name}), 
 				React.createElement("div", {className: "caption"}, 
 					React.createElement("h3", null, this.props.name)
 				)
@@ -41458,12 +41452,6 @@ var Achievements = require('./Achievements');
 
 var Tribes = React.createClass({displayName: "Tribes",
 	render: function () {
-		// var style = {
-		// 	display: 'flex',
-		// 	flexDirection: 'row',
-		// 	justifyContent: 'space-around',
-		// 	alignItems: 'baseline'
-		// };
 		return (
 			React.createElement("div", {className: "row"}, 
 				this.tribes()
@@ -41472,12 +41460,6 @@ var Tribes = React.createClass({displayName: "Tribes",
 	}
 	,
 	tribes: function () {
-		// var style = {
-		// 	display: 'flex',
-		// 	flexDirection: 'column',
-		// 	justifyContent: 'flex-start',
-		// 	alignItems: 'center'
-		// };
 		var that = this;
 		return this.props.contestants
 			.groupBy(function (contestant) {
@@ -41494,6 +41476,21 @@ var Tribes = React.createClass({displayName: "Tribes",
 	,
 	membersOf: function (tribe) {
 		var that = this;
+		// var gotVotesFrom = tribe
+		// 	.groupBy(function (contestant) {
+		// 		return contestant.get('votedFor');
+		// 	})
+		// 	.map(function (voteOrigins) {
+		// 		return voteOrigins.keySeq();
+		// 	});
+		// var votedOut = gotVotesFrom
+		// 	.maxBy(function (voteOrigins) {
+		// 		return voteOrigin.count();
+		// 	}, function (a, b) {
+		// 		a > b;
+		// 	});
+		// console.log(gotVotesFrom.toString());
+		// console.log(votedOut);
 		return tribe.map(function (contestant, id) {
 			return (
 				React.createElement("div", {className: "row", key: id}, 
@@ -41704,13 +41701,37 @@ var Fantasy = React.createClass({displayName: "Fantasy",
 	}
 	,
 	propTypes: {
-		week: ImmutablePropTypes.map.isRequired
+		week: ImmutablePropTypes.contains({
+			selected: PropTypes.number,
+			count: PropTypes.number,
+			contestantStatus: ImmutablePropTypes.mapOf(
+				ImmutablePropTypes.contains({
+					tribe: PropTypes.string.isRequired,
+					votedFor: PropTypes.string.isRequired,
+					achievements: ImmutablePropTypes.mapOf(PropTypes.bool).isRequired
+				})
+			)
+		}).isRequired
 		,
-		contestants: ImmutablePropTypes.map.isRequired
+		contestants: ImmutablePropTypes.mapOf(
+			ImmutablePropTypes.contains({
+				name: PropTypes.string.isRequired
+			})
+		).isRequired
 		,
-		questions: ImmutablePropTypes.map.isRequired
+		questions: ImmutablePropTypes.mapOf(
+			ImmutablePropTypes.contains({
+				question: PropTypes.string.isRequired,
+				answer: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
+				type: PropTypes.string.isRequired
+			})
+		).isRequired
 		,
-		user: ImmutablePropTypes.map.isRequired
+		user: ImmutablePropTypes.contains({
+			userId: PropTypes.string,
+			isAdmin: PropTypes.bool.isRequired,
+			attempting: PropTypes.bool.isRequired
+		}).isRequired
 	}
 });
 
@@ -41794,7 +41815,7 @@ var initialState = {};
 // different if the action was relevant.
 
 // State represents sign-in status.
-initialState.user = Map({userId: null, isAdmin: false, attempting: false});
+initialState.user = Map({userId: undefined, isAdmin: false, attempting: false});
 var user = function (prev, action) {
 	if (typeof prev === 'undefined') {
 		return initialState.user;
@@ -41818,7 +41839,7 @@ var user = function (prev, action) {
 };
 
 // State represents week.
-initialState.week = Map({selected: null, count: 16, contestantStatus: Map()});
+initialState.week = Map({selected: undefined, count: 16, contestantStatus: Map()});
 var week = function (prev, action) {
 	if (typeof prev === 'undefined') {
 		return initialState.week;
@@ -41886,12 +41907,6 @@ var questions = function (prev, action) {
 		return initialState.questions;
 	}
 	switch (action.type) {
-		// case 'CREATE-QUESTION-PEND':
-		// return prev
-		// 	.set('pending', Map({
-		// 		question: '',
-		// 		type: action.payload.type
-		// 	}));
 		case 'CREATE-QUESTION-DONE':
 		return prev
 			.set(action.payload.questionId, Map({
@@ -41976,26 +41991,6 @@ var questions = function (prev, action) {
 		return prev;
 	}
 };
-
-// State represents all achievements of the selected week.
-// var achievements = function (prev, action) {
-// 	if (typeof prev === 'undefined') {
-// 		return initialState.achievements;
-// 	}
-// 	switch (action.type) {
-// 		case 'TOGGLE-ACHIEVEMENT':
-// 		return prev.updateIn([
-// 			action.payload.contestant,
-// 			action.payload.achievement
-// 		], function (isAchieved) {
-// 			return !isAchieved;
-// 		});
-// 		case 'WEEK-VIEW-SELECT':
-// 		return prev; // TODO: match the achievements.
-// 		default:
-// 		return prev;
-// 	}
-// }
 
 var reducers = combineReducers({
 	week,

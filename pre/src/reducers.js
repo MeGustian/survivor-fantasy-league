@@ -15,7 +15,7 @@ var initialState = {};
 // different if the action was relevant.
 
 // State represents sign-in status.
-initialState.user = Map({userId: null, isAdmin: false, attempting: false});
+initialState.user = Map({userId: undefined, isAdmin: false, attempting: false});
 var user = function (prev, action) {
 	if (typeof prev === 'undefined') {
 		return initialState.user;
@@ -39,7 +39,7 @@ var user = function (prev, action) {
 };
 
 // State represents week.
-initialState.week = Map({selected: null, count: 16, contestantStatus: Map()});
+initialState.week = Map({selected: undefined, count: 16, contestantStatus: Map()});
 var week = function (prev, action) {
 	if (typeof prev === 'undefined') {
 		return initialState.week;
@@ -107,12 +107,6 @@ var questions = function (prev, action) {
 		return initialState.questions;
 	}
 	switch (action.type) {
-		// case 'CREATE-QUESTION-PEND':
-		// return prev
-		// 	.set('pending', Map({
-		// 		question: '',
-		// 		type: action.payload.type
-		// 	}));
 		case 'CREATE-QUESTION-DONE':
 		return prev
 			.set(action.payload.questionId, Map({
@@ -197,26 +191,6 @@ var questions = function (prev, action) {
 		return prev;
 	}
 };
-
-// State represents all achievements of the selected week.
-// var achievements = function (prev, action) {
-// 	if (typeof prev === 'undefined') {
-// 		return initialState.achievements;
-// 	}
-// 	switch (action.type) {
-// 		case 'TOGGLE-ACHIEVEMENT':
-// 		return prev.updateIn([
-// 			action.payload.contestant,
-// 			action.payload.achievement
-// 		], function (isAchieved) {
-// 			return !isAchieved;
-// 		});
-// 		case 'WEEK-VIEW-SELECT':
-// 		return prev; // TODO: match the achievements.
-// 		default:
-// 		return prev;
-// 	}
-// }
 
 var reducers = combineReducers({
 	week,

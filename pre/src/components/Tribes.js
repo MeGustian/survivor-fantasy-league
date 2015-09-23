@@ -4,12 +4,6 @@ var Achievements = require('./Achievements');
 
 var Tribes = React.createClass({
 	render: function () {
-		// var style = {
-		// 	display: 'flex',
-		// 	flexDirection: 'row',
-		// 	justifyContent: 'space-around',
-		// 	alignItems: 'baseline'
-		// };
 		return (
 			<div className="row">
 				{this.tribes()}
@@ -18,12 +12,6 @@ var Tribes = React.createClass({
 	}
 	,
 	tribes: function () {
-		// var style = {
-		// 	display: 'flex',
-		// 	flexDirection: 'column',
-		// 	justifyContent: 'flex-start',
-		// 	alignItems: 'center'
-		// };
 		var that = this;
 		return this.props.contestants
 			.groupBy(function (contestant) {
@@ -40,6 +28,21 @@ var Tribes = React.createClass({
 	,
 	membersOf: function (tribe) {
 		var that = this;
+		// var gotVotesFrom = tribe
+		// 	.groupBy(function (contestant) {
+		// 		return contestant.get('votedFor');
+		// 	})
+		// 	.map(function (voteOrigins) {
+		// 		return voteOrigins.keySeq();
+		// 	});
+		// var votedOut = gotVotesFrom
+		// 	.maxBy(function (voteOrigins) {
+		// 		return voteOrigin.count();
+		// 	}, function (a, b) {
+		// 		a > b;
+		// 	});
+		// console.log(gotVotesFrom.toString());
+		// console.log(votedOut);
 		return tribe.map(function (contestant, id) {
 			return (
 				<div className="row" key={id}>

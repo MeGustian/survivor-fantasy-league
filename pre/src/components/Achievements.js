@@ -6,23 +6,17 @@ var Achievements = React.createClass({
 		return (
 			<div className="col-xs-8">
 			<div className="row">
-			<div className="col-xs-6">
+			<div className="col-xs-12 col-md-6">
 				<div className="panel panel-success">
 					<div className="panel-heading">Good achievements</div>
-					<div className="panel-body">
-						<p>Listed below are {this.props.contestantName+'\'s'} good achievments.</p>
-					</div>
 					<ul className="list-group">
 						{this.items('good')}
 					</ul>
 				</div>
 			</div>
-			<div className="col-xs-6">
+			<div className="col-xs-12 col-md-6">
 				<div className="panel panel-danger">
 					<div className="panel-heading">Bad achievements</div>
-					<div className="panel-body">
-						<p>Listed below are {this.props.contestantName+'\'s'} bad achievments.</p>
-					</div>
 					<ul className="list-group">
 						{this.items('bad')}
 					</ul>

@@ -110,7 +110,7 @@ var week = function (req, number) {
 			},
 			"7": {
 				tribe: "Abu",
-				votedFor: "3",
+				votedFor: "2",
 				achievements: {
 					"TREE-MAIL": true,
 					"HASHTAG": true
@@ -170,8 +170,6 @@ var week = function (req, number) {
 	};
 };
 app.post('/sign-in', function (req, res) {
-	console.log('sign-in');
-	console.log(req.body);
 	if (true) {
 		res.status(200).send(week(req, 1));
 	}
