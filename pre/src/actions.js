@@ -54,13 +54,11 @@ var actionParser = function (data, requestType, circumstances) {
 // };
 
 // Sign out.
-// act.signOut = function () {
-// 	return {
-// 		type: 'SIGN-OUT'
-// 		,
-// 		payload: undefined
-// 	};
-// };
+act.signOut = function () {
+	return actionParser({
+		meta: 'SIGN-OUT'
+	}, 'GET', {url: '/sign-out'});
+};
 
 // Get information after being signed in.
 act.getInitial = function () {
@@ -126,7 +124,7 @@ act.updateQuestion = function (circumstances, questionId, question, answer, type
 // User submit answer to questions.
 act.userAnswer = function (circumstances, questionId, answer) {
 	return actionParser({
-		meta: 'ANSWER',
+		meta: 'USER-ANSWER',
 		questionId: questionId,
 		answer: answer
 	}, 'POST', circumstances);

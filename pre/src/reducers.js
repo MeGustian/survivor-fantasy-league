@@ -32,6 +32,8 @@ var user = function (prev, action) {
 		return prev
 			.set('attempting', false)
 			.set('error', true);
+		case 'SIGN-OUT-DONE':
+		return initialState.week;
 		// case 'SIGN-OUT':
 		// return initialState.user
 		// case 'SIGN-IN-PEND':
@@ -61,6 +63,8 @@ var week = function (prev, action) {
 			.set('selected', action.payload.weekNumber)
 			.set('count', action.payload.weekNumber)
 			.set('contestantStatus', I.fromJS(action.payload.contestantStatus));
+		case 'SIGN-OUT-DONE':
+		return initialState.week;
 		case 'WEEK-VIEW-SELECT-DONE':
 		return prev
 			.set('selected', action.payload.weekNumber)
@@ -119,6 +123,8 @@ var contestants = function (prev, action) {
 	switch (action.type) {
 		case 'GET-INITIAL-DONE':
 		return I.fromJS(action.payload.allContestants);
+		case 'SIGN-OUT-DONE':
+		return initialState.week;
 		default:
 		return prev;
 	}
@@ -142,6 +148,8 @@ var questions = function (prev, action) {
 					return truthiness(boolString);
 				})
 			});
+		case 'SIGN-OUT-DONE':
+		return initialState.week;
 		case 'CREATE-QUESTION-DONE':
 		return prev
 			.set(action.payload.questionId, Map({

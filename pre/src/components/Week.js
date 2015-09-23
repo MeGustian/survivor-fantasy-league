@@ -9,6 +9,7 @@ var Week = React.createClass({
 				<div className="container-fluid">
 					<ul className="pagination">
 						{this.items()}
+						<li onClick={this.props.signOut} key="sign-out"><a>{"sign out"}</a></li>
 					</ul>
 				</div>
 			</nav>
