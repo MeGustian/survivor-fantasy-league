@@ -1,11 +1,15 @@
 body {
   padding-top: 120px;
 }
-body footer {
+#root {
+  margin-left: 5%;
+  margin-right: 5%;
+}
+#root footer {
   position: fixed;
   bottom: 0;
   color: #f00;
 }
-body footer p:before {
+#root footer p:before {
   content: "!";
 }

@@ -4,13 +4,13 @@ var AchievementsObj = require('../objects/Achievements');
 var Achievements = React.createClass({
 	render: function () {
 		return (
-			<div className="col-xs-8">
+			<div className="col-xs-6">
 			<div className="row">
 			<div className="col-xs-12 col-md-6">
 				<div className="panel panel-success">
 					<div className="panel-heading">
 						Good achievements
-						<span className="badge pull-right">{this.score('good')}</span>
+						<span className="badge pull-right">{this.props.scores.get('good')}</span>
 					</div>
 					<ul className="list-group">
 						{this.items('good')}
@@ -21,7 +21,7 @@ var Achievements = React.createClass({
 				<div className="panel panel-danger">
 					<div className="panel-heading">
 						Bad achievements
-						<span className="badge pull-right">{this.score('bad')}</span>
+						<span className="badge pull-right">{this.props.scores.get('bad')}</span>
 					</div>
 					<ul className="list-group">
 						{this.items('bad')}

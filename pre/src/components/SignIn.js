@@ -1,5 +1,6 @@
 var React = require('react');
 
+// NOTE: Depricated!
 var SignIn = React.createClass({
 	getInitialState: function () {
 		return {

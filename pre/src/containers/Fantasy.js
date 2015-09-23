@@ -9,24 +9,32 @@ var SignIn = require('../components/SignIn'); // Explain...
 var Week = require('../components/Week'); // Explain...
 var Tribes = require('../components/Tribes'); // Explain...
 var Questions = require('../components/Questions'); // Explain...
+var computerOfState = require('../compute-state');
 var act = require('../actions'); // Give dispatch an action payload.
 // TODO: Do I need `immutable`?
 var I = require('immutable');
 var ImmutablePropTypes = require('react-immutable-proptypes');
 
+
 var Fantasy = React.createClass({
 	render: function () {
-		console.group('contestants');
-			console.log(this.props.contestants.toString());
+		console.groupCollapsed('rendering with...');
+		// console.group('contestants');
+		// 	console.log(this.props.contestants.toString());
+		// console.groupEnd();
+		// console.group('week');
+		// 	console.log(this.props.week.toString());
+		// console.groupEnd();
+		// console.group('questions');
+		// 	console.log(this.props.questions.toString());
+		// console.groupEnd();
+		// console.group('user');
+		// 	console.log(this.props.user.toString());
+		// console.groupEnd();
+		console.group('compute-state');
+			var computedState = computerOfState(this.props);
+			console.log(computedState.scores.toString());
 		console.groupEnd();
-		console.group('week');
-			console.log(this.props.week.toString());
-		console.groupEnd();
-		console.group('questions');
-			console.log(this.props.questions.toString());
-		console.groupEnd();
-		console.group('user');
-			console.log(this.props.user.toString());
 		console.groupEnd();
 		var p = this.props;
 		var dispatch = p.dispatch;
@@ -57,6 +65,9 @@ var Fantasy = React.createClass({
 					selected={p.week.get('selected')}
 					count={p.week.get('count')}
 					key="week"
+					signOut={function () {
+						return dispatch(act.signOut());
+					}}
 					onWeekChoice={function (number) {
 						return dispatch(act.selectWeekView(circumstances, number));
 					}}
@@ -87,6 +98,7 @@ var Fantasy = React.createClass({
 				<Tribes
 					user={p.user}
 					contestants={fullContestants}
+					scores={computedState.scores}
 					toggleAchievement={function (achievementCode, contestantId, hasAchieved) {
 						return dispatch(act.toggleAchievement(circumstances, achievementCode, contestantId, hasAchieved));
 					}}
@@ -113,7 +125,7 @@ var Fantasy = React.createClass({
 			ImmutablePropTypes.contains({
 				firstName: PropTypes.string.isRequired,
 				lastName: PropTypes.string.isRequired,
-				age: PropTypes.number.isRequired,
+				age: PropTypes.string.isRequired,
 				occupation: PropTypes.string.isRequired,
 				previousSeason: PropTypes.string.isRequired,
 				place: PropTypes.string.isRequired
