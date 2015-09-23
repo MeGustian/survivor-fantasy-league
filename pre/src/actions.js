@@ -44,22 +44,29 @@ var actionParser = function (data, requestType, circumstances) {
 };
 
 // Sign in.
-act.signIn = function (username, password, isAdmin) {
-	return actionParser({
-		meta: 'SIGN-IN',
-		username: username,
-		password: password,
-		isAdmin: isAdmin
-	}, 'POST', {url: '/sign-in'});
-};
+// act.signIn = function (username, password, isAdmin) {
+// 	return actionParser({
+// 		meta: 'SIGN-IN',
+// 		username: username,
+// 		password: password,
+// 		isAdmin: isAdmin
+// 	}, 'POST', {url: '/sign-in'});
+// };
 
 // Sign out.
-act.signOut = function () {
-	return {
-		type: 'SIGN-OUT'
-		,
-		payload: undefined
-	};
+// act.signOut = function () {
+// 	return {
+// 		type: 'SIGN-OUT'
+// 		,
+// 		payload: undefined
+// 	};
+// };
+
+// Get information after being signed in.
+act.getInitial = function () {
+	return actionParser({
+		meta: 'GET-INITIAL'
+	}, 'GET', {url: '/initial'});
 };
 
 // Player/Admin chose a week to view.

@@ -14,25 +14,36 @@ var initialState = {};
 // different if the action was relevant.
 
 // State represents sign-in status.
-initialState.user = Map({userId: undefined, isAdmin: false, attempting: false});
+initialState.user = Map();
 var user = function (prev, action) {
 	if (typeof prev === 'undefined') {
 		return initialState.user;
 	}
 	switch (action.type) {
-		case 'SIGN-OUT':
-		return initialState.user
-		case 'SIGN-IN-PEND':
+		case 'GET-INITIAL-PEND':
 		return initialState.user
 			.set('attempting', true);
-		case 'SIGN-IN-DONE':
-		return initialState.user
-			.set('userId', action.payload.username)
-			.set('isAdmin', truthiness(action.payload.isAdmin))
-			.remove('error');
-		case 'SIGN-IN-FAIL':
-		return initialState.user
+		case 'GET-INITIAL-DONE':
+		return prev
+			.set('attempting', false)
+			.set('signedIn', true)
+			.set('isAdmin', truthiness(action.payload.isAdmin));
+		case 'GET-INITIAL-FAIL':
+		return prev
+			.set('attempting', false)
 			.set('error', true);
+		// case 'SIGN-OUT':
+		// return initialState.user
+		// case 'SIGN-IN-PEND':
+		// return initialState.user
+		// 	.set('attempting', true);
+		// case 'SIGN-IN-DONE':
+		// return initialState.user
+		// 	.set('isAdmin', truthiness(action.payload.isAdmin))
+		// 	.remove('error');
+		// case 'SIGN-IN-FAIL':
+		// return initialState.user
+		// 	.set('error', true);
 		default:
 		return prev;
 	}
@@ -45,7 +56,7 @@ var week = function (prev, action) {
 		return initialState.week;
 	}
 	switch (action.type) {
-		case 'SIGN-IN-DONE':
+		case 'GET-INITIAL-DONE':
 		return prev
 			.set('selected', action.payload.weekNumber)
 			.set('count', action.payload.weekNumber)
@@ -106,7 +117,7 @@ var contestants = function (prev, action) {
 		return initialState.contestants;
 	}
 	switch (action.type) {
-		case 'SIGN-IN-DONE':
+		case 'GET-INITIAL-DONE':
 		return I.fromJS(action.payload.allContestants);
 		default:
 		return prev;
@@ -120,7 +131,7 @@ var questions = function (prev, action) {
 		return initialState.questions;
 	}
 	switch (action.type) {
-		case 'SIGN-IN-DONE':
+		case 'GET-INITIAL-DONE':
 		case 'WEEK-VIEW-SELECT-DONE':
 		return I.fromJS(action.payload.questions)
 			.map(function (details, id) {

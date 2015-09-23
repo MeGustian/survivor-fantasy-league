@@ -179,7 +179,7 @@ var week = function (req, number) {
 		}
 	};
 };
-app.post('/sign-in', function (req, res) {
+app.get('/initial', function (req, res) {
 	if (true) {
 		res.status(200).send(week(req, 1));
 	}

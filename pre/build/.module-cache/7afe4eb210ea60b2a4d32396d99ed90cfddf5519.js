@@ -56,7 +56,7 @@ var week = function (prev, action) {
 		return initialState.week;
 	}
 	switch (action.type) {
-		case 'GET-INITIAL-DONE':
+		case 'SIGN-IN-DONE':
 		return prev
 			.set('selected', action.payload.weekNumber)
 			.set('count', action.payload.weekNumber)
@@ -117,7 +117,7 @@ var contestants = function (prev, action) {
 		return initialState.contestants;
 	}
 	switch (action.type) {
-		case 'GET-INITIAL-DONE':
+		case 'SIGN-IN-DONE':
 		return I.fromJS(action.payload.allContestants);
 		default:
 		return prev;
@@ -131,7 +131,7 @@ var questions = function (prev, action) {
 		return initialState.questions;
 	}
 	switch (action.type) {
-		case 'GET-INITIAL-DONE':
+		case 'SIGN-IN-DONE':
 		case 'WEEK-VIEW-SELECT-DONE':
 		return I.fromJS(action.payload.questions)
 			.map(function (details, id) {

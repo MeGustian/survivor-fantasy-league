@@ -1,24 +1,17 @@
 /**
 * Contract: request-response.
 * The primary property is the meta tag of both in request and response.
-* Three dots after only entry in object mean there are multiple entries like
-* it of the same shape.
+* Three dots after only entry in object mean there are multiple (0 or more)
+* entries like it of the same shape.
 */
 {
-	'SIGN-IN': {
-		method: 'POST'
+	'GET-INITIAL': {
+		method: 'GET'
 		,
-		url: '/sign-in'
-		,
-		req: {
-			username: <String>
-			,
-			password: <String>
+		url: '/initial'
 		}
 		,
 		res: {
-			username: <String>
-			,
 			isAdmin: <Boolean>
 			,
 			questions: {
@@ -32,6 +25,7 @@
 				<ContestantId>: {
 					tribe: <String>,
 					votedFor: <contestantId>,
+					votedOut: [Boolean],
 					achievements: {
 						<String>: <Boolean>
 						.
@@ -61,23 +55,18 @@
 			}
 		}
 	}
-	// ,
-	// 'SIGN-OUT': {
-	// 	method: 'POST'
-	// 	,
-	// 	url: '/sign-out'
-	// }
 	,
 	'WEEK-VIEW-SELECT': {
 		method: 'GET'
 		,
-		url: '/:userId/:weekNumber'
+		url: '/:weekNumber'
 		,
 		res: {
 			contestantStatus: {
 				<ContestantId>: {
 					tribe: <String>,
 					votedFor: <ContestantId>,
+					votedOut: [Boolean],
 					achievements: {
 						<String>: <Boolean>
 						.
@@ -95,7 +84,7 @@
 	}
 	,
 	'CREATE-WEEK': {
-		url: '/:userId/:weekNumber'
+		url: '/:weekNumber'
 		,
 		req: {
 			removedContestants: [
@@ -107,7 +96,7 @@
 		}
 	,
 	'TOGGLE-ACHIEVEMENT': {
-		url: '/:userId/:weekNumber'
+		url: '/:weekNumber'
 		,
 		req: {
 			contestantId: <ContestantId>
@@ -126,7 +115,7 @@
 	'USER-ANSWER': {
 		method: 'POST'
 		,
-		url: '/:userId/:weekNumber'
+		url: '/:weekNumber'
 		,
 		req: {
 			questionId: <QuestionId>
@@ -140,7 +129,7 @@
 	}
 	,
 	'CREATE-QUESTION': {
-		url: '/:userId/:weekNumber'
+		url: '/:weekNumber'
 		,
 		req: {
 			type: <String>
@@ -155,7 +144,7 @@
 	'REMOVE-QUESTION': {
 		method: 'POST'
 		,
-		url: '/:userId/:weekNumber'
+		url: '/:weekNumber'
 		,
 		req: {
 			questionId: <QuestionId>
@@ -169,7 +158,7 @@
 	'UPDATE-QUESTION': {
 		method: 'POST'
 		,
-		url: '/:userId/:weekNumber'
+		url: '/:weekNumber'
 		,
 		req: {
 			questionId: <QuestionId>

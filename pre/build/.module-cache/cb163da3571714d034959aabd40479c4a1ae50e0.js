@@ -66,7 +66,7 @@ var actionParser = function (data, requestType, circumstances) {
 act.getInitial = function () {
 	return actionParser({
 		meta: 'GET-INITIAL'
-	}, 'GET', {url: '/initial'});
+	}, 'GET', '/initial');
 };
 
 // Player/Admin chose a week to view.

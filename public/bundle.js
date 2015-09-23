@@ -40918,22 +40918,29 @@ var actionParser = function (data, requestType, circumstances) {
 };
 
 // Sign in.
-act.signIn = function (username, password, isAdmin) {
-	return actionParser({
-		meta: 'SIGN-IN',
-		username: username,
-		password: password,
-		isAdmin: isAdmin
-	}, 'POST', {url: '/sign-in'});
-};
+// act.signIn = function (username, password, isAdmin) {
+// 	return actionParser({
+// 		meta: 'SIGN-IN',
+// 		username: username,
+// 		password: password,
+// 		isAdmin: isAdmin
+// 	}, 'POST', {url: '/sign-in'});
+// };
 
 // Sign out.
-act.signOut = function () {
-	return {
-		type: 'SIGN-OUT'
-		,
-		payload: undefined
-	};
+// act.signOut = function () {
+// 	return {
+// 		type: 'SIGN-OUT'
+// 		,
+// 		payload: undefined
+// 	};
+// };
+
+// Get information after being signed in.
+act.getInitial = function () {
+	return actionParser({
+		meta: 'GET-INITIAL'
+	}, 'GET', {url: '/initial'});
 };
 
 // Player/Admin chose a week to view.
@@ -41697,10 +41704,20 @@ var Fantasy = React.createClass({displayName: "Fantasy",
 			userId: p.user.get('userId')
 		};
 		// console.log(fullContestants.toString());
-		if (!p.user.get('userId')) {
-			return React.createElement(SignIn, {user: p.user, submit: function (username, password, isAdmin) {
-				return dispatch(act.signIn(username, password, isAdmin));
-			}})
+		// if (!p.user.get('userId')) {
+		// 	return <SignIn user={p.user} submit={function (username, password, isAdmin) {
+		// 		return dispatch(act.signIn(username, password, isAdmin));
+		// 	}}/>
+		// }
+		if (p.user.get('error')) {
+			return React.createElement("div", {className: "alert alert-danger", role: "alert"}, "failed!");
+		}
+		if (p.user.get('attempting')) {
+			return React.createElement("div", {className: "alert alert-info", role: "alert"}, "loading...");
+		}
+		if (!p.user.get('signedIn')) {
+			dispatch(act.getInitial());
+			return React.createElement("div", {className: "alert alert-info", role: "alert"}, "signing in...");
 		}
 		return (
 			React.createElement("div", null, 
@@ -41782,8 +41799,8 @@ var Fantasy = React.createClass({displayName: "Fantasy",
 		,
 		user: ImmutablePropTypes.contains({
 			userId: PropTypes.string,
-			isAdmin: PropTypes.bool.isRequired,
-			attempting: PropTypes.bool.isRequired
+			isAdmin: PropTypes.bool,
+			attempting: PropTypes.bool
 		}).isRequired
 	}
 });
@@ -41863,25 +41880,36 @@ var initialState = {};
 // different if the action was relevant.
 
 // State represents sign-in status.
-initialState.user = Map({userId: undefined, isAdmin: false, attempting: false});
+initialState.user = Map();
 var user = function (prev, action) {
 	if (typeof prev === 'undefined') {
 		return initialState.user;
 	}
 	switch (action.type) {
-		case 'SIGN-OUT':
-		return initialState.user
-		case 'SIGN-IN-PEND':
+		case 'GET-INITIAL-PEND':
 		return initialState.user
 			.set('attempting', true);
-		case 'SIGN-IN-DONE':
-		return initialState.user
-			.set('userId', action.payload.username)
-			.set('isAdmin', truthiness(action.payload.isAdmin))
-			.remove('error');
-		case 'SIGN-IN-FAIL':
-		return initialState.user
+		case 'GET-INITIAL-DONE':
+		return prev
+			.set('attempting', false)
+			.set('signedIn', true)
+			.set('isAdmin', truthiness(action.payload.isAdmin));
+		case 'GET-INITIAL-FAIL':
+		return prev
+			.set('attempting', false)
 			.set('error', true);
+		// case 'SIGN-OUT':
+		// return initialState.user
+		// case 'SIGN-IN-PEND':
+		// return initialState.user
+		// 	.set('attempting', true);
+		// case 'SIGN-IN-DONE':
+		// return initialState.user
+		// 	.set('isAdmin', truthiness(action.payload.isAdmin))
+		// 	.remove('error');
+		// case 'SIGN-IN-FAIL':
+		// return initialState.user
+		// 	.set('error', true);
 		default:
 		return prev;
 	}
@@ -41894,7 +41922,7 @@ var week = function (prev, action) {
 		return initialState.week;
 	}
 	switch (action.type) {
-		case 'SIGN-IN-DONE':
+		case 'GET-INITIAL-DONE':
 		return prev
 			.set('selected', action.payload.weekNumber)
 			.set('count', action.payload.weekNumber)
@@ -41955,7 +41983,7 @@ var contestants = function (prev, action) {
 		return initialState.contestants;
 	}
 	switch (action.type) {
-		case 'SIGN-IN-DONE':
+		case 'GET-INITIAL-DONE':
 		return I.fromJS(action.payload.allContestants);
 		default:
 		return prev;
@@ -41969,7 +41997,7 @@ var questions = function (prev, action) {
 		return initialState.questions;
 	}
 	switch (action.type) {
-		case 'SIGN-IN-DONE':
+		case 'GET-INITIAL-DONE':
 		case 'WEEK-VIEW-SELECT-DONE':
 		return I.fromJS(action.payload.questions)
 			.map(function (details, id) {

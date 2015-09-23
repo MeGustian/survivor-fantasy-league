@@ -14,7 +14,7 @@ var act = require('../actions'); // Give dispatch an action payload.
 var I = require('immutable');
 var ImmutablePropTypes = require('react-immutable-proptypes');
 
-var Fantasy = React.createClass({
+var Fantasy = React.createClass({displayName: "Fantasy",
 	render: function () {
 		// console.log(this.props.contestants.toString());
 		// console.log(this.props.week.toString());
@@ -34,32 +34,32 @@ var Fantasy = React.createClass({
 		// 	}}/>
 		// }
 		if (p.user.get('error')) {
-			return <div className="alert alert-danger" role="alert">{"failed!"}</div>;
+			return React.createElement("div", {className: "alert alert-danger", role: "alert"}, "failed!");
 		}
 		if (p.user.get('attempting')) {
-			return <div className="alert alert-info" role="alert">{"loading..."}</div>;
+			return React.createElement("div", {className: "alert alert-info", role: "alert"}, "loading...");
 		}
 		if (!p.user.get('signedIn')) {
-			dispatch(act.getInitial());
-			return <div className="alert alert-info" role="alert">{"signing in..."}</div>;
+			dispatch(act.getInitial())
+			return React.createElement("div", {className: "alert alert-info", role: "alert"}, "signing in...");
 		}
 		return (
-			<div>
-				<Week
-					user={p.user}
-					selected={p.week.get('selected')}
-					count={p.week.get('count')}
-					key="week"
-					onWeekChoice={function (number) {
+			React.createElement("div", null, 
+				React.createElement(Week, {
+					user: p.user, 
+					selected: p.week.get('selected'), 
+					count: p.week.get('count'), 
+					key: "week", 
+					onWeekChoice: function (number) {
 						return dispatch(act.selectWeekView(circumstances, number));
 					}}
-				/>
-				<Questions
-					user={p.user}
-					questions={p.questions}
-					contestants={fullContestants}
-					key="questions"
-					dispatcher={{
+				), 
+				React.createElement(Questions, {
+					user: p.user, 
+					questions: p.questions, 
+					contestants: fullContestants, 
+					key: "questions", 
+					dispatcher: {
 						userAnswer: function (questionId, answer) {
 							return dispatch(act.userAnswer(circumstances, questionId, answer));
 						},
@@ -76,16 +76,16 @@ var Fantasy = React.createClass({
 							return dispatch(act.removeQuestion(circumstances, questionId));
 						}
 					}}
-				/>
-				<Tribes
-					user={p.user}
-					contestants={fullContestants}
-					toggleAchievement={function (achievementCode, contestantId, hasAchieved) {
+				), 
+				React.createElement(Tribes, {
+					user: p.user, 
+					contestants: fullContestants, 
+					toggleAchievement: function (achievementCode, contestantId, hasAchieved) {
 						return dispatch(act.toggleAchievement(circumstances, achievementCode, contestantId, hasAchieved));
-					}}
-					key="tribes"
-				/>
-			</div>
+					}, 
+					key: "tribes"}
+				)
+			)
 		);
 	}
 	,
@@ -123,8 +123,8 @@ var Fantasy = React.createClass({
 		,
 		user: ImmutablePropTypes.contains({
 			userId: PropTypes.string,
-			isAdmin: PropTypes.bool,
-			attempting: PropTypes.bool
+			isAdmin: PropTypes.bool.isRequired,
+			attempting: PropTypes.bool.isRequired
 		}).isRequired
 	}
 });
