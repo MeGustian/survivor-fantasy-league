@@ -53,7 +53,7 @@ var Tribes = React.createClass({
 					<Achievements
 						contestant={id}
 						isAdmin={that.props.user.get('isAdmin')}
-						marked={contestant.get('achievements')}
+						achievements={contestant.get('achievements')}
 						toggleAchievement={that.props.toggleAchievement}
 					/>
 				</div>

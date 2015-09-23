@@ -21,6 +21,6 @@ var Achievements = Map({
 		text: 'Destroyed food or other tribe stuff.',
 		points: -200
 	})
-})
+});
 
 module.exports = Achievements;

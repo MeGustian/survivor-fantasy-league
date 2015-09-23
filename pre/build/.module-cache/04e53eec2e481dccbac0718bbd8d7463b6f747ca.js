@@ -1,35 +1,35 @@
 var React = require('react');
 var AchievementsObj = require('../objects/Achievements');
 
-var Achievements = React.createClass({
+var Achievements = React.createClass({displayName: "Achievements",
 	render: function () {
 		return (
-			<div className="col-xs-8">
-			<div className="row">
-			<div className="col-xs-12 col-md-6">
-				<div className="panel panel-success">
-					<div className="panel-heading">
-						Good achievements
-						<span className="badge pull-right">{this.score('good')}</span>
-					</div>
-					<ul className="list-group">
-						{this.items('good')}
-					</ul>
-				</div>
-			</div>
-			<div className="col-xs-12 col-md-6">
-				<div className="panel panel-danger">
-					<div className="panel-heading">
-						Bad achievements
-						<span className="badge pull-right">{this.score('bad')}</span>
-					</div>
-					<ul className="list-group">
-						{this.items('bad')}
-					</ul>
-				</div>
-			</div>
-			</div>
-			</div>
+			React.createElement("div", {className: "col-xs-8"}, 
+			React.createElement("div", {className: "row"}, 
+			React.createElement("div", {className: "col-xs-12 col-md-6"}, 
+				React.createElement("div", {className: "panel panel-success"}, 
+					React.createElement("div", {className: "panel-heading"}, 
+						"Good achievements", 
+						React.createElement("span", {className: "badge pull-right"}, this.score('good'))
+					), 
+					React.createElement("ul", {className: "list-group"}, 
+						this.items('good')
+					)
+				)
+			), 
+			React.createElement("div", {className: "col-xs-12 col-md-6"}, 
+				React.createElement("div", {className: "panel panel-danger"}, 
+					React.createElement("div", {className: "panel-heading"}, 
+						"Bad achievements", 
+						React.createElement("span", {className: "badge pull-right"}, this.score('bad'))
+					), 
+					React.createElement("ul", {className: "list-group"}, 
+						this.items('bad')
+					)
+				)
+			)
+			)
+			)
 		);
 	}
 	,
@@ -51,17 +51,17 @@ var Achievements = React.createClass({
 				var isAdmin = that.props.isAdmin; // TODO: Remove glyphs for none admins.
 				var hasAchieved = !!that.props.achievements.get(achievementCode);
 				return (
-					<li className="list-group-item" key={achievementCode}>
-						<span
-							className={"badge pull-right"}
-							onClick={that.toggleAchievement.bind(that, achievementCode, hasAchieved)}
-						>
-							{hasAchieved ? theAchievement.get('points') : 0}
-						</span>
-						<span style={{marginRight: '1em'}}>
-							{theAchievement.get('text')}
-						</span>
-					</li>
+					React.createElement("li", {className: "list-group-item", key: achievementCode}, 
+						React.createElement("span", {
+							className: "badge success pull-right", 
+							onClick: that.toggleAchievement.bind(that, achievementCode, hasAchieved)
+						}, 
+							theAchievement.get('points')
+						), 
+						React.createElement("span", {style: {marginRight: '1em'}}, 
+							theAchievement.get('text')
+						)
+					)
 				);
 				// if (!hasAchieved) {
 				// 	labelType = 'default';
