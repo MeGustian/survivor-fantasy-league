@@ -29,7 +29,7 @@ router.post('/sign-in', function (req, res) {
         console.log('inserting contestant status week' + weekCount);
         var weekData = toObject(docs);
         weekData = _.mapKeys(weekData, function(value, key){
-          return value['_id'].toHexString();
+          return value['contestantId'];
         });
         responseData['contestantStatus'] = weekData;
         responseData['weekNumber'] = weekCount;
@@ -41,7 +41,7 @@ router.post('/sign-in', function (req, res) {
           });
           responseData['allContestants'] = survivorData;
           console.log('sending ')
-          res.json(responseData);
+          res.status(200).json(responseData);
         });
       });
 
@@ -83,7 +83,7 @@ router.post('/:userId/:weekNumber', function(req, res) {
         console.log('inserting contestant status week' + weekCount);
         var weekData = toObject(docs);
         weekData = _.mapKeys(weekData, function (value, key) {
-          return value['_id'].toHexString();
+          return value['contestandId'];
         });
         responseData['contestantStatus'] = weekData;
         responseData['weekNumber'] = req.params.weekNumber;
@@ -94,21 +94,26 @@ router.post('/:userId/:weekNumber', function(req, res) {
     case 'TOGGLE-ACHIEVEMENT':
       var db = req.db;
       var collection = db.get('week' + req.params.weekNumber);
-      query[data['achievement']] = data['value'];
+      var setModifier = { $set: {}};
+      setModifier.$set['achievements.' + data['achievement']] = data['value'];
       collection.update(
-          { 'contestantId' : data['contestantId']},
-          {
-            $set: query
-          }
-      )
+        { 'contestantId' : data['contestantId']},
+          setModifier
+        ,
+        {
+          upsert : true
+        }
+      );
+      res.send(data);
+
       break;
 
     case 'CREATE-QUESTION':
       var db = req.db;
       var collection = db.get('questions');
-      collection.insert(query, function(err, doc){
+      collection.insert({'week': req.params.weekNumber}, function(err, doc){
         if (err) return;
-        res.json({ '_id' : doc['_id'], 'type' : ''});
+        res.json({ '_id' : doc['_id'], 'type' : data['type']});
       });
       break;
 
@@ -136,6 +141,8 @@ router.post('/:userId/:weekNumber', function(req, res) {
             $set: query
           }
       )
+      res.json({'questionId' : data['questionId']})
+
       break;
 
     default:

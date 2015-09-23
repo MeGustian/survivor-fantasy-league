@@ -96,13 +96,15 @@
 			contestantId: <ContestantId>
 			,
 			achievement: <String>
+
+			value : <boolean>
 		}
 		res: {
 			contestantId: <ContestantId>
 			,
 			achievement: <String>
-			// ,
-			// value: <Boolean>
+			,
+			value: <Boolean>
 		}
 	}
 	,
