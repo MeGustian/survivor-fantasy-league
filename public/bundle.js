@@ -40902,7 +40902,7 @@ var requestParser = function (data, requestType, url) {
 };
 
 var actionParser = function (data, requestType, circumstances) {
-	var url = circumstances.url || '/' + circumstances.userId + '/' + circumstances.weekNumber;
+	var url = circumstances.url || '/' + circumstances.weekNumber;
 	return {
 		meta: data.meta
 		,
@@ -40948,14 +40948,14 @@ act.generateNextWeek = function (circumstances, removedContestants) {
 	return actionParser({
 		meta: 'WEEK-VIEW-SELECT',
 		removedContestants: removedContestants
-	}, 'POST', {userId: circumstances.userId, weekNumber: circumstances.weekNumber + 1});
+	}, 'POST', {weekNumber: circumstances.weekNumber + 1});
 };
 
 // Player/Admin chose a week to view.
 act.selectWeekView = function (circumstances, number) {
 	return actionParser({
 		meta: 'WEEK-VIEW-SELECT'
-	}, 'GET', {userId: circumstances.userId, weekNumber: number});
+	}, 'GET', {weekNumber: number});
 };
 
 // Admin creates question.
@@ -41692,16 +41692,23 @@ var ImmutablePropTypes = require('react-immutable-proptypes');
 
 var Fantasy = React.createClass({displayName: "Fantasy",
 	render: function () {
-		// console.log(this.props.contestants.toString());
-		// console.log(this.props.week.toString());
-		// console.log(this.props.questions.toString());
-		// console.log(this.props.user.toString());
+		console.group('contestants');
+			console.log(this.props.contestants.toString());
+		console.groupEnd();
+		console.group('week');
+			console.log(this.props.week.toString());
+		console.groupEnd();
+		console.group('questions');
+			console.log(this.props.questions.toString());
+		console.groupEnd();
+		console.group('user');
+			console.log(this.props.user.toString());
+		console.groupEnd();
 		var p = this.props;
 		var dispatch = p.dispatch;
 		var fullContestants = p.week.get('contestantStatus').mergeDeep(p.contestants);
 		var circumstances = {
-			weekNumber: p.week.get('selected'),
-			userId: p.user.get('userId')
+			weekNumber: p.week.get('selected')
 		};
 		// console.log(fullContestants.toString());
 		// if (!p.user.get('userId')) {

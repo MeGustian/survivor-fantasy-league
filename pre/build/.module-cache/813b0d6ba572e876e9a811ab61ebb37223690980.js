@@ -74,14 +74,14 @@ act.generateNextWeek = function (circumstances, removedContestants) {
 	return actionParser({
 		meta: 'WEEK-VIEW-SELECT',
 		removedContestants: removedContestants
-	}, 'POST', {weekNumber: circumstances.weekNumber + 1});
+	}, 'POST', {userId: circumstances.userId, weekNumber: circumstances.weekNumber + 1});
 };
 
 // Player/Admin chose a week to view.
 act.selectWeekView = function (circumstances, number) {
 	return actionParser({
 		meta: 'WEEK-VIEW-SELECT'
-	}, 'GET', {weekNumber: number});
+	}, 'GET', {userId: circumstances.userId, weekNumber: number});
 };
 
 // Admin creates question.
@@ -131,7 +131,6 @@ act.userAnswer = function (circumstances, questionId, answer) {
 		answer: answer
 	}, 'POST', circumstances);
 };
-
 
 // Admin toggles achievement of contestant.
 act.toggleAchievement = function (circumstances, achievement, contestantId, hasAchieved) {

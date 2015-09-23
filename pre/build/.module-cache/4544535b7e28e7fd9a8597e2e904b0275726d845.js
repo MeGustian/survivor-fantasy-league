@@ -132,7 +132,6 @@ act.userAnswer = function (circumstances, questionId, answer) {
 	}, 'POST', circumstances);
 };
 
-
 // Admin toggles achievement of contestant.
 act.toggleAchievement = function (circumstances, achievement, contestantId, hasAchieved) {
 	return actionParser({
