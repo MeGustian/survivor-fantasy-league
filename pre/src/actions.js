@@ -28,7 +28,7 @@ var requestParser = function (data, requestType, url) {
 };
 
 var actionParser = function (data, requestType, circumstances) {
-	var url = circumstances.url || '/' + circumstances.userId + '/' + circumstances.weekNumber;
+	var url = circumstances.url || '/' + circumstances.weekNumber;
 	return {
 		meta: data.meta
 		,
@@ -74,14 +74,14 @@ act.generateNextWeek = function (circumstances, removedContestants) {
 	return actionParser({
 		meta: 'WEEK-VIEW-SELECT',
 		removedContestants: removedContestants
-	}, 'POST', {userId: circumstances.userId, weekNumber: circumstances.weekNumber + 1});
+	}, 'POST', {weekNumber: circumstances.weekNumber + 1});
 };
 
 // Player/Admin chose a week to view.
 act.selectWeekView = function (circumstances, number) {
 	return actionParser({
 		meta: 'WEEK-VIEW-SELECT'
-	}, 'GET', {userId: circumstances.userId, weekNumber: number});
+	}, 'GET', {weekNumber: number});
 };
 
 // Admin creates question.
