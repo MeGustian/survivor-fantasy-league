@@ -99,6 +99,16 @@ var week = function (req, number) {
 	return {
 		username: req.body.username,
 		isAdmin: req.body.isAdmin,
+		questions: {
+			"124": {
+				question: 'Bool?',
+				type: 'boolean'
+			},
+			"125": {
+				question: 'Cont?',
+				type: 'contestant'
+			}
+		},
 		contestantStatus: {
 			"1": {
 				tribe: "Abu",

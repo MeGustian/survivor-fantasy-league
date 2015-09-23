@@ -37,7 +37,14 @@ var Achievements = React.createClass({
 			return hasAchieved;
 		}).keySeq();
 		var relevant = AchievementsObj.filter(function (theAchievement) {
-			return theAchievement.get('alignment') === alignment;
+			switch (alignment) {
+				case 'good':
+				return theAchievement.get('points') > 0
+				case 'bad':
+				return theAchievement.get('points') < 0
+				default:
+				return false;
+			}
 		});
 		return relevant
 			.filter(function (theAchievement, achievementCode) {
@@ -47,8 +54,9 @@ var Achievements = React.createClass({
 			})
 			.map(function (theAchievement, achievementCode) {
 				var labelType;
-				var hasAchieved = marked.indexOf(achievementCode)<0;
-				if (hasAchieved) {
+				var isAdmin = that.props.isAdmin; // TODO: Remove glyphs for none admins.
+				var hasAchieved = !(marked.indexOf(achievementCode)<0);
+				if (!hasAchieved) {
 					labelType = 'default';
 					labelGlyph = 'remove-sign';
 				} else {
@@ -56,10 +64,10 @@ var Achievements = React.createClass({
 					labelGlyph = 'ok-sign';
 				}
 				return (
-					<li className="list-group-item">
+					<li className="list-group-item" key={achievementCode}>
 						<span
 							className={"pull-right label label-" + labelType}
-							onClick={that.toggleAchievement.bind(that, achievementCode)}
+							onClick={that.toggleAchievement.bind(that, achievementCode, hasAchieved)}
 							style={{fontFamily: 'monospace'}}
 						>
 							<span className={"glyphicon glyphicon-" + labelGlyph}></span>
@@ -72,9 +80,9 @@ var Achievements = React.createClass({
 			});
 	}
 	,
-	toggleAchievement: function (achievementCode) {
+	toggleAchievement: function (achievementCode, hasAchieved) {
 		var p = this.props;
-		if (p.isAdmin) p.toggleAchievement(achievementCode, p.contestant);
+		if (p.isAdmin) p.toggleAchievement(achievementCode, p.contestant, hasAchieved);
 	}
 });
 

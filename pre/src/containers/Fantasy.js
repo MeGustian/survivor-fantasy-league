@@ -70,8 +70,8 @@ var Fantasy = React.createClass({
 				<Tribes
 					user={p.user}
 					contestants={fullContestants}
-					toggleAchievement={function (achievementCode, contestantId) {
-						return dispatch(act.toggleAchievement(circumstances, achievementCode, contestantId));
+					toggleAchievement={function (achievementCode, contestantId, hasAchieved) {
+						return dispatch(act.toggleAchievement(circumstances, achievementCode, contestantId, hasAchieved));
 					}}
 					key="tribes"
 				/>
@@ -94,7 +94,12 @@ var Fantasy = React.createClass({
 		,
 		contestants: ImmutablePropTypes.mapOf(
 			ImmutablePropTypes.contains({
-				name: PropTypes.string.isRequired
+				firstName: PropTypes.string.isRequired,
+				lastName: PropTypes.string.isRequired,
+				age: PropTypes.number.isRequired,
+				occupation: PropTypes.string.isRequired,
+				previousSeason: PropTypes.string.isRequired,
+				place: PropTypes.string.isRequired
 			})
 		).isRequired
 		,

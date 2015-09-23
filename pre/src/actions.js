@@ -63,6 +63,14 @@ act.signOut = function () {
 };
 
 // Player/Admin chose a week to view.
+act.generateNextWeek = function (circumstances, removedContestants) {
+	return actionParser({
+		meta: 'WEEK-VIEW-SELECT',
+		removedContestants: removedContestants
+	}, 'POST', {userId: circumstances.userId, weekNumber: circumstances.weekNumber + 1});
+};
+
+// Player/Admin chose a week to view.
 act.selectWeekView = function (circumstances, number) {
 	return actionParser({
 		meta: 'WEEK-VIEW-SELECT'
@@ -118,15 +126,16 @@ act.userAnswer = function (circumstances, questionId, answer) {
 };
 
 // Admin toggles achievement of contestant.
-act.toggleAchievement = function (circumstances, achievement, contestantId) {
+act.toggleAchievement = function (circumstances, achievement, contestantId, hasAchieved) {
 	return actionParser({
 		meta: 'TOGGLE-ACHIEVEMENT',
 		achievement: achievement,
-		contestantId: contestantId
+		contestantId: contestantId,
+		value: !hasAchieved
 	}, 'POST', circumstances);
 };
 
-// Player choses contestants.
+// Player choses contestants. // TODO: Make this work.
 act.choose = function (listOfContestants) {
 	return {
 		type: 'PLAYER-CHOOSE-CONTESTANTS'

@@ -58,7 +58,7 @@ var SignIn = React.createClass({
 	failAlert: function () {
 		var p = this.props;
 		if (p.user.has('error')) {
-			return <div className="alert alert-danger" role="alert">{p.user.get('error')}</div>
+			return <div className="alert alert-danger" role="alert">{"Sign in failed!"}</div>
 		}
 	}
 })

@@ -21,6 +21,13 @@
 			,
 			isAdmin: <Boolean>
 			,
+			questions: {
+				<QuestionId>: <String>
+				.
+				.
+				.
+			}
+			,
 			contestantStatus: {
 				<ContestantId>: {
 					tribe: <String>,
@@ -41,14 +48,12 @@
 			,
 			allContestants: {
 				<ContestantId>: {
-					name: <String>,
-					// age: <Number>,
-					// profession: <String>,
-					// pastSeason: {
-					// 	number: <Number>,
-					// 	name: <String>,
-					// 	place: <Number>
-					// }
+					firstName: <String>,
+					lastName: <String>,
+					age: <Number>,
+					occupation: <String>,
+					previousSeason: <String>,
+					place: <String>
 				}
 				.
 				.
@@ -89,6 +94,18 @@
 		}
 	}
 	,
+	'CREATE-WEEK': {
+		url: '/:userId/:weekNumber'
+		,
+		req: {
+			removedContestants: [
+				<ContestantId>
+				.
+				.
+				.
+			]
+		}
+	,
 	'TOGGLE-ACHIEVEMENT': {
 		url: '/:userId/:weekNumber'
 		,
@@ -96,13 +113,13 @@
 			contestantId: <ContestantId>
 			,
 			achievement: <String>
+			,
+			value: <Boolean>
 		}
 		res: {
 			contestantId: <ContestantId>
 			,
 			achievement: <String>
-			// ,
-			// value: <Boolean>
 		}
 	}
 	,

@@ -40937,6 +40937,14 @@ act.signOut = function () {
 };
 
 // Player/Admin chose a week to view.
+act.generateNextWeek = function (circumstances, removedContestants) {
+	return actionParser({
+		meta: 'WEEK-VIEW-SELECT',
+		removedContestants: removedContestants
+	}, 'POST', {userId: circumstances.userId, weekNumber: circumstances.weekNumber + 1});
+};
+
+// Player/Admin chose a week to view.
 act.selectWeekView = function (circumstances, number) {
 	return actionParser({
 		meta: 'WEEK-VIEW-SELECT'
@@ -40992,15 +41000,16 @@ act.userAnswer = function (circumstances, questionId, answer) {
 };
 
 // Admin toggles achievement of contestant.
-act.toggleAchievement = function (circumstances, achievement, contestantId) {
+act.toggleAchievement = function (circumstances, achievement, contestantId, hasAchieved) {
 	return actionParser({
 		meta: 'TOGGLE-ACHIEVEMENT',
 		achievement: achievement,
-		contestantId: contestantId
+		contestantId: contestantId,
+		value: !hasAchieved
 	}, 'POST', circumstances);
 };
 
-// Player choses contestants.
+// Player choses contestants. // TODO: Make this work.
 act.choose = function (listOfContestants) {
 	return {
 		type: 'PLAYER-CHOOSE-CONTESTANTS'
@@ -41051,7 +41060,14 @@ var Achievements = React.createClass({displayName: "Achievements",
 			return hasAchieved;
 		}).keySeq();
 		var relevant = AchievementsObj.filter(function (theAchievement) {
-			return theAchievement.get('alignment') === alignment;
+			switch (alignment) {
+				case 'good':
+				return theAchievement.get('points') > 0
+				case 'bad':
+				return theAchievement.get('points') < 0
+				default:
+				return false;
+			}
 		});
 		return relevant
 			.filter(function (theAchievement, achievementCode) {
@@ -41061,8 +41077,9 @@ var Achievements = React.createClass({displayName: "Achievements",
 			})
 			.map(function (theAchievement, achievementCode) {
 				var labelType;
-				var hasAchieved = marked.indexOf(achievementCode)<0;
-				if (hasAchieved) {
+				var isAdmin = that.props.isAdmin; // TODO: Remove glyphs for none admins.
+				var hasAchieved = !(marked.indexOf(achievementCode)<0);
+				if (!hasAchieved) {
 					labelType = 'default';
 					labelGlyph = 'remove-sign';
 				} else {
@@ -41070,10 +41087,10 @@ var Achievements = React.createClass({displayName: "Achievements",
 					labelGlyph = 'ok-sign';
 				}
 				return (
-					React.createElement("li", {className: "list-group-item"}, 
+					React.createElement("li", {className: "list-group-item", key: achievementCode}, 
 						React.createElement("span", {
 							className: "pull-right label label-" + labelType, 
-							onClick: that.toggleAchievement.bind(that, achievementCode), 
+							onClick: that.toggleAchievement.bind(that, achievementCode, hasAchieved), 
 							style: {fontFamily: 'monospace'}
 						}, 
 							React.createElement("span", {className: "glyphicon glyphicon-" + labelGlyph})
@@ -41086,9 +41103,9 @@ var Achievements = React.createClass({displayName: "Achievements",
 			});
 	}
 	,
-	toggleAchievement: function (achievementCode) {
+	toggleAchievement: function (achievementCode, hasAchieved) {
 		var p = this.props;
-		if (p.isAdmin) p.toggleAchievement(achievementCode, p.contestant);
+		if (p.isAdmin) p.toggleAchievement(achievementCode, p.contestant, hasAchieved);
 	}
 });
 
@@ -41438,7 +41455,7 @@ var SignIn = React.createClass({displayName: "SignIn",
 	failAlert: function () {
 		var p = this.props;
 		if (p.user.has('error')) {
-			return React.createElement("div", {className: "alert alert-danger", role: "alert"}, p.user.get('error'))
+			return React.createElement("div", {className: "alert alert-danger", role: "alert"}, "Sign in failed!")
 		}
 	}
 })
@@ -41496,11 +41513,10 @@ var Tribes = React.createClass({displayName: "Tribes",
 				React.createElement("div", {className: "row", key: id}, 
 					React.createElement(Contestant, {
 						contestant: id, 
-						name: contestant.get('name')}
+						name: contestant.get('firstName') + " " + contestant.get('lastName')}
 					), 
 					React.createElement(Achievements, {
 						contestant: id, 
-						contestantName: contestant.get('name'), 
 						isAdmin: that.props.user.get('isAdmin'), 
 						marked: contestant.get('achievements'), 
 						toggleAchievement: that.props.toggleAchievement}
@@ -41691,8 +41707,8 @@ var Fantasy = React.createClass({displayName: "Fantasy",
 				React.createElement(Tribes, {
 					user: p.user, 
 					contestants: fullContestants, 
-					toggleAchievement: function (achievementCode, contestantId) {
-						return dispatch(act.toggleAchievement(circumstances, achievementCode, contestantId));
+					toggleAchievement: function (achievementCode, contestantId, hasAchieved) {
+						return dispatch(act.toggleAchievement(circumstances, achievementCode, contestantId, hasAchieved));
 					}, 
 					key: "tribes"}
 				)
@@ -41715,7 +41731,12 @@ var Fantasy = React.createClass({displayName: "Fantasy",
 		,
 		contestants: ImmutablePropTypes.mapOf(
 			ImmutablePropTypes.contains({
-				name: PropTypes.string.isRequired
+				firstName: PropTypes.string.isRequired,
+				lastName: PropTypes.string.isRequired,
+				age: PropTypes.number.isRequired,
+				occupation: PropTypes.string.isRequired,
+				previousSeason: PropTypes.string.isRequired,
+				place: PropTypes.string.isRequired
 			})
 		).isRequired
 		,
@@ -41772,25 +41793,21 @@ var Map = I.Map;
 var Achievements = Map({
 	"CRIED": Map({
 		text: 'Cried at least once during the episode.',
-		alignment: 'bad',
 		points: -20
 	})
 	,
 	"TREE-MAIL": Map({
 		text: 'Got tree mail for tribe.',
-		alignment: 'good',
 		points: 50
 	})
 	,
 	"HASHTAG": Map({
 		text: 'Said something or did something that got hashtaged.',
-		alignment: 'good',
 		points: 100
 	})
 	,
 	"DESTROYED-GOODS": Map({
 		text: 'Destroyed food or other tribe stuff.',
-		alignment: 'bad',
 		points: -200
 	})
 })
@@ -41807,8 +41824,7 @@ var Promise = this.Promise || require('promise');
 var request = require('superagent-promise')(require('superagent'), Promise);
 
 var initialState = {};
-// TODO: Install react-router (and react-redux-router) to change week switches
-// to URL path's.
+// TODO: Add server fail reducer to manage fails.
 
 // A reducer, which takes the state of the store an action passed from the
 // store, and returns a new state of the store. It will only return something
@@ -41829,10 +41845,11 @@ var user = function (prev, action) {
 		case 'SIGN-IN-DONE':
 		return initialState.user
 			.set('userId', action.payload.username)
-			.set('isAdmin', action.payload.isAdmin);
+			.set('isAdmin', truthiness(action.payload.isAdmin))
+			.remove('error');
 		case 'SIGN-IN-FAIL':
 		return initialState.user
-			.set('error', 'Sign-in failed!');
+			.set('error', true);
 		default:
 		return prev;
 	}
@@ -41846,10 +41863,27 @@ var week = function (prev, action) {
 	}
 	switch (action.type) {
 		case 'SIGN-IN-DONE':
+		return prev
+			.set('selected', action.payload.weekNumber)
+			.set('count', action.payload.weekNumber)
+			.set('contestantStatus', I.fromJS(action.payload.contestantStatus));
 		case 'WEEK-VIEW-SELECT-DONE':
 		return prev
 			.set('selected', action.payload.weekNumber)
 			.set('contestantStatus', I.fromJS(action.payload.contestantStatus));
+		case 'CREATE-WEEK-PEND':
+		return prev
+			.set('prev', prev)
+			.update('selected', function (n) {return n+1})
+			.update('count', function (n) {return n+1})
+			.filter('contestantStatus', function (contestant, id) {
+				return action.payload.removedContestants.indexOf(id)<0;
+			});
+		case 'CREATE-WEEK-DONE':
+		return prev;
+		case 'CREATE-WEEK-FAIL':
+		return prev
+			.get('prev');
 		case 'TOGGLE-ACHIEVEMENT-PEND':
 		return prev
 			.updateIn([
@@ -41863,7 +41897,12 @@ var week = function (prev, action) {
 		case 'TOGGLE-ACHIEVEMENT-DONE':
 		return prev;
 		case 'TOGGLE-ACHIEVEMENT-FAIL':
-		return prev
+		var success = checkProperties(action.payload, [
+			'contestantId',
+			'achievement'
+		]);
+		return !success ? prev
+		 	.set('error', true) : prev
 			.updateIn([
 				'contestantStatus',
 				action.payload.contestantId,
@@ -41892,21 +41931,23 @@ var contestants = function (prev, action) {
 };
 
 // State represents the questions and answers.
-initialState.questions = Map({
-	"124124": Map({
-		question: 'Bool?',
-		type: 'boolean'
-	}),
-	"35732": Map({
-		question: 'Contestant?',
-		type: 'contestant'
-	})
-});
+initialState.questions = Map();
 var questions = function (prev, action) {
 	if (typeof prev === 'undefined') {
 		return initialState.questions;
 	}
 	switch (action.type) {
+		case 'SIGN-IN-DONE':
+		case 'WEEK-VIEW-SELECT-DONE':
+		return I.fromJS(action.payload.questions)
+			.map(function (details, id) {
+				if (details.get('type') !== 'boolean' || !details.has('answer')) {
+					return details;
+				}
+				return details.update('answer', function (boolString) {
+					return truthiness(boolString);
+				})
+			});
 		case 'CREATE-QUESTION-DONE':
 		return prev
 			.set(action.payload.questionId, Map({
@@ -41932,7 +41973,11 @@ var questions = function (prev, action) {
 		case 'UPDATE-QUESTION-DONE':
 		return prev;
 		case 'UPDATE-QUESTION-FAIL':
-		return prev
+		var success = checkProperties(action.payload, [
+			'questionId'
+		]);
+		return !success ? prev
+		 	.set('error', true) : prev
 			.set(action.payload.questionId, prev.getIn([
 				action.payload.questionId,
 				'prev'
@@ -41955,7 +42000,11 @@ var questions = function (prev, action) {
 		return prev
 			.delete(action.payload.questionId);
 		case 'REMOVE-QUESTION-FAIL':
-		return prev
+		var success = checkProperties(action.payload, [
+			'questionId'
+		]);
+		return !success ? prev
+		 	.set('error', true) : prev
 			.deleteIn([
 				action.payload.questionId,
 				'removed'
@@ -41978,7 +42027,11 @@ var questions = function (prev, action) {
 				'prevAnswer'
 			]);
 		case 'ANSWER-FAIL':
-		return prev
+		var success = checkProperties(action.payload, [
+			'questionId'
+		]);
+		return !success ? prev
+		 	.set('error', true) : prev
 			.setIn([
 				action.payload.questionId,
 				'answer'
@@ -41998,6 +42051,22 @@ var reducers = combineReducers({
 	questions,
 	user
 });
+
+var truthiness = function (bool) {
+	if (typeof bool === 'boolean' || typeof bool === 'undefined' || bool === null) {
+		return !!bool;
+	}
+	if (typeof bool !== 'string') {
+		throw '`truthiness` cannot handle this bool\'s type!';
+	}
+	return bool.toLowerCase() === 'true';
+};
+
+var checkProperties = function (obj, props) {
+	return props.every(function (prop) {
+		return obj.hasOwnProperty(prop);
+	})
+}
 
 module.exports = reducers;
 
