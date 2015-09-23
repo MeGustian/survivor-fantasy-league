@@ -54,6 +54,98 @@ router.post('/sign-in', function (req, res) {
 
 });
 
+
+router.post('/:userId/:weekNumber', function(req, res) {
+  console.log('testing server...');
+  var data = req.body;
+  console.log(data['meta']);
+  var query = {};
+  switch (data['meta']) {
+    case 'USER-ANSWER':
+      var db = req.db;
+      var collection = db.get('users');
+      query[data['questionId']] = data['answer'];
+      collection.update(
+          { '_id' : req.params.userId},
+          {
+            $set: query
+          }
+      );
+      res.json({'questionId' : data['questionId']});
+
+      break;
+
+    case 'WEEK-VIEW-SELECT':
+      var responseData = {};
+      var db = req.db;
+      var week = db.get('week' + req.params.weekNumber);
+      week.find({}, {}, function(err, docs) {
+        console.log('inserting contestant status week' + weekCount);
+        var weekData = toObject(docs);
+        weekData = _.mapKeys(weekData, function (value, key) {
+          return value['_id'].toHexString();
+        });
+        responseData['contestantStatus'] = weekData;
+        responseData['weekNumber'] = req.params.weekNumber;
+        res.json(responseData);
+      });
+      break;
+    //TODO: TOGGLE-ACHIEVEMENT
+    case 'TOGGLE-ACHIEVEMENT':
+      var db = req.db;
+      var collection = db.get('week' + req.params.weekNumber);
+      query[data['achievement']] = data['value'];
+      collection.update(
+          { 'contestantId' : data['contestantId']},
+          {
+            $set: query
+          }
+      )
+      break;
+
+    case 'CREATE-QUESTION':
+      var db = req.db;
+      var collection = db.get('questions');
+      collection.insert(query, function(err, doc){
+        if (err) return;
+        res.json({ '_id' : doc['_id'], 'type' : ''});
+      });
+      break;
+
+    case 'REMOVE-QUESTION':
+      console.log('Inside REMOVE-QUESTION');
+      var db = req.db;
+      var collection = db.get('questions');
+      query['_id'] = data['questionId']
+      collection.remove(query);
+      res.send(data);
+      break;
+
+    case 'UPDATE-QUESTION':
+      var db = req.db;
+      var collection = db.get('questions');
+      if (typeof data['question'] !== 'undefined'){
+        query['question'] = data['question']
+      }
+      if (typeof data['answer'] !== 'undefined'){
+        query['answer'] = data['answer']
+      }
+      collection.update(
+          { _id : data['questionId']},
+          {
+            $set: query
+          }
+      )
+      break;
+
+    default:
+      console.log('Bad Request');
+
+  }
+});
+
+
+
 function toObject(arr) {
   var rv = {};
   for (var i = 0; i < arr.length; ++i)
