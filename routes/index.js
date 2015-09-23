@@ -90,14 +90,16 @@ router.get('/initial', function (req, res) {
             return value['_id'].toHexString();
           });
           responseData['allContestants'] = survivorData;
-          questions.find({'week': weekCount}, function(err, docs){
+          questions.find({'week': '' + weekCount}, function(err, docs){
             console.log('inserting weekly questions');
+            //console.log(docs);
             var questionData = toObject(docs);
             questionData = _.mapKeys(questionData, function(value, key){
               return value['_id'];
             });
             responseData['questions'] = questionData;
             console.log('sending');
+            //console.log(questionData);
             res.status(200).send(responseData);
           })
 
