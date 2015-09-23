@@ -45,22 +45,37 @@ var actionParser = function (data, requestType, circumstances) {
 };
 
 // Sign in.
-act.signIn = function (username, password, isAdmin) {
-	return actionParser({
-		meta: 'SIGN-IN',
-		username: username,
-		password: password,
-		isAdmin: isAdmin
-	}, 'POST', {url: '/sign-in'});
-};
+// act.signIn = function (username, password, isAdmin) {
+// 	return actionParser({
+// 		meta: 'SIGN-IN',
+// 		username: username,
+// 		password: password,
+// 		isAdmin: isAdmin
+// 	}, 'POST', {url: '/sign-in'});
+// };
 
 // Sign out.
-act.signOut = function () {
-	return {
-		type: 'SIGN-OUT'
-		,
-		payload: undefined
-	};
+// act.signOut = function () {
+// 	return {
+// 		type: 'SIGN-OUT'
+// 		,
+// 		payload: undefined
+// 	};
+// };
+
+// Get information after being signed in.
+act.getInitial = function () {
+	return actionParser({
+		meta: 'GET-INITIAL'
+	}, 'GET', {url: '/initial'});
+};
+
+// Player/Admin chose a week to view.
+act.generateNextWeek = function (circumstances, removedContestants) {
+	return actionParser({
+		meta: 'WEEK-VIEW-SELECT',
+		removedContestants: removedContestants
+	}, 'POST', {userId: circumstances.userId, weekNumber: circumstances.weekNumber + 1});
 };
 
 // Player/Admin chose a week to view.
@@ -119,15 +134,16 @@ act.userAnswer = function (circumstances, questionId, answer) {
 };
 
 // Admin toggles achievement of contestant.
-act.toggleAchievement = function (circumstances, achievement, contestantId) {
+act.toggleAchievement = function (circumstances, achievement, contestantId, hasAchieved) {
 	return actionParser({
 		meta: 'TOGGLE-ACHIEVEMENT',
 		achievement: achievement,
-		contestantId: contestantId
+		contestantId: contestantId,
+		value: !hasAchieved
 	}, 'POST', circumstances);
 };
 
-// Player choses contestants.
+// Player choses contestants. // TODO: Make this work.
 act.choose = function (listOfContestants) {
 	return {
 		type: 'PLAYER-CHOOSE-CONTESTANTS'

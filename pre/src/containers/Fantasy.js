@@ -28,10 +28,20 @@ var Fantasy = React.createClass({
 			userId: p.user.get('userId')
 		};
 		// console.log(fullContestants.toString());
-		if (!p.user.get('userId')) {
-			return <SignIn user={p.user} submit={function (username, password, isAdmin) {
-				return dispatch(act.signIn(username, password, isAdmin));
-			}}/>
+		// if (!p.user.get('userId')) {
+		// 	return <SignIn user={p.user} submit={function (username, password, isAdmin) {
+		// 		return dispatch(act.signIn(username, password, isAdmin));
+		// 	}}/>
+		// }
+		if (p.user.get('error')) {
+			return <div className="alert alert-danger" role="alert">{"failed!"}</div>;
+		}
+		if (p.user.get('attempting')) {
+			return <div className="alert alert-info" role="alert">{"loading..."}</div>;
+		}
+		if (!p.user.get('signedIn')) {
+			dispatch(act.getInitial());
+			return <div className="alert alert-info" role="alert">{"signing in..."}</div>;
 		}
 		return (
 			<div>
@@ -70,8 +80,8 @@ var Fantasy = React.createClass({
 				<Tribes
 					user={p.user}
 					contestants={fullContestants}
-					toggleAchievement={function (achievementCode, contestantId) {
-						return dispatch(act.toggleAchievement(circumstances, achievementCode, contestantId));
+					toggleAchievement={function (achievementCode, contestantId, hasAchieved) {
+						return dispatch(act.toggleAchievement(circumstances, achievementCode, contestantId, hasAchieved));
 					}}
 					key="tribes"
 				/>
@@ -94,7 +104,12 @@ var Fantasy = React.createClass({
 		,
 		contestants: ImmutablePropTypes.mapOf(
 			ImmutablePropTypes.contains({
-				name: PropTypes.string.isRequired
+				firstName: PropTypes.string.isRequired,
+				lastName: PropTypes.string.isRequired,
+				age: PropTypes.number.isRequired,
+				occupation: PropTypes.string.isRequired,
+				previousSeason: PropTypes.string.isRequired,
+				place: PropTypes.string.isRequired
 			})
 		).isRequired
 		,
@@ -108,8 +123,8 @@ var Fantasy = React.createClass({
 		,
 		user: ImmutablePropTypes.contains({
 			userId: PropTypes.string,
-			isAdmin: PropTypes.bool.isRequired,
-			attempting: PropTypes.bool.isRequired
+			isAdmin: PropTypes.bool,
+			attempting: PropTypes.bool
 		}).isRequired
 	}
 });

@@ -40918,22 +40918,37 @@ var actionParser = function (data, requestType, circumstances) {
 };
 
 // Sign in.
-act.signIn = function (username, password, isAdmin) {
-	return actionParser({
-		meta: 'SIGN-IN',
-		username: username,
-		password: password,
-		isAdmin: isAdmin
-	}, 'POST', {url: '/sign-in'});
-};
+// act.signIn = function (username, password, isAdmin) {
+// 	return actionParser({
+// 		meta: 'SIGN-IN',
+// 		username: username,
+// 		password: password,
+// 		isAdmin: isAdmin
+// 	}, 'POST', {url: '/sign-in'});
+// };
 
 // Sign out.
-act.signOut = function () {
-	return {
-		type: 'SIGN-OUT'
-		,
-		payload: undefined
-	};
+// act.signOut = function () {
+// 	return {
+// 		type: 'SIGN-OUT'
+// 		,
+// 		payload: undefined
+// 	};
+// };
+
+// Get information after being signed in.
+act.getInitial = function () {
+	return actionParser({
+		meta: 'GET-INITIAL'
+	}, 'GET', {url: '/initial'});
+};
+
+// Player/Admin chose a week to view.
+act.generateNextWeek = function (circumstances, removedContestants) {
+	return actionParser({
+		meta: 'WEEK-VIEW-SELECT',
+		removedContestants: removedContestants
+	}, 'POST', {userId: circumstances.userId, weekNumber: circumstances.weekNumber + 1});
 };
 
 // Player/Admin chose a week to view.
@@ -40992,15 +41007,16 @@ act.userAnswer = function (circumstances, questionId, answer) {
 };
 
 // Admin toggles achievement of contestant.
-act.toggleAchievement = function (circumstances, achievement, contestantId) {
+act.toggleAchievement = function (circumstances, achievement, contestantId, hasAchieved) {
 	return actionParser({
 		meta: 'TOGGLE-ACHIEVEMENT',
 		achievement: achievement,
-		contestantId: contestantId
+		contestantId: contestantId,
+		value: !hasAchieved
 	}, 'POST', circumstances);
 };
 
-// Player choses contestants.
+// Player choses contestants. // TODO: Make this work.
 act.choose = function (listOfContestants) {
 	return {
 		type: 'PLAYER-CHOOSE-CONTESTANTS'
@@ -41022,7 +41038,10 @@ var Achievements = React.createClass({displayName: "Achievements",
 			React.createElement("div", {className: "row"}, 
 			React.createElement("div", {className: "col-xs-12 col-md-6"}, 
 				React.createElement("div", {className: "panel panel-success"}, 
-					React.createElement("div", {className: "panel-heading"}, "Good achievements"), 
+					React.createElement("div", {className: "panel-heading"}, 
+						"Good achievements", 
+						React.createElement("span", {className: "badge pull-right"}, this.score('good'))
+					), 
 					React.createElement("ul", {className: "list-group"}, 
 						this.items('good')
 					)
@@ -41030,7 +41049,10 @@ var Achievements = React.createClass({displayName: "Achievements",
 			), 
 			React.createElement("div", {className: "col-xs-12 col-md-6"}, 
 				React.createElement("div", {className: "panel panel-danger"}, 
-					React.createElement("div", {className: "panel-heading"}, "Bad achievements"), 
+					React.createElement("div", {className: "panel-heading"}, 
+						"Bad achievements", 
+						React.createElement("span", {className: "badge pull-right"}, this.score('bad'))
+					), 
 					React.createElement("ul", {className: "list-group"}, 
 						this.items('bad')
 					)
@@ -41043,52 +41065,86 @@ var Achievements = React.createClass({displayName: "Achievements",
 	,
 	items: function (alignment) {
 		var that = this;
-		var alignmentToLabelType = {
-			good: 'success',
-			bad: 'danger'
-		};
-		var marked = this.props.marked.filter(function (hasAchieved) {
-			return hasAchieved;
-		}).keySeq();
-		var relevant = AchievementsObj.filter(function (theAchievement) {
-			return theAchievement.get('alignment') === alignment;
-		});
-		return relevant
+		// var alignmentToLabelType = {
+		// 	good: 'success',
+		// 	bad: 'danger'
+		// };
+		return this
+			.filterByAlignment(alignment)
 			.filter(function (theAchievement, achievementCode) {
 				var isAdmin = that.props.isAdmin;
-				var hasAchieved = !(marked.indexOf(achievementCode)<0);
+				var hasAchieved = !!that.props.achievements.get(achievementCode);
 				return isAdmin || hasAchieved;
 			})
 			.map(function (theAchievement, achievementCode) {
 				var labelType;
-				var hasAchieved = marked.indexOf(achievementCode)<0;
-				if (hasAchieved) {
-					labelType = 'default';
-					labelGlyph = 'remove-sign';
-				} else {
-					labelType = alignmentToLabelType[alignment];
-					labelGlyph = 'ok-sign';
-				}
+				var isAdmin = that.props.isAdmin; // TODO: Remove glyphs for none admins.
+				var hasAchieved = !!that.props.achievements.get(achievementCode);
 				return (
-					React.createElement("li", {className: "list-group-item"}, 
+					React.createElement("li", {className: "list-group-item", key: achievementCode}, 
 						React.createElement("span", {
-							className: "pull-right label label-" + labelType, 
-							onClick: that.toggleAchievement.bind(that, achievementCode), 
-							style: {fontFamily: 'monospace'}
+							className: "badge pull-right", 
+							onClick: that.toggleAchievement.bind(that, achievementCode, hasAchieved)
 						}, 
-							React.createElement("span", {className: "glyphicon glyphicon-" + labelGlyph})
+							hasAchieved ? theAchievement.get('points') : 0
 						), 
 						React.createElement("span", {style: {marginRight: '1em'}}, 
 							theAchievement.get('text')
 						)
 					)
 				);
+				// if (!hasAchieved) {
+				// 	labelType = 'default';
+				// 	labelGlyph = 'remove-sign';
+				// } else {
+				// 	labelType = alignmentToLabelType[alignment];
+				// 	labelGlyph = 'ok-sign';
+				// }
+				// return (
+				// 	<li className="list-group-item" key={achievementCode}>
+				// 		<span
+				// 			className={"pull-right label label-" + labelType}
+				// 			onClick={that.toggleAchievement.bind(that, achievementCode, hasAchieved)}
+				// 			style={{fontFamily: 'monospace'}}
+				// 		>
+				// 			<span className={"glyphicon glyphicon-" + labelGlyph}></span>
+				// 		</span>
+				// 		<span style={{marginRight: '1em'}}>
+				// 			{theAchievement.get('text')}
+				// 		</span>
+				// 	</li>
+				// );
 			});
 	}
 	,
-	toggleAchievement: function (achievementCode) {
+	score: function (alignment) {
+		var that = this;
+		return this
+			.filterByAlignment(alignment)
+			.filter(function (theAchievement, achievementCode) {
+				return !!that.props.achievements.get(achievementCode);
+			})
+			.reduce(function (reduction, theAchievement) {
+				return reduction + theAchievement.get('points');
+			}, 0);
+	}
+	,
+	filterByAlignment: function (alignment) {
+		return AchievementsObj.filter(function (theAchievement) {
+			switch (alignment) {
+				case 'good':
+				return theAchievement.get('points') > 0
+				case 'bad':
+				return theAchievement.get('points') < 0
+				default:
+				return false;
+			}
+		});
+	}
+	,
+	toggleAchievement: function (achievementCode, hasAchieved) {
 		var p = this.props;
-		if (p.isAdmin) p.toggleAchievement(achievementCode, p.contestant);
+		if (p.isAdmin) p.toggleAchievement(achievementCode, p.contestant, hasAchieved);
 	}
 });
 
@@ -41438,7 +41494,7 @@ var SignIn = React.createClass({displayName: "SignIn",
 	failAlert: function () {
 		var p = this.props;
 		if (p.user.has('error')) {
-			return React.createElement("div", {className: "alert alert-danger", role: "alert"}, p.user.get('error'))
+			return React.createElement("div", {className: "alert alert-danger", role: "alert"}, "Sign in failed!")
 		}
 	}
 })
@@ -41496,13 +41552,12 @@ var Tribes = React.createClass({displayName: "Tribes",
 				React.createElement("div", {className: "row", key: id}, 
 					React.createElement(Contestant, {
 						contestant: id, 
-						name: contestant.get('name')}
+						name: contestant.get('firstName') + " " + contestant.get('lastName')}
 					), 
 					React.createElement(Achievements, {
 						contestant: id, 
-						contestantName: contestant.get('name'), 
 						isAdmin: that.props.user.get('isAdmin'), 
-						marked: contestant.get('achievements'), 
+						achievements: contestant.get('achievements'), 
 						toggleAchievement: that.props.toggleAchievement}
 					)
 				)
@@ -41649,10 +41704,20 @@ var Fantasy = React.createClass({displayName: "Fantasy",
 			userId: p.user.get('userId')
 		};
 		// console.log(fullContestants.toString());
-		if (!p.user.get('userId')) {
-			return React.createElement(SignIn, {user: p.user, submit: function (username, password, isAdmin) {
-				return dispatch(act.signIn(username, password, isAdmin));
-			}})
+		// if (!p.user.get('userId')) {
+		// 	return <SignIn user={p.user} submit={function (username, password, isAdmin) {
+		// 		return dispatch(act.signIn(username, password, isAdmin));
+		// 	}}/>
+		// }
+		if (p.user.get('error')) {
+			return React.createElement("div", {className: "alert alert-danger", role: "alert"}, "failed!");
+		}
+		if (p.user.get('attempting')) {
+			return React.createElement("div", {className: "alert alert-info", role: "alert"}, "loading...");
+		}
+		if (!p.user.get('signedIn')) {
+			dispatch(act.getInitial());
+			return React.createElement("div", {className: "alert alert-info", role: "alert"}, "signing in...");
 		}
 		return (
 			React.createElement("div", null, 
@@ -41691,8 +41756,8 @@ var Fantasy = React.createClass({displayName: "Fantasy",
 				React.createElement(Tribes, {
 					user: p.user, 
 					contestants: fullContestants, 
-					toggleAchievement: function (achievementCode, contestantId) {
-						return dispatch(act.toggleAchievement(circumstances, achievementCode, contestantId));
+					toggleAchievement: function (achievementCode, contestantId, hasAchieved) {
+						return dispatch(act.toggleAchievement(circumstances, achievementCode, contestantId, hasAchieved));
 					}, 
 					key: "tribes"}
 				)
@@ -41715,7 +41780,12 @@ var Fantasy = React.createClass({displayName: "Fantasy",
 		,
 		contestants: ImmutablePropTypes.mapOf(
 			ImmutablePropTypes.contains({
-				name: PropTypes.string.isRequired
+				firstName: PropTypes.string.isRequired,
+				lastName: PropTypes.string.isRequired,
+				age: PropTypes.number.isRequired,
+				occupation: PropTypes.string.isRequired,
+				previousSeason: PropTypes.string.isRequired,
+				place: PropTypes.string.isRequired
 			})
 		).isRequired
 		,
@@ -41729,8 +41799,8 @@ var Fantasy = React.createClass({displayName: "Fantasy",
 		,
 		user: ImmutablePropTypes.contains({
 			userId: PropTypes.string,
-			isAdmin: PropTypes.bool.isRequired,
-			attempting: PropTypes.bool.isRequired
+			isAdmin: PropTypes.bool,
+			attempting: PropTypes.bool
 		}).isRequired
 	}
 });
@@ -41772,28 +41842,24 @@ var Map = I.Map;
 var Achievements = Map({
 	"CRIED": Map({
 		text: 'Cried at least once during the episode.',
-		alignment: 'bad',
 		points: -20
 	})
 	,
 	"TREE-MAIL": Map({
 		text: 'Got tree mail for tribe.',
-		alignment: 'good',
 		points: 50
 	})
 	,
 	"HASHTAG": Map({
 		text: 'Said something or did something that got hashtaged.',
-		alignment: 'good',
 		points: 100
 	})
 	,
 	"DESTROYED-GOODS": Map({
 		text: 'Destroyed food or other tribe stuff.',
-		alignment: 'bad',
 		points: -200
 	})
-})
+});
 
 module.exports = Achievements;
 
@@ -41807,32 +41873,43 @@ var Promise = this.Promise || require('promise');
 var request = require('superagent-promise')(require('superagent'), Promise);
 
 var initialState = {};
-// TODO: Install react-router (and react-redux-router) to change week switches
-// to URL path's.
+// TODO: Add server fail reducer to manage fails.
 
 // A reducer, which takes the state of the store an action passed from the
 // store, and returns a new state of the store. It will only return something
 // different if the action was relevant.
 
 // State represents sign-in status.
-initialState.user = Map({userId: undefined, isAdmin: false, attempting: false});
+initialState.user = Map();
 var user = function (prev, action) {
 	if (typeof prev === 'undefined') {
 		return initialState.user;
 	}
 	switch (action.type) {
-		case 'SIGN-OUT':
-		return initialState.user
-		case 'SIGN-IN-PEND':
+		case 'GET-INITIAL-PEND':
 		return initialState.user
 			.set('attempting', true);
-		case 'SIGN-IN-DONE':
-		return initialState.user
-			.set('userId', action.payload.username)
-			.set('isAdmin', action.payload.isAdmin);
-		case 'SIGN-IN-FAIL':
-		return initialState.user
-			.set('error', 'Sign-in failed!');
+		case 'GET-INITIAL-DONE':
+		return prev
+			.set('attempting', false)
+			.set('signedIn', true)
+			.set('isAdmin', truthiness(action.payload.isAdmin));
+		case 'GET-INITIAL-FAIL':
+		return prev
+			.set('attempting', false)
+			.set('error', true);
+		// case 'SIGN-OUT':
+		// return initialState.user
+		// case 'SIGN-IN-PEND':
+		// return initialState.user
+		// 	.set('attempting', true);
+		// case 'SIGN-IN-DONE':
+		// return initialState.user
+		// 	.set('isAdmin', truthiness(action.payload.isAdmin))
+		// 	.remove('error');
+		// case 'SIGN-IN-FAIL':
+		// return initialState.user
+		// 	.set('error', true);
 		default:
 		return prev;
 	}
@@ -41845,11 +41922,28 @@ var week = function (prev, action) {
 		return initialState.week;
 	}
 	switch (action.type) {
-		case 'SIGN-IN-DONE':
+		case 'GET-INITIAL-DONE':
+		return prev
+			.set('selected', action.payload.weekNumber)
+			.set('count', action.payload.weekNumber)
+			.set('contestantStatus', I.fromJS(action.payload.contestantStatus));
 		case 'WEEK-VIEW-SELECT-DONE':
 		return prev
 			.set('selected', action.payload.weekNumber)
 			.set('contestantStatus', I.fromJS(action.payload.contestantStatus));
+		case 'CREATE-WEEK-PEND':
+		return prev
+			.set('prev', prev)
+			.update('selected', function (n) {return n+1})
+			.update('count', function (n) {return n+1})
+			.filter('contestantStatus', function (contestant, id) {
+				return action.payload.removedContestants.indexOf(id)<0;
+			});
+		case 'CREATE-WEEK-DONE':
+		return prev;
+		case 'CREATE-WEEK-FAIL':
+		return prev
+			.get('prev');
 		case 'TOGGLE-ACHIEVEMENT-PEND':
 		return prev
 			.updateIn([
@@ -41863,7 +41957,12 @@ var week = function (prev, action) {
 		case 'TOGGLE-ACHIEVEMENT-DONE':
 		return prev;
 		case 'TOGGLE-ACHIEVEMENT-FAIL':
-		return prev
+		var success = checkProperties(action.payload, [
+			'contestantId',
+			'achievement'
+		]);
+		return !success ? prev
+		 	.set('error', true) : prev
 			.updateIn([
 				'contestantStatus',
 				action.payload.contestantId,
@@ -41884,7 +41983,7 @@ var contestants = function (prev, action) {
 		return initialState.contestants;
 	}
 	switch (action.type) {
-		case 'SIGN-IN-DONE':
+		case 'GET-INITIAL-DONE':
 		return I.fromJS(action.payload.allContestants);
 		default:
 		return prev;
@@ -41892,21 +41991,23 @@ var contestants = function (prev, action) {
 };
 
 // State represents the questions and answers.
-initialState.questions = Map({
-	"124124": Map({
-		question: 'Bool?',
-		type: 'boolean'
-	}),
-	"35732": Map({
-		question: 'Contestant?',
-		type: 'contestant'
-	})
-});
+initialState.questions = Map();
 var questions = function (prev, action) {
 	if (typeof prev === 'undefined') {
 		return initialState.questions;
 	}
 	switch (action.type) {
+		case 'GET-INITIAL-DONE':
+		case 'WEEK-VIEW-SELECT-DONE':
+		return I.fromJS(action.payload.questions)
+			.map(function (details, id) {
+				if (details.get('type') !== 'boolean' || !details.has('answer')) {
+					return details;
+				}
+				return details.update('answer', function (boolString) {
+					return truthiness(boolString);
+				})
+			});
 		case 'CREATE-QUESTION-DONE':
 		return prev
 			.set(action.payload.questionId, Map({
@@ -41932,7 +42033,11 @@ var questions = function (prev, action) {
 		case 'UPDATE-QUESTION-DONE':
 		return prev;
 		case 'UPDATE-QUESTION-FAIL':
-		return prev
+		var success = checkProperties(action.payload, [
+			'questionId'
+		]);
+		return !success ? prev
+		 	.set('error', true) : prev
 			.set(action.payload.questionId, prev.getIn([
 				action.payload.questionId,
 				'prev'
@@ -41955,7 +42060,11 @@ var questions = function (prev, action) {
 		return prev
 			.delete(action.payload.questionId);
 		case 'REMOVE-QUESTION-FAIL':
-		return prev
+		var success = checkProperties(action.payload, [
+			'questionId'
+		]);
+		return !success ? prev
+		 	.set('error', true) : prev
 			.deleteIn([
 				action.payload.questionId,
 				'removed'
@@ -41978,7 +42087,11 @@ var questions = function (prev, action) {
 				'prevAnswer'
 			]);
 		case 'ANSWER-FAIL':
-		return prev
+		var success = checkProperties(action.payload, [
+			'questionId'
+		]);
+		return !success ? prev
+		 	.set('error', true) : prev
 			.setIn([
 				action.payload.questionId,
 				'answer'
@@ -41998,6 +42111,22 @@ var reducers = combineReducers({
 	questions,
 	user
 });
+
+var truthiness = function (bool) {
+	if (typeof bool === 'boolean' || typeof bool === 'undefined' || bool === null) {
+		return !!bool;
+	}
+	if (typeof bool !== 'string') {
+		throw '`truthiness` cannot handle this bool\'s type!';
+	}
+	return bool.toLowerCase() === 'true';
+};
+
+var checkProperties = function (obj, props) {
+	return props.every(function (prop) {
+		return obj.hasOwnProperty(prop);
+	})
+}
 
 module.exports = reducers;
 

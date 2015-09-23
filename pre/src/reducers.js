@@ -7,32 +7,43 @@ var Promise = this.Promise || require('promise');
 var request = require('superagent-promise')(require('superagent'), Promise);
 
 var initialState = {};
-// TODO: Install react-router (and react-redux-router) to change week switches
-// to URL path's.
+// TODO: Add server fail reducer to manage fails.
 
 // A reducer, which takes the state of the store an action passed from the
 // store, and returns a new state of the store. It will only return something
 // different if the action was relevant.
 
 // State represents sign-in status.
-initialState.user = Map({userId: undefined, isAdmin: false, attempting: false});
+initialState.user = Map();
 var user = function (prev, action) {
 	if (typeof prev === 'undefined') {
 		return initialState.user;
 	}
 	switch (action.type) {
-		case 'SIGN-OUT':
-		return initialState.user
-		case 'SIGN-IN-PEND':
+		case 'GET-INITIAL-PEND':
 		return initialState.user
 			.set('attempting', true);
-		case 'SIGN-IN-DONE':
-		return initialState.user
-			.set('userId', action.payload.username)
-			.set('isAdmin', action.payload.isAdmin);
-		case 'SIGN-IN-FAIL':
-		return initialState.user
-			.set('error', 'Sign-in failed!');
+		case 'GET-INITIAL-DONE':
+		return prev
+			.set('attempting', false)
+			.set('signedIn', true)
+			.set('isAdmin', truthiness(action.payload.isAdmin));
+		case 'GET-INITIAL-FAIL':
+		return prev
+			.set('attempting', false)
+			.set('error', true);
+		// case 'SIGN-OUT':
+		// return initialState.user
+		// case 'SIGN-IN-PEND':
+		// return initialState.user
+		// 	.set('attempting', true);
+		// case 'SIGN-IN-DONE':
+		// return initialState.user
+		// 	.set('isAdmin', truthiness(action.payload.isAdmin))
+		// 	.remove('error');
+		// case 'SIGN-IN-FAIL':
+		// return initialState.user
+		// 	.set('error', true);
 		default:
 		return prev;
 	}
@@ -45,11 +56,28 @@ var week = function (prev, action) {
 		return initialState.week;
 	}
 	switch (action.type) {
-		case 'SIGN-IN-DONE':
+		case 'GET-INITIAL-DONE':
+		return prev
+			.set('selected', action.payload.weekNumber)
+			.set('count', action.payload.weekNumber)
+			.set('contestantStatus', I.fromJS(action.payload.contestantStatus));
 		case 'WEEK-VIEW-SELECT-DONE':
 		return prev
 			.set('selected', action.payload.weekNumber)
 			.set('contestantStatus', I.fromJS(action.payload.contestantStatus));
+		case 'CREATE-WEEK-PEND':
+		return prev
+			.set('prev', prev)
+			.update('selected', function (n) {return n+1})
+			.update('count', function (n) {return n+1})
+			.filter('contestantStatus', function (contestant, id) {
+				return action.payload.removedContestants.indexOf(id)<0;
+			});
+		case 'CREATE-WEEK-DONE':
+		return prev;
+		case 'CREATE-WEEK-FAIL':
+		return prev
+			.get('prev');
 		case 'TOGGLE-ACHIEVEMENT-PEND':
 		return prev
 			.updateIn([
@@ -63,7 +91,12 @@ var week = function (prev, action) {
 		case 'TOGGLE-ACHIEVEMENT-DONE':
 		return prev;
 		case 'TOGGLE-ACHIEVEMENT-FAIL':
-		return prev
+		var success = checkProperties(action.payload, [
+			'contestantId',
+			'achievement'
+		]);
+		return !success ? prev
+		 	.set('error', true) : prev
 			.updateIn([
 				'contestantStatus',
 				action.payload.contestantId,
@@ -84,7 +117,7 @@ var contestants = function (prev, action) {
 		return initialState.contestants;
 	}
 	switch (action.type) {
-		case 'SIGN-IN-DONE':
+		case 'GET-INITIAL-DONE':
 		return I.fromJS(action.payload.allContestants);
 		default:
 		return prev;
@@ -92,21 +125,23 @@ var contestants = function (prev, action) {
 };
 
 // State represents the questions and answers.
-initialState.questions = Map({
-	"124124": Map({
-		question: 'Bool?',
-		type: 'boolean'
-	}),
-	"35732": Map({
-		question: 'Contestant?',
-		type: 'contestant'
-	})
-});
+initialState.questions = Map();
 var questions = function (prev, action) {
 	if (typeof prev === 'undefined') {
 		return initialState.questions;
 	}
 	switch (action.type) {
+		case 'GET-INITIAL-DONE':
+		case 'WEEK-VIEW-SELECT-DONE':
+		return I.fromJS(action.payload.questions)
+			.map(function (details, id) {
+				if (details.get('type') !== 'boolean' || !details.has('answer')) {
+					return details;
+				}
+				return details.update('answer', function (boolString) {
+					return truthiness(boolString);
+				})
+			});
 		case 'CREATE-QUESTION-DONE':
 		return prev
 			.set(action.payload.questionId, Map({
@@ -132,7 +167,11 @@ var questions = function (prev, action) {
 		case 'UPDATE-QUESTION-DONE':
 		return prev;
 		case 'UPDATE-QUESTION-FAIL':
-		return prev
+		var success = checkProperties(action.payload, [
+			'questionId'
+		]);
+		return !success ? prev
+		 	.set('error', true) : prev
 			.set(action.payload.questionId, prev.getIn([
 				action.payload.questionId,
 				'prev'
@@ -155,7 +194,11 @@ var questions = function (prev, action) {
 		return prev
 			.delete(action.payload.questionId);
 		case 'REMOVE-QUESTION-FAIL':
-		return prev
+		var success = checkProperties(action.payload, [
+			'questionId'
+		]);
+		return !success ? prev
+		 	.set('error', true) : prev
 			.deleteIn([
 				action.payload.questionId,
 				'removed'
@@ -178,7 +221,11 @@ var questions = function (prev, action) {
 				'prevAnswer'
 			]);
 		case 'ANSWER-FAIL':
-		return prev
+		var success = checkProperties(action.payload, [
+			'questionId'
+		]);
+		return !success ? prev
+		 	.set('error', true) : prev
 			.setIn([
 				action.payload.questionId,
 				'answer'
@@ -198,5 +245,21 @@ var reducers = combineReducers({
 	questions,
 	user
 });
+
+var truthiness = function (bool) {
+	if (typeof bool === 'boolean' || typeof bool === 'undefined' || bool === null) {
+		return !!bool;
+	}
+	if (typeof bool !== 'string') {
+		throw '`truthiness` cannot handle this bool\'s type!';
+	}
+	return bool.toLowerCase() === 'true';
+};
+
+var checkProperties = function (obj, props) {
+	return props.every(function (prop) {
+		return obj.hasOwnProperty(prop);
+	})
+}
 
 module.exports = reducers;
