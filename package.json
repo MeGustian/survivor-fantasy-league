@@ -14,7 +14,9 @@
     "lodash": "^3.10.1",
     "nib": "*",
     "normalize.css": "*",
+    "promise": "*",
     "react": "*",
+    "react-bootstrap": "^0.25.2",
     "react-immutable-proptypes": "^1.2.0",
     "react-redux": "^2.1.0",
     "redux": "^2.0.0",
@@ -22,7 +24,6 @@
     "redux-promise-middleware": "^0.2.1",
     "redux-thunk": "^1.0.0",
     "stylus": "*",
-    "promise": "*",
     "superagent": "*",
     "superagent-promise": "^1.0.3"
   },

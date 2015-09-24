@@ -1,19 +1,21 @@
 var React = require('react');
 var AdminToolbox = require('./AdminToolbox');
+var AnswerTypes = require('./AnswerTypes');
+var Bs = require('react-bootstrap');
 
 var Questions = React.createClass({
 	render: function () {
-		var style = {
-			display: 'flex',
-			flexDirection: 'row',
-			justifyContent: 'space-around',
-			alignItems: 'flex-basis'
-		};
+		// var style = {
+		// 	display: 'flex',
+		// 	flexDirection: 'row',
+		// 	justifyContent: 'space-around',
+		// 	alignItems: 'flex-basis'
+		// };
 		return (
-			<div className="questions-container" style={style}>
+			<Bs.Row>
 				{this.newQuestion()}
 				{this.questions()}
-			</div>
+			</Bs.Row>
 		);
 	}
 	,
@@ -60,9 +62,9 @@ var Question = React.createClass({
 	}
 	,
 	render: function () {
-		var styleQuestion = {
-			width: '40%'
-		};
+		// var styleQuestion = {
+		// 	width: '40%'
+		// };
 		var stylePanelHeadingInner = {
 			display: 'flex',
 			flexDirection: 'row',
@@ -70,26 +72,24 @@ var Question = React.createClass({
 			alignItems: 'center'
 		};
 		return (
-			<div className="question" style={styleQuestion}>
-				<div className="panel panel-default">
-					<div className="panel-heading">
-						<div style={stylePanelHeadingInner}>
-							{this.questionRender()}
-							{this.tools()}
-						</div>
+			<Bs.Col xs="12" md="6">
+				<Bs.Panel header={
+					<div style={stylePanelHeadingInner}>
+						{this.questionRender()}
+						{this.tools()}
 					</div>
-					<div className="panel-body">
+				}>
 						{this.bodyRender()}
-					</div>
-				</div>
-			</div>
+				</Bs.Panel>
+			</Bs.Col>
 		);
 	}
 	,
 	questionRender: function () {
 		var details = this.props.details;
 		var style = {
-			flexGrow: '2',
+			flexGrow: '1',
+			flexShrink: '1',
 			marginRight: '10px'
 		}
 		if (!details.get('isEditing')) {
@@ -115,48 +115,56 @@ var Question = React.createClass({
 		// NOTE: Changing the type is supported, but not implemented here.
 		switch (details.get('type')) {
 			case 'boolean':
-				var yes = answer ? " active" : "",
-					no = !answer ? " active" : "";
-				return (
-					<div className="btn-group btn-group-lg" role="group">
-						<button type="button" className={"btn btn-success" + yes} onClick={this.changeAnswer.bind(this, true)}>Yes</button>
-						<button type="button" className={"btn btn-danger" + no} onClick={this.changeAnswer.bind(this, false)}>No</button>
-					</div>
-				);
+			var yes = answer ? " active" : "",
+				no = !answer ? " active" : "";
+			return (
+				<Bs.ButtonGroup>
+					<Bs.Button bsStyle="success" active={answer} onClick={this.changeAnswer.bind(this, true)}>Yes</Bs.Button>
+					<Bs.Button bsStyle="danger" active={!answer} onClick={this.changeAnswer.bind(this, false)}>No</Bs.Button>
+				</Bs.ButtonGroup>
+			);
 			case 'contestant':
-				var nobody = !answer ? " active" : "";
-				return (
-					<div className="btn-group btn-group-lg" role="group">
-						<button
-							type="button"
-							className={"btn btn-default" + nobody}
-							onClick={this.changeAnswer.bind(this, null)}
-						>
-							<span className="glyphicon glyphicon-remove" />
-						</button>
-						<button type="button" className="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-							{(answer || "Nobody") + " "}
-							<span className="caret"></span>
-						</button>
-						<ul className="dropdown-menu">
-							{this.answerContestants()}
-						</ul>
-					</div>
-				);
+			var nobody = !answer ? " active" : "";
+			return (
+				<AnswerTypes.Contestants
+					tribes={this.props.tribes}
+					changeAnswer={this.changeAnswer}
+				/>
+			);
+			// return (
+			// 	<div className="btn-group btn-group-lg" role="group">
+			// 		<button
+			// 			type="button"
+			// 			className={"btn btn-default" + nobody}
+			// 			onClick={this.changeAnswer.bind(this, null)}
+			// 		>
+			// 			<span className="glyphicon glyphicon-remove" />
+			// 		</button>
+			// 		<button type="button" className="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+			// 			{(answer || "Nobody") + " "}
+			// 			<span className="caret"></span>
+			// 		</button>
+			// 		<ul className="dropdown-menu">
+			// 			{this.answerContestants()}
+			// 		</ul>
+			// 	</div>
+			// );
 			default:
-				return <div>Bad type specified</div>
+			return <div>Bad type specified</div>
 		}
 	}
 	,
 	answerContestants: function () {
 		var that = this;
 		return this.props.tribes.map(function (contestant, id) {
+			var name = contestant.get('firstName') + " " + contestant.get('lastName');
 			return (
 				<li onClick={that.changeAnswer.bind(that, contestant.get('name'))}><a>
-					{contestant.get('name')}
+					<img style={{marginRight: '0.25em', width: '40px', height: '40px'}} src={"/images/contestants/" + name + ".jpg"} alt={name} />
+					{name}
 				</a></li>
 			);
-		})
+		});
 	}
 	,
 	tools: function () {

@@ -56,14 +56,6 @@
 		}
 	}
 	,
-	'SIGN-OUT': {
-		method: 'GET'
-		,
-		url: '/sign-out'
-		,
-		res: ... to be determined ...
-	}
-	,
 	'WEEK-VIEW-SELECT': {
 		method: 'GET'
 		,

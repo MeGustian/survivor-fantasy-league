@@ -53,12 +53,12 @@ var actionParser = function (data, requestType, circumstances) {
 // 	}, 'POST', {url: '/sign-in'});
 // };
 
-// Sign out.
-act.signOut = function () {
-	return actionParser({
-		meta: 'SIGN-OUT'
-	}, 'GET', {url: '/sign-out'});
-};
+// // Sign out.
+// act.signOut = function () {
+// 	return actionParser({
+// 		meta: 'SIGN-OUT'
+// 	}, 'GET', {url: '/sign-out'});
+// };
 
 // Get information after being signed in.
 act.getInitial = function () {

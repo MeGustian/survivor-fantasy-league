@@ -97,12 +97,8 @@ app.post('/ajax', function (req, res) {
 });
 var week1 = {
 	"username":"yoav",
-	"isAdmin":"false",
+	"isAdmin":"true",
 	questions: {
-		"124": {
-			question: 'Bool?',
-			type: 'boolean'
-		},
 		"125": {
 			question: 'Cont?',
 			type: 'contestant'

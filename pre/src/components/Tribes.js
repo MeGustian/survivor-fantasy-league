@@ -49,6 +49,10 @@ var Tribes = React.createClass({
 					<Contestant
 						contestant={id}
 						name={contestant.get('firstName') + " " + contestant.get('lastName')}
+						age={contestant.get('age')}
+						occupation={contestant.get('occupation')}
+						previousSeason={contestant.get('previousSeason')}
+						place={contestant.get('place')}
 						scores={that.props.scores.get(id)}
 					/>
 					<Achievements

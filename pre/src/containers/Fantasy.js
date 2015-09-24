@@ -1,73 +1,43 @@
 var React = require('react');
 var PropTypes = React.PropTypes;
+// TODO: Do I need `immutable`?
+var I = require('immutable');
+var ImmutablePropTypes = require('react-immutable-proptypes');
 // TODO: Do I need `bindActionCreators`? Should I use it?
 var bindActionCreators = require('redux').bindActionCreators;
 var ReactRedux = require('react-redux');
 var connect = ReactRedux.connect; // Connect react container to redux.
-// TODO: Add proptypes to components (in their files).
-var SignIn = require('../components/SignIn'); // Explain...
+
+// Components. // TODO: Add proptypes to components (in their files).
 var Week = require('../components/Week'); // Explain...
 var Tribes = require('../components/Tribes'); // Explain...
 var Questions = require('../components/Questions'); // Explain...
-var computerOfState = require('../compute-state');
+var computerOfState = require('../helpers/compute-state');
 var act = require('../actions'); // Give dispatch an action payload.
-// TODO: Do I need `immutable`?
-var I = require('immutable');
-var ImmutablePropTypes = require('react-immutable-proptypes');
+// Handle the phase between passportJS sign-in to when the page loads. will
+// return false once everything is clear.
+var userLoading = require('../helpers/user-loading');
+var forcedLogger = require('../helpers/forced-logger');
 
 
 var Fantasy = React.createClass({
 	render: function () {
-		console.groupCollapsed('rendering with...');
-		// console.group('contestants');
-		// 	console.log(this.props.contestants.toString());
-		// console.groupEnd();
-		// console.group('week');
-		// 	console.log(this.props.week.toString());
-		// console.groupEnd();
-		// console.group('questions');
-		// 	console.log(this.props.questions.toString());
-		// console.groupEnd();
-		// console.group('user');
-		// 	console.log(this.props.user.toString());
-		// console.groupEnd();
-		console.group('compute-state');
-			var computedState = computerOfState(this.props);
-			console.log(computedState.scores.toString());
-		console.groupEnd();
-		console.groupEnd();
 		var p = this.props;
+		forcedLogger(p);
+		var computedState = computerOfState(p);
 		var dispatch = p.dispatch;
 		var fullContestants = p.week.get('contestantStatus').mergeDeep(p.contestants);
 		var circumstances = {
 			weekNumber: p.week.get('selected')
 		};
-		// console.log(fullContestants.toString());
-		// if (!p.user.get('userId')) {
-		// 	return <SignIn user={p.user} submit={function (username, password, isAdmin) {
-		// 		return dispatch(act.signIn(username, password, isAdmin));
-		// 	}}/>
-		// }
-		if (p.user.get('error')) {
-			return <div className="alert alert-danger" role="alert">{"failed!"}</div>;
-		}
-		if (p.user.get('attempting')) {
-			return <div className="alert alert-info" role="alert">{"loading..."}</div>;
-		}
-		if (!p.user.get('signedIn')) {
-			dispatch(act.getInitial());
-			return <div className="alert alert-info" role="alert">{"signing in..."}</div>;
-		}
-		return (
+		var whatIsLoading = userLoading(p.user, dispatch, act);
+		return whatIsLoading ? whatIsLoading : (
 			<div>
 				<Week
 					user={p.user}
 					selected={p.week.get('selected')}
 					count={p.week.get('count')}
 					key="week"
-					signOut={function () {
-						return dispatch(act.signOut());
-					}}
 					onWeekChoice={function (number) {
 						return dispatch(act.selectWeekView(circumstances, number));
 					}}
