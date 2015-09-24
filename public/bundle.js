@@ -55827,6 +55827,18 @@ var Bs = require('react-bootstrap');
 var AchievementsObj = require('../objects/Achievements');
 
 var Achievements = React.createClass({displayName: "Achievements",
+	shouldComponentUpdate: function (nextProps) {
+		var equal = (
+			this.props.scores.every(function (val, key) {
+				return val === nextProps.scores.get(key);
+			}) &&
+			this.props.achievements.every(function (val, key) {
+				return val === nextProps.achievements.get(key);
+			})
+		);
+		return !equal;
+	}
+	,
 	render: function () {
 		return (
 			React.createElement(Bs.Row, null, 
@@ -55952,8 +55964,15 @@ module.exports = React.createClass({displayName: "exports",
 	render: function () {
 		if (this.props.serverFail) {
 			return (
+				React.createElement(Bs.Row, null, 
+				React.createElement(Bs.Col, {md: 10, mdOffset: 1}, 
 				React.createElement(Bs.Alert, {bsStyle: "danger"}, 
-					"An error has occured. Data may have not been saved!"
+					React.createElement("h4", null, "Frak!"), 
+					React.createElement("p", null, 
+						"A server error has occured! Whatever changes you make may not be recorded."
+					)
+				)
+				)
 				)
 			);
 		}
@@ -56031,10 +56050,16 @@ module.exports = AdminToolbox;
 },{"react":407}],430:[function(require,module,exports){
 var React = require('react');
 var Bs = require('react-bootstrap');
+var I = require('immutable');
 
 var AnswerTypes = {};
 
 AnswerTypes.Contestants = React.createClass({displayName: "Contestants",
+	shouldComponentUpdate: function (nextProps) {
+		var equal = this.props.answer === nextProps.answer;
+		return !equal;
+	}
+	,
 	render: function () {
 		var style = {
 			display: 'flex',
@@ -56052,35 +56077,62 @@ AnswerTypes.Contestants = React.createClass({displayName: "Contestants",
 	,
 	thumbnails: function () {
 		var that = this;
-		return this.props.tribes.map(function (contestant, id) {
-			var name = contestant.get('firstName') + " " + contestant.get('lastName');
-			var tooltip = React.createElement(Bs.Tooltip, null, name);
-			return (
-				React.createElement(Bs.OverlayTrigger, {placement: "top", overlay: tooltip, key: id}, 
-					React.createElement(Bs.Thumbnail, {
-						onClick: that.choose.bind(that, id), 
-						src: "/images/contestants/" + name + ".jpg", 
-						alt: name, 
-						style: {width: '80px', height: '80px', marginRight: '20px', marginLeft: '5px'}}
-					)
+		return this.props.tribes
+			.map(function (contestant, id) {
+				var name = contestant.get('firstName') + " " + contestant.get('lastName');
+				var correct = id === that.props.answer;
+				return (
+					React.createElement(MyThumbnail, {key: id, id: id, correct: correct, name: name, changeAnswer: that.props.changeAnswer})
+				);
+			});
+	}
+});
+
+var MyThumbnail = React.createClass({displayName: "MyThumbnail",
+	shouldComponentUpdate: function (nextProps) {
+		var equal = this.props.correct === nextProps.correct;
+		return !equal;
+	}
+	,
+	render: function () {
+		var p = this.props;
+		var that = this;
+		var tooltip = React.createElement(Bs.Tooltip, null, p.name);
+		return (
+			React.createElement(Bs.OverlayTrigger, {placement: "top", overlay: tooltip, key: p.id}, 
+				React.createElement(Bs.Thumbnail, {
+					onClick: that.choose.bind(that, (p.correct ? null : p.id)), 
+					src: "/images/contestants/" + p.name + ".jpg", 
+					alt: p.name, 
+					style: {border: (p.correct ? "3px solid green" : ""), width: '80px', height: '80px', marginRight: '20px', marginLeft: '5px'}}
 				)
-			);
-		});
+			)
+		);
 	}
 	,
 	choose: function (id) {
-		this.props.changeAnswer(id)
+		this.props.changeAnswer(id);
 	}
 });
 
 module.exports = AnswerTypes;
 
-},{"react":407,"react-bootstrap":149}],431:[function(require,module,exports){
+},{"immutable":1,"react":407,"react-bootstrap":149}],431:[function(require,module,exports){
 var React = require('react');
 var Bs = require('react-bootstrap');
 var Achievements = require('./Achievements');
 
 var Contestant = React.createClass({displayName: "Contestant",
+	shouldComponentUpdate: function (nextProps) {
+		var equal = (
+			this.props.scores.every(function (val, key) {
+				return val === nextProps.scores.get(key);
+			}) &&
+			this.props.votedOut === nextProps.votedOut
+		);
+		return !equal;
+	}
+	,
 	render: function () {
 		return (
 			React.createElement(Bs.Row, null, 
@@ -56191,7 +56243,7 @@ var Question = React.createClass({displayName: "Question",
 			alignItems: 'center'
 		};
 		return (
-			React.createElement(Bs.Col, {xs: "12", md: "6"}, 
+			React.createElement(Bs.Col, {xs: 12, md: 6}, 
 				React.createElement(Bs.Panel, {header: 
 					React.createElement("div", {style: stylePanelHeadingInner}, 
 						this.questionRender(), 
@@ -56337,23 +56389,183 @@ var Bs = require('react-bootstrap');
 var AdminToolbox = require('./AdminToolbox');
 var AnswerTypes = require('./AnswerTypes');
 
-module.exports = React.createClass({displayName: "exports",
+var now;
+
+module.exports = Quiz = React.createClass({displayName: "Quiz",
+	componentWillUpdate: function () {
+		now = Date.now();
+	}
+	,
+	componentDidUpdate: function (prevProps, prevState) {
+		console.log('Rendering `Quiz` took: ' + (Date.now() - now) + 'ms.');
+	}
+	,
 	render: function () {
 		return (
 			React.createElement(Bs.Row, null, 
 				React.createElement(Bs.Col, {xs: 12, sm: 10, smOffset: 1, md: 8, mdOffset: 2}, 
-					React.createElement(Bs.Panel, {header: "some q?"}, 
-						"some a"
-					), 
-					React.createElement(Bs.Pager, null, 
-						React.createElement(Bs.PageItem, {previous: true}, "Previous"), 
-						React.createElement(Bs.PageItem, {next: true}, "Next")
+					React.createElement(Bs.Accordion, null, 
+						this.questions()
 					)
 				)
 			)
 		);
 	}
-})
+	,
+	questions: function () {
+		var p = this.props;
+		return p.questions
+			.filter(function (details, id) {
+				return (id !== 'removed') && !details.get('removed');
+			})
+			.map(function (details, id) {
+				return (
+					React.createElement(Question, {
+						key: id, 
+						questionId: id, 
+						details: details, 
+						tribes: p.contestants, 
+						user: p.user, 
+						handlers: p.dispatcher}
+					)
+				);
+			})
+			.toArray();
+	}
+});
+
+var Question = React.createClass({displayName: "Question",
+	getInitialState: function () {
+		// State represents the editing mode.
+		return this.props.details.toJS();
+	}
+	,
+	render: function () {
+		var stylePanelHeadingInner = {
+			display: 'flex',
+			flexDirection: 'row',
+			justifyContent: 'space-between',
+			alignItems: 'center'
+		};
+		return (
+			React.createElement(Bs.Panel, {eventKey: this.props.id, header: 
+				React.createElement("div", {style: stylePanelHeadingInner}, 
+					this.questionRender(), 
+					this.tools()
+				)
+			}, 
+					this.bodyRender()
+			)
+		);
+	}
+	,
+	questionRender: function () {
+		var details = this.props.details;
+		var style = {
+			flexGrow: '1',
+			flexShrink: '1',
+			marginRight: '10px'
+		}
+		if (!details.get('isEditing')) {
+			return React.createElement("h3", {className: "panel-title", style: style}, details.get('question'));
+		} else {
+			return (
+				React.createElement("input", {
+					type: "text", 
+					className: "form-control", 
+					placeholder: "question", 
+					style: style, 
+					value: this.state.question, 
+					onChange: this.onText}
+				)
+			);
+		}
+	}
+	,
+	bodyRender: function () {
+		var details = this.props.details;
+		var isEditing = details.get('isEditing');
+		var answer = isEditing ? this.state.answer : details.get('answer');
+		// NOTE: Changing the type is supported, but not implemented here.
+		switch (details.get('type')) {
+			case 'boolean':
+			var yes = answer ? " active" : "",
+				no = !answer ? " active" : "";
+			return (
+				React.createElement(Bs.ButtonGroup, null, 
+					React.createElement(Bs.Button, {bsStyle: "success", active: answer, onClick: this.changeAnswer.bind(this, true)}, "Yes"), 
+					React.createElement(Bs.Button, {bsStyle: "danger", active: !answer, onClick: this.changeAnswer.bind(this, false)}, "No")
+				)
+			);
+			case 'contestant':
+			var nobody = !answer ? " active" : "";
+			return (
+				React.createElement(AnswerTypes.Contestants, {
+					answer: answer, 
+					tribes: this.props.tribes, 
+					changeAnswer: this.changeAnswer}
+				)
+			);
+			default:
+			return React.createElement("div", null, "Bad type specified")
+		}
+	}
+	,
+	answerContestants: function () {
+		var that = this;
+		return this.props.tribes.map(function (contestant, id) {
+			var name = contestant.get('firstName') + " " + contestant.get('lastName');
+			return (
+				React.createElement("li", {onClick: that.changeAnswer.bind(that, contestant.get('name'))}, React.createElement("a", null, 
+					React.createElement("img", {style: {marginRight: '0.25em', width: '40px', height: '40px'}, src: "/images/contestants/" + name + ".jpg", alt: name}), 
+					name
+				))
+			);
+		});
+	}
+	,
+	tools: function () {
+		var handlers = this.props.handlers;
+		var questionId = this.props.questionId;
+		var isAdmin = this.props.user.get('isAdmin');
+		var isEditing = this.props.details.get('isEditing');
+		var style = {
+			flexGrow: '0',
+			flexShrink: '0',
+			alignSelf: 'flex-start'
+		}
+		if (!isAdmin) {
+			return;
+		}
+		return (
+			React.createElement("div", {className: "btn-group", role: "group", "aria-label": "...", style: style}, 
+				React.createElement(AdminToolbox, {
+					tool: isEditing ? "discard" : "edit", 
+					handleClick: handlers.edit.bind(null, questionId, !!isEditing)}
+				), 
+				React.createElement(AdminToolbox, {
+					tool: isEditing ? "approve" : "remove", 
+					handleClick: isEditing ? handlers.update.bind(null, questionId, this.state.question, this.state.answer, this.state.type) : handlers.remove.bind(null, questionId)}
+				)
+			)
+		);
+	}
+	,
+	onText: function (e) {
+		this.setState({question: e.target.value});
+	}
+	,
+	changeAnswer: function (answer, e) {
+		var handlers = this.props.handlers;
+		var questionId = this.props.questionId;
+		var isAdmin = this.props.user.get('isAdmin');
+		var isEditing = this.props.details.get('isEditing');
+		var adminEdit = isAdmin && isEditing;
+		var userEdit = !isAdmin;
+		if (adminEdit) this.setState({answer: answer});
+		if (userEdit) handlers.userAnswer(questionId, answer);
+	}
+});
 
 },{"./AdminToolbox":429,"./AnswerTypes":430,"react":407,"react-bootstrap":149}],434:[function(require,module,exports){
 var React = require('react');
@@ -56362,6 +56574,10 @@ var Contestant = require('./Contestant');
 var Achievements = require('./Achievements');
 
 var Tribes = React.createClass({displayName: "Tribes",
+	shouldComponentUpdate: function (nextProps) {
+		return !!this.props.user.isAdmin;
+	}
+	,
 	render: function () {
 		return (
 			React.createElement(Bs.Row, null, 
@@ -56509,20 +56725,32 @@ var reducers = require('../reducers');
 
 // Middleware: log each action.
 var logger = loggerMiddlewareCreator();
-// var logger = function (store) {
-// 	return function (next) {
-// 		return function (action) {
-// 			console.group(action.type);
-// 			console.log('dispatching', action);
-// 			var result = next(action);
-// 			console.log('next state', store.getState());
-// 			console.groupEnd();
-// 			return result;
-// 		};
-// 	};
-// };
+/*
+var logger = function (store) {
+	return function (next) {
+		return function (action) {
+			console.group(action.type);
+			console.log('dispatching', action);
+			var result = next(action);
+			console.log('next state', store.getState());
+			console.groupEnd();
+			return result;
+		};
+	};
+};
+*/
 // Middleware: patch promises according to superagent done/fail returns from
 // Ajax call.
+var timer = function (store) {
+	return function (next) {
+		return function (action) {
+			var now = Date.now()
+			var result = next(action);
+			console.log('Reducing the action took: ' + (Date.now() - now) + 'ms.');
+			return result;
+		};
+	};
+};
 var patchPromiseWithSuperagent = function (store) {
 	return function (next) {
 		return function (action) {
@@ -56543,6 +56771,7 @@ var patchPromiseWithSuperagent = function (store) {
 	};
 };
 var createStoreWithMiddleware = applyMiddleware(
+	timer,
 	promiseMiddleware,
 	patchPromiseWithSuperagent,
 	logger
@@ -56592,7 +56821,9 @@ var Fantasy = React.createClass({displayName: "Fantasy",
 	render: function () {
 		var p = this.props;
 		forcedLogger(p);
+		var now = Date.now();
 		var computedState = computerOfState(p);
+		console.log('Computing the state took: ' + (Date.now() - now) + 'ms.');
 		var dispatch = p.dispatch;
 		var fullContestants = p.week.get('contestantStatus').mergeDeep(p.contestants);
 		var circumstances = {
@@ -56899,6 +57130,15 @@ var user = function (prev, action) {
 			.set('error', true);
 		case 'SIGN-OUT-DONE':
 		return initialState.week;
+		case 'CREATE-WEEK-FAIL':
+		case 'TOGGLE-ACHIEVEMENT-FAIL':
+		case 'TOGGLE-VOTED-OUT-FAIL':
+		case 'UPDATE-QUESTION-FAIL':
+		case 'REMOVE-QUESTION-FAIL':
+		case 'USER-ANSWER-FAIL':
+		return prev
+		 	.set('error', true)
+			.set('errorActionType', action.type);
 		// case 'SIGN-OUT':
 		// return initialState.user
 		// case 'SIGN-IN-PEND':
@@ -56964,8 +57204,7 @@ var week = function (prev, action) {
 			'contestantId',
 			'achievement'
 		]);
-		return !heardBack ? prev
-		 	.set('error', true) : prev
+		return !heardBack ? prev : prev
 			.updateIn([
 				'contestantStatus',
 				action.payload.contestantId,
@@ -56986,12 +57225,11 @@ var week = function (prev, action) {
 		case 'TOGGLE-VOTED-OUT-DONE':
 		return prev;
 		case 'TOGGLE-VOTED-OUT-FAIL':
-		var success = checkProperties(action.payload, [
+		var heardBack = checkProperties(action.payload, [
 			'contestantId',
 			'votedOut'
 		]);
-		return !success ? prev
-		 	.set('error', true) : prev
+		return !heardBack ? prev : prev
 			.updateIn([
 				'contestantStatus',
 				action.payload.contestantId,
@@ -57065,11 +57303,10 @@ var questions = function (prev, action) {
 		case 'UPDATE-QUESTION-DONE':
 		return prev;
 		case 'UPDATE-QUESTION-FAIL':
-		var success = checkProperties(action.payload, [
+		var heardBack = checkProperties(action.payload, [
 			'questionId'
 		]);
-		return !success ? prev
-		 	.set('error', true) : prev
+		return !heardBack ? prev : prev
 			.set(action.payload.questionId, prev.getIn([
 				action.payload.questionId,
 				'prev'
@@ -57092,17 +57329,16 @@ var questions = function (prev, action) {
 		return prev
 			.delete(action.payload.questionId);
 		case 'REMOVE-QUESTION-FAIL':
-		var success = checkProperties(action.payload, [
+		var heardBack = checkProperties(action.payload, [
 			'questionId'
 		]);
-		return !success ? prev
-		 	.set('error', true) : prev
+		return !heardBack ? prev : prev
 			.deleteIn([
 				action.payload.questionId,
 				'removed'
 			]);
 		// ANSWER
-		case 'ANSWER-PEND':
+		case 'USER-ANSWER-PEND':
 		return prev
 			.setIn([
 				action.payload.questionId,
@@ -57112,18 +57348,17 @@ var questions = function (prev, action) {
 				action.payload.questionId,
 				'answer'
 			], action.payload.answer);
-		case 'ANSWER-DONE':
+		case 'USER-ANSWER-DONE':
 		return prev
 			.deleteIn([
 				action.payload.questionId,
 				'prevAnswer'
 			]);
-		case 'ANSWER-FAIL':
-		var success = checkProperties(action.payload, [
+		case 'USER-ANSWER-FAIL':
+		var heardBack = checkProperties(action.payload, [
 			'questionId'
 		]);
-		return !success ? prev
-		 	.set('error', true) : prev
+		return !heardBack ? prev : prev
 			.setIn([
 				action.payload.questionId,
 				'answer'

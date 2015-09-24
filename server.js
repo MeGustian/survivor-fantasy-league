@@ -1,3 +1,5 @@
+var isAdmin = "false";
+
 // TODO: Remove unecessary packages from package.json (including all the other
 // scripts).
 var fs = require('fs'),
@@ -97,11 +99,15 @@ app.post('/ajax', function (req, res) {
 });
 var week1 = {
 	"username":"yoav",
-	"isAdmin":"true",
+	"isAdmin":isAdmin,
 	questions: {
 		"125": {
 			question: 'Cont?',
 			type: 'contestant'
+		},
+		"4576": {
+			question: 'Bool?',
+			type: 'boolean'
 		}
 	},
 	"contestantStatus":{
@@ -571,8 +577,7 @@ app.get('/initial', function (req, res) {
 	}
 	// timeout...
 });
-app.post('/v/1', function (req, res) {
-	console.log('post v1');
+app.post('/:weekNumber', function (req, res) {
 	res.status(200).send(req.body);
 });
 

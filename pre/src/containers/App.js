@@ -10,20 +10,32 @@ var reducers = require('../reducers');
 
 // Middleware: log each action.
 var logger = loggerMiddlewareCreator();
-// var logger = function (store) {
-// 	return function (next) {
-// 		return function (action) {
-// 			console.group(action.type);
-// 			console.log('dispatching', action);
-// 			var result = next(action);
-// 			console.log('next state', store.getState());
-// 			console.groupEnd();
-// 			return result;
-// 		};
-// 	};
-// };
+/*
+var logger = function (store) {
+	return function (next) {
+		return function (action) {
+			console.group(action.type);
+			console.log('dispatching', action);
+			var result = next(action);
+			console.log('next state', store.getState());
+			console.groupEnd();
+			return result;
+		};
+	};
+};
+*/
 // Middleware: patch promises according to superagent done/fail returns from
 // Ajax call.
+var timer = function (store) {
+	return function (next) {
+		return function (action) {
+			var now = Date.now()
+			var result = next(action);
+			console.log('Reducing the action took: ' + (Date.now() - now) + 'ms.');
+			return result;
+		};
+	};
+};
 var patchPromiseWithSuperagent = function (store) {
 	return function (next) {
 		return function (action) {
@@ -44,6 +56,7 @@ var patchPromiseWithSuperagent = function (store) {
 	};
 };
 var createStoreWithMiddleware = applyMiddleware(
+	timer,
 	promiseMiddleware,
 	patchPromiseWithSuperagent,
 	logger

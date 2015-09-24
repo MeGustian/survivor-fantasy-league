@@ -6,9 +6,16 @@ module.exports = React.createClass({
 	render: function () {
 		if (this.props.serverFail) {
 			return (
+				<Bs.Row>
+				<Bs.Col md={10} mdOffset={1}>
 				<Bs.Alert bsStyle="danger">
-					{"An error has occured. Data may have not been saved!"}
+					<h4>Frak!</h4>
+					<p>
+						A server error has occured! Whatever changes you make may not be recorded.
+					</p>
 				</Bs.Alert>
+				</Bs.Col>
+				</Bs.Row>
 			);
 		}
 		if (this.props.user.get('isAdmin')) {

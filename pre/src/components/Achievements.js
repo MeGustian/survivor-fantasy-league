@@ -3,6 +3,18 @@ var Bs = require('react-bootstrap');
 var AchievementsObj = require('../objects/Achievements');
 
 var Achievements = React.createClass({
+	shouldComponentUpdate: function (nextProps) {
+		var equal = (
+			this.props.scores.every(function (val, key) {
+				return val === nextProps.scores.get(key);
+			}) &&
+			this.props.achievements.every(function (val, key) {
+				return val === nextProps.achievements.get(key);
+			})
+		);
+		return !equal;
+	}
+	,
 	render: function () {
 		return (
 			<Bs.Row>

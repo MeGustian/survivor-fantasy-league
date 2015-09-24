@@ -4,6 +4,10 @@ var Contestant = require('./Contestant');
 var Achievements = require('./Achievements');
 
 var Tribes = React.createClass({
+	shouldComponentUpdate: function (nextProps) {
+		return !!this.props.user.isAdmin;
+	}
+	,
 	render: function () {
 		return (
 			<Bs.Row>

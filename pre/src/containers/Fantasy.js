@@ -25,7 +25,9 @@ var Fantasy = React.createClass({
 	render: function () {
 		var p = this.props;
 		forcedLogger(p);
+		var now = Date.now();
 		var computedState = computerOfState(p);
+		console.log('Computing the state took: ' + (Date.now() - now) + 'ms.');
 		var dispatch = p.dispatch;
 		var fullContestants = p.week.get('contestantStatus').mergeDeep(p.contestants);
 		var circumstances = {

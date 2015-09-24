@@ -72,7 +72,7 @@ var Question = React.createClass({
 			alignItems: 'center'
 		};
 		return (
-			<Bs.Col xs="12" md="6">
+			<Bs.Col xs={12} md={6}>
 				<Bs.Panel header={
 					<div style={stylePanelHeadingInner}>
 						{this.questionRender()}

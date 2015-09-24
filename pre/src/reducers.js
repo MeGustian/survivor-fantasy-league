@@ -34,6 +34,15 @@ var user = function (prev, action) {
 			.set('error', true);
 		case 'SIGN-OUT-DONE':
 		return initialState.week;
+		case 'CREATE-WEEK-FAIL':
+		case 'TOGGLE-ACHIEVEMENT-FAIL':
+		case 'TOGGLE-VOTED-OUT-FAIL':
+		case 'UPDATE-QUESTION-FAIL':
+		case 'REMOVE-QUESTION-FAIL':
+		case 'USER-ANSWER-FAIL':
+		return prev
+		 	.set('error', true)
+			.set('errorActionType', action.type);
 		// case 'SIGN-OUT':
 		// return initialState.user
 		// case 'SIGN-IN-PEND':
@@ -99,8 +108,7 @@ var week = function (prev, action) {
 			'contestantId',
 			'achievement'
 		]);
-		return !heardBack ? prev
-		 	.set('error', true) : prev
+		return !heardBack ? prev : prev
 			.updateIn([
 				'contestantStatus',
 				action.payload.contestantId,
@@ -121,12 +129,11 @@ var week = function (prev, action) {
 		case 'TOGGLE-VOTED-OUT-DONE':
 		return prev;
 		case 'TOGGLE-VOTED-OUT-FAIL':
-		var success = checkProperties(action.payload, [
+		var heardBack = checkProperties(action.payload, [
 			'contestantId',
 			'votedOut'
 		]);
-		return !success ? prev
-		 	.set('error', true) : prev
+		return !heardBack ? prev : prev
 			.updateIn([
 				'contestantStatus',
 				action.payload.contestantId,
@@ -200,11 +207,10 @@ var questions = function (prev, action) {
 		case 'UPDATE-QUESTION-DONE':
 		return prev;
 		case 'UPDATE-QUESTION-FAIL':
-		var success = checkProperties(action.payload, [
+		var heardBack = checkProperties(action.payload, [
 			'questionId'
 		]);
-		return !success ? prev
-		 	.set('error', true) : prev
+		return !heardBack ? prev : prev
 			.set(action.payload.questionId, prev.getIn([
 				action.payload.questionId,
 				'prev'
@@ -227,17 +233,16 @@ var questions = function (prev, action) {
 		return prev
 			.delete(action.payload.questionId);
 		case 'REMOVE-QUESTION-FAIL':
-		var success = checkProperties(action.payload, [
+		var heardBack = checkProperties(action.payload, [
 			'questionId'
 		]);
-		return !success ? prev
-		 	.set('error', true) : prev
+		return !heardBack ? prev : prev
 			.deleteIn([
 				action.payload.questionId,
 				'removed'
 			]);
 		// ANSWER
-		case 'ANSWER-PEND':
+		case 'USER-ANSWER-PEND':
 		return prev
 			.setIn([
 				action.payload.questionId,
@@ -247,18 +252,17 @@ var questions = function (prev, action) {
 				action.payload.questionId,
 				'answer'
 			], action.payload.answer);
-		case 'ANSWER-DONE':
+		case 'USER-ANSWER-DONE':
 		return prev
 			.deleteIn([
 				action.payload.questionId,
 				'prevAnswer'
 			]);
-		case 'ANSWER-FAIL':
-		var success = checkProperties(action.payload, [
+		case 'USER-ANSWER-FAIL':
+		var heardBack = checkProperties(action.payload, [
 			'questionId'
 		]);
-		return !success ? prev
-		 	.set('error', true) : prev
+		return !heardBack ? prev : prev
 			.setIn([
 				action.payload.questionId,
 				'answer'

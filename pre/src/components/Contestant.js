@@ -3,6 +3,16 @@ var Bs = require('react-bootstrap');
 var Achievements = require('./Achievements');
 
 var Contestant = React.createClass({
+	shouldComponentUpdate: function (nextProps) {
+		var equal = (
+			this.props.scores.every(function (val, key) {
+				return val === nextProps.scores.get(key);
+			}) &&
+			this.props.votedOut === nextProps.votedOut
+		);
+		return !equal;
+	}
+	,
 	render: function () {
 		return (
 			<Bs.Row>
