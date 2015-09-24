@@ -110,6 +110,7 @@ var week1 = {
 			"contestantId":"56029683b2c3b5601f976290",
 			"tribe":"Ta-Keo",
 			"votedFor":"",
+			"votedOut":true,
 			"achievements":{
 				"CRIED": true,
 				"HASHTAG": true

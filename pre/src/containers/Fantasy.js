@@ -1,6 +1,5 @@
 var React = require('react');
 var PropTypes = React.PropTypes;
-// TODO: Do I need `immutable`?
 var I = require('immutable');
 var ImmutablePropTypes = require('react-immutable-proptypes');
 // TODO: Do I need `bindActionCreators`? Should I use it?
@@ -11,7 +10,9 @@ var connect = ReactRedux.connect; // Connect react container to redux.
 // Components. // TODO: Add proptypes to components (in their files).
 var Week = require('../components/Week'); // Explain...
 var Tribes = require('../components/Tribes'); // Explain...
+var Quiz = require('../components/Quiz'); // Explain...
 var Questions = require('../components/Questions'); // Explain...
+var Admin = require('../components/Admin'); // Explain...
 var computerOfState = require('../helpers/compute-state');
 var act = require('../actions'); // Give dispatch an action payload.
 // Handle the phase between passportJS sign-in to when the page loads. will
@@ -31,28 +32,33 @@ var Fantasy = React.createClass({
 			weekNumber: p.week.get('selected')
 		};
 		var whatIsLoading = userLoading(p.user, dispatch, act);
-		return whatIsLoading ? whatIsLoading : (
+		if (whatIsLoading) {
+			return whatIsLoading;
+		}
+		var serverFail = Object.getOwnPropertyNames(p).some(function (prop) {
+			if (prop === 'dispatch') {
+				return false;
+			}
+			return p[prop].get('error');
+		});
+		return (
 			<div>
-				<Week
+				<Admin
+					key="admin"
 					user={p.user}
-					selected={p.week.get('selected')}
-					count={p.week.get('count')}
-					key="week"
-					onWeekChoice={function (number) {
-						return dispatch(act.selectWeekView(circumstances, number));
+					serverFail={serverFail}
+					createQuestion={function (type) {
+						return dispatch(act.createQuestion(circumstances, type));
 					}}
 				/>
-				<Questions
+				<Quiz
+					key="quiz"
 					user={p.user}
 					questions={p.questions}
 					contestants={fullContestants}
-					key="questions"
 					dispatcher={{
 						userAnswer: function (questionId, answer) {
 							return dispatch(act.userAnswer(circumstances, questionId, answer));
-						},
-						create: function (type) {
-							return dispatch(act.createQuestion(circumstances, type));
 						},
 						update: function (questionId, question, answer, type) {
 							return dispatch(act.updateQuestion(circumstances, questionId, question, answer, type));
@@ -66,16 +72,59 @@ var Fantasy = React.createClass({
 					}}
 				/>
 				<Tribes
+					key="tribes"
 					user={p.user}
 					contestants={fullContestants}
 					scores={computedState.scores}
 					toggleAchievement={function (achievementCode, contestantId, hasAchieved) {
 						return dispatch(act.toggleAchievement(circumstances, achievementCode, contestantId, hasAchieved));
 					}}
-					key="tribes"
 				/>
 			</div>
 		);
+			// <div>
+			// 	<Week
+			// 		user={p.user}
+			// 		selected={p.week.get('selected')}
+			// 		count={p.week.get('count')}
+			// 		key="week"
+			// 		onWeekChoice={function (number) {
+			// 			return dispatch(act.selectWeekView(circumstances, number));
+			// 		}}
+			// 	/>
+			// 	<Questions
+			// 		user={p.user}
+			// 		questions={p.questions}
+			// 		contestants={fullContestants}
+			// 		key="questions"
+			// 		dispatcher={{
+			// 			userAnswer: function (questionId, answer) {
+			// 				return dispatch(act.userAnswer(circumstances, questionId, answer));
+			// 			},
+			// 			create: function (type) {
+			// 				return dispatch(act.createQuestion(circumstances, type));
+			// 			},
+			// 			update: function (questionId, question, answer, type) {
+			// 				return dispatch(act.updateQuestion(circumstances, questionId, question, answer, type));
+			// 			},
+			// 			edit: function (questionId, isEditing) {
+			// 				return dispatch(act.editQuestion(questionId, isEditing));
+			// 			},
+			// 			remove: function (questionId) {
+			// 				return dispatch(act.removeQuestion(circumstances, questionId));
+			// 			}
+			// 		}}
+			// 	/>
+			// 	<Tribes
+			// 		user={p.user}
+			// 		contestants={fullContestants}
+			// 		scores={computedState.scores}
+			// 		toggleAchievement={function (achievementCode, contestantId, hasAchieved) {
+			// 			return dispatch(act.toggleAchievement(circumstances, achievementCode, contestantId, hasAchieved));
+			// 		}}
+			// 		key="tribes"
+			// 	/>
+			// </div>
 	}
 	,
 	propTypes: {

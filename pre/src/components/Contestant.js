@@ -1,12 +1,12 @@
 var React = require('react');
+var Bs = require('react-bootstrap');
 var Achievements = require('./Achievements');
 
 var Contestant = React.createClass({
 	render: function () {
 		return (
-			<div className="col-xs-6">
-			<div className="thumbnail row">
-			<div className="col-md-5">
+			<Bs.Row>
+			<Bs.Col sm={12} md={4}>
 				<img
 					className="img-circle"
 					style={{marginRight: '10px', width: '200px', height: '200px'}}
@@ -15,11 +15,12 @@ var Contestant = React.createClass({
 					width="200"
 					height="200"
 				/>
-			</div>
-			<div className="col-md-7 center-block" style={{border: 'none'}}>
-				<h3 className="text-center" style={{margin: '5px'}}>
+			</Bs.Col>
+			<Bs.Col sm={12} md={8}>
+				<h3 className="text-center" style={{marginRight: '5px'}}>
+					{this.props.votedOut ? <span className="badge progress-bar-danger" style={{marginRight: '0.5em'}}>voted out</span> : ""}
 					{this.props.name}
-					<span className="badge">{this.props.scores.get('total')}</span>
+					<span className="badge" style={{marginLeft: '0.5em'}}>{this.props.scores.get('total')}</span>
 				</h3>
 				<dl className="dl-horizontal">
 					<dt>{"Age"}</dt>
@@ -29,9 +30,8 @@ var Contestant = React.createClass({
 					<dt>{"Previous season"}</dt>
 					<dd>{this.props.previousSeason}<br/>{"finished " + this.props.place}</dd>
 				</dl>
-			</div>
-			</div>
-			</div>
+			</Bs.Col>
+			</Bs.Row>
 		);
 	}
 });

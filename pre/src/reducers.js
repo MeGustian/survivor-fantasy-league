@@ -95,19 +95,44 @@ var week = function (prev, action) {
 		case 'TOGGLE-ACHIEVEMENT-DONE':
 		return prev;
 		case 'TOGGLE-ACHIEVEMENT-FAIL':
-		var success = checkProperties(action.payload, [
+		var heardBack = checkProperties(action.payload, [
 			'contestantId',
 			'achievement'
 		]);
-		return !success ? prev
+		return !heardBack ? prev
 		 	.set('error', true) : prev
 			.updateIn([
 				'contestantStatus',
 				action.payload.contestantId,
 				'achievements',
 				action.payload.achievement
-			], function (hasAchieved) {
-				return !hasAchieved;
+			], function (votedOut) {
+				return !votedOut;
+			});
+		case 'TOGGLE-VOTED-OUT-PEND':
+		return prev
+			.updateIn([
+				'contestantStatus',
+				action.payload.contestantId,
+				'votedOut'
+			], function (votedOut) {
+				return !votedOut;
+			});
+		case 'TOGGLE-VOTED-OUT-DONE':
+		return prev;
+		case 'TOGGLE-VOTED-OUT-FAIL':
+		var success = checkProperties(action.payload, [
+			'contestantId',
+			'votedOut'
+		]);
+		return !success ? prev
+		 	.set('error', true) : prev
+			.updateIn([
+				'contestantStatus',
+				action.payload.contestantId,
+				'votedOut'
+			], function (votedOut) {
+				return !votedOut;
 			});
 		default:
 		return prev;
@@ -267,7 +292,7 @@ var truthiness = function (bool) {
 var checkProperties = function (obj, props) {
 	return props.every(function (prop) {
 		return obj.hasOwnProperty(prop);
-	})
+	});
 }
 
 module.exports = reducers;

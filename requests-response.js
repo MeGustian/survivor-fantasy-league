@@ -57,7 +57,7 @@
 	}
 	,
 	'WEEK-VIEW-SELECT': {
-		method: 'GET'
+		method: 'POST'
 		,
 		url: '/:weekNumber'
 		,
@@ -83,17 +83,26 @@
 		}
 	}
 	,
+	'TOGGLE-VOTED-OUT': {
+		url '/:weekNumber'
+		,
+		method: 'POST'
+		,
+		req: {
+			contestantId: <ContestantId>
+			,
+			value: <Boolean>
+		}
+		,
+		res: {
+			contestantId: <ContestantId>
+		}
+	}
+	,
 	'CREATE-WEEK': {
 		url: '/:weekNumber'
 		,
-		req: {
-			removedContestants: [
-				<ContestantId>
-				.
-				.
-				.
-			]
-		}
+		method: 'POST'
 	,
 	'TOGGLE-ACHIEVEMENT': {
 		url: '/:weekNumber'
