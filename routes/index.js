@@ -4,6 +4,9 @@ var _ = require('lodash');
 var passport = require('passport');
 var weekCount = 1;
 
+//// =====================================
+//// LOGIN ROUTES    =====================
+//// =====================================
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -48,21 +51,22 @@ router.post('/signup', passport.authenticate('local-signup', {
   failureFlash : true // allow flash messages
 }));
 
+/* GET Signout */
+router.get('/sign-out', function(req, res){
+  req.logout();
+
+  res.redirect('/');
+})
 //// =====================================
-//// FACEBOOK ROUTES =====================
+//// LOGIN ROUTES END=====================
 //// =====================================
-//// route for facebook authentication and login
-//router.get('/auth/facebook', passport.authenticate('facebook', { scope : 'email' }));
-//
-//// handle the callback after facebook has authenticated the user
-//router.get('/auth/facebook/callback',
-//    passport.authenticate('facebook', {
-//      successRedirect : '/home',
-//      failureRedirect : '/'
-//    }));
 
 
-/* Retrieve initial data */
+//// =====================================
+//// INITIAL ROUTE   =====================
+//// =====================================
+
+/* Retrieve initial data - return username, isAdmin, contestantStatus, weekNumber, allContestant, weekly questions */
 router.get('/initial', function (req, res) {
   console.log('initial');
   var responseData = {};
@@ -74,7 +78,6 @@ router.get('/initial', function (req, res) {
   users.findOne( { 'local.username' : req.user.local.username}, function(err, userData){
       responseData['username'] = userData.local.username;
       responseData['isAdmin'] = userData.local.isAdmin;
-      //responseData['contestantStatus'] = {};
       week.find({}, {}, function(err, docs){
         console.log('inserting contestant status week' + weekCount);
         var weekData = toObject(docs);
@@ -110,6 +113,9 @@ router.get('/initial', function (req, res) {
 
 });
 
+//// =====================================
+//// META ROUTES     =====================
+//// =====================================
 
 router.post('/:weekNumber', function(req, res) {
   console.log('testing server...');
@@ -117,12 +123,13 @@ router.post('/:weekNumber', function(req, res) {
   console.log(data['meta']);
   var query = {};
   switch (data['meta']) {
+    // Submits user weekly answers to db - return questionID
     case 'USER-ANSWER':
       var db = req.db;
       var collection = db.get('users');
       query[data['questionId']] = data['answer'];
       collection.update(
-          { '_id' : req.params.userId},
+          { 'username' : req.user.local.username},
           {
             $set: query
           }
@@ -132,6 +139,7 @@ router.post('/:weekNumber', function(req, res) {
       break;
 
     case 'WEEK-VIEW-SELECT':
+      // Retrieve all weekly data - return contestantStatus, weekNumber
       var responseData = {};
       var db = req.db;
       var week = db.get('week' + req.params.weekNumber);
@@ -146,7 +154,7 @@ router.post('/:weekNumber', function(req, res) {
         res.json(responseData);
       });
       break;
-    //TODO: TOGGLE-ACHIEVEMENT
+    // Changes achieveme
     case 'TOGGLE-ACHIEVEMENT':
       var db = req.db;
       var collection = db.get('week' + req.params.weekNumber);
@@ -201,6 +209,18 @@ router.post('/:weekNumber', function(req, res) {
 
       break;
 
+    case 'CONTESTANT-CHOICES':
+      var db = req.db;
+      var collection = db.get('users');
+      var choices = data['choices'];
+        collection.update(
+            {'username' : req.user.local.username },
+            {
+              $set: {'choices' : choices}
+            }
+        )
+      res.json(data);
+
     default:
       console.log('Bad Request');
 
@@ -216,48 +236,21 @@ function toObject(arr) {
   return rv;
 }
 
-/* GET user page.
-router.get('/:username', function(req, res, next) {
-  var db = req.db;
-  var collection = db.get('users');
-  collection.findOne({ 'name' : req.body.name}, function(err, doc){
-    console.log(doc.loggedIn)
-    if (req.params.username === 'admin'){
-      res.render('admin', {title: 'Admin'});
-    }
-    else{
-      res.render('user', { title: 'Welcome ' + req.params.username});
-    }
-  })
-
-});
- */
-/* POST User Answer */
-router.post('/:username/:weekNumber', function(req, res, next){
-  var db = req.db;
-  var collection = db.get('users');
-  var data = req.body;
-  var query = { 'answer' : data[answer]};
-  collection.update(
-                    { '_id' : data['questionId']},
-                    { $set : query}
-                   )
-});
-
-router.post('/createWeek1', function(req, res, next){
-  var db = req.db;
-  var data = req.body;
-  var week = db.get('week1');
-  week.insert({ 'contestantId' : data['contestantId'],
-                'tribe' : data['tribe'],
-                'votedFor' : ' ',
-                'achievements' : { }
-  });
-  res.send('ok!');
-});
-
-
 module.exports = router;
+
+
+//// =====================================
+//// FACEBOOK ROUTES =====================
+//// =====================================
+//// route for facebook authentication and login
+//router.get('/auth/facebook', passport.authenticate('facebook', { scope : 'email' }));
+//
+//// handle the callback after facebook has authenticated the user
+//router.get('/auth/facebook/callback',
+//    passport.authenticate('facebook', {
+//      successRedirect : '/home',
+//      failureRedirect : '/'
+//    }));
 
 
 
