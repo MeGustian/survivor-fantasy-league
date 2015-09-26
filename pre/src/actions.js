@@ -67,6 +67,17 @@ act.getInitial = function () {
 	}, 'GET', {url: '/initial'});
 };
 
+// Navigation.
+act.navigate = function (target) {
+	return {
+		type: 'NAVIGATE'
+		,
+		payload: {
+			target: target
+		}
+	};
+};
+
 // Player/Admin chose a week to view.
 act.generateNextWeek = function (circumstances, removedContestants) {
 	return actionParser({
@@ -149,11 +160,13 @@ act.toggleVotedOut = function (circumstances, contestantId, votedOut) {
 };
 
 // Player choses contestants. // TODO: Make this work.
-act.choose = function (listOfContestants) {
+act.chooseContestant = function (id) {
 	return {
-		type: 'PLAYER-CHOOSE-CONTESTANTS'
+		type: 'CHOOSE-CONTESTANT'
 		,
-		payload: listOfContestants
+		payload: {
+			id: id
+		}
 	};
 };
 

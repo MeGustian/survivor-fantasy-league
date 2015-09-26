@@ -19,8 +19,8 @@ var Contestant = React.createClass({
 			<Bs.Col sm={12} md={4}>
 				<img
 					className="img-circle"
-					style={{marginRight: '10px', width: '200px', height: '200px'}}
-					src={"/images/contestants/" + this.props.name + ".jpg"}
+					style={{marginRight: '10px', width: '200px', height: '200px', marginBottom: '15px'}}
+					src={"/images/contestants/thumbnails/" + this.props.name + ".jpg"}
 					alt={this.props.name}
 					width="200"
 					height="200"

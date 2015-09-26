@@ -5,7 +5,7 @@ var AnswerTypes = require('./AnswerTypes');
 
 var now;
 
-module.exports = Quiz = React.createClass({
+var Quiz = React.createClass({
 	componentWillUpdate: function () {
 		now = Date.now();
 	}
@@ -180,3 +180,5 @@ var Question = React.createClass({
 		if (userEdit) handlers.userAnswer(questionId, answer);
 	}
 });
+
+module.exports = Quiz;

@@ -5,7 +5,7 @@ var Achievements = require('./Achievements');
 
 var Tribes = React.createClass({
 	shouldComponentUpdate: function (nextProps) {
-		return !!this.props.user.isAdmin;
+		return !!this.props.user.get('isAdmin');
 	}
 	,
 	render: function () {

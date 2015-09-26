@@ -14,7 +14,7 @@ var computeState = function (state) {
 };
 
 computeState.scores = function (state) {
-	return state.week.get('contestantStatus')
+	return state.contestants.get('status')
 		.map(function (contestant, id) {
 			return AchievementsObj
 				.filter(function (theAchievement, achievementCode) {

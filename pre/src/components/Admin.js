@@ -4,14 +4,14 @@ var AdminToolbox = require('./AdminToolbox');
 
 module.exports = React.createClass({
 	render: function () {
-		if (this.props.serverFail) {
+		if (this.props.serverFail.get('is')) {
 			return (
 				<Bs.Row>
 				<Bs.Col md={10} mdOffset={1}>
 				<Bs.Alert bsStyle="danger">
 					<h4>Frak!</h4>
 					<p>
-						A server error has occured! Whatever changes you make may not be recorded.
+						{"A server error has occured!" + this.props.serverFail.getIn(['details', 'messege'])}
 					</p>
 				</Bs.Alert>
 				</Bs.Col>

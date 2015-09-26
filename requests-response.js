@@ -15,16 +15,22 @@
 			isAdmin: <Boolean>
 			,
 			questions: {
-				<QuestionId>: <String>
+				<QuestionId>: {
+					question: <String>,
+					answer: <String|Number|ContestantId>,
+					type: <String>
+				}
 				.
 				.
 				.
 			}
 			,
+			chosen: <Array: ContestantId>
+			,
 			contestantStatus: {
 				<ContestantId>: {
 					tribe: <String>,
-					votedFor: <contestantId>,
+					votedFor: <ContestantId>,
 					votedOut: [Boolean],
 					achievements: {
 						<String>: <Boolean>
@@ -56,8 +62,18 @@
 		}
 	}
 	,
-	'WEEK-VIEW-SELECT': {
+	'CONTESTANT-CHOICE': {
 		method: 'POST'
+		,
+		url: '/'
+		,
+		req: {
+			chosen: <Array: ContestantId>
+		}
+	}
+	,
+	'WEEK-VIEW-SELECT': {
+		method: 'POST' // Should be GET...
 		,
 		url: '/:weekNumber'
 		,

@@ -1,13 +1,13 @@
 var React = require('react');
 
-module.exports = function (user, dispatch, act) {
-	if (user.get('error')) {
-		return <div className="alert alert-danger" role="alert">{"failed!"}</div>;
+module.exports = function (controller, dispatch, act) {
+	if (controller.getIn(['error', 'is'])) {
+		return <div className="alert alert-danger" role="alert">{"failed! " + controller.getIn(['error', 'details', 'messege'])}</div>;
 	}
-	if (user.get('attempting')) {
+	if (controller.getIn(['user', 'attempting'])) {
 		return <div className="alert alert-info" role="alert">{"loading..."}</div>;
 	}
-	if (!user.get('signedIn')) {
+	if (!controller.getIn(['user', 'signedIn'])) {
 		dispatch(act.getInitial());
 		return <div className="alert alert-info" role="alert">{"signing in..."}</div>;
 	}
