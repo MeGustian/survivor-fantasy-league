@@ -1,12 +1,24 @@
 var React = require('react');
+var Bs = require('react-bootstrap');
 var AchievementsObj = require('../objects/Achievements');
 
 var Achievements = React.createClass({
+	shouldComponentUpdate: function (nextProps) {
+		var equal = (
+			this.props.scores.every(function (val, key) {
+				return val === nextProps.scores.get(key);
+			}) &&
+			this.props.achievements.every(function (val, key) {
+				return val === nextProps.achievements.get(key);
+			})
+		);
+		return !equal;
+	}
+	,
 	render: function () {
 		return (
-			<div className="col-xs-6">
-			<div className="row">
-			<div className="col-xs-12 col-md-6">
+			<Bs.Row>
+			<Bs.Col sm={12} md={6}>
 				<div className="panel panel-success">
 					<div className="panel-heading">
 						Good achievements
@@ -16,8 +28,8 @@ var Achievements = React.createClass({
 						{this.items('good')}
 					</ul>
 				</div>
-			</div>
-			<div className="col-xs-12 col-md-6">
+			</Bs.Col>
+			<Bs.Col sm={12} md={6}>
 				<div className="panel panel-danger">
 					<div className="panel-heading">
 						Bad achievements
@@ -27,9 +39,8 @@ var Achievements = React.createClass({
 						{this.items('bad')}
 					</ul>
 				</div>
-			</div>
-			</div>
-			</div>
+			</Bs.Col>
+			</Bs.Row>
 		);
 	}
 	,

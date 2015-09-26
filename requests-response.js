@@ -14,21 +14,24 @@
 		res: {
 			isAdmin: <Boolean>
 			,
-			questions: {ddddd
+			questions: {
 				<QuestionId>: {
 					question: <String>,
-					answer: <String>,
+					answer: <String|Number|ContestantId>,
 					type: <String>
-			}
+				}
+
 				.
 				.
 				.
 			}
 			,
+			chosen: <Array: ContestantId>
+			,
 			contestantStatus: {
 				<ContestantId>: {
 					tribe: <String>,
-					votedFor: <contestantId>,
+					votedFor: <ContestantId>,
 					votedOut: [Boolean],
 					achievements: {
 						<String>: <Boolean>
@@ -60,16 +63,18 @@
 		}
 	}
 	,
-	'SIGN-OUT': {
-		method: 'GET'
+	'CONTESTANT-CHOICE': {
+		method: 'POST'
 		,
-		url: '/sign-out'
+		url: '/'
 		,
-		res: ... to be determined ...
+		req: {
+			chosen: <Array: ContestantId>
+		}
 	}
 	,
 	'WEEK-VIEW-SELECT': {
-		method: 'GET'
+		method: 'POST' // Should be GET...
 		,
 		url: '/:weekNumber'
 		,
@@ -95,17 +100,26 @@
 		}
 	}
 	,
+	'TOGGLE-VOTED-OUT': {
+		url '/:weekNumber'
+		,
+		method: 'POST'
+		,
+		req: {
+			contestantId: <ContestantId>
+			,
+			value: <Boolean>
+		}
+		,
+		res: {
+			contestantId: <ContestantId>
+		}
+	}
+	,
 	'CREATE-WEEK': {
 		url: '/:weekNumber'
 		,
-		req: {
-			removedContestants: [
-				<ContestantId>
-				.
-				.
-				.
-			]
-		}
+		method: 'POST'
 	,
 	'TOGGLE-ACHIEVEMENT': {
 		url: '/:weekNumber'

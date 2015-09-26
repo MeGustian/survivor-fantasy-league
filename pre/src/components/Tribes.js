@@ -1,27 +1,39 @@
 var React = require('react');
+var Bs = require('react-bootstrap');
 var Contestant = require('./Contestant');
 var Achievements = require('./Achievements');
 
 var Tribes = React.createClass({
+	shouldComponentUpdate: function (nextProps) {
+		return !!this.props.user.get('isAdmin');
+	}
+	,
 	render: function () {
 		return (
-			<div className="row">
+			<Bs.Row>
 				{this.tribes()}
-			</div>
+			</Bs.Row>
 		);
 	}
 	,
 	tribes: function () {
 		var that = this;
-		return this.props.contestants
+		var byTribe = this.props.contestants
 			.groupBy(function (contestant) {
 				return contestant.get('tribe');
-			}).map(function (tribe, name) {
+			});
+		return byTribe
+			.map(function (tribe, name) {
+				if (!name) {
+					name = "Voted Out";
+				}
 				return (
-					<div className="col-xs-12" key={name}>
-						<div className="row"><div className="col-xs-12"><h2>{name}</h2></div></div>
-						{that.membersOf(tribe)}
-					</div>
+					<Bs.Col sm={12} md={12/byTribe.count()} key={name}>
+						<h2>{name}</h2>
+						<Bs.Accordion>
+							{that.membersOf(tribe)}
+						</Bs.Accordion>
+					</Bs.Col>
 				);
 			});
 	}
@@ -44,22 +56,48 @@ var Tribes = React.createClass({
 		// console.log(gotVotesFrom.toString());
 		// console.log(votedOut);
 		return tribe.map(function (contestant, id) {
+			var name = contestant.get('firstName') + " " + contestant.get('lastName');
 			return (
-				<div className="row" key={id}>
-					<Contestant
-						contestant={id}
-						name={contestant.get('firstName') + " " + contestant.get('lastName')}
-						scores={that.props.scores.get(id)}
-					/>
-					<Achievements
-						contestant={id}
-						isAdmin={that.props.user.get('isAdmin')}
-						achievements={contestant.get('achievements')}
-						scores={that.props.scores.get(id)}
-						toggleAchievement={that.props.toggleAchievement}
-					/>
-				</div>
+				<Bs.Panel header={name} eventKey={id}>
+				<Contestant
+					contestant={id}
+					name={contestant.get('firstName') + " " + contestant.get('lastName')}
+					age={contestant.get('age')}
+					occupation={contestant.get('occupation')}
+					previousSeason={contestant.get('previousSeason')}
+					place={contestant.get('place')}
+					scores={that.props.scores.get(id)}
+					votedOut={contestant.get('votedOut')}
+				/>
+				<Achievements
+					contestant={id}
+					isAdmin={that.props.user.get('isAdmin')}
+					achievements={contestant.get('achievements')}
+					scores={that.props.scores.get(id)}
+					toggleAchievement={that.props.toggleAchievement}
+				/>
+				</Bs.Panel>
 			);
+			// return (
+			// 	<div className="row" key={id}>
+			// 		<Contestant
+			// 			contestant={id}
+			// 			name={contestant.get('firstName') + " " + contestant.get('lastName')}
+			// 			age={contestant.get('age')}
+			// 			occupation={contestant.get('occupation')}
+			// 			previousSeason={contestant.get('previousSeason')}
+			// 			place={contestant.get('place')}
+			// 			scores={that.props.scores.get(id)}
+			// 		/>
+			// 		<Achievements
+			// 			contestant={id}
+			// 			isAdmin={that.props.user.get('isAdmin')}
+			// 			achievements={contestant.get('achievements')}
+			// 			scores={that.props.scores.get(id)}
+			// 			toggleAchievement={that.props.toggleAchievement}
+			// 		/>
+			// 	</div>
+			// );
 		});
 	}
 });

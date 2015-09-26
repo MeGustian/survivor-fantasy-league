@@ -53,12 +53,12 @@ var actionParser = function (data, requestType, circumstances) {
 // 	}, 'POST', {url: '/sign-in'});
 // };
 
-// Sign out.
-act.signOut = function () {
-	return actionParser({
-		meta: 'SIGN-OUT'
-	}, 'GET', {url: '/sign-out'});
-};
+// // Sign out.
+// act.signOut = function () {
+// 	return actionParser({
+// 		meta: 'SIGN-OUT'
+// 	}, 'GET', {url: '/sign-out'});
+// };
 
 // Get information after being signed in.
 act.getInitial = function () {
@@ -67,11 +67,21 @@ act.getInitial = function () {
 	}, 'GET', {url: '/initial'});
 };
 
+// Navigation.
+act.navigate = function (target) {
+	return {
+		type: 'NAVIGATE'
+		,
+		payload: {
+			target: target
+		}
+	};
+};
+
 // Player/Admin chose a week to view.
 act.generateNextWeek = function (circumstances, removedContestants) {
 	return actionParser({
-		meta: 'WEEK-VIEW-SELECT',
-		removedContestants: removedContestants
+		meta: 'WEEK-VIEW-SELECT'
 	}, 'POST', {weekNumber: circumstances.weekNumber + 1});
 };
 
@@ -79,7 +89,7 @@ act.generateNextWeek = function (circumstances, removedContestants) {
 act.selectWeekView = function (circumstances, number) {
 	return actionParser({
 		meta: 'WEEK-VIEW-SELECT'
-	}, 'GET', {weekNumber: number});
+	}, 'POST', {weekNumber: number});
 };
 
 // Admin creates question.
@@ -141,12 +151,23 @@ act.toggleAchievement = function (circumstances, achievement, contestantId, hasA
 	}, 'POST', circumstances);
 };
 
+// Admin toggles voted out of contestant.
+act.toggleVotedOut = function (circumstances, contestantId, votedOut) {
+	return actionParser({
+		meta: 'TOGGLE-ACHIEVEMENT',
+		contestantId: contestantId,
+		value: !votedOut
+	}, 'POST', circumstances);
+};
+
 // Player choses contestants. // TODO: Make this work.
-act.choose = function (listOfContestants) {
+act.chooseContestant = function (id) {
 	return {
-		type: 'PLAYER-CHOOSE-CONTESTANTS'
+		type: 'CHOOSE-CONTESTANT'
 		,
-		payload: listOfContestants
+		payload: {
+			id: id
+		}
 	};
 };
 

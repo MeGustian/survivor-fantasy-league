@@ -1,88 +1,80 @@
 var React = require('react');
 var PropTypes = React.PropTypes;
-// TODO: Do I need `bindActionCreators`? Should I use it?
-var bindActionCreators = require('redux').bindActionCreators;
-var ReactRedux = require('react-redux');
-var connect = ReactRedux.connect; // Connect react container to redux.
-// TODO: Add proptypes to components (in their files).
-var SignIn = require('../components/SignIn'); // Explain...
-var Week = require('../components/Week'); // Explain...
-var Tribes = require('../components/Tribes'); // Explain...
-var Questions = require('../components/Questions'); // Explain...
-var computerOfState = require('../compute-state');
-var act = require('../actions'); // Give dispatch an action payload.
-// TODO: Do I need `immutable`?
 var I = require('immutable');
 var ImmutablePropTypes = require('react-immutable-proptypes');
+// TODO: Do I need `bindActionCreators`? Should I use it?
+var bindActionCreators = require('redux').bindActionCreators;
+var connect = require('react-redux').connect; // Connect react container to redux.
+
+// Components. // TODO: Add proptypes to components (in their files).
+var Week = require('../components/Week'); // Explain...
+var Navigation = require('../components/Navigation'); // Explain...
+var Profile = require('../components/Profile'); // Explain...
+var Tribes = require('../components/Tribes'); // Explain...
+var Quiz = require('../components/Quiz'); // Explain...
+var Questions = require('../components/Questions'); // Explain...
+var Admin = require('../components/Admin'); // Explain...
+var computerOfState = require('../helpers/compute-state');
+var act = require('../actions'); // Give dispatch an action payload.
+// Handle the phase between passportJS sign-in to when the page loads. will
+// return false once everything is clear.
+var userLoading = require('../helpers/user-loading');
+var forcedLogger = require('../helpers/forced-logger');
 
 
 var Fantasy = React.createClass({
 	render: function () {
-		console.groupCollapsed('rendering with...');
-		// console.group('contestants');
-		// 	console.log(this.props.contestants.toString());
-		// console.groupEnd();
-		// console.group('week');
-		// 	console.log(this.props.week.toString());
-		// console.groupEnd();
-		// console.group('questions');
-		// 	console.log(this.props.questions.toString());
-		// console.groupEnd();
-		// console.group('user');
-		// 	console.log(this.props.user.toString());
-		// console.groupEnd();
-		console.group('compute-state');
-			var computedState = computerOfState(this.props);
-			console.log(computedState.scores.toString());
-		console.groupEnd();
-		console.groupEnd();
 		var p = this.props;
+		forcedLogger(p);
+		var computedState = computerOfState(p);
 		var dispatch = p.dispatch;
-		var fullContestants = p.week.get('contestantStatus').mergeDeep(p.contestants);
+		var fullContestants = p.contestants.get('status').mergeDeep(p.contestants.get('info'));
 		var circumstances = {
-			weekNumber: p.week.get('selected')
+			weekNumber: p.navigation.get('selectedWeek')
 		};
-		// console.log(fullContestants.toString());
-		// if (!p.user.get('userId')) {
-		// 	return <SignIn user={p.user} submit={function (username, password, isAdmin) {
-		// 		return dispatch(act.signIn(username, password, isAdmin));
-		// 	}}/>
-		// }
-		if (p.user.get('error')) {
-			return <div className="alert alert-danger" role="alert">{"failed!"}</div>;
-		}
-		if (p.user.get('attempting')) {
-			return <div className="alert alert-info" role="alert">{"loading..."}</div>;
-		}
-		if (!p.user.get('signedIn')) {
-			dispatch(act.getInitial());
-			return <div className="alert alert-info" role="alert">{"signing in..."}</div>;
+		var whatIsLoading = userLoading(p.controller, dispatch, act);
+		if (whatIsLoading) {
+			return whatIsLoading;
 		}
 		return (
 			<div>
-				<Week
-					user={p.user}
-					selected={p.week.get('selected')}
-					count={p.week.get('count')}
-					key="week"
-					signOut={function () {
-						return dispatch(act.signOut());
-					}}
-					onWeekChoice={function (number) {
-						return dispatch(act.selectWeekView(circumstances, number));
+				<Navigation
+					key="navigation"
+					user={p.controller.get('user')}
+					navigation={p.navigation}
+					navigate={function (target) {
+						return dispatch(act.navigate(target));
 					}}
 				/>
-				<Questions
-					user={p.user}
+				<Admin
+					key="admin"
+					user={p.controller.get('user')}
+					serverFail={p.controller.get('error')}
+					createQuestion={function (type) {
+						return dispatch(act.createQuestion(circumstances, type));
+					}}
+				/>
+				<div style={{display: p.navigation.get('location') === 'profile' ? 'initial' : 'none'}}>
+				<Profile
+					key="profile"
+					user={p.controller.get('user')}
+					chosen={p.profile.get('chosen')}
+					info={fullContestants}
+					selector={function (id) {
+						return dispatch(act.chooseContestant(id));
+					}}
+				/>
+				</div>
+				<div style={{display: p.navigation.get('location') === 'weekly' ? 'initial' : 'none'}}>
+				<Quiz
+					key="quiz"
+					display={p.navigation.get('location') === 'weekly'}
+					user={p.controller.get('user')}
 					questions={p.questions}
 					contestants={fullContestants}
-					key="questions"
 					dispatcher={{
 						userAnswer: function (questionId, answer) {
 							return dispatch(act.userAnswer(circumstances, questionId, answer));
-						},
-						create: function (type) {
-							return dispatch(act.createQuestion(circumstances, type));
 						},
 						update: function (questionId, question, answer, type) {
 							return dispatch(act.updateQuestion(circumstances, questionId, question, answer, type));
@@ -96,14 +88,15 @@ var Fantasy = React.createClass({
 					}}
 				/>
 				<Tribes
-					user={p.user}
+					key="tribes"
+					user={p.controller.get('user')}
 					contestants={fullContestants}
 					scores={computedState.scores}
 					toggleAchievement={function (achievementCode, contestantId, hasAchieved) {
 						return dispatch(act.toggleAchievement(circumstances, achievementCode, contestantId, hasAchieved));
 					}}
-					key="tribes"
 				/>
+				</div>
 			</div>
 		);
 	}
@@ -153,13 +146,11 @@ var Fantasy = React.createClass({
 // the state.
 var select = function (state) {
 	return {
-		week: state.week
-		,
-		contestants: state.contestants
-		,
+		controller: state.controller,
+		navigation: state.navigation,
+		profile: state.profile,
+		contestants: state.contestants,
 		questions: state.questions
-		,
-		user: state.user
 	}
 };
 

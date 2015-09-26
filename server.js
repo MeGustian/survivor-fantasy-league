@@ -33,9 +33,9 @@ require('./config/passport')(passport); // pass passport for configuration
 
 function compile(str, path) {
 	return stylus(str)
-	.set('filename', path)
-	.use(nib())
-	.import('nib');
+		.set('filename', path)
+		.use(nib())
+		.import('nib');
 }
 // Set views with Jade. Read below to understand the __dirname thing.
 app.set('views', __dirname + '/views');
@@ -43,8 +43,8 @@ app.set('view engine', 'jade');
 // Using Stylus with nib.
 app.use(stylus.middleware(
 	{ src: __dirname + '/public'
-	, compile: compile
-}
+		, compile: compile
+	}
 ));
 
 // Set `/public` as the static resources, which is accessable from the browser
@@ -67,8 +67,8 @@ app.use(flash()); // use connect-flash for flash messages stored in session
 
 // Connect to DB
 app.use(function(req,res,next){
-  req.db = db;
-  next();
+	req.db = db;
+	next();
 
 });
 
@@ -86,9 +86,9 @@ app.use('/admin', admin);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
-  var err = new Error('Not Found');
-  err.status = 404;
-  next(err);
+	var err = new Error('Not Found');
+	err.status = 404;
+	next(err);
 });
 
 // error handlers
@@ -96,23 +96,23 @@ app.use(function(req, res, next) {
 // development error handler
 // will print stacktrace
 if (app.get('env') === 'development') {
-  app.use(function(err, req, res, next) {
-    res.status(err.status || 500);
-    res.render('error', {
-      message: err.message,
-      error: err
-    });
-  });
+	app.use(function(err, req, res, next) {
+		res.status(err.status || 500);
+		res.render('error', {
+			message: err.message,
+			error: err
+		});
+	});
 }
 
 // production error handler
 // no stacktraces leaked to user
 app.use(function(err, req, res, next) {
-  res.status(err.status || 500);
-  res.render('error', {
-    message: err.message,
-    error: {}
-  });
+	res.status(err.status || 500);
+	res.render('error', {
+		message: err.message,
+		error: {}
+	});
 });
 
 
