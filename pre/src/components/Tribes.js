@@ -9,6 +9,7 @@ var Tribes = React.createClass({
 	}
 	,
 	render: function () {
+		console.info('Tribes');
 		return (
 			<Bs.Row>
 				{this.tribes()}
@@ -18,19 +19,22 @@ var Tribes = React.createClass({
 	,
 	tribes: function () {
 		var that = this;
-		var byTribe =
-			that.props.contestants
-				.groupBy(function (contestant) {
-					return contestant.get('tribe');
-				});
+		var byTribe = that.props.contestants
+			.groupBy(function (contestant) {
+				return contestant.getIn(['weeks', that.props.weekNumber, 'tribe']);
+			});
 		return React.addons.createFragment(
 			byTribe
+				.filter(function (tribe, name) {return !!name;}) // Works for empty string and undefined.
 				.map(function (tribe, name) {
-					if (!name) {
+					var hasVotedOutees = 0;
+					if (!name) { // Remove filter for this to not be vacant.
+						hasVotedOutees = 1;
 						name = "Voted Out";
 					}
+					var columns = byTribe.count() - hasVotedOutees; // Remove -1 when removing filter.
 					return (
-						<Bs.Col sm={12} md={12/byTribe.count()} key={name}>
+						<Bs.Col sm={12} md={12/columns} key={name}>
 							<h2>{name}</h2>
 							<Bs.Accordion>
 								{that.membersOf(tribe)}
@@ -56,12 +60,13 @@ var Tribes = React.createClass({
 							previousSeason={contestant.get('previousSeason')}
 							place={contestant.get('place')}
 							scores={that.props.scores.get(id)}
-							votedOut={contestant.get('votedOut')}
+							votedOut={contestant.getIn(['weeks', that.props.weekNumber, 'votedOut'])}
 						/>
 						<Achievements
 							contestant={id}
+							weekNumber={that.props.weekNumber} // For `VOTED-OUT` achievement
 							isAdmin={that.props.user.get('isAdmin')}
-							achievements={contestant.get('achievements')}
+							achievements={contestant.getIn(['weeks', that.props.weekNumber, 'achievements'])}
 							scores={that.props.scores.get(id)}
 							toggleAchievement={that.props.toggleAchievement}
 						/>

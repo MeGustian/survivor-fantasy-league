@@ -6,11 +6,13 @@ var Contestant = require('./Contestant');
 
 var Profile = React.createClass({
 	render: function () {
+		console.info('Profile');
 		if (this.props.submittedChoices) {
 			return (
 				<div>
 				<Bs.Row>
 					<Bs.Col sm={12} md={10} mdOffset={1}>
+					<h2 style={{textAlign: 'center'}}>Your choices:</h2>
 					<div style={{maxWidth: 900, maxHeight: 500, margin: '0 auto'}}>
 						<Final key="final" chosen={this.props.chosen} info={this.props.info} />
 					</div>
@@ -25,10 +27,11 @@ var Profile = React.createClass({
 				<Bs.Col sm={12} md={10} mdOffset={1}>
 				<div>
 					<Bs.Alert bsStyle="info">
-						Please select the <strong>4</strong> contestants you wish to follow throughout the season.
+						<p>Please select the <strong>4</strong> contestants you wish to follow throughout the season.</p>
 					</Bs.Alert>
-					<Bs.Alert bsStyle="warning">
-						<strong>Notice:</strong> Submitting choices is permanent!
+					<Bs.Alert pullRight bsStyle="warning">
+						<p><strong>Notice:</strong> Submitting choices is permanent! Make sure the selected contestants are the ones you wish to choose.</p>
+						<p style={{textAlign: 'center'}}><Bs.Button onClick={this.submit} disabled={this.full()}>Submit your choices</Bs.Button></p>
 					</Bs.Alert>
 					<Options key="options" chosen={this.props.chosen} info={this.props.info} selector={this.props.selector} />
 				</div>
@@ -41,6 +44,17 @@ var Profile = React.createClass({
 			</Bs.Row>
 			</div>
 		);
+	}
+	,
+	submit: function () {
+		this.props.submit(this.props.chosen);
+	}
+	,
+	full: function () {
+		if (I.Set.isSet(this.props.chosen)) {
+			return this.props.chosen.size !== 4;
+		}
+		return true;
 	}
 });
 

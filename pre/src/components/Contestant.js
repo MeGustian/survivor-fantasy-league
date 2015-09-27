@@ -1,6 +1,7 @@
 var React = require('react');
 var Bs = require('react-bootstrap');
 var Achievements = require('./Achievements');
+var nameToImg = require('../helpers/image-name')('contestant');
 
 var Contestant = React.createClass({
 	shouldComponentUpdate: function (nextProps) {
@@ -31,7 +32,7 @@ var Contestant = React.createClass({
 				<img
 					className="img-circle"
 					style={{marginRight: '10px', width: '200px', height: '200px', marginBottom: '15px'}}
-					src={"/images/contestants/thumbnails/" + this.props.name + ".jpg"}
+					src={nameToImg(this.props.name)}
 					alt={this.props.name}
 					width="200"
 					height="200"
@@ -41,7 +42,7 @@ var Contestant = React.createClass({
 				<h3 className="text-center" style={{marginRight: '5px'}}>
 					{this.props.votedOut ? <span className="badge progress-bar-danger" style={{marginRight: '0.5em'}}>voted out</span> : ""}
 					{this.props.name}
-					{this.props.score ? <span className="badge" style={{marginLeft: '0.5em'}}>{this.props.scores.get('total')}</span> : ""}
+					{this.props.scores ? <span className="badge" style={{marginLeft: '0.5em'}}>{this.props.scores.get('total')}</span> : ""}
 				</h3>
 				<dl className="dl-horizontal">
 					<dt>{"Age"}</dt>

@@ -17,6 +17,7 @@ var Quiz = React.createClass({
 	}
 	,
 	render: function () {
+		console.info('Quiz');
 		return (
 			<Bs.Row>
 				<Bs.Col xs={12} sm={10} smOffset={1} md={8} mdOffset={2}>
@@ -41,7 +42,7 @@ var Quiz = React.createClass({
 							key={id}
 							questionId={id}
 							details={details}
-							tribes={p.contestants}
+							contestants={p.contestants}
 							user={p.user}
 							handlers={p.dispatcher}
 						/>
@@ -119,7 +120,7 @@ var Question = React.createClass({
 			return (
 				<Contestants
 					answer={answer}
-					tribes={this.props.tribes}
+					contestants={this.props.contestants}
 					changeAnswer={this.changeAnswer}
 				/>
 			);

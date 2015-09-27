@@ -9,29 +9,36 @@ var AchievementsObj = require('../objects/Achievements');
 var computeState = function (state) {
 	var calc = computeState;
 	return {
-		scores: calc.scores(state)
+		scores: calc.scores(state, state.navigation.get('selectedWeek')),
+		playerScore: calc.playerScore(state, state.navigation.get('selectedWeek'))
 	};
 };
 
-computeState.scores = function (state) {
-	var weekNumber = state.navigation.get('selectedWeek').toString();
-	if (typeof state.contestants.getIn(['statuses', weekNumber]) === 'undefined') {
-		throw 'arrr'
-	}
-	return state.contestants.getIn(['statuses', weekNumber])
+// Map each contestant to an object that reduces his achievements according to
+// their score.
+computeState.scores = function (state, weekNumber) {
+	return state.contestants
 		.map(function (contestant, id) {
 			return AchievementsObj
 				.filter(function (theAchievement, achievementCode) {
-					return !!contestant.get('achievements').get(achievementCode);
+					return !!contestant.getIn(['weeks', weekNumber, 'achievements', achievementCode]);
 				})
 				.reduce(function (reduction, theAchievement) {
 					var points = theAchievement.get('points');
+					if (theAchievement.get('extra') === '10*(weekNumber)') {
+						points *= weekNumber;
+					}
 					var addTo = function (curr) {return curr+points};
 					return reduction
 						.update('total', addTo)
 						.update(points>0 ? 'good' : 'bad', addTo);
 				}, I.fromJS({good: 0, bad: 0, total: 0}));
 			});
+};
+
+// Reduce player to score by the chosen.
+computeState.playerScore = function (state, weekNumber) {
+
 };
 
 module.exports = computeState;

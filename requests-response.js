@@ -29,7 +29,7 @@
 				.
 			}
 			,
-			allContestants: {
+			contestants: {
 				<ContestantId>: {
 					firstName: <String>,
 					lastName: <String>,
@@ -37,34 +37,27 @@
 					occupation: <String>,
 					previousSeason: <String>,
 					place: <String>
-				}
-				.
-				.
-				.
-			}
-			,
-			contestantStatus: {
-				<Number>: {
-					<ContestantId>: {
-						tribe: <String>,
-						votedFor: <ContestantId>,
-						votedOut: [Boolean],
-						achievements: {
-							<String>: <Boolean>
-							.
-							.
-							.
+					weeks: {
+						<Number>: {
+							tribe: <String>,
+							votedFor: <ContestantId>,
+							votedOut: [Boolean],
+							achievements: {
+								<String>: <Boolean>
+								.
+								.
+								.
+							}
 						}
+						.
+						.
+						.
 					}
-					.
-					.
-					.
 				}
 				.
 				.
 				.
 			}
-			,
 		}
 	}
 	,
