@@ -121,31 +121,22 @@ var Fantasy = React.createClass({displayName: "Fantasy",
 			location: PropTypes.string.isRequired,
 			selectedWeek: PropTypes.number.isRequired,
 			weekCount: PropTypes.number.isRequired
-		}).isRequired
+		})
 		,
 		profile: ImmutablePropTypes.contains({
 			chosen: ImmutablePropTypes.set.isRequired
-		}).isRequired
-		,
-		contestants: ImmutablePropTypes.contains({
-			info: ImmutablePropTypes.mapOf(
-				ImmutablePropTypes.contains({
-					firstName: PropTypes.string.isRequired,
-					lastName: PropTypes.string.isRequired,
-					age: PropTypes.string.isRequired,
-					occupation: PropTypes.string.isRequired,
-					previousSeason: PropTypes.string.isRequired,
-					place: PropTypes.string.isRequired
-				})
-			).isRequired,
-			status: ImmutablePropTypes.mapOf(
-				ImmutablePropTypes.contains({
-					tribe: PropTypes.string.isRequired,
-					votedFor: PropTypes.string.isRequired,
-					achievements: ImmutablePropTypes.mapOf(PropTypes.bool)
-				})
-			).isRequired
 		})
+		,
+		contestants: ImmutablePropTypes.mapOf(
+			ImmutablePropTypes.contains({
+				firstName: PropTypes.string.isRequired,
+				lastName: PropTypes.string.isRequired,
+				age: PropTypes.string.isRequired,
+				occupation: PropTypes.string.isRequired,
+				previousSeason: PropTypes.string.isRequired,
+				place: PropTypes.string.isRequired
+			})
+		).isRequired
 		,
 		questions: ImmutablePropTypes.mapOf(
 			ImmutablePropTypes.contains({
@@ -154,6 +145,12 @@ var Fantasy = React.createClass({displayName: "Fantasy",
 				type: PropTypes.string.isRequired
 			})
 		).isRequired
+		,
+		user: ImmutablePropTypes.contains({
+			userId: PropTypes.string,
+			isAdmin: PropTypes.bool,
+			attempting: PropTypes.bool
+		}).isRequired
 	}
 });
 

@@ -66,27 +66,6 @@ var Fantasy = React.createClass({displayName: "Fantasy",
 				)
 				), 
 				React.createElement("div", {style: {display: p.navigation.get('location') === 'weekly' ? 'initial' : 'none'}}, 
-				React.createElement(Quiz, {
-					key: "quiz", 
-					display: p.navigation.get('location') === 'weekly', 
-					user: p.controller.get('user'), 
-					questions: p.questions, 
-					contestants: fullContestants, 
-					dispatcher: {
-						userAnswer: function (questionId, answer) {
-							return dispatch(act.userAnswer(circumstances, questionId, answer));
-						},
-						update: function (questionId, question, answer, type) {
-							return dispatch(act.updateQuestion(circumstances, questionId, question, answer, type));
-						},
-						edit: function (questionId, isEditing) {
-							return dispatch(act.editQuestion(questionId, isEditing));
-						},
-						remove: function (questionId) {
-							return dispatch(act.removeQuestion(circumstances, questionId));
-						}
-					}}
-				), 
 				React.createElement(Tribes, {
 					key: "tribes", 
 					user: p.controller.get('user'), 
@@ -102,50 +81,28 @@ var Fantasy = React.createClass({displayName: "Fantasy",
 	}
 	,
 	propTypes: {
-		controller: ImmutablePropTypes.contains({
-			user: ImmutablePropTypes.contains({
-				signedIn: PropTypes.bool.isRequired,
-				attempting: PropTypes.bool.isRequired,
-				isAdmin: PropTypes.bool.isRequired
-			}),
-			error: ImmutablePropTypes.contains({
-				is: PropTypes.bool.isRequired,
-				details: ImmutablePropTypes.contains({
-					action: PropTypes.string,
-					details: PropTypes.string
-				})
-			})
-		})
-		,
-		navigation: ImmutablePropTypes.contains({
-			location: PropTypes.string.isRequired,
-			selectedWeek: PropTypes.number.isRequired,
-			weekCount: PropTypes.number.isRequired
-		}).isRequired
-		,
-		profile: ImmutablePropTypes.contains({
-			chosen: ImmutablePropTypes.set.isRequired
-		}).isRequired
-		,
-		contestants: ImmutablePropTypes.contains({
-			info: ImmutablePropTypes.mapOf(
-				ImmutablePropTypes.contains({
-					firstName: PropTypes.string.isRequired,
-					lastName: PropTypes.string.isRequired,
-					age: PropTypes.string.isRequired,
-					occupation: PropTypes.string.isRequired,
-					previousSeason: PropTypes.string.isRequired,
-					place: PropTypes.string.isRequired
-				})
-			).isRequired,
-			status: ImmutablePropTypes.mapOf(
+		week: ImmutablePropTypes.contains({
+			selected: PropTypes.number,
+			count: PropTypes.number,
+			contestantStatus: ImmutablePropTypes.mapOf(
 				ImmutablePropTypes.contains({
 					tribe: PropTypes.string.isRequired,
 					votedFor: PropTypes.string.isRequired,
-					achievements: ImmutablePropTypes.mapOf(PropTypes.bool)
+					achievements: ImmutablePropTypes.mapOf(PropTypes.bool).isRequired
 				})
-			).isRequired
-		})
+			)
+		}).isRequired
+		,
+		contestants: ImmutablePropTypes.mapOf(
+			ImmutablePropTypes.contains({
+				firstName: PropTypes.string.isRequired,
+				lastName: PropTypes.string.isRequired,
+				age: PropTypes.string.isRequired,
+				occupation: PropTypes.string.isRequired,
+				previousSeason: PropTypes.string.isRequired,
+				place: PropTypes.string.isRequired
+			})
+		).isRequired
 		,
 		questions: ImmutablePropTypes.mapOf(
 			ImmutablePropTypes.contains({
@@ -154,6 +111,12 @@ var Fantasy = React.createClass({displayName: "Fantasy",
 				type: PropTypes.string.isRequired
 			})
 		).isRequired
+		,
+		user: ImmutablePropTypes.contains({
+			userId: PropTypes.string,
+			isAdmin: PropTypes.bool,
+			attempting: PropTypes.bool
+		}).isRequired
 	}
 });
 

@@ -1,4 +1,4 @@
-var React = require('react/addons');
+var React = require('react');
 var Bs = require('react-bootstrap');
 var I = require('immutable');
 var MyThumbnail = require('./MyThumbnail');
@@ -28,16 +28,14 @@ AnswerTypes.Contestants = React.createClass({displayName: "Contestants",
 	,
 	thumbnails: function () {
 		var that = this;
-		return React.addons.createFragment(
-			that.props.tribes
-				.map(function (contestant, id) {
-					var name = contestant.get('firstName') + " " + contestant.get('lastName');
-					var isAnswer = id === that.props.answer;
-					return (
-						React.createElement(MyThumbnail, {key: id, id: id, selected: isAnswer, name: name, choose: that.changeAnswer.bind(that, isAnswer)})
-					);
-				}).toJS()
-		);
+		return this.props.tribes
+			.map(function (contestant, id) {
+				var name = contestant.get('firstName') + " " + contestant.get('lastName');
+				var isAnswer = id === that.props.answer;
+				return (
+					React.createElement(MyThumbnail, {key: id, id: id, selected: isAnswer, name: name, choose: that.changeAnswer.bind(that, isAnswer)})
+				);
+			}).toJS();
 	}
 	,
 	changeAnswer: function (alreadySelected, id) {

@@ -58,14 +58,14 @@ var Options = React.createClass({displayName: "Options",
 		var that = this;
 		return React.addons.createFragment(
 			that.props.info
-				.map(function (contestant, id) {
-					var name = contestant.get('firstName') + " " + contestant.get('lastName');
-					var isChosen = that.props.chosen.has(id);
-					return (
-						React.createElement(MyThumbnail, {key: id, id: id, selected: isChosen, name: name, choose: that.select})
-					);
-				})
-				.toJS()
+			.map(function (contestant, id) {
+				var name = contestant.get('firstName') + " " + contestant.get('lastName');
+				var isChosen = that.props.chosen.has(id);
+				return (
+					React.createElement(MyThumbnail, {key: id, id: id, selected: isChosen, name: name, choose: that.select})
+				);
+			})
+			.toJS()
 		);
 	}
 	,
@@ -89,26 +89,24 @@ var Choices = React.createClass({displayName: "Choices",
 	,
 	items: function () {
 		var that = this;
-		return React.addons.createFragment(
-			that.props.info
-				.filter(function (contestant, id) {
-					return that.props.chosen.has(id);
-				})
-				.map(function (contestant, id) {
-					var name = contestant.get('firstName') + " " + contestant.get('lastName');
-					return (
-						React.createElement(Bs.CarouselItem, {key: id}, 
-							React.createElement("img", {width: 900, height: 500, style: {width: 900, height: 500}, alt: name, 
-								src: "/images/contestants/slides/" + name + ".jpg"}
-							), 
-							React.createElement("div", {className: "carousel-caption"}, 
-								React.createElement("h3", null, name)
-							)
+		return this.props.info
+			.filter(function (contestant, id) {
+				return that.props.chosen.has(id);
+			})
+			.map(function (contestant, id) {
+				var name = contestant.get('firstName') + " " + contestant.get('lastName');
+				return (
+					React.createElement(Bs.CarouselItem, {key: id}, 
+						React.createElement("img", {width: 900, height: 500, style: {width: 900, height: 500}, alt: name, 
+							src: "/images/contestants/slides/" + name + ".jpg"}
+						), 
+						React.createElement("div", {className: "carousel-caption"}, 
+							React.createElement("h3", null, name)
 						)
-					);
-				})
-				.toJS()
-		);
+					)
+				);
+			})
+			.toJS();
 	}
 });
 

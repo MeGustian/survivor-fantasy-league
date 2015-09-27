@@ -1,4 +1,4 @@
-var React = require('react');
+var React = require('react/addons');
 var Bs = require('react-bootstrap');
 var I = require('immutable');
 var MyThumbnail = require('./MyThumbnail');
@@ -56,15 +56,17 @@ var Options = React.createClass({
 	,
 	items: function () {
 		var that = this;
-		return this.props.info
-			.map(function (contestant, id) {
-				var name = contestant.get('firstName') + " " + contestant.get('lastName');
-				var isChosen = that.props.chosen.has(id);
-				return (
-					<MyThumbnail key={id} id={id} selected={isChosen} name={name} choose={that.select} />
-				);
-			})
-			.toJS();
+		return React.addons.createFragment(
+			that.props.info
+				.map(function (contestant, id) {
+					var name = contestant.get('firstName') + " " + contestant.get('lastName');
+					var isChosen = that.props.chosen.has(id);
+					return (
+						<MyThumbnail key={id} id={id} selected={isChosen} name={name} choose={that.select} />
+					);
+				})
+				.toJS()
+		);
 	}
 	,
 	select: function (id) {
@@ -87,24 +89,26 @@ var Choices = React.createClass({
 	,
 	items: function () {
 		var that = this;
-		return this.props.info
-			.filter(function (contestant, id) {
-				return that.props.chosen.has(id);
-			})
-			.map(function (contestant, id) {
-				var name = contestant.get('firstName') + " " + contestant.get('lastName');
-				return (
-					<Bs.CarouselItem key={id}>
-						<img width={900} height={500} style={{width: 900, height: 500}} alt={name}
-							src={"/images/contestants/slides/" + name + ".jpg"}
-						/>
-						<div className="carousel-caption">
-							<h3>{name}</h3>
-						</div>
-					</Bs.CarouselItem>
-				);
-			})
-			.toJS();
+		return React.addons.createFragment(
+			that.props.info
+				.filter(function (contestant, id) {
+					return that.props.chosen.has(id);
+				})
+				.map(function (contestant, id) {
+					var name = contestant.get('firstName') + " " + contestant.get('lastName');
+					return (
+						<Bs.CarouselItem key={id}>
+							<img width={900} height={500} style={{width: 900, height: 500}} alt={name}
+								src={"/images/contestants/slides/" + name + ".jpg"}
+							/>
+							<div className="carousel-caption">
+								<h3>{name}</h3>
+							</div>
+						</Bs.CarouselItem>
+					);
+				})
+				.toJS()
+		);
 	}
 });
 

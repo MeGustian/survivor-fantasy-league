@@ -6,11 +6,15 @@ var week1 = {
 		"560296e1b2c3b5601f976292", "56029707b2c3b5601f976293"
 	],
 	questions: {
-		"125": {
+		"125f": {
 			question: 'Cont?',
 			type: 'contestant'
 		},
-		"4576": {
+		"345646a": {
+			question: 'Num?',
+			type: 'number'
+		},
+		"4576e": {
 			question: 'Bool?',
 			type: 'boolean'
 		}

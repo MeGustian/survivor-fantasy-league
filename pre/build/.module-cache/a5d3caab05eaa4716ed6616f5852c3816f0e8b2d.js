@@ -1,8 +1,8 @@
-var React = require('react/addons');
+var React = require('react');
 var Bs = require('react-bootstrap');
 var AdminToolbox = require('./AdminToolbox');
 var AnswerTypes = require('./AnswerTypes');
-var Contestants = AnswerTypes.Contestants;
+var Contestant = AnswerTypes.Contestant;
 var Num = AnswerTypes.Num;
 
 var now;
@@ -30,25 +30,23 @@ var Quiz = React.createClass({displayName: "Quiz",
 	,
 	questions: function () {
 		var p = this.props;
-		return React.addons.createFragment(
-			p.questions
-				.filter(function (details, id) {
-					return (id !== 'removed') && !details.get('removed');
-				})
-				.map(function (details, id) {
-					return (
-						React.createElement(Question, {
-							key: id, 
-							questionId: id, 
-							details: details, 
-							tribes: p.contestants, 
-							user: p.user, 
-							handlers: p.dispatcher}
-						)
-					);
-				})
-				.toJS()
-		);
+		return p.questions
+			.filter(function (details, id) {
+				return (id !== 'removed') && !details.get('removed');
+			})
+			.map(function (details, id) {
+				return (
+					React.createElement(Question, {
+						key: id, 
+						questionId: id, 
+						details: details, 
+						tribes: p.contestants, 
+						user: p.user, 
+						handlers: p.dispatcher}
+					)
+				);
+			})
+			.toArray();
 	}
 });
 
@@ -116,6 +114,7 @@ var Question = React.createClass({displayName: "Question",
 				)
 			);
 			case 'contestant':
+			var nobody = !answer ? " active" : "";
 			return (
 				React.createElement(Contestants, {
 					answer: answer, 
@@ -123,16 +122,22 @@ var Question = React.createClass({displayName: "Question",
 					changeAnswer: this.changeAnswer}
 				)
 			);
-			case 'number':
-			return (
-				React.createElement(Num, {
-					answer: answer, 
-					changeAnswer: this.changeAnswer}
-				)
-			);
 			default:
 			return React.createElement("div", null, "Bad type specified")
 		}
+	}
+	,
+	answerContestants: function () {
+		var that = this;
+		return this.props.tribes.map(function (contestant, id) {
+			var name = contestant.get('firstName') + " " + contestant.get('lastName');
+			return (
+				React.createElement("li", {onClick: that.changeAnswer.bind(that, contestant.get('name'))}, React.createElement("a", null, 
+					React.createElement("img", {style: {marginRight: '0.25em', width: '40px', height: '40px'}, src: "/images/contestants/" + name + ".jpg", alt: name}), 
+					name
+				))
+			);
+		});
 	}
 	,
 	tools: function () {

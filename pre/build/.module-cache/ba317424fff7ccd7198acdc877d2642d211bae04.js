@@ -43,6 +43,21 @@ var Tribes = React.createClass({displayName: "Tribes",
 	,
 	membersOf: function (tribe) {
 		var that = this;
+		// var gotVotesFrom = tribe
+		// 	.groupBy(function (contestant) {
+		// 		return contestant.get('votedFor');
+		// 	})
+		// 	.map(function (voteOrigins) {
+		// 		return voteOrigins.keySeq();
+		// 	});
+		// var votedOut = gotVotesFrom
+		// 	.maxBy(function (voteOrigins) {
+		// 		return voteOrigin.count();
+		// 	}, function (a, b) {
+		// 		a > b;
+		// 	});
+		// console.log(gotVotesFrom.toString());
+		// console.log(votedOut);
 		return React.addons.createFragment(
 			tribe.map(function (contestant, id) {
 				var name = contestant.get('firstName') + " " + contestant.get('lastName');

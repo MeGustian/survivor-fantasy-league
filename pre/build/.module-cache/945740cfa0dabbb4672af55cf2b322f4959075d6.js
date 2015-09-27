@@ -1,4 +1,4 @@
-var React = require('react/addons');
+var React = require('react');
 var Bs = require('react-bootstrap');
 var AchievementsObj = require('../objects/Achievements');
 
@@ -46,33 +46,31 @@ var Achievements = React.createClass({displayName: "Achievements",
 	,
 	items: function (alignment) {
 		var that = this;
-		return React.addons.createFragment(
-			that
-				.filterByAlignment(alignment)
-				.filter(function (theAchievement, achievementCode) {
-					var isAdmin = that.props.isAdmin;
-					var hasAchieved = !!that.props.achievements.get(achievementCode);
-					return isAdmin || hasAchieved;
-				})
-				.map(function (theAchievement, achievementCode) {
-					var labelType;
-					var isAdmin = that.props.isAdmin; // TODO: Remove glyphs for none admins.
-					var hasAchieved = !!that.props.achievements.get(achievementCode);
-					return (
-						React.createElement("li", {className: "list-group-item", key: achievementCode}, 
-							React.createElement("span", {
-								className: "badge pull-right", 
-								onClick: that.toggleAchievement.bind(that, achievementCode, hasAchieved)
-							}, 
-								hasAchieved ? theAchievement.get('points') : 0
-							), 
-							React.createElement("span", {style: {marginRight: '1em'}}, 
-								theAchievement.get('text')
-							)
+		return this
+			.filterByAlignment(alignment)
+			.filter(function (theAchievement, achievementCode) {
+				var isAdmin = that.props.isAdmin;
+				var hasAchieved = !!that.props.achievements.get(achievementCode);
+				return isAdmin || hasAchieved;
+			})
+			.map(function (theAchievement, achievementCode) {
+				var labelType;
+				var isAdmin = that.props.isAdmin; // TODO: Remove glyphs for none admins.
+				var hasAchieved = !!that.props.achievements.get(achievementCode);
+				return (
+					React.createElement("li", {className: "list-group-item", key: achievementCode}, 
+						React.createElement("span", {
+							className: "badge pull-right", 
+							onClick: that.toggleAchievement.bind(that, achievementCode, hasAchieved)
+						}, 
+							hasAchieved ? theAchievement.get('points') : 0
+						), 
+						React.createElement("span", {style: {marginRight: '1em'}}, 
+							theAchievement.get('text')
 						)
-					);
-				}).toJS()
-		);
+					)
+				);
+			});
 	}
 	,
 	score: function (alignment) {
