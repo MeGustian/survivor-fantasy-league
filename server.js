@@ -1,215 +1,426 @@
-var week1 = {
-	"username":"yoav",
+var ini = {
 	"isAdmin":"false",
+	weekNumber:2,
 	chosen:[
 		"56029683b2c3b5601f976290", "560296b7b2c3b5601f976291",
 		"560296e1b2c3b5601f976292", "56029707b2c3b5601f976293"
 	],
 	questions: {
 		"125f": {
-			question: 'Cont?',
+			weekNumber: 1,
+			question: '1Cont?',
+			answer: "56029683b2c3b5601f976290",
 			type: 'contestant'
 		},
 		"345646a": {
-			question: 'Num?',
+			question: '-Num?',
+			type: 'number'
+		},
+		"12asf5f": {
+			weekNumber: 2,
+			question: '2Cont?',
+			type: 'contestant'
+		},
+		"1ab25f": {
+			weekNumber: 2,
+			question: '2Cont?',
+			type: 'contestant'
+		},
+		"345646a": {
+			weekNumber: 2,
+			question: '2Num?',
+			answer: 4,
 			type: 'number'
 		},
 		"4576e": {
-			question: 'Bool?',
+			weekNumber: 1,
+			question: '1Bool?',
+			answer: true,
 			type: 'boolean'
 		}
 	},
 	"contestantStatus":{
-		"56029683b2c3b5601f976290":{
-			"_id":"5602a0cce855f3dc1fd1303b",
-			"contestantId":"56029683b2c3b5601f976290",
-			"tribe":"Ta-Keo",
-			"votedFor":"",
-			"votedOut":true,
-			"achievements":{
-				"CRIED": true,
-				"HASHTAG": true
-			}
-		},
-		"560296b7b2c3b5601f976291":{
-			"_id":"5602a0e8e855f3dc1fd1303c",
-			"contestantId":"560296b7b2c3b5601f976291",
-			"tribe":"Ta-Keo",
-			"votedFor":"",
-			"achievements":{
-				"CRIED": true,
-				"HASHTAG": true
-			}
-		},
-		"560296e1b2c3b5601f976292":{
-			"_id":"5602a0f1e855f3dc1fd1303d",
-			"contestantId":"560296e1b2c3b5601f976292",
-			"tribe":"Ta-Keo",
-			"votedFor":"",
-			"achievements":{
-				"CRIED": true,
-				"HASHTAG": true,
-				"TREE-MAIL": true
-			}
-		},
-		"56029707b2c3b5601f976293":{
-			"_id":"5602a0f8e855f3dc1fd1303e",
-			"contestantId":"56029707b2c3b5601f976293",
-			"tribe":"Ta-Keo",
-			"votedFor":"",
-			"achievements":{
+		"1": {
+			"56029683b2c3b5601f976290":{
+				"_id":"5602a0cce855f3dc1fd1303b",
+				"contestantId":"56029683b2c3b5601f976290",
+				"tribe":"Ta-Keo",
+				"votedFor":"",
+				"votedOut":true,
+				"achievements":{
+					"CRIED": true,
+					"HASHTAG": true
+				}
+			},
+			"560296b7b2c3b5601f976291":{
+				"_id":"5602a0e8e855f3dc1fd1303c",
+				"contestantId":"560296b7b2c3b5601f976291",
+				"tribe":"Ta-Keo",
+				"votedFor":"",
+				"achievements":{
+					"CRIED": true,
+					"HASHTAG": true
+				}
+			},
+			"560296e1b2c3b5601f976292":{
+				"_id":"5602a0f1e855f3dc1fd1303d",
+				"contestantId":"560296e1b2c3b5601f976292",
+				"tribe":"Ta-Keo",
+				"votedFor":"",
+				"achievements":{
+					"CRIED": true,
+					"HASHTAG": true,
+					"TREE-MAIL": true
+				}
+			},
+			"56029707b2c3b5601f976293":{
+				"_id":"5602a0f8e855f3dc1fd1303e",
+				"contestantId":"56029707b2c3b5601f976293",
+				"tribe":"Ta-Keo",
+				"votedFor":"",
+				"achievements":{
 
-			}
-		},
-		"56029724b2c3b5601f976294":{
-			"_id":"5602a101e855f3dc1fd1303f",
-			"contestantId":"56029724b2c3b5601f976294",
-			"tribe":"Ta-Keo",
-			"votedFor":"",
-			"achievements":{
-				"CRIED": true,
-				"HASHTAG": true
-			}
-		},
-		"56029749b2c3b5601f976295":{
-			"_id":"5602a109e855f3dc1fd13040",
-			"contestantId":"56029749b2c3b5601f976295",
-			"tribe":"Ta-Keo",
-			"votedFor":"",
-			"achievements":{
-				"CRIED": true,
-				"HASHTAG": true,
-				"TREE-MAIL": true
-			}
-		},
-		"560298ceb2c3b5601f976296":{
-			"_id":"5602a116e855f3dc1fd13041",
-			"contestantId":"560298ceb2c3b5601f976296",
-			"tribe":"Ta-Keo",
-			"votedFor":"",
-			"achievements":{
+				}
+			},
+			"56029724b2c3b5601f976294":{
+				"_id":"5602a101e855f3dc1fd1303f",
+				"contestantId":"56029724b2c3b5601f976294",
+				"tribe":"Ta-Keo",
+				"votedFor":"",
+				"achievements":{
+					"CRIED": true,
+					"HASHTAG": true
+				}
+			},
+			"56029749b2c3b5601f976295":{
+				"_id":"5602a109e855f3dc1fd13040",
+				"contestantId":"56029749b2c3b5601f976295",
+				"tribe":"Ta-Keo",
+				"votedFor":"",
+				"achievements":{
+					"CRIED": true,
+					"HASHTAG": true,
+					"TREE-MAIL": true
+				}
+			},
+			"560298ceb2c3b5601f976296":{
+				"_id":"5602a116e855f3dc1fd13041",
+				"contestantId":"560298ceb2c3b5601f976296",
+				"tribe":"Ta-Keo",
+				"votedFor":"",
+				"achievements":{
 
+				}
+			},
+			"560298e8b2c3b5601f976297":{
+				"_id":"5602a123e855f3dc1fd13042",
+				"contestantId":"560298e8b2c3b5601f976297",
+				"tribe":"Ta-Keo",
+				"votedFor":"",
+				"achievements":{
+
+				}
+			},
+			"56029919b2c3b5601f976298":{
+				"_id":"5602a12ae855f3dc1fd13043",
+				"contestantId":"56029919b2c3b5601f976298",
+				"tribe":"Ta-Keo",
+				"votedFor":"",
+				"achievements":{
+
+				}
+			},
+			"56029937b2c3b5601f976299":{
+				"_id":"5602a133e855f3dc1fd13044",
+				"contestantId":"56029937b2c3b5601f976299",
+				"tribe":"Ta-Keo",
+				"votedFor":"",
+				"achievements":{
+
+				}
+			},
+			"5602994cb2c3b5601f97629a":{
+				"_id":"5602a148e855f3dc1fd13045",
+				"contestantId":"5602994cb2c3b5601f97629a",
+				"tribe":"Bayon",
+				"votedFor":"",
+				"achievements":{
+
+				}
+			},
+			"5602996ab2c3b5601f97629b":{
+				"_id":"5602a154e855f3dc1fd13046",
+				"contestantId":"5602996ab2c3b5601f97629b",
+				"tribe":"Bayon",
+				"votedFor":"",
+				"achievements":{
+
+				}
+			},
+			"56029983b2c3b5601f97629c":{
+				"_id":"5602a15de855f3dc1fd13047",
+				"contestantId":"56029983b2c3b5601f97629c",
+				"tribe":"Bayon",
+				"votedFor":"",
+				"achievements":{
+
+				}
+			},
+			"5602999db2c3b5601f97629d":{
+				"_id":"5602a163e855f3dc1fd13048",
+				"contestantId":"5602999db2c3b5601f97629d",
+				"tribe":"Bayon",
+				"votedFor":"",
+				"achievements":{
+
+				}
+			},
+			"560299c2b2c3b5601f97629e":{
+				"_id":"5602a16ae855f3dc1fd13049",
+				"contestantId":"560299c2b2c3b5601f97629e",
+				"tribe":"Bayon",
+				"votedFor":"",
+				"achievements":{
+
+				}
+			},
+			"560299e5b2c3b5601f97629f":{
+				"_id":"5602a171e855f3dc1fd1304a",
+				"contestantId":"560299e5b2c3b5601f97629f",
+				"tribe":"Bayon",
+				"votedFor":"",
+				"achievements":{
+
+				}
+			},
+			"56029a03b2c3b5601f9762a0":{
+				"_id":"5602a17ae855f3dc1fd1304b",
+				"contestantId":"56029a03b2c3b5601f9762a0",
+				"tribe":"Bayon",
+				"votedFor":"",
+				"achievements":{
+
+				}
+			},
+			"56029a1eb2c3b5601f9762a1":{
+				"_id":"5602a180e855f3dc1fd1304c",
+				"contestantId":"56029a1eb2c3b5601f9762a1",
+				"tribe":"Bayon",
+				"votedFor":"",
+				"achievements":{
+
+				}
+			},
+			"56029a3db2c3b5601f9762a2":{
+				"_id":"5602a186e855f3dc1fd1304d",
+				"contestantId":"56029a3db2c3b5601f9762a2",
+				"tribe":"Bayon",
+				"votedFor":"",
+				"achievements":{
+
+				}
+			},
+			"56029a55b2c3b5601f9762a3":{
+				"_id":"5602a18be855f3dc1fd1304e",
+				"contestantId":"56029a55b2c3b5601f9762a3",
+				"tribe":"Bayon",
+				"votedFor":"",
+				"achievements":{
+
+				}
 			}
 		},
-		"560298e8b2c3b5601f976297":{
-			"_id":"5602a123e855f3dc1fd13042",
-			"contestantId":"560298e8b2c3b5601f976297",
-			"tribe":"Ta-Keo",
-			"votedFor":"",
-			"achievements":{
+		"2": {
+			"56029683b2c3b5601f976290":{
+				"_id":"5602a0cce855f3dc1fd1303b",
+				"contestantId":"56029683b2c3b5601f976290",
+				"tribe":"Ta-Keo",
+				"votedFor":"",
+				"votedOut":true,
+				"achievements":{
+					"CRIED": true,
+					"HASHTAG": true
+				}
+			},
+			"560296b7b2c3b5601f976291":{
+				"_id":"5602a0e8e855f3dc1fd1303c",
+				"contestantId":"560296b7b2c3b5601f976291",
+				"tribe":"Ta-Keo",
+				"votedFor":"",
+				"achievements":{
+					"CRIED": true,
+					"HASHTAG": true
+				}
+			},
+			"560296e1b2c3b5601f976292":{
+				"_id":"5602a0f1e855f3dc1fd1303d",
+				"contestantId":"560296e1b2c3b5601f976292",
+				"tribe":"Ta-Keo",
+				"votedFor":"",
+				"achievements":{
+					"CRIED": true,
+					"HASHTAG": true,
+					"TREE-MAIL": true
+				}
+			},
+			"56029707b2c3b5601f976293":{
+				"_id":"5602a0f8e855f3dc1fd1303e",
+				"contestantId":"56029707b2c3b5601f976293",
+				"tribe":"Ta-Keo",
+				"votedFor":"",
+				"achievements":{
 
-			}
-		},
-		"56029919b2c3b5601f976298":{
-			"_id":"5602a12ae855f3dc1fd13043",
-			"contestantId":"56029919b2c3b5601f976298",
-			"tribe":"Ta-Keo",
-			"votedFor":"",
-			"achievements":{
+				}
+			},
+			"56029724b2c3b5601f976294":{
+				"_id":"5602a101e855f3dc1fd1303f",
+				"contestantId":"56029724b2c3b5601f976294",
+				"tribe":"Ta-Keo",
+				"votedFor":"",
+				"achievements":{
+					"CRIED": true,
+					"HASHTAG": true
+				}
+			},
+			"56029749b2c3b5601f976295":{
+				"_id":"5602a109e855f3dc1fd13040",
+				"contestantId":"56029749b2c3b5601f976295",
+				"tribe":"Ta-Keo",
+				"votedFor":"",
+				"achievements":{
+					"CRIED": true,
+					"HASHTAG": true,
+					"TREE-MAIL": true
+				}
+			},
+			"560298ceb2c3b5601f976296":{
+				"_id":"5602a116e855f3dc1fd13041",
+				"contestantId":"560298ceb2c3b5601f976296",
+				"tribe":"Ta-Keo",
+				"votedFor":"",
+				"achievements":{
 
-			}
-		},
-		"56029937b2c3b5601f976299":{
-			"_id":"5602a133e855f3dc1fd13044",
-			"contestantId":"56029937b2c3b5601f976299",
-			"tribe":"Ta-Keo",
-			"votedFor":"",
-			"achievements":{
+				}
+			},
+			"560298e8b2c3b5601f976297":{
+				"_id":"5602a123e855f3dc1fd13042",
+				"contestantId":"560298e8b2c3b5601f976297",
+				"tribe":"Ta-Keo",
+				"votedFor":"",
+				"achievements":{
 
-			}
-		},
-		"5602994cb2c3b5601f97629a":{
-			"_id":"5602a148e855f3dc1fd13045",
-			"contestantId":"5602994cb2c3b5601f97629a",
-			"tribe":"Bayon",
-			"votedFor":"",
-			"achievements":{
+				}
+			},
+			"56029919b2c3b5601f976298":{
+				"_id":"5602a12ae855f3dc1fd13043",
+				"contestantId":"56029919b2c3b5601f976298",
+				"tribe":"Ta-Keo",
+				"votedFor":"",
+				"achievements":{
 
-			}
-		},
-		"5602996ab2c3b5601f97629b":{
-			"_id":"5602a154e855f3dc1fd13046",
-			"contestantId":"5602996ab2c3b5601f97629b",
-			"tribe":"Bayon",
-			"votedFor":"",
-			"achievements":{
+				}
+			},
+			"56029937b2c3b5601f976299":{
+				"_id":"5602a133e855f3dc1fd13044",
+				"contestantId":"56029937b2c3b5601f976299",
+				"tribe":"Ta-Keo",
+				"votedFor":"",
+				"achievements":{
 
-			}
-		},
-		"56029983b2c3b5601f97629c":{
-			"_id":"5602a15de855f3dc1fd13047",
-			"contestantId":"56029983b2c3b5601f97629c",
-			"tribe":"Bayon",
-			"votedFor":"",
-			"achievements":{
+				}
+			},
+			"5602994cb2c3b5601f97629a":{
+				"_id":"5602a148e855f3dc1fd13045",
+				"contestantId":"5602994cb2c3b5601f97629a",
+				"tribe":"Bayon",
+				"votedFor":"",
+				"achievements":{
 
-			}
-		},
-		"5602999db2c3b5601f97629d":{
-			"_id":"5602a163e855f3dc1fd13048",
-			"contestantId":"5602999db2c3b5601f97629d",
-			"tribe":"Bayon",
-			"votedFor":"",
-			"achievements":{
+				}
+			},
+			"5602996ab2c3b5601f97629b":{
+				"_id":"5602a154e855f3dc1fd13046",
+				"contestantId":"5602996ab2c3b5601f97629b",
+				"tribe":"Bayon",
+				"votedFor":"",
+				"achievements":{
 
-			}
-		},
-		"560299c2b2c3b5601f97629e":{
-			"_id":"5602a16ae855f3dc1fd13049",
-			"contestantId":"560299c2b2c3b5601f97629e",
-			"tribe":"Bayon",
-			"votedFor":"",
-			"achievements":{
+				}
+			},
+			"56029983b2c3b5601f97629c":{
+				"_id":"5602a15de855f3dc1fd13047",
+				"contestantId":"56029983b2c3b5601f97629c",
+				"tribe":"Bayon",
+				"votedFor":"",
+				"achievements":{
 
-			}
-		},
-		"560299e5b2c3b5601f97629f":{
-			"_id":"5602a171e855f3dc1fd1304a",
-			"contestantId":"560299e5b2c3b5601f97629f",
-			"tribe":"Bayon",
-			"votedFor":"",
-			"achievements":{
+				}
+			},
+			"5602999db2c3b5601f97629d":{
+				"_id":"5602a163e855f3dc1fd13048",
+				"contestantId":"5602999db2c3b5601f97629d",
+				"tribe":"Bayon",
+				"votedFor":"",
+				"achievements":{
 
-			}
-		},
-		"56029a03b2c3b5601f9762a0":{
-			"_id":"5602a17ae855f3dc1fd1304b",
-			"contestantId":"56029a03b2c3b5601f9762a0",
-			"tribe":"Bayon",
-			"votedFor":"",
-			"achievements":{
+				}
+			},
+			"560299c2b2c3b5601f97629e":{
+				"_id":"5602a16ae855f3dc1fd13049",
+				"contestantId":"560299c2b2c3b5601f97629e",
+				"tribe":"",
+				"votedFor":"",
+				"achievements":{
 
-			}
-		},
-		"56029a1eb2c3b5601f9762a1":{
-			"_id":"5602a180e855f3dc1fd1304c",
-			"contestantId":"56029a1eb2c3b5601f9762a1",
-			"tribe":"Bayon",
-			"votedFor":"",
-			"achievements":{
+				}
+			},
+			"560299e5b2c3b5601f97629f":{
+				"_id":"5602a171e855f3dc1fd1304a",
+				"contestantId":"560299e5b2c3b5601f97629f",
+				"tribe":"Bayon",
+				"votedFor":"",
+				"achievements":{
 
-			}
-		},
-		"56029a3db2c3b5601f9762a2":{
-			"_id":"5602a186e855f3dc1fd1304d",
-			"contestantId":"56029a3db2c3b5601f9762a2",
-			"tribe":"Bayon",
-			"votedFor":"",
-			"achievements":{
+				}
+			},
+			"56029a03b2c3b5601f9762a0":{
+				"_id":"5602a17ae855f3dc1fd1304b",
+				"contestantId":"56029a03b2c3b5601f9762a0",
+				"tribe":"Bayon",
+				"votedFor":"",
+				"achievements":{
 
-			}
-		},
-		"56029a55b2c3b5601f9762a3":{
-			"_id":"5602a18be855f3dc1fd1304e",
-			"contestantId":"56029a55b2c3b5601f9762a3",
-			"tribe":"Bayon",
-			"votedFor":"",
-			"achievements":{
+				}
+			},
+			"56029a1eb2c3b5601f9762a1":{
+				"_id":"5602a180e855f3dc1fd1304c",
+				"contestantId":"56029a1eb2c3b5601f9762a1",
+				"tribe":"Bayon",
+				"votedFor":"",
+				"achievements":{
 
+				}
+			},
+			"56029a3db2c3b5601f9762a2":{
+				"_id":"5602a186e855f3dc1fd1304d",
+				"contestantId":"56029a3db2c3b5601f9762a2",
+				"tribe":"Bayon",
+				"votedFor":"",
+				"achievements":{
+
+				}
+			},
+			"56029a55b2c3b5601f9762a3":{
+				"_id":"5602a18be855f3dc1fd1304e",
+				"contestantId":"56029a55b2c3b5601f9762a3",
+				"tribe":"Bayon",
+				"votedFor":"",
+				"achievements":{
+
+				}
 			}
 		}
 	},
-	"weekNumber":1,
 	"allContestants":{
 		"56029683b2c3b5601f976290":{
 			"_id":"56029683b2c3b5601f976290",
@@ -491,93 +702,9 @@ app.post('/ajax', function (req, res) {
 	}
 	// timeout...
 });
-var week = function (req, number) {
-	return {
-		username: 'yoav',
-		isAdmin: 'false',
-		questions: {
-			"124": {
-				question: 'Bool?',
-				type: 'boolean'
-			},
-			"125": {
-				question: 'Cont?',
-				type: 'contestant'
-			}
-		},
-		contestantStatus: {
-			"1": {
-				tribe: "Abu",
-				votedFor: "3",
-				achievements: {
-					"CRIED": true,
-					"HASHTAG": false
-				}
-			},
-			"7": {
-				tribe: "Abu",
-				votedFor: "2",
-				achievements: {
-					"TREE-MAIL": true,
-					"HASHTAG": true
-				}
-			},
-			"2": {
-				tribe: "Abu",
-				votedFor: "3",
-				achievements: {
-					"CRIED": true,
-					"HASHTAG": false,
-					"TREE-MAIL": true
-				}
-			},
-			"3": {
-				tribe: "Abu",
-				votedFor: "1",
-				achievements: {
-					"CRIED": true,
-					"HASHTAG": false
-				}
-			},
-			"4": {
-				tribe: "Bala",
-				votedFor: "5",
-				achievements: {
-					"CRIED": true,
-					"HASHTAG": false
-				}
-			},
-			"5": {
-				tribe: "Bala",
-				votedFor: "4",
-				achievements: {
-					"CRIED": true,
-					"HASHTAG": false
-				}
-			},
-			"6": {
-				tribe: "Bala",
-				votedFor: "4",
-				achievements: {
-					"HASHTAG": false
-				}
-			}
-		},
-		weekNumber: number,
-		allContestants: {
-			"1": {name: "Spencer"},
-			"2": {name: "Kass"},
-			"3": {name: "Jonny"},
-			"4": {name: "Adam"},
-			"5": {name: "Tom"},
-			"6": {name: "Parvati"},
-			"7": {name: "Sandra"}
-		}
-	};
-};
 app.get('/initial', function (req, res) {
 	if (true) {
-		res.status(200).send(week1);
+		res.status(200).send(ini);
 	}
 	if (!true) {
 		res.status(500).send({error: req.body});

@@ -15,9 +15,7 @@ var computeState = function (state) {
 
 computeState.scores = function (state) {
 	var weekNumber = state.navigation.get('selectedWeek').toString();
-	if (typeof state.contestants.getIn(['statuses', weekNumber]) === 'undefined') {
-		throw 'arrr'
-	}
+	console.log(state.contestants.getIn(['statuses', weekNumber]));
 	return state.contestants.getIn(['statuses', weekNumber])
 		.map(function (contestant, id) {
 			return AchievementsObj

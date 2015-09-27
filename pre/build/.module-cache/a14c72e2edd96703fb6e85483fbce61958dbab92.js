@@ -80,21 +80,21 @@ act.selectWeek = function (circumstances, weekNumber) {
 };
 
 // Admin creates question.
-// act.createQuestion = function (circumstances, type) {
-// 	return actionParser({
-// 		meta: 'CREATE-QUESTION',
-// 		type: type,
-// 		weekNumber: circumstances.weekNumber
-// 	}, 'POST', circumstances);
-// };
+act.createQuestion = function (circumstances, type) {
+	return actionParser({
+		meta: 'CREATE-QUESTION',
+		type: type,
+		weekNumber: circumstances.weekNumber
+	}, 'POST', circumstances);
+};
 
 // Admin removes question.
-// act.removeQuestion = function (circumstances, questionId) {
-// 	return actionParser({
-// 		meta: 'REMOVE-QUESTION',
-// 		questionId: questionId
-// 	}, 'POST', circumstances);
-// };
+act.removeQuestion = function (circumstances, questionId) {
+	return actionParser({
+		meta: 'REMOVE-QUESTION',
+		questionId: questionId
+	}, 'POST', circumstances);
+};
 
 // Admin enters edit mode.
 // act.editQuestion = function (questionId, isEditing) {
@@ -109,15 +109,15 @@ act.selectWeek = function (circumstances, weekNumber) {
 // };
 
 // Admin submits question details.
-// act.updateQuestion = function (circumstances, questionId, question, answer, type) {
-// 	return actionParser({
-// 		meta: 'UPDATE-QUESTION',
-// 		questionId: questionId,
-// 		question: question,
-// 		answer: answer,
-// 		type: type
-// 	}, 'POST', circumstances);
-// };
+act.updateQuestion = function (circumstances, questionId, question, answer, type) {
+	return actionParser({
+		meta: 'UPDATE-QUESTION',
+		questionId: questionId,
+		question: question,
+		answer: answer,
+		type: type
+	}, 'POST', circumstances);
+};
 
 // User submit answer to questions.
 act.userAnswer = function (circumstances, questionId, answer) {
@@ -148,7 +148,7 @@ act.toggleAchievement = function (circumstances, achievement, contestantId, hasA
 // 	}, 'POST', circumstances);
 // };
 
-// Player choses contestants.
+// Player choses contestants. // TODO: Make this work.
 act.chooseContestant = function (id) {
 	return {
 		type: 'CHOOSE-CONTESTANT'
@@ -158,7 +158,5 @@ act.chooseContestant = function (id) {
 		}
 	};
 };
-
-// Submit Choices. (Or send each choice live?)
 
 module.exports = act;

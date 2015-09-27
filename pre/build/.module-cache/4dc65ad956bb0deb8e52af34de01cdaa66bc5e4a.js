@@ -148,7 +148,7 @@ act.toggleAchievement = function (circumstances, achievement, contestantId, hasA
 // 	}, 'POST', circumstances);
 // };
 
-// Player choses contestants.
+// Player choses contestants. // TODO: Make this work.
 act.chooseContestant = function (id) {
 	return {
 		type: 'CHOOSE-CONTESTANT'
@@ -158,7 +158,5 @@ act.chooseContestant = function (id) {
 		}
 	};
 };
-
-// Submit Choices. (Or send each choice live?)
 
 module.exports = act;

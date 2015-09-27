@@ -57766,23 +57766,6 @@ var actionParser = function (data, requestType, circumstances) {
 	};
 };
 
-// Sign in.
-// act.signIn = function (username, password, isAdmin) {
-// 	return actionParser({
-// 		meta: 'SIGN-IN',
-// 		username: username,
-// 		password: password,
-// 		isAdmin: isAdmin
-// 	}, 'POST', {url: '/sign-in'});
-// };
-
-// // Sign out.
-// act.signOut = function () {
-// 	return actionParser({
-// 		meta: 'SIGN-OUT'
-// 	}, 'GET', {url: '/sign-out'});
-// };
-
 // Get information after being signed in.
 act.getInitial = function () {
 	return actionParser({
@@ -57802,57 +57785,62 @@ act.navigate = function (target) {
 };
 
 // Player/Admin chose a week to view.
-act.generateNextWeek = function (circumstances, removedContestants) {
-	return actionParser({
-		meta: 'WEEK-VIEW-SELECT'
-	}, 'POST', {weekNumber: circumstances.weekNumber + 1});
-};
+// act.generateNextWeek = function (circumstances, removedContestants) {
+// 	return actionParser({
+// 		meta: ''
+// 	}, 'POST', {weekNumber: circumstances.weekNumber + 1});
+// };
 
 // Player/Admin chose a week to view.
-act.selectWeekView = function (circumstances, number) {
-	return actionParser({
-		meta: 'WEEK-VIEW-SELECT'
-	}, 'POST', {weekNumber: number});
+act.selectWeek = function (circumstances, weekNumber) {
+	return {
+		type: 'WEEK-SELECT'
+		,
+		payload: {
+			weekNumber: weekNumber
+		}
+	}
 };
 
 // Admin creates question.
-act.createQuestion = function (circumstances, type) {
-	return actionParser({
-		meta: 'CREATE-QUESTION',
-		type: type
-	}, 'POST', circumstances);
-};
+// act.createQuestion = function (circumstances, type) {
+// 	return actionParser({
+// 		meta: 'CREATE-QUESTION',
+// 		type: type,
+// 		weekNumber: circumstances.weekNumber
+// 	}, 'POST', circumstances);
+// };
 
 // Admin removes question.
-act.removeQuestion = function (circumstances, questionId) {
-	return actionParser({
-		meta: 'REMOVE-QUESTION',
-		questionId: questionId
-	}, 'POST', circumstances);
-};
+// act.removeQuestion = function (circumstances, questionId) {
+// 	return actionParser({
+// 		meta: 'REMOVE-QUESTION',
+// 		questionId: questionId
+// 	}, 'POST', circumstances);
+// };
 
 // Admin enters edit mode.
-act.editQuestion = function (questionId, isEditing) {
-	return {
-		type: 'EDIT-QUESTION'
-		,
-		payload: {
-			questionId: questionId,
-			isEditing: isEditing
-		}
-	};
-};
+// act.editQuestion = function (questionId, isEditing) {
+// 	return {
+// 		type: 'EDIT-QUESTION'
+// 		,
+// 		payload: {
+// 			questionId: questionId,
+// 			isEditing: isEditing
+// 		}
+// 	};
+// };
 
 // Admin submits question details.
-act.updateQuestion = function (circumstances, questionId, question, answer, type) {
-	return actionParser({
-		meta: 'UPDATE-QUESTION',
-		questionId: questionId,
-		question: question,
-		answer: answer,
-		type: type
-	}, 'POST', circumstances);
-};
+// act.updateQuestion = function (circumstances, questionId, question, answer, type) {
+// 	return actionParser({
+// 		meta: 'UPDATE-QUESTION',
+// 		questionId: questionId,
+// 		question: question,
+// 		answer: answer,
+// 		type: type
+// 	}, 'POST', circumstances);
+// };
 
 // User submit answer to questions.
 act.userAnswer = function (circumstances, questionId, answer) {
@@ -57869,20 +57857,21 @@ act.toggleAchievement = function (circumstances, achievement, contestantId, hasA
 		meta: 'TOGGLE-ACHIEVEMENT',
 		achievement: achievement,
 		contestantId: contestantId,
-		value: !hasAchieved
+		value: !hasAchieved,
+		weekNumber: circumstances.weekNumber
 	}, 'POST', circumstances);
 };
 
 // Admin toggles voted out of contestant.
-act.toggleVotedOut = function (circumstances, contestantId, votedOut) {
-	return actionParser({
-		meta: 'TOGGLE-ACHIEVEMENT',
-		contestantId: contestantId,
-		value: !votedOut
-	}, 'POST', circumstances);
-};
+// act.toggleVotedOut = function (circumstances, contestantId, votedOut) {
+// 	return actionParser({
+// 		meta: 'TOGGLE-ACHIEVEMENT',
+// 		contestantId: contestantId,
+// 		value: !votedOut
+// 	}, 'POST', circumstances);
+// };
 
-// Player choses contestants. // TODO: Make this work.
+// Player choses contestants.
 act.chooseContestant = function (id) {
 	return {
 		type: 'CHOOSE-CONTESTANT'
@@ -57892,6 +57881,8 @@ act.chooseContestant = function (id) {
 		}
 	};
 };
+
+// Submit Choices. (Or send each choice live?)
 
 module.exports = act;
 
@@ -59047,7 +59038,9 @@ var Fantasy = React.createClass({displayName: "Fantasy",
 		forcedLogger(p);
 		var computedState = computerOfState(p);
 		var dispatch = p.dispatch;
-		var fullContestants = p.contestants.get('status').mergeDeep(p.contestants.get('info'));
+		var fullContestants = p.contestants
+			.getIn(['statuses', p.navigation.get('selectedWeek').toString()])
+			.mergeDeep(p.contestants.get('info'));
 		var circumstances = {
 			weekNumber: p.navigation.get('selectedWeek')
 		};
@@ -59089,7 +59082,7 @@ var Fantasy = React.createClass({displayName: "Fantasy",
 					key: "quiz", 
 					display: p.navigation.get('location') === 'weekly', 
 					user: p.controller.get('user'), 
-					questions: p.questions, 
+					questions: p.questions.filter(function (q, id) {return q.get('weekNumber') === p.navigation.get('selectedWeek')}), 
 					contestants: fullContestants, 
 					dispatcher: {
 						userAnswer: function (questionId, answer) {
@@ -59157,10 +59150,10 @@ var Fantasy = React.createClass({displayName: "Fantasy",
 					place: PropTypes.string.isRequired
 				})
 			).isRequired,
-			status: ImmutablePropTypes.mapOf(
+			statuses: ImmutablePropTypes.mapOf(
 				ImmutablePropTypes.contains({
-					tribe: PropTypes.string.isRequired,
-					votedFor: PropTypes.string.isRequired,
+					tribe: PropTypes.string,
+					votedFor: PropTypes.string,
 					achievements: ImmutablePropTypes.mapOf(PropTypes.bool)
 				})
 			).isRequired
@@ -59169,7 +59162,7 @@ var Fantasy = React.createClass({displayName: "Fantasy",
 		questions: ImmutablePropTypes.mapOf(
 			ImmutablePropTypes.contains({
 				question: PropTypes.string.isRequired,
-				answer: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
+				answer: PropTypes.oneOfType([PropTypes.string, PropTypes.bool, PropTypes.number]),
 				type: PropTypes.string.isRequired
 			})
 		).isRequired
@@ -59208,7 +59201,11 @@ var computeState = function (state) {
 };
 
 computeState.scores = function (state) {
-	return state.contestants.get('status')
+	var weekNumber = state.navigation.get('selectedWeek').toString();
+	if (typeof state.contestants.getIn(['statuses', weekNumber]) === 'undefined') {
+		throw 'arrr'
+	}
+	return state.contestants.getIn(['statuses', weekNumber])
 		.map(function (contestant, id) {
 			return AchievementsObj
 				.filter(function (theAchievement, achievementCode) {
@@ -59351,7 +59348,9 @@ var initialState = I.fromJS({
 	contestants: {
 		info: {} // The contestant static data.
 		,
-		status: {} // The status depending on the selected week.
+		statuses: {
+			"0": {}
+		} // The statuses for all weeks.
 	}
 	,
 	questions: {
@@ -59405,9 +59404,9 @@ var navigation = function (prev, action) {
 		case 'NAVIGATE':
 		return prev
 			.set('location', action.payload.target);
-		case 'WEEK-VIEW-SELECT-DONE':
+		case 'WEEK-SELECT':
 		return prev
-			.set('selectedWeek', parseInt(action.payload.weekNumber) || prev.get('weekCount'));
+			.set('selectedWeek', parseInt(action.payload.weekNumber));
 		default:
 		return prev;
 	}
@@ -59442,14 +59441,12 @@ var contestants = function (prev, action) {
 		case 'GET-INITIAL-DONE':
 		return prev
 			.set('info', I.fromJS(action.payload.allContestants))
-			.set('status', I.fromJS(action.payload.contestantStatus));
-		case 'WEEK-VIEW-SELECT-DONE':
-		return prev
-			.set('status', I.fromJS(action.payload.contestantStatus));
+			.set('statuses', I.fromJS(action.payload.contestantStatus));
 		case 'TOGGLE-ACHIEVEMENT-PEND':
 		return prev
 			.updateIn([
-				'status',
+				'statuses',
+				action.payload.weekNumber,
 				action.payload.contestantId,
 				'achievements',
 				action.payload.achievement
@@ -59465,37 +59462,40 @@ var contestants = function (prev, action) {
 		]);
 		return !heardBack ? prev : prev
 			.updateIn([
-				'status',
+				'statuses',
+				action.payload.weekNumber,
 				action.payload.contestantId,
 				'achievements',
 				action.payload.achievement
 			], function (votedOut) {
 				return !votedOut;
 			});
-		case 'TOGGLE-VOTED-OUT-PEND':
-		return prev
-			.updateIn([
-				'status',
-				action.payload.contestantId,
-				'votedOut'
-			], function (votedOut) {
-				return !votedOut;
-			});
-		case 'TOGGLE-VOTED-OUT-DONE':
-		return prev;
-		case 'TOGGLE-VOTED-OUT-FAIL':
-		var heardBack = checkProperties(action.payload, [
-			'contestantId',
-			'votedOut'
-		]);
-		return !heardBack ? prev : prev
-			.updateIn([
-				'status',
-				action.payload.contestantId,
-				'votedOut'
-			], function (votedOut) {
-				return !votedOut;
-			});
+		// case 'TOGGLE-VOTED-OUT-PEND':
+		// return prev
+		// 	.updateIn([
+		// 		'statuses',
+		// 		prev.get('selectedWeek'),
+		// 		action.payload.contestantId,
+		// 		'votedOut'
+		// 	], function (votedOut) {
+		// 		return !votedOut;
+		// 	});
+		// case 'TOGGLE-VOTED-OUT-DONE':
+		// return prev;
+		// case 'TOGGLE-VOTED-OUT-FAIL':
+		// var heardBack = checkProperties(action.payload, [
+		// 	'contestantId',
+		// 	'votedOut'
+		// ]);
+		// return !heardBack ? prev : prev
+		// 	.updateIn([
+		// 		'statuses',
+		// 		prev.get('selectedWeek'),
+		// 		action.payload.contestantId,
+		// 		'votedOut'
+		// 	], function (votedOut) {
+		// 		return !votedOut;
+		// 	});
 		default:
 		return prev;
 	}
@@ -59507,74 +59507,73 @@ var questions = function (prev, action) {
 	}
 	switch (action.type) {
 		case 'GET-INITIAL-DONE':
-		case 'WEEK-VIEW-SELECT-DONE':
 		return I.fromJS(action.payload.questions)
-			.map(function (details, id) {
-				if (details.get('type') !== 'boolean' || !details.has('answer')) {
-					return details;
-				}
-				return details.update('answer', function (boolString) {
-					return truthiness(boolString);
+				.map(function (details, id) { // Fix booleans...
+					if (details.get('type') !== 'boolean' || !details.has('answer')) {
+						return details;
+					}
+					return details.update('answer', function (boolString) {
+						return truthiness(boolString);
+					});
 				});
-			});
-		case 'CREATE-QUESTION-DONE':
-		return prev
-			.set(action.payload.questionId, Map({
-				question: '',
-				type: action.payload.type,
-				isEditing: true
-			}));
-		case 'UPDATE-QUESTION-PEND':
-		return prev
-			.setIn([
-				action.payload.questionId,
-				'prev'
-			], prev.get(action.payload.questionId))
-			.mergeDeep(Map()
-				.set(action.payload.questionId, Map({
-					question: action.payload.question,
-					answer: action.payload.answer,
-					type: action.payload.type,
-					isEditing: false
-				})
-			));
-		case 'UPDATE-QUESTION-DONE':
-		return prev;
-		case 'UPDATE-QUESTION-FAIL':
-		var heardBack = checkProperties(action.payload, [
-			'questionId'
-		]);
-		return !heardBack ? prev : prev
-			.set(action.payload.questionId, prev.getIn([
-				action.payload.questionId,
-				'prev'
-			]));
-		// EDIT
-		case 'EDIT-QUESTION':
-		return prev
-			.setIn([
-				action.payload.questionId,
-				'isEditing'
-			], !action.payload.isEditing);
-		// REMOVE
-		case 'REMOVE-QUESTION-PEND':
-		return prev
-			.setIn([
-				action.payload.questionId,
-				'removed'
-			], true);
-		case 'REMOVE-QUESTION-DONE':
-		return prev
-			.delete(action.payload.questionId);
-		case 'REMOVE-QUESTION-FAIL':
-		var heardBack = checkProperties(action.payload, [
-			'questionId'
-		]);
-		return !heardBack ? prev : prev
-			.deleteIn([
-				action.payload.questionId,
-				'removed'
-			]);
+		// case 'CREATE-QUESTION-DONE':
+		// return prev
+		// 	.set(action.payload.questionId, Map({
+		// 		question: '',
+		// 		type: action.payload.type,
+		// 		isEditing: true
+		// 	}));
+		// case 'UPDATE-QUESTION-PEND':
+		// return prev
+		// 	.setIn([
+		// 		action.payload.questionId,
+		// 		'prev'
+		// 	], prev.get(action.payload.questionId))
+		// 	.mergeDeep(Map()
+		// 		.set(action.payload.questionId, Map({
+		// 			question: action.payload.question,
+		// 			answer: action.payload.answer,
+		// 			type: action.payload.type,
+		// 			isEditing: false
+		// 		})
+		// 	));
+		// case 'UPDATE-QUESTION-DONE':
+		// return prev;
+		// case 'UPDATE-QUESTION-FAIL':
+		// var heardBack = checkProperties(action.payload, [
+		// 	'questionId'
+		// ]);
+		// return !heardBack ? prev : prev
+		// 	.set(action.payload.questionId, prev.getIn([
+		// 		action.payload.questionId,
+		// 		'prev'
+		// 	]));
+		// // EDIT
+		// case 'EDIT-QUESTION':
+		// return prev
+		// 	.setIn([
+		// 		action.payload.questionId,
+		// 		'isEditing'
+		// 	], !action.payload.isEditing);
+		// // REMOVE
+		// case 'REMOVE-QUESTION-PEND':
+		// return prev
+		// 	.setIn([
+		// 		action.payload.questionId,
+		// 		'removed'
+		// 	], true);
+		// case 'REMOVE-QUESTION-DONE':
+		// return prev
+		// 	.delete(action.payload.questionId);
+		// case 'REMOVE-QUESTION-FAIL':
+		// var heardBack = checkProperties(action.payload, [
+		// 	'questionId'
+		// ]);
+		// return !heardBack ? prev : prev
+		// 	.deleteIn([
+		// 		action.payload.questionId,
+		// 		'removed'
+		// 	]);
 		// ANSWER
 		case 'USER-ANSWER-PEND':
 		return prev

@@ -43,7 +43,9 @@ var initialState = I.fromJS({
 	contestants: {
 		info: {} // The contestant static data.
 		,
-		status: {} // The status depending on the selected week.
+		statuses: {
+			"0": {}
+		} // The statuses for all weeks.
 	}
 	,
 	questions: {
@@ -97,9 +99,9 @@ var navigation = function (prev, action) {
 		case 'NAVIGATE':
 		return prev
 			.set('location', action.payload.target);
-		case 'WEEK-VIEW-SELECT-DONE':
+		case 'WEEK-SELECT':
 		return prev
-			.set('selectedWeek', parseInt(action.payload.weekNumber) || prev.get('weekCount'));
+			.set('selectedWeek', parseInt(action.payload.weekNumber));
 		default:
 		return prev;
 	}
@@ -134,14 +136,12 @@ var contestants = function (prev, action) {
 		case 'GET-INITIAL-DONE':
 		return prev
 			.set('info', I.fromJS(action.payload.allContestants))
-			.set('status', I.fromJS(action.payload.contestantStatus));
-		case 'WEEK-VIEW-SELECT-DONE':
-		return prev
-			.set('status', I.fromJS(action.payload.contestantStatus));
+			.set('statuses', I.fromJS(action.payload.contestantStatus));
 		case 'TOGGLE-ACHIEVEMENT-PEND':
 		return prev
 			.updateIn([
-				'status',
+				'statuses',
+				action.payload.weekNumber,
 				action.payload.contestantId,
 				'achievements',
 				action.payload.achievement
@@ -157,37 +157,40 @@ var contestants = function (prev, action) {
 		]);
 		return !heardBack ? prev : prev
 			.updateIn([
-				'status',
+				'statuses',
+				action.payload.weekNumber,
 				action.payload.contestantId,
 				'achievements',
 				action.payload.achievement
 			], function (votedOut) {
 				return !votedOut;
 			});
-		case 'TOGGLE-VOTED-OUT-PEND':
-		return prev
-			.updateIn([
-				'status',
-				action.payload.contestantId,
-				'votedOut'
-			], function (votedOut) {
-				return !votedOut;
-			});
-		case 'TOGGLE-VOTED-OUT-DONE':
-		return prev;
-		case 'TOGGLE-VOTED-OUT-FAIL':
-		var heardBack = checkProperties(action.payload, [
-			'contestantId',
-			'votedOut'
-		]);
-		return !heardBack ? prev : prev
-			.updateIn([
-				'status',
-				action.payload.contestantId,
-				'votedOut'
-			], function (votedOut) {
-				return !votedOut;
-			});
+		// case 'TOGGLE-VOTED-OUT-PEND':
+		// return prev
+		// 	.updateIn([
+		// 		'statuses',
+		// 		prev.get('selectedWeek'),
+		// 		action.payload.contestantId,
+		// 		'votedOut'
+		// 	], function (votedOut) {
+		// 		return !votedOut;
+		// 	});
+		// case 'TOGGLE-VOTED-OUT-DONE':
+		// return prev;
+		// case 'TOGGLE-VOTED-OUT-FAIL':
+		// var heardBack = checkProperties(action.payload, [
+		// 	'contestantId',
+		// 	'votedOut'
+		// ]);
+		// return !heardBack ? prev : prev
+		// 	.updateIn([
+		// 		'statuses',
+		// 		prev.get('selectedWeek'),
+		// 		action.payload.contestantId,
+		// 		'votedOut'
+		// 	], function (votedOut) {
+		// 		return !votedOut;
+		// 	});
 		default:
 		return prev;
 	}
@@ -199,74 +202,73 @@ var questions = function (prev, action) {
 	}
 	switch (action.type) {
 		case 'GET-INITIAL-DONE':
-		case 'WEEK-VIEW-SELECT-DONE':
 		return I.fromJS(action.payload.questions)
-			.map(function (details, id) {
-				if (details.get('type') !== 'boolean' || !details.has('answer')) {
-					return details;
-				}
-				return details.update('answer', function (boolString) {
-					return truthiness(boolString);
+				.map(function (details, id) { // Fix booleans...
+					if (details.get('type') !== 'boolean' || !details.has('answer')) {
+						return details;
+					}
+					return details.update('answer', function (boolString) {
+						return truthiness(boolString);
+					});
 				});
-			});
-		case 'CREATE-QUESTION-DONE':
-		return prev
-			.set(action.payload.questionId, Map({
-				question: '',
-				type: action.payload.type,
-				isEditing: true
-			}));
-		case 'UPDATE-QUESTION-PEND':
-		return prev
-			.setIn([
-				action.payload.questionId,
-				'prev'
-			], prev.get(action.payload.questionId))
-			.mergeDeep(Map()
-				.set(action.payload.questionId, Map({
-					question: action.payload.question,
-					answer: action.payload.answer,
-					type: action.payload.type,
-					isEditing: false
-				})
-			));
-		case 'UPDATE-QUESTION-DONE':
-		return prev;
-		case 'UPDATE-QUESTION-FAIL':
-		var heardBack = checkProperties(action.payload, [
-			'questionId'
-		]);
-		return !heardBack ? prev : prev
-			.set(action.payload.questionId, prev.getIn([
-				action.payload.questionId,
-				'prev'
-			]));
-		// EDIT
-		case 'EDIT-QUESTION':
-		return prev
-			.setIn([
-				action.payload.questionId,
-				'isEditing'
-			], !action.payload.isEditing);
-		// REMOVE
-		case 'REMOVE-QUESTION-PEND':
-		return prev
-			.setIn([
-				action.payload.questionId,
-				'removed'
-			], true);
-		case 'REMOVE-QUESTION-DONE':
-		return prev
-			.delete(action.payload.questionId);
-		case 'REMOVE-QUESTION-FAIL':
-		var heardBack = checkProperties(action.payload, [
-			'questionId'
-		]);
-		return !heardBack ? prev : prev
-			.deleteIn([
-				action.payload.questionId,
-				'removed'
-			]);
+		// case 'CREATE-QUESTION-DONE':
+		// return prev
+		// 	.set(action.payload.questionId, Map({
+		// 		question: '',
+		// 		type: action.payload.type,
+		// 		isEditing: true
+		// 	}));
+		// case 'UPDATE-QUESTION-PEND':
+		// return prev
+		// 	.setIn([
+		// 		action.payload.questionId,
+		// 		'prev'
+		// 	], prev.get(action.payload.questionId))
+		// 	.mergeDeep(Map()
+		// 		.set(action.payload.questionId, Map({
+		// 			question: action.payload.question,
+		// 			answer: action.payload.answer,
+		// 			type: action.payload.type,
+		// 			isEditing: false
+		// 		})
+		// 	));
+		// case 'UPDATE-QUESTION-DONE':
+		// return prev;
+		// case 'UPDATE-QUESTION-FAIL':
+		// var heardBack = checkProperties(action.payload, [
+		// 	'questionId'
+		// ]);
+		// return !heardBack ? prev : prev
+		// 	.set(action.payload.questionId, prev.getIn([
+		// 		action.payload.questionId,
+		// 		'prev'
+		// 	]));
+		// // EDIT
+		// case 'EDIT-QUESTION':
+		// return prev
+		// 	.setIn([
+		// 		action.payload.questionId,
+		// 		'isEditing'
+		// 	], !action.payload.isEditing);
+		// // REMOVE
+		// case 'REMOVE-QUESTION-PEND':
+		// return prev
+		// 	.setIn([
+		// 		action.payload.questionId,
+		// 		'removed'
+		// 	], true);
+		// case 'REMOVE-QUESTION-DONE':
+		// return prev
+		// 	.delete(action.payload.questionId);
+		// case 'REMOVE-QUESTION-FAIL':
+		// var heardBack = checkProperties(action.payload, [
+		// 	'questionId'
+		// ]);
+		// return !heardBack ? prev : prev
+		// 	.deleteIn([
+		// 		action.payload.questionId,
+		// 		'removed'
+		// 	]);
 		// ANSWER
 		case 'USER-ANSWER-PEND':
 		return prev

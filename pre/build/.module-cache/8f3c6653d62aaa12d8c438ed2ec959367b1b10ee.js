@@ -43,9 +43,7 @@ var initialState = I.fromJS({
 	contestants: {
 		info: {} // The contestant static data.
 		,
-		statuses: {
-			"0": {}
-		} // The statuses for all weeks.
+		statuses: {} // The statuses for all weeks.
 	}
 	,
 	questions: {
@@ -136,7 +134,7 @@ var contestants = function (prev, action) {
 		case 'GET-INITIAL-DONE':
 		return prev
 			.set('info', I.fromJS(action.payload.allContestants))
-			.set('statuses', I.fromJS(action.payload.contestantStatus));
+			.set('statuses', I.fromJS(action.payload.weekly));
 		case 'TOGGLE-ACHIEVEMENT-PEND':
 		return prev
 			.updateIn([

@@ -15,10 +15,7 @@ var computeState = function (state) {
 
 computeState.scores = function (state) {
 	var weekNumber = state.navigation.get('selectedWeek').toString();
-	if (typeof state.contestants.getIn(['statuses', weekNumber]) === 'undefined') {
-		throw 'arrr'
-	}
-	return state.contestants.getIn(['statuses', weekNumber])
+	return state.contestants.get(['statuses', weekNumber])
 		.map(function (contestant, id) {
 			return AchievementsObj
 				.filter(function (theAchievement, achievementCode) {

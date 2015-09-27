@@ -22,7 +22,7 @@ var userLoading = require('../helpers/user-loading');
 var forcedLogger = require('../helpers/forced-logger');
 
 
-var Fantasy = React.createClass({
+var Fantasy = React.createClass({displayName: "Fantasy",
 	render: function () {
 		var p = this.props;
 		forcedLogger(p);
@@ -39,42 +39,42 @@ var Fantasy = React.createClass({
 			return whatIsLoading;
 		}
 		return (
-			<div>
-				<Navigation
-					key="navigation"
-					user={p.controller.get('user')}
-					navigation={p.navigation}
-					navigate={function (target) {
+			React.createElement("div", null, 
+				React.createElement(Navigation, {
+					key: "navigation", 
+					user: p.controller.get('user'), 
+					navigation: p.navigation, 
+					navigate: function (target) {
 						return dispatch(act.navigate(target));
 					}}
-				/>
-				<Admin
-					key="admin"
-					user={p.controller.get('user')}
-					serverFail={p.controller.get('error')}
-					createQuestion={function (type) {
+				), 
+				React.createElement(Admin, {
+					key: "admin", 
+					user: p.controller.get('user'), 
+					serverFail: p.controller.get('error'), 
+					createQuestion: function (type) {
 						return dispatch(act.createQuestion(circumstances, type));
 					}}
-				/>
-				<div style={{display: p.navigation.get('location') === 'profile' ? 'initial' : 'none'}}>
-				<Profile
-					key="profile"
-					user={p.controller.get('user')}
-					chosen={p.profile.get('chosen')}
-					info={fullContestants}
-					selector={function (id) {
+				), 
+				React.createElement("div", {style: {display: p.navigation.get('location') === 'profile' ? 'initial' : 'none'}}, 
+				React.createElement(Profile, {
+					key: "profile", 
+					user: p.controller.get('user'), 
+					chosen: p.profile.get('chosen'), 
+					info: fullContestants, 
+					selector: function (id) {
 						return dispatch(act.chooseContestant(id));
 					}}
-				/>
-				</div>
-				<div style={{display: p.navigation.get('location') === 'weekly' ? 'initial' : 'none'}}>
-				<Quiz
-					key="quiz"
-					display={p.navigation.get('location') === 'weekly'}
-					user={p.controller.get('user')}
-					questions={p.questions.filter(function (q, id) {return q.get('weekNumber') === p.navigation.get('selectedWeek')})}
-					contestants={fullContestants}
-					dispatcher={{
+				)
+				), 
+				React.createElement("div", {style: {display: p.navigation.get('location') === 'weekly' ? 'initial' : 'none'}}, 
+				React.createElement(Quiz, {
+					key: "quiz", 
+					display: p.navigation.get('location') === 'weekly', 
+					user: p.controller.get('user'), 
+					questions: p.questions.filter(function (q, id) {return q.get('weekNumber') === p.navigation.get('selectedWeek')}), 
+					contestants: fullContestants, 
+					dispatcher: {
 						userAnswer: function (questionId, answer) {
 							return dispatch(act.userAnswer(circumstances, questionId, answer));
 						},
@@ -88,18 +88,18 @@ var Fantasy = React.createClass({
 							return dispatch(act.removeQuestion(circumstances, questionId));
 						}
 					}}
-				/>
-				<Tribes
-					key="tribes"
-					user={p.controller.get('user')}
-					contestants={fullContestants}
-					scores={computedState.scores}
-					toggleAchievement={function (achievementCode, contestantId, hasAchieved) {
+				), 
+				React.createElement(Tribes, {
+					key: "tribes", 
+					user: p.controller.get('user'), 
+					contestants: fullContestants, 
+					scores: computedState.scores, 
+					toggleAchievement: function (achievementCode, contestantId, hasAchieved) {
 						return dispatch(act.toggleAchievement(circumstances, achievementCode, contestantId, hasAchieved));
 					}}
-				/>
-				</div>
-			</div>
+				)
+				)
+			)
 		);
 	}
 	,
@@ -142,8 +142,8 @@ var Fantasy = React.createClass({
 			).isRequired,
 			statuses: ImmutablePropTypes.mapOf(
 				ImmutablePropTypes.contains({
-					tribe: PropTypes.string,
-					votedFor: PropTypes.string,
+					tribe: PropTypes.string.isRequired,
+					votedFor: PropTypes.string.isRequired,
 					achievements: ImmutablePropTypes.mapOf(PropTypes.bool)
 				})
 			).isRequired
@@ -152,7 +152,7 @@ var Fantasy = React.createClass({
 		questions: ImmutablePropTypes.mapOf(
 			ImmutablePropTypes.contains({
 				question: PropTypes.string.isRequired,
-				answer: PropTypes.oneOfType([PropTypes.string, PropTypes.bool, PropTypes.number]),
+				answer: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
 				type: PropTypes.string.isRequired
 			})
 		).isRequired

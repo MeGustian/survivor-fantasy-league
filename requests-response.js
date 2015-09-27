@@ -14,37 +14,19 @@
 		res: {
 			isAdmin: <Boolean>
 			,
+			chosen: <Array: ContestantId>
+			,
 			questions: {
 				<QuestionId>: {
+					weekNumber: <Number>,
 					question: <String>,
-					answer: <String|Number|ContestantId>,
+					answer: <String|Number|ContestantId>, // The user's answer, not the actual answer.
 					type: <String>
 				}
 				.
 				.
 				.
 			}
-			,
-			chosen: <Array: ContestantId>
-			,
-			contestantStatus: {
-				<ContestantId>: {
-					tribe: <String>,
-					votedFor: <ContestantId>,
-					votedOut: [Boolean],
-					achievements: {
-						<String>: <Boolean>
-						.
-						.
-						.
-					}
-				}
-				.
-				.
-				.
-			})
-			,
-			weekNumber: <Number>
 			,
 			allContestants: {
 				<ContestantId>: {
@@ -59,6 +41,29 @@
 				.
 				.
 			}
+			,
+			contestantStatus: {
+				<Number>: {
+					<ContestantId>: {
+						tribe: <String>,
+						votedFor: <ContestantId>,
+						votedOut: [Boolean],
+						achievements: {
+							<String>: <Boolean>
+							.
+							.
+							.
+						}
+					}
+					.
+					.
+					.
+				}
+				.
+				.
+				.
+			}
+			,
 		}
 	}
 	,
@@ -71,54 +76,28 @@
 			chosen: <Array: ContestantId>
 		}
 	}
-	,
-	'WEEK-VIEW-SELECT': {
-		method: 'POST' // Should be GET...
-		,
-		url: '/:weekNumber'
-		,
-		res: {
-			contestantStatus: {
-				<ContestantId>: {
-					tribe: <String>,
-					votedFor: <ContestantId>,
-					votedOut: [Boolean],
-					achievements: {
-						<String>: <Boolean>
-						.
-						.
-						.
-					}
-				}
-				.
-				.
-				.
-			})
-			,
-			weekNumber: <Number>
-		}
-	}
-	,
-	'TOGGLE-VOTED-OUT': {
-		url '/:weekNumber'
-		,
-		method: 'POST'
-		,
-		req: {
-			contestantId: <ContestantId>
-			,
-			value: <Boolean>
-		}
-		,
-		res: {
-			contestantId: <ContestantId>
-		}
-	}
-	,
-	'CREATE-WEEK': {
-		url: '/:weekNumber'
-		,
-		method: 'POST'
+	// ,
+	// 'TOGGLE-VOTED-OUT': {
+	// 	url '/:weekNumber'
+	// 	,
+	// 	method: 'POST'
+	// 	,
+	// 	req: {
+	// 		contestantId: <ContestantId>
+	// 		,
+	// 		value: <Boolean>
+	// 	}
+	// 	,
+	// 	res: {
+	// 		contestantId: <ContestantId>
+	// 	}
+	// }
+	// ,
+	// 'CREATE-WEEK': {
+	// 	url: '/:weekNumber'
+	// 	,
+	// 	method: 'POST'
+	// }
 	,
 	'TOGGLE-ACHIEVEMENT': {
 		url: '/:weekNumber'
@@ -152,49 +131,49 @@
 			questionId: <QuestionId>
 		}
 	}
-	,
-	'CREATE-QUESTION': {
-		url: '/:weekNumber'
-		,
-		req: {
-			type: <String>
-		}
-		res: {
-			questionId: <QuestionId>
-			,
-			type: <String>
-		}
-	}
-	,
-	'REMOVE-QUESTION': {
-		method: 'POST'
-		,
-		url: '/:weekNumber'
-		,
-		req: {
-			questionId: <QuestionId>
-		}
-		,
-		res: {
-			questionId: <QuestionId>
-		}
-	}
-	,
-	'UPDATE-QUESTION': {
-		method: 'POST'
-		,
-		url: '/:weekNumber'
-		,
-		req: {
-			questionId: <QuestionId>
-			,
-			question: [String]
-			,
-			answer: [String]
-		}
-		,
-		res: {
-			questionId: <QuestionId>
-		}
-	}
+	// ,
+	// 'CREATE-QUESTION': {
+	// 	url: '/:weekNumber'
+	// 	,
+	// 	req: {
+	// 		type: <String>
+	// 	}
+	// 	res: {
+	// 		questionId: <QuestionId>
+	// 		,
+	// 		type: <String>
+	// 	}
+	// }
+	// ,
+	// 'REMOVE-QUESTION': {
+	// 	method: 'POST'
+	// 	,
+	// 	url: '/:weekNumber'
+	// 	,
+	// 	req: {
+	// 		questionId: <QuestionId>
+	// 	}
+	// 	,
+	// 	res: {
+	// 		questionId: <QuestionId>
+	// 	}
+	// }
+	// ,
+	// 'UPDATE-QUESTION': {
+	// 	method: 'POST'
+	// 	,
+	// 	url: '/:weekNumber'
+	// 	,
+	// 	req: {
+	// 		questionId: <QuestionId>
+	// 		,
+	// 		question: [String]
+	// 		,
+	// 		answer: [String]
+	// 	}
+	// 	,
+	// 	res: {
+	// 		questionId: <QuestionId>
+	// 	}
+	// }
 }
