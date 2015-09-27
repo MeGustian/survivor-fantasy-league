@@ -14,7 +14,7 @@ var MyThumbnail = React.createClass({
 		var that = this;
 		var tooltip = <Bs.Tooltip>{p.name}</Bs.Tooltip>;
 		return (
-			<Bs.OverlayTrigger placement="top" overlay={tooltip} key={p.id}>
+			<Bs.OverlayTrigger placement="top" overlay={tooltip} key={p.id} id={p.name}>
 				<Bs.Thumbnail
 					onClick={that.props.choose.bind(null, p.id)}
 					src={"/images/contestants/thumbnails/" + p.name + ".jpg"}

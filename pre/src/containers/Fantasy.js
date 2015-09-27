@@ -28,7 +28,9 @@ var Fantasy = React.createClass({
 		forcedLogger(p);
 		var computedState = computerOfState(p);
 		var dispatch = p.dispatch;
-		var fullContestants = p.contestants.get('status').mergeDeep(p.contestants.get('info'));
+		var fullContestants = p.contestants
+			.getIn(['statuses', p.navigation.get('selectedWeek').toString()])
+			.mergeDeep(p.contestants.get('info'));
 		var circumstances = {
 			weekNumber: p.navigation.get('selectedWeek')
 		};
@@ -59,6 +61,7 @@ var Fantasy = React.createClass({
 					key="profile"
 					user={p.controller.get('user')}
 					chosen={p.profile.get('chosen')}
+					submittedChoices={p.profile.get('submittedChoices')}
 					info={fullContestants}
 					selector={function (id) {
 						return dispatch(act.chooseContestant(id));
@@ -70,7 +73,7 @@ var Fantasy = React.createClass({
 					key="quiz"
 					display={p.navigation.get('location') === 'weekly'}
 					user={p.controller.get('user')}
-					questions={p.questions}
+					questions={p.questions.filter(function (q, id) {return q.get('weekNumber') === p.navigation.get('selectedWeek')})}
 					contestants={fullContestants}
 					dispatcher={{
 						userAnswer: function (questionId, answer) {
@@ -102,42 +105,58 @@ var Fantasy = React.createClass({
 	}
 	,
 	propTypes: {
-		week: ImmutablePropTypes.contains({
-			selected: PropTypes.number,
-			count: PropTypes.number,
-			contestantStatus: ImmutablePropTypes.mapOf(
-				ImmutablePropTypes.contains({
-					tribe: PropTypes.string.isRequired,
-					votedFor: PropTypes.string.isRequired,
-					achievements: ImmutablePropTypes.mapOf(PropTypes.bool).isRequired
+		controller: ImmutablePropTypes.contains({
+			user: ImmutablePropTypes.contains({
+				signedIn: PropTypes.bool.isRequired,
+				attempting: PropTypes.bool.isRequired,
+				isAdmin: PropTypes.bool.isRequired
+			}),
+			error: ImmutablePropTypes.contains({
+				is: PropTypes.bool.isRequired,
+				details: ImmutablePropTypes.contains({
+					action: PropTypes.string,
+					details: PropTypes.string
 				})
-			)
+			})
+		})
+		,
+		navigation: ImmutablePropTypes.contains({
+			location: PropTypes.string.isRequired,
+			selectedWeek: PropTypes.number.isRequired,
+			weekCount: PropTypes.number.isRequired
 		}).isRequired
 		,
-		contestants: ImmutablePropTypes.mapOf(
-			ImmutablePropTypes.contains({
-				firstName: PropTypes.string.isRequired,
-				lastName: PropTypes.string.isRequired,
-				age: PropTypes.string.isRequired,
-				occupation: PropTypes.string.isRequired,
-				previousSeason: PropTypes.string.isRequired,
-				place: PropTypes.string.isRequired
-			})
-		).isRequired
+		profile: ImmutablePropTypes.contains({
+			chosen: ImmutablePropTypes.set.isRequired
+		}).isRequired
+		,
+		contestants: ImmutablePropTypes.contains({
+			info: ImmutablePropTypes.mapOf(
+				ImmutablePropTypes.contains({
+					firstName: PropTypes.string.isRequired,
+					lastName: PropTypes.string.isRequired,
+					age: PropTypes.string.isRequired,
+					occupation: PropTypes.string.isRequired,
+					previousSeason: PropTypes.string.isRequired,
+					place: PropTypes.string.isRequired
+				})
+			).isRequired,
+			statuses: ImmutablePropTypes.mapOf(
+				ImmutablePropTypes.contains({
+					tribe: PropTypes.string,
+					votedFor: PropTypes.string,
+					achievements: ImmutablePropTypes.mapOf(PropTypes.bool)
+				})
+			).isRequired
+		})
 		,
 		questions: ImmutablePropTypes.mapOf(
 			ImmutablePropTypes.contains({
 				question: PropTypes.string.isRequired,
-				answer: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
+				answer: PropTypes.oneOfType([PropTypes.string, PropTypes.bool, PropTypes.number]),
 				type: PropTypes.string.isRequired
 			})
 		).isRequired
-		,
-		user: ImmutablePropTypes.contains({
-			userId: PropTypes.string,
-			isAdmin: PropTypes.bool,
-			attempting: PropTypes.bool
-		}).isRequired
 	}
 });
 

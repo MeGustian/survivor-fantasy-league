@@ -1,7 +1,9 @@
-var React = require('react');
+var React = require('react/addons');
 var Bs = require('react-bootstrap');
 var AdminToolbox = require('./AdminToolbox');
 var AnswerTypes = require('./AnswerTypes');
+var Contestants = AnswerTypes.Contestants;
+var Num = AnswerTypes.Num;
 
 var now;
 
@@ -28,23 +30,25 @@ var Quiz = React.createClass({
 	,
 	questions: function () {
 		var p = this.props;
-		return p.questions
-			.filter(function (details, id) {
-				return (id !== 'removed') && !details.get('removed');
-			})
-			.map(function (details, id) {
-				return (
-					<Question
-						key={id}
-						questionId={id}
-						details={details}
-						tribes={p.contestants}
-						user={p.user}
-						handlers={p.dispatcher}
-					/>
-				);
-			})
-			.toArray();
+		return React.addons.createFragment(
+			p.questions
+				.filter(function (details, id) {
+					return (id !== 'removed') && !details.get('removed');
+				})
+				.map(function (details, id) {
+					return (
+						<Question
+							key={id}
+							questionId={id}
+							details={details}
+							tribes={p.contestants}
+							user={p.user}
+							handlers={p.dispatcher}
+						/>
+					);
+				})
+				.toJS()
+		);
 	}
 });
 
@@ -112,30 +116,23 @@ var Question = React.createClass({
 				</Bs.ButtonGroup>
 			);
 			case 'contestant':
-			var nobody = !answer ? " active" : "";
 			return (
-				<AnswerTypes.Contestants
+				<Contestants
 					answer={answer}
 					tribes={this.props.tribes}
+					changeAnswer={this.changeAnswer}
+				/>
+			);
+			case 'number':
+			return (
+				<Num
+					answer={answer}
 					changeAnswer={this.changeAnswer}
 				/>
 			);
 			default:
 			return <div>Bad type specified</div>
 		}
-	}
-	,
-	answerContestants: function () {
-		var that = this;
-		return this.props.tribes.map(function (contestant, id) {
-			var name = contestant.get('firstName') + " " + contestant.get('lastName');
-			return (
-				<li onClick={that.changeAnswer.bind(that, contestant.get('name'))}><a>
-					<img style={{marginRight: '0.25em', width: '40px', height: '40px'}} src={"/images/contestants/" + name + ".jpg"} alt={name} />
-					{name}
-				</a></li>
-			);
-		});
 	}
 	,
 	tools: function () {

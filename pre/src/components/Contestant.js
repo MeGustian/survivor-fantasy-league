@@ -4,13 +4,24 @@ var Achievements = require('./Achievements');
 
 var Contestant = React.createClass({
 	shouldComponentUpdate: function (nextProps) {
-		var equal = (
-			this.props.scores.every(function (val, key) {
-				return val === nextProps.scores.get(key);
-			}) &&
-			this.props.votedOut === nextProps.votedOut
-		);
-		return !equal;
+		if (typeof this.props.scores !== 'object') {
+			if (typeof nextProps.scores !== 'object') {
+				return !(this.props.votedOut === nextProps.votedOut);
+			} else {
+				return true;
+			}
+		} else {
+			if (typeof nextProps.scores !== 'object') {
+				return true;
+			} else {
+				return !(
+					this.props.scores.every(function (val, key) {
+						return val === nextProps.scores.get(key);
+					}) &&
+					this.props.votedOut === nextProps.votedOut
+				);
+			}
+		}
 	}
 	,
 	render: function () {
@@ -30,7 +41,7 @@ var Contestant = React.createClass({
 				<h3 className="text-center" style={{marginRight: '5px'}}>
 					{this.props.votedOut ? <span className="badge progress-bar-danger" style={{marginRight: '0.5em'}}>voted out</span> : ""}
 					{this.props.name}
-					<span className="badge" style={{marginLeft: '0.5em'}}>{this.props.scores.get('total')}</span>
+					{this.props.score ? <span className="badge" style={{marginLeft: '0.5em'}}>{this.props.scores.get('total')}</span> : ""}
 				</h3>
 				<dl className="dl-horizontal">
 					<dt>{"Age"}</dt>
