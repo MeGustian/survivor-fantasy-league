@@ -129,11 +129,13 @@ router.post('/:weekNumber', function(req, res) {
       var collection = db.get('users');
       query[data['questionId']] = data['answer'];
       collection.update(
-          { 'username' : req.user.local.username},
+          { 'local.username' : req.user.local.username},
           {
             $set: query
-          }
+          },
+          { upsert : true }
       );
+        console.log(query);
       res.json({'questionId' : data['questionId']});
 
       break;
