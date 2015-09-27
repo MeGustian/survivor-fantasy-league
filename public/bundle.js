@@ -57958,15 +57958,16 @@ var Achievements = React.createClass({displayName: "Achievements",
 				})
 				.map(function (theAchievement, achievementCode) {
 					var labelType;
-					var isAdmin = that.props.isAdmin; // TODO: Remove glyphs for none admins.
+					var isAdmin = that.props.isAdmin;
 					var hasAchieved = !!that.props.achievements.get(achievementCode);
+					var mult = (theAchievement.get('extra') === '10*(weekNumber)') ? that.props.weekNumber : 1;
 					return (
 						React.createElement("li", {className: "list-group-item", key: achievementCode}, 
 							React.createElement("span", {
 								className: "badge pull-right", 
 								onClick: that.toggleAchievement.bind(that, achievementCode, hasAchieved)
 							}, 
-								hasAchieved ? theAchievement.get('points') : 0
+								(hasAchieved ? theAchievement.get('points')*mult : 0) + (isAdmin ? " / " + theAchievement.get('points')*mult : "")
 							), 
 							React.createElement("span", {style: {marginRight: '1em'}}, 
 								theAchievement.get('text')
@@ -58031,7 +58032,7 @@ var Admin = React.createClass({displayName: "Admin",
 				)
 			);
 		}
-		if (this.props.user.get('isAdmin')) {
+		if (false && this.props.user.get('isAdmin')) {
 			return (
 				React.createElement(AdminToolbox, {
 					tool: "add", 
@@ -58136,7 +58137,7 @@ AnswerTypes.Contestants = React.createClass({displayName: "Contestants",
 	thumbnails: function () {
 		var that = this;
 		return React.addons.createFragment(
-			that.props.tribes
+			that.props.contestants
 				.map(function (contestant, id) {
 					var name = contestant.get('firstName') + " " + contestant.get('lastName');
 					var isAnswer = id === that.props.answer;
@@ -58224,7 +58225,7 @@ var Contestant = React.createClass({displayName: "Contestant",
 				React.createElement("h3", {className: "text-center", style: {marginRight: '5px'}}, 
 					this.props.votedOut ? React.createElement("span", {className: "badge progress-bar-danger", style: {marginRight: '0.5em'}}, "voted out") : "", 
 					this.props.name, 
-					this.props.score ? React.createElement("span", {className: "badge", style: {marginLeft: '0.5em'}}, this.props.scores.get('total')) : ""
+					this.props.scores ? React.createElement("span", {className: "badge", style: {marginLeft: '0.5em'}}, this.props.scores.get('total')) : ""
 				), 
 				React.createElement("dl", {className: "dl-horizontal"}, 
 					React.createElement("dt", null, "Age"), 
@@ -58334,6 +58335,7 @@ var Contestant = require('./Contestant');
 
 var Profile = React.createClass({displayName: "Profile",
 	render: function () {
+		console.info('Profile');
 		if (this.props.submittedChoices) {
 			return (
 				React.createElement("div", null, 
@@ -58755,6 +58757,7 @@ var Quiz = React.createClass({displayName: "Quiz",
 	}
 	,
 	render: function () {
+		console.info('Quiz');
 		return (
 			React.createElement(Bs.Row, null, 
 				React.createElement(Bs.Col, {xs: 12, sm: 10, smOffset: 1, md: 8, mdOffset: 2}, 
@@ -58779,7 +58782,7 @@ var Quiz = React.createClass({displayName: "Quiz",
 							key: id, 
 							questionId: id, 
 							details: details, 
-							tribes: p.contestants, 
+							contestants: p.contestants, 
 							user: p.user, 
 							handlers: p.dispatcher}
 						)
@@ -58857,7 +58860,7 @@ var Question = React.createClass({displayName: "Question",
 			return (
 				React.createElement(Contestants, {
 					answer: answer, 
-					tribes: this.props.tribes, 
+					contestants: this.props.contestants, 
 					changeAnswer: this.changeAnswer}
 				)
 			);
@@ -58930,6 +58933,7 @@ var Tribes = React.createClass({displayName: "Tribes",
 	}
 	,
 	render: function () {
+		console.info('Tribes');
 		return (
 			React.createElement(Bs.Row, null, 
 				this.tribes()
@@ -58939,19 +58943,20 @@ var Tribes = React.createClass({displayName: "Tribes",
 	,
 	tribes: function () {
 		var that = this;
-		var byTribe =
-			that.props.contestants
-				.groupBy(function (contestant) {
-					return contestant.get('tribe');
-				});
+		var byTribe = that.props.contestants
+			.groupBy(function (contestant) {
+				return contestant.getIn(['weeks', that.props.weekNumber, 'tribe']);
+			});
 		return React.addons.createFragment(
 			byTribe
-				.filter(function (tribe, name) {return !!name})
+				.filter(function (tribe, name) {return !!name;}) // Works for empty string and undefined.
 				.map(function (tribe, name) {
-					if (!name) { // Remove filter for this to work.
+					var hasVotedOutees = 0;
+					if (!name) { // Remove filter for this to not be vacant.
+						hasVotedOutees = 1;
 						name = "Voted Out";
 					}
-					var columns = byTribe.count() - 1; // Remove -1 when removing filter.
+					var columns = byTribe.count() - hasVotedOutees; // Remove -1 when removing filter.
 					return (
 						React.createElement(Bs.Col, {sm: 12, md: 12/columns, key: name}, 
 							React.createElement("h2", null, name), 
@@ -58979,12 +58984,13 @@ var Tribes = React.createClass({displayName: "Tribes",
 							previousSeason: contestant.get('previousSeason'), 
 							place: contestant.get('place'), 
 							scores: that.props.scores.get(id), 
-							votedOut: contestant.get('votedOut')}
+							votedOut: contestant.getIn(['weeks', that.props.weekNumber, 'votedOut'])}
 						), 
 						React.createElement(Achievements, {
 							contestant: id, 
+							weekNumber: that.props.weekNumber, // For `VOTED-OUT` achievement
 							isAdmin: that.props.user.get('isAdmin'), 
-							achievements: contestant.get('achievements'), 
+							achievements: contestant.getIn(['weeks', that.props.weekNumber, 'achievements']), 
 							scores: that.props.scores.get(id), 
 							toggleAchievement: that.props.toggleAchievement}
 						)
@@ -59151,9 +59157,9 @@ var Fantasy = React.createClass({displayName: "Fantasy",
 			return whatIsLoading;
 		}
 		var computedState = computerOfState(p);
-		var fullContestants = p.contestants
-			.getIn(['statuses', p.navigation.get('selectedWeek').toString()])
-			.mergeDeep(p.contestants.get('info'));
+		// var fullContestants = p.contestants
+		// 	.getIn(['statuses', p.navigation.get('selectedWeek')])
+		// 	.mergeDeep(p.contestants.get('info'));
 		var circumstances = {
 			weekNumber: p.navigation.get('selectedWeek')
 		};
@@ -59184,7 +59190,7 @@ var Fantasy = React.createClass({displayName: "Fantasy",
 					submit: function (choices) {
 						return dispatch(act.submitChoices(choices));
 					}, 
-					info: fullContestants, 
+					info: p.contestants, // XXX: should work the same
 					selector: function (id) {
 						return dispatch(act.chooseContestant(id));
 					}}
@@ -59195,8 +59201,8 @@ var Fantasy = React.createClass({displayName: "Fantasy",
 					key: "quiz", 
 					display: p.navigation.get('location') === 'weekly', 
 					user: p.controller.get('user'), 
-					questions: p.questions.filter(function (q, id) {return q.get('weekNumber') === p.navigation.get('selectedWeek')}), 
-					contestants: fullContestants, 
+					questions: p.questions.filter(function (q, id) {return q.get('weekNumber') == p.navigation.get('selectedWeek')}), 
+					contestants: p.contestants, // XXX: should work the same
 					dispatcher: {
 						userAnswer: function (questionId, answer) {
 							return dispatch(act.userAnswer(circumstances, questionId, answer));
@@ -59215,7 +59221,8 @@ var Fantasy = React.createClass({displayName: "Fantasy",
 				React.createElement(Tribes, {
 					key: "tribes", 
 					user: p.controller.get('user'), 
-					contestants: fullContestants, 
+					weekNumber: p.navigation.get('selectedWeek'), // XXX: added for modi
+					contestants: p.contestants, // XXX: this needs modi
 					scores: computedState.scores, 
 					toggleAchievement: function (achievementCode, contestantId, hasAchieved) {
 						return dispatch(act.toggleAchievement(circumstances, achievementCode, contestantId, hasAchieved));
@@ -59309,29 +59316,36 @@ var AchievementsObj = require('../objects/Achievements');
 var computeState = function (state) {
 	var calc = computeState;
 	return {
-		scores: calc.scores(state)
+		scores: calc.scores(state, state.navigation.get('selectedWeek')),
+		playerScore: calc.playerScore(state, state.navigation.get('selectedWeek'))
 	};
 };
 
-computeState.scores = function (state) {
-	var weekNumber = state.navigation.get('selectedWeek').toString();
-	if (typeof state.contestants.getIn(['statuses', weekNumber]) === 'undefined') {
-		throw 'arrr'
-	}
-	return state.contestants.getIn(['statuses', weekNumber])
+// Map each contestant to an object that reduces his achievements according to
+// their score.
+computeState.scores = function (state, weekNumber) {
+	return state.contestants
 		.map(function (contestant, id) {
 			return AchievementsObj
 				.filter(function (theAchievement, achievementCode) {
-					return !!contestant.get('achievements').get(achievementCode);
+					return !!contestant.getIn(['weeks', weekNumber, 'achievements', achievementCode]);
 				})
 				.reduce(function (reduction, theAchievement) {
 					var points = theAchievement.get('points');
+					if (theAchievement.get('extra') === '10*(weekNumber)') {
+						points *= weekNumber;
+					}
 					var addTo = function (curr) {return curr+points};
 					return reduction
 						.update('total', addTo)
 						.update(points>0 ? 'good' : 'bad', addTo);
 				}, I.fromJS({good: 0, bad: 0, total: 0}));
 			});
+};
+
+// Reduce player to score by the chosen.
+computeState.playerScore = function (state, weekNumber) {
+
 };
 
 module.exports = computeState;
@@ -59433,24 +59447,230 @@ var I = require('immutable');
 var Map = I.Map;
 
 var Achievements = Map({
-	"CRIED": Map({
-		text: 'Cried at least once during the episode.',
-		points: -20
-	})
-	,
 	"TREE-MAIL": Map({
-		text: 'Got tree mail for tribe.',
-		points: 50
+		text: 'Read tree mail for tribe.',
+		points: 10
 	})
 	,
 	"HASHTAG": Map({
-		text: 'Said something or did something that got hashtaged.',
+		text: 'Said or did something that got hashtagged.',
 		points: 100
+	})
+	,
+	"NAMES-EPISODE": Map({
+		text: 'Said or did something that named the episode.',
+		points: 90
 	})
 	,
 	"DESTROYED-GOODS": Map({
 		text: 'Destroyed food or other tribe stuff.',
 		points: -200
+	})
+	,
+	"SCREAM-FIGHT": Map({
+		text: 'Had a screaming fight with someone.',
+		points: -20
+	})
+	,
+	"FEMALE-CRIED": Map({
+		text: 'Female: Cried at least once during the episode.',
+		points: -10
+	})
+	,
+	"MALE-CRIED": Map({
+		text: 'Male: Cried at least once during the episode.',
+		points: -30
+	})
+	,
+	"LIES-ABOUT-BG": Map({
+		text: 'Lied about his occupation or background.',
+		points: 30
+	})
+	,
+	"REWARD-TRIBE": Map({
+		text: 'Part of the tribe that won reward.',
+		points: 20
+	})
+	,
+	"REWARD-INDIVIDUAL": Map({
+		text: 'Won individual reward challenge.',
+		points: 50
+	})
+	,
+	"IMMUNITY-TRIBE": Map({
+		text: 'Part of the tribe that won immunity.',
+		points: 30
+	})
+	,
+	"IMMUNITY-INDIVIDUAL": Map({
+		text: 'Won individual immunity challenge.',
+		points: 80
+	})
+	,
+	"REWARD-SHARED-WITH": Map({
+		text: 'Was chosen to be shared reward with.',
+		points: 30
+	})
+	,
+	"GAVE-REWARD": Map({
+		text: 'Won reward and gave it to someone else.',
+		points: 30
+	})
+	,
+	"FINDS-HIDDEN": Map({
+		text: 'Found hidden immunity idol with the help of a clue.',
+		points: 70
+	})
+	,
+	"FINDS-HIDDEN-NO-CLUE": Map({
+		text: 'Found hidden immunity idol without a clue.',
+		points: 90
+	})
+	,
+	"HIDDEN-GIVEN-TO": Map({
+		text: 'Was given a hidden immunity idol.',
+		points: 90
+	})
+	,
+	"PLAYS-HIDDEN-GOOD": Map({
+		text: 'Played hidden immunity idol when otherwise voted out.',
+		points: 100
+	})
+	,
+	"PLAYS-HIDDEN-BAD": Map({
+		text: 'Played hidden immunity idol when not necessary.',
+		points: -50
+	})
+	,
+	"GIVES-HIDDEN-GOOD": Map({
+		text: 'Played hidden immunity idol for someone else and saved him\\her.',
+		points: 150
+	})
+	,
+	"GIVES-HIDDEN-BAD": Map({
+		text: 'Played hidden immunity idol for someone else when not necessary.',
+		points: -100
+	})
+	,
+	"MAKES-ERIK": Map({
+		text: 'Played hidden immunity idol for someone else and voted out.',
+		points: -150
+	})
+	,
+	"RECEIVES-MEDIC": Map({
+		text: 'Receiceed treatment or checked out by medic.',
+		points: -10
+	})
+	,
+	"SITS-OUT-REWARD": Map({
+		text: 'Sat out reward challenge.',
+		points: -10
+	})
+	,
+	"SITS-OUT-IMMUNITY": Map({
+		text: 'Sat out immunity challenge.',
+		points: -20
+	})
+	,
+	"AUDIBLY-PRAYS": Map({
+		text: 'Prayed out loud.',
+		points: -50
+	})
+	,
+	"TEMPTED-WITH-GIFT": Map({
+		text: 'Quit a challenge for food\\goodies.',
+		points: -100
+	})
+	,
+	"QUITS": Map({
+		text: 'Chose to quit game.',
+		points: -200
+	})
+	,
+	"MED-EVAC": Map({
+		text: 'Forced to quit game due to medical reasons.',
+		points: -50
+	})
+	,
+	"MENTIONED": Map({
+		text: 'Mentioned after being eliminated.',
+		points: 30
+	})
+	,
+	"NAMES-TRIBE": Map({
+		text: 'Suggested the name for the merged tribe.',
+		points: 150
+	})
+	,
+	"VOTES-WINNER": Map({
+		text: 'Voted for the winner of the game.',
+		points: 50
+	})
+	,
+	"VOTES-LOSER": Map({
+		text: 'Voted for the loser of the game.',
+		points: -50
+	})
+	,
+	"VOTES-FOR-ELIM": Map({
+		text: 'Voted for the person eliminated.',
+		points: 30
+	})
+	,
+	"VOTES-FOR-STAYS": Map({
+		text: 'Voted for someone who was not eliminated.',
+		points: -30
+	})
+	,
+	"VOTED-FOR": Map({
+		text: 'Got a vote at tribal council.',
+		points: -10
+	})
+	,
+	"FIRE-CHALL-WIN": Map({
+		text: 'Won a fire challenge.',
+		points: 50
+	})
+	,
+	"FIRE-CHALL-LOSE": Map({
+		text: 'Lost a fire challenge.',
+		points: -50
+	})
+	,
+	"BEATS-PREV-SEASON": Map({
+		text: 'Got further than previous season.',
+		points: 70
+	})
+	,
+	"FAN-FAV": Map({
+		text: 'Won the title of Fans Favorite.',
+		points: 100
+	})
+	,
+	"JURY": Map({
+		text: 'Became a member of the jury.',
+		points: 70
+	})
+	,
+	"VOTED-OUT": Map({
+		text: 'Got voted out!',
+		points: 10,
+		extra: '10*(weekNumber)'
+	})
+	,
+	"3rd-PLACE": Map({
+		text: 'Won Third Place!',
+		points: 200
+	})
+	,
+	"2nd-PLACE": Map({
+		text: 'Won Second Place!',
+		points: 250
+	})
+	,
+	"1st-PLACE": Map({
+		text: 'Won First Place!!!',
+		points: 300
 	})
 });
 
@@ -59501,13 +59721,7 @@ var initialState = I.fromJS({
 		submittedChoices: false
 	}
 	,
-	contestants: {
-		info: {} // The contestant static data.
-		,
-		statuses: {
-			"0": {}
-		} // The statuses for all weeks.
-	}
+	contestants: {}
 	,
 	questions: {
 		// Question ID with content.
@@ -59555,14 +59769,14 @@ var navigation = function (prev, action) {
 	switch (action.type) {
 		case 'GET-INITIAL-DONE':
 		return prev
-			.set('selectedWeek', parseInt(action.payload.weekNumber))
-			.set('weekCount', parseInt(action.payload.weekNumber));
+			.set('selectedWeek', action.payload.weekNumber)
+			.set('weekCount', action.payload.weekNumber);
 		case 'NAVIGATE':
 		return prev
 			.set('location', action.payload.target);
 		case 'WEEK-SELECT':
 		return prev
-			.set('selectedWeek', parseInt(action.payload.weekNumber));
+			.set('selectedWeek', action.payload.weekNumber);
 		default:
 		return prev;
 	}
@@ -59599,15 +59813,13 @@ var contestants = function (prev, action) {
 	}
 	switch (action.type) {
 		case 'GET-INITIAL-DONE':
-		return prev
-			.set('info', I.fromJS(action.payload.allContestants))
-			.set('statuses', I.fromJS(action.payload.contestantStatus));
+		return I.fromJS(action.payload.contestants);
 		case 'TOGGLE-ACHIEVEMENT-PEND':
 		return prev
 			.updateIn([
-				'statuses',
-				action.payload.weekNumber,
 				action.payload.contestantId,
+				'weeks',
+				action.payload.weekNumber.toString(),
 				'achievements',
 				action.payload.achievement
 			], function (hasAchieved) {
@@ -59622,13 +59834,13 @@ var contestants = function (prev, action) {
 		]);
 		return !heardBack ? prev : prev
 			.updateIn([
-				'statuses',
-				action.payload.weekNumber,
 				action.payload.contestantId,
+				'weeks',
+				action.payload.weekNumber.toString(),
 				'achievements',
 				action.payload.achievement
-			], function (votedOut) {
-				return !votedOut;
+			], function (hasAchieved) {
+				return !hasAchieved;
 			});
 		// case 'TOGGLE-VOTED-OUT-PEND':
 		// return prev

@@ -32,9 +32,9 @@ var Fantasy = React.createClass({
 			return whatIsLoading;
 		}
 		var computedState = computerOfState(p);
-		var fullContestants = p.contestants
-			.getIn(['statuses', p.navigation.get('selectedWeek').toString()])
-			.mergeDeep(p.contestants.get('info'));
+		// var fullContestants = p.contestants
+		// 	.getIn(['statuses', p.navigation.get('selectedWeek')])
+		// 	.mergeDeep(p.contestants.get('info'));
 		var circumstances = {
 			weekNumber: p.navigation.get('selectedWeek')
 		};
@@ -65,7 +65,7 @@ var Fantasy = React.createClass({
 					submit={function (choices) {
 						return dispatch(act.submitChoices(choices));
 					}}
-					info={fullContestants}
+					info={p.contestants} // XXX: should work the same
 					selector={function (id) {
 						return dispatch(act.chooseContestant(id));
 					}}
@@ -76,8 +76,8 @@ var Fantasy = React.createClass({
 					key="quiz"
 					display={p.navigation.get('location') === 'weekly'}
 					user={p.controller.get('user')}
-					questions={p.questions.filter(function (q, id) {return q.get('weekNumber') === p.navigation.get('selectedWeek')})}
-					contestants={fullContestants}
+					questions={p.questions.filter(function (q, id) {return q.get('weekNumber') == p.navigation.get('selectedWeek')})}
+					contestants={p.contestants} // XXX: should work the same
 					dispatcher={{
 						userAnswer: function (questionId, answer) {
 							return dispatch(act.userAnswer(circumstances, questionId, answer));
@@ -96,7 +96,8 @@ var Fantasy = React.createClass({
 				<Tribes
 					key="tribes"
 					user={p.controller.get('user')}
-					contestants={fullContestants}
+					weekNumber={p.navigation.get('selectedWeek')} // XXX: added for modi
+					contestants={p.contestants} // XXX: this needs modi
 					scores={computedState.scores}
 					toggleAchievement={function (achievementCode, contestantId, hasAchieved) {
 						return dispatch(act.toggleAchievement(circumstances, achievementCode, contestantId, hasAchieved));

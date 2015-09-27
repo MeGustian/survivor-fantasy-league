@@ -56,15 +56,16 @@ var Achievements = React.createClass({
 				})
 				.map(function (theAchievement, achievementCode) {
 					var labelType;
-					var isAdmin = that.props.isAdmin; // TODO: Remove glyphs for none admins.
+					var isAdmin = that.props.isAdmin;
 					var hasAchieved = !!that.props.achievements.get(achievementCode);
+					var mult = (theAchievement.get('extra') === '10*(weekNumber)') ? that.props.weekNumber : 1;
 					return (
 						<li className="list-group-item" key={achievementCode}>
 							<span
 								className={"badge pull-right"}
 								onClick={that.toggleAchievement.bind(that, achievementCode, hasAchieved)}
 							>
-								{hasAchieved ? theAchievement.get('points') : 0}
+								{(hasAchieved ? theAchievement.get('points')*mult : 0) + (isAdmin ? " / " + theAchievement.get('points')*mult : "")}
 							</span>
 							<span style={{marginRight: '1em'}}>
 								{theAchievement.get('text')}

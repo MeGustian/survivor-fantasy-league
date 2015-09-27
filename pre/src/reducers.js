@@ -42,13 +42,7 @@ var initialState = I.fromJS({
 		submittedChoices: false
 	}
 	,
-	contestants: {
-		info: {} // The contestant static data.
-		,
-		statuses: {
-			"0": {}
-		} // The statuses for all weeks.
-	}
+	contestants: {}
 	,
 	questions: {
 		// Question ID with content.
@@ -96,14 +90,14 @@ var navigation = function (prev, action) {
 	switch (action.type) {
 		case 'GET-INITIAL-DONE':
 		return prev
-			.set('selectedWeek', parseInt(action.payload.weekNumber))
-			.set('weekCount', parseInt(action.payload.weekNumber));
+			.set('selectedWeek', action.payload.weekNumber)
+			.set('weekCount', action.payload.weekNumber);
 		case 'NAVIGATE':
 		return prev
 			.set('location', action.payload.target);
 		case 'WEEK-SELECT':
 		return prev
-			.set('selectedWeek', parseInt(action.payload.weekNumber));
+			.set('selectedWeek', action.payload.weekNumber);
 		default:
 		return prev;
 	}
@@ -140,15 +134,13 @@ var contestants = function (prev, action) {
 	}
 	switch (action.type) {
 		case 'GET-INITIAL-DONE':
-		return prev
-			.set('info', I.fromJS(action.payload.allContestants))
-			.set('statuses', I.fromJS(action.payload.contestantStatus));
+		return I.fromJS(action.payload.contestants);
 		case 'TOGGLE-ACHIEVEMENT-PEND':
 		return prev
 			.updateIn([
-				'statuses',
-				action.payload.weekNumber,
 				action.payload.contestantId,
+				'weeks',
+				action.payload.weekNumber.toString(),
 				'achievements',
 				action.payload.achievement
 			], function (hasAchieved) {
@@ -163,13 +155,13 @@ var contestants = function (prev, action) {
 		]);
 		return !heardBack ? prev : prev
 			.updateIn([
-				'statuses',
-				action.payload.weekNumber,
 				action.payload.contestantId,
+				'weeks',
+				action.payload.weekNumber.toString(),
 				'achievements',
 				action.payload.achievement
-			], function (votedOut) {
-				return !votedOut;
+			], function (hasAchieved) {
+				return !hasAchieved;
 			});
 		// case 'TOGGLE-VOTED-OUT-PEND':
 		// return prev

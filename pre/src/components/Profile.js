@@ -6,6 +6,7 @@ var Contestant = require('./Contestant');
 
 var Profile = React.createClass({
 	render: function () {
+		console.info('Profile');
 		if (this.props.submittedChoices) {
 			return (
 				<div>

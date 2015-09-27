@@ -29,7 +29,7 @@ AnswerTypes.Contestants = React.createClass({
 	thumbnails: function () {
 		var that = this;
 		return React.addons.createFragment(
-			that.props.tribes
+			that.props.contestants
 				.map(function (contestant, id) {
 					var name = contestant.get('firstName') + " " + contestant.get('lastName');
 					var isAnswer = id === that.props.answer;

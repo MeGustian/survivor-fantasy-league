@@ -18,7 +18,7 @@ var Admin = React.createClass({
 				</Bs.Row>
 			);
 		}
-		if (this.props.user.get('isAdmin')) {
+		if (false && this.props.user.get('isAdmin')) {
 			return (
 				<AdminToolbox
 					tool="add"
