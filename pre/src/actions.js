@@ -50,6 +50,13 @@ act.getInitial = function () {
 	}, 'GET', {url: '/initial'});
 };
 
+// Get specific week.
+// act.getWeek = function (weekNumber) {
+// 	return actionParser({
+// 		meta: 'GET-WEEK'
+// 	}, 'GET', {weekNumber: weekNumber});
+// };
+
 // Navigation.
 act.navigate = function (target) {
 	return {
@@ -163,7 +170,7 @@ act.chooseContestant = function (id) {
 act.submitChoices = function (choices) {
 	return actionParser({
 		meta: 'CONTESTANT-CHOICE',
-		chosen: choices
+		chosen: choices.toArray()
 	}, 'POST', {url: '/'});
 };
 

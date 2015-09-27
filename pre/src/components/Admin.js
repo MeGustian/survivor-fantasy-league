@@ -2,7 +2,7 @@ var React = require('react');
 var Bs = require('react-bootstrap');
 var AdminToolbox = require('./AdminToolbox');
 
-module.exports = React.createClass({
+var Admin = React.createClass({
 	render: function () {
 		if (this.props.serverFail.get('is')) {
 			return (
@@ -33,3 +33,5 @@ module.exports = React.createClass({
 		this.props.createQuestion(type);
 	}
 })
+
+module.exports = Admin;

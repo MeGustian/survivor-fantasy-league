@@ -25,12 +25,14 @@ var Tribes = React.createClass({
 				});
 		return React.addons.createFragment(
 			byTribe
+				.filter(function (tribe, name) {return !!name})
 				.map(function (tribe, name) {
-					if (!name) {
+					if (!name) { // Remove filter for this to work.
 						name = "Voted Out";
 					}
+					var columns = byTribe.count() - 1; // Remove -1 when removing filter.
 					return (
-						<Bs.Col sm={12} md={12/byTribe.count()} key={name}>
+						<Bs.Col sm={12} md={12/columns} key={name}>
 							<h2>{name}</h2>
 							<Bs.Accordion>
 								{that.membersOf(tribe)}

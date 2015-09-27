@@ -26,18 +26,18 @@ var Fantasy = React.createClass({
 	render: function () {
 		var p = this.props;
 		forcedLogger(p);
-		var computedState = computerOfState(p);
 		var dispatch = p.dispatch;
+		var whatIsLoading = userLoading(p.controller, dispatch, act);
+		if (whatIsLoading) {
+			return whatIsLoading;
+		}
+		var computedState = computerOfState(p);
 		var fullContestants = p.contestants
 			.getIn(['statuses', p.navigation.get('selectedWeek').toString()])
 			.mergeDeep(p.contestants.get('info'));
 		var circumstances = {
 			weekNumber: p.navigation.get('selectedWeek')
 		};
-		var whatIsLoading = userLoading(p.controller, dispatch, act);
-		if (whatIsLoading) {
-			return whatIsLoading;
-		}
 		return (
 			<div>
 				<Navigation
@@ -62,6 +62,9 @@ var Fantasy = React.createClass({
 					user={p.controller.get('user')}
 					chosen={p.profile.get('chosen')}
 					submittedChoices={p.profile.get('submittedChoices')}
+					submit={function (choices) {
+						return dispatch(act.submitChoices(choices));
+					}}
 					info={fullContestants}
 					selector={function (id) {
 						return dispatch(act.chooseContestant(id));

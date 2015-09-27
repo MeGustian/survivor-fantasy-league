@@ -679,20 +679,8 @@ app.get('/', function(req, res){
 // });
 
 // TODO: Deal with booleans (they are returned as strings!).
-app.get('/ajax', function (req, res) {
+app.post('/', function (req, res) {
 	console.log('GET:');
-	console.log(req.query);
-	if (true) {
-		res.status(200).send(req.query);
-	}
-	if (!true) {
-		res.status(500).send({error: req.query});
-	}
-	// timeout...
-});
-// TODO: Deal with booleans (they are returned as strings!).
-app.post('/ajax', function (req, res) {
-	console.log('POST:');
 	console.log(req.body);
 	if (true) {
 		res.status(200).send(req.body);

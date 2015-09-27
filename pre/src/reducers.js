@@ -128,7 +128,7 @@ var profile = function (prev, action) {
 		}
 		case 'CONTESTANT-CHOICE-DONE':
 		return prev
-			.set('submitChoices', true);
+			.set('submittedChoices', true);
 		default:
 		return prev;
 	}

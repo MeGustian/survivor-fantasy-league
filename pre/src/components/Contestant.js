@@ -1,6 +1,7 @@
 var React = require('react');
 var Bs = require('react-bootstrap');
 var Achievements = require('./Achievements');
+var nameToImg = require('../helpers/image-name')('contestant');
 
 var Contestant = React.createClass({
 	shouldComponentUpdate: function (nextProps) {
@@ -31,7 +32,7 @@ var Contestant = React.createClass({
 				<img
 					className="img-circle"
 					style={{marginRight: '10px', width: '200px', height: '200px', marginBottom: '15px'}}
-					src={"/images/contestants/thumbnails/" + this.props.name + ".jpg"}
+					src={nameToImg(this.props.name)}
 					alt={this.props.name}
 					width="200"
 					height="200"
