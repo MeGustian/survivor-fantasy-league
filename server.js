@@ -47,7 +47,7 @@ app.use(stylus.middleware(
 	}
 ));
 
-// Set `/public` as the static resources, which is accessable from the browser
+// Set `/public` as the static resources, which is accessible from the browser
 // as if public was the root directory.
 // Example: If I want to access `/public/images/logo.png`, I could write
 // `__full-site-URL__/images/logo.png`.
