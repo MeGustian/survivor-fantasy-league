@@ -1,10 +1,47 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="efde706e-1f32-4343-952a-6666e0ccd61a" name="Default" comment="Merge branch 'master' of https://github.com/yotamDvir/survivor-fantasy-league&#10;&#10;Conflicts:&#10;&#9;pre/build/actions.js&#10;&#9;server.js&#10;">
-      <change type="DELETED" beforePath="C:\Projects\Survivor\survivor-fantasy-league\npm-debug.log" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/routes/index.js" afterPath="$PROJECT_DIR$/routes/index.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/stylesheets/style.css" afterPath="$PROJECT_DIR$/public/stylesheets/style.css" />
+    <list default="true" id="efde706e-1f32-4343-952a-6666e0ccd61a" name="Default" comment="">
+      <change type="DELETED" beforePath="C:\Projects\Survivor\survivor-fantasy-league\public\images\contestants\Slides\Abi-Maria Gomes.jpg" afterPath="" />
+      <change type="DELETED" beforePath="C:\Projects\Survivor\survivor-fantasy-league\public\images\contestants\Slides\Andrew Savage.jpg" afterPath="" />
+      <change type="DELETED" beforePath="C:\Projects\Survivor\survivor-fantasy-league\public\images\contestants\Slides\Ciera Eastin.jpg" afterPath="" />
+      <change type="DELETED" beforePath="C:\Projects\Survivor\survivor-fantasy-league\public\images\contestants\Slides\Jeff Varner.jpg" afterPath="" />
+      <change type="DELETED" beforePath="C:\Projects\Survivor\survivor-fantasy-league\public\images\contestants\Slides\Jeremy Collins.jpg" afterPath="" />
+      <change type="DELETED" beforePath="C:\Projects\Survivor\survivor-fantasy-league\public\images\contestants\Slides\Joe Anglim.jpg" afterPath="" />
+      <change type="DELETED" beforePath="C:\Projects\Survivor\survivor-fantasy-league\public\images\contestants\Slides\Kass McQuillen.jpg" afterPath="" />
+      <change type="DELETED" beforePath="C:\Projects\Survivor\survivor-fantasy-league\public\images\contestants\Slides\Keith Nale.jpg" afterPath="" />
+      <change type="DELETED" beforePath="C:\Projects\Survivor\survivor-fantasy-league\public\images\contestants\Slides\Kelley Wentworth.jpg" afterPath="" />
+      <change type="DELETED" beforePath="C:\Projects\Survivor\survivor-fantasy-league\public\images\contestants\Slides\Kelly Wiglesworth.jpg" afterPath="" />
+      <change type="DELETED" beforePath="C:\Projects\Survivor\survivor-fantasy-league\public\images\contestants\Slides\Kimmi Kappenberg.jpg" afterPath="" />
+      <change type="DELETED" beforePath="C:\Projects\Survivor\survivor-fantasy-league\public\images\contestants\Slides\Monica Padilla.jpg" afterPath="" />
+      <change type="DELETED" beforePath="C:\Projects\Survivor\survivor-fantasy-league\public\images\contestants\Slides\Peih-Gee Law.jpg" afterPath="" />
+      <change type="DELETED" beforePath="C:\Projects\Survivor\survivor-fantasy-league\public\images\contestants\Slides\Shirin Oskooi.jpg" afterPath="" />
+      <change type="DELETED" beforePath="C:\Projects\Survivor\survivor-fantasy-league\public\images\contestants\Slides\Spencer Bledsoe.jpg" afterPath="" />
+      <change type="DELETED" beforePath="C:\Projects\Survivor\survivor-fantasy-league\public\images\contestants\Slides\Stephen Fishbach.jpg" afterPath="" />
+      <change type="DELETED" beforePath="C:\Projects\Survivor\survivor-fantasy-league\public\images\contestants\Slides\Tasha Fox.jpg" afterPath="" />
+      <change type="DELETED" beforePath="C:\Projects\Survivor\survivor-fantasy-league\public\images\contestants\Slides\Terry Deitz.jpg" afterPath="" />
+      <change type="DELETED" beforePath="C:\Projects\Survivor\survivor-fantasy-league\public\images\contestants\Slides\Vytas Baskauskas.jpg" afterPath="" />
+      <change type="DELETED" beforePath="C:\Projects\Survivor\survivor-fantasy-league\public\images\contestants\Slides\Woo Hwang.jpg" afterPath="" />
+      <change type="DELETED" beforePath="C:\Projects\Survivor\survivor-fantasy-league\public\images\contestants\Thumbnails\Abi-Maria Gomes.jpg" afterPath="" />
+      <change type="DELETED" beforePath="C:\Projects\Survivor\survivor-fantasy-league\public\images\contestants\Thumbnails\Andrew Savage.jpg" afterPath="" />
+      <change type="DELETED" beforePath="C:\Projects\Survivor\survivor-fantasy-league\public\images\contestants\Thumbnails\Ciera Eastin.jpg" afterPath="" />
+      <change type="DELETED" beforePath="C:\Projects\Survivor\survivor-fantasy-league\public\images\contestants\Thumbnails\Jeff Varner.jpg" afterPath="" />
+      <change type="DELETED" beforePath="C:\Projects\Survivor\survivor-fantasy-league\public\images\contestants\Thumbnails\Jeremy Collins.jpg" afterPath="" />
+      <change type="DELETED" beforePath="C:\Projects\Survivor\survivor-fantasy-league\public\images\contestants\Thumbnails\Joe Anglim.jpg" afterPath="" />
+      <change type="DELETED" beforePath="C:\Projects\Survivor\survivor-fantasy-league\public\images\contestants\Thumbnails\Kass McQuillen.jpg" afterPath="" />
+      <change type="DELETED" beforePath="C:\Projects\Survivor\survivor-fantasy-league\public\images\contestants\Thumbnails\Keith Nale.jpg" afterPath="" />
+      <change type="DELETED" beforePath="C:\Projects\Survivor\survivor-fantasy-league\public\images\contestants\Thumbnails\Kelley Wentworth.jpg" afterPath="" />
+      <change type="DELETED" beforePath="C:\Projects\Survivor\survivor-fantasy-league\public\images\contestants\Thumbnails\Kelly Wiglesworth.jpg" afterPath="" />
+      <change type="DELETED" beforePath="C:\Projects\Survivor\survivor-fantasy-league\public\images\contestants\Thumbnails\Kimmi Kappenberg.jpg" afterPath="" />
+      <change type="DELETED" beforePath="C:\Projects\Survivor\survivor-fantasy-league\public\images\contestants\Thumbnails\Monica Padilla.jpg" afterPath="" />
+      <change type="DELETED" beforePath="C:\Projects\Survivor\survivor-fantasy-league\public\images\contestants\Thumbnails\Peih-Gee Law.jpg" afterPath="" />
+      <change type="DELETED" beforePath="C:\Projects\Survivor\survivor-fantasy-league\public\images\contestants\Thumbnails\Shirin Oskooi.jpg" afterPath="" />
+      <change type="DELETED" beforePath="C:\Projects\Survivor\survivor-fantasy-league\public\images\contestants\Thumbnails\Spencer Bledsoe.jpg" afterPath="" />
+      <change type="DELETED" beforePath="C:\Projects\Survivor\survivor-fantasy-league\public\images\contestants\Thumbnails\Stephen Fishbach.jpg" afterPath="" />
+      <change type="DELETED" beforePath="C:\Projects\Survivor\survivor-fantasy-league\public\images\contestants\Thumbnails\Tasha Fox.jpg" afterPath="" />
+      <change type="DELETED" beforePath="C:\Projects\Survivor\survivor-fantasy-league\public\images\contestants\Thumbnails\Terry Deitz.jpg" afterPath="" />
+      <change type="DELETED" beforePath="C:\Projects\Survivor\survivor-fantasy-league\public\images\contestants\Thumbnails\Vytas Baskauskas.jpg" afterPath="" />
+      <change type="DELETED" beforePath="C:\Projects\Survivor\survivor-fantasy-league\public\images\contestants\Thumbnails\Woo Hwang.jpg" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="survivor-fantasy-league.iws" />
@@ -30,8 +67,8 @@
       <file leaf-file-name="package.json" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/package.json">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.9437086">
-              <caret line="41" column="26" selection-start-line="41" selection-start-column="3" selection-end-line="41" selection-end-column="26" />
+            <state vertical-scroll-proportion="0.6539735">
+              <caret line="28" column="17" selection-start-line="28" selection-start-column="17" selection-end-line="28" selection-end-column="17" />
               <folding />
             </state>
           </provider>
@@ -192,7 +229,7 @@
   <component name="ProjectFrameBounds">
     <option name="x" value="-8" />
     <option name="y" value="-8" />
-    <option name="width" value="1936" />
+    <option name="width" value="1932" />
     <option name="height" value="1056" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
@@ -787,7 +824,7 @@
       <option name="number" value="Default" />
       <updated>1442855657342</updated>
       <workItem from="1442855659225" duration="83669000" />
-      <workItem from="1443351633217" duration="2674000" />
+      <workItem from="1443351633217" duration="3540000" />
     </task>
     <task id="LOCAL-00001" summary="merging codes together">
       <created>1442857447003</created>
@@ -825,18 +862,25 @@
       <option name="project" value="LOCAL" />
       <updated>1443048040931</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="Merge branch 'master' of https://github.com/yotamDvir/survivor-fantasy-league&#10;&#10;Conflicts:&#10;&#9;pre/build/actions.js&#10;&#9;server.js&#10;">
+      <created>1443355014890</created>
+      <option name="number" value="00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1443355014890</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="86343000" />
+    <option name="totallyTimeSpent" value="87209000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
+    <frame x="-8" y="-8" width="1932" height="1056" extended-state="0" />
     <editor active="false" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32972974" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25945947" sideWeight="0.5021322" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -844,14 +888,13 @@
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32972974" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.28864864" sideWeight="0.4978678" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.09434968" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.09455128" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32972974" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
@@ -1221,11 +1264,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/images/contestants/Thumbnails/Abi-Maria Gomes.jpg">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/server.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -1238,8 +1276,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/package.json">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.9437086">
-          <caret line="41" column="26" selection-start-line="41" selection-start-column="3" selection-end-line="41" selection-end-column="26" />
+        <state vertical-scroll-proportion="0.6539735">
+          <caret line="28" column="17" selection-start-line="28" selection-start-column="17" selection-end-line="28" selection-end-column="17" />
           <folding />
         </state>
       </provider>
