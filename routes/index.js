@@ -76,39 +76,29 @@ router.get('/initial', function (req, res) {
   var survivors = db.get('survivors');
   var questions = db.get('questions')
   users.findOne( { 'local.username' : req.user.local.username}, function(err, userData){
-      responseData['username'] = userData.local.username;
-      responseData['isAdmin'] = userData.local.isAdmin;
-      week.find({}, {}, function(err, docs){
-        console.log('inserting contestant status week' + weekCount);
-        var weekData = toObject(docs);
-        weekData = _.mapKeys(weekData, function(value, key){
-          return value['contestantId'];
-        });
-        responseData['contestantStatus'] = weekData;
-        responseData['weekNumber'] = weekCount;
-        survivors.find({}, {}, function(err, docs) {
-          console.log('inserting all contestants');
-          var survivorData = toObject(docs);
-          survivorData = _.mapKeys(survivorData, function (value, key) {
-            return value['_id'].toHexString();
-          });
-          responseData['allContestants'] = survivorData;
-          questions.find({'week': '' + weekCount}, function(err, docs){
-            console.log('inserting weekly questions');
-            //console.log(docs);
-            var questionData = toObject(docs);
-            questionData = _.mapKeys(questionData, function(value, key){
-              return value['_id'];
-            });
-            responseData['questions'] = questionData;
-            console.log('sending');
-            //console.log(questionData);
-            res.status(200).send(responseData);
-          })
-
-        });
+    responseData['username'] = userData.local.username;
+    responseData['isAdmin'] = userData.local.isAdmin;
+    responseData['weekNumber'] = weekCount;
+    survivors.find({}, {}, function(err, docs) {
+      console.log('inserting all contestants');
+      var survivorData = toObject(docs);
+      survivorData = _.mapKeys(survivorData, function (value, key) {
+        return value['_id'].toHexString();
       });
-
+      responseData['contestants'] = survivorData;
+      questions.find({'week': '' + weekCount}, function(err, docs){
+        console.log('inserting weekly questions');
+        //console.log(docs);
+        var questionData = toObject(docs);
+        questionData = _.mapKeys(questionData, function(value, key){
+          return value['_id'];
+        });
+        responseData['questions'] = questionData;
+        console.log('sending');
+        console.log(responseData);
+        res.status(200).send(responseData);
+      })
+    });
   })
 
 });
@@ -156,14 +146,16 @@ router.post('/:weekNumber', function(req, res) {
         res.json(responseData);
       });
       break;
-    // Changes achieveme
+
+
+    // Changes achievement
     case 'TOGGLE-ACHIEVEMENT':
       var db = req.db;
-      var collection = db.get('week' + req.params.weekNumber);
+      var collection = db.get('survivors');
       var setModifier = { $set: {}};
-      setModifier.$set['achievements.' + data['achievement']] = data['value'];
+      setModifier.$set['weeks.' + req.params.weekNumber + '.achievements.' + data['achievement']] = data['value'];
       collection.update(
-        { 'contestantId' : data['contestantId']},
+        { '_id' : data['contestantId']},
           setModifier
         ,
         {
@@ -214,7 +206,7 @@ router.post('/:weekNumber', function(req, res) {
     case 'CONTESTANT-CHOICES':
       var db = req.db;
       var collection = db.get('users');
-      var choices = data['choices'];
+      var choices = data['chosen'];
         collection.update(
             {'username' : req.user.local.username },
             {
