@@ -38,6 +38,8 @@ var initialState = I.fromJS({
 		newbie: true
 		,
 		chosen: Set()
+		,
+		submittedChoices: false
 	}
 	,
 	contestants: {
@@ -114,7 +116,8 @@ var profile = function (prev, action) {
 	switch (action.type) {
 		case 'GET-INITIAL-DONE':
 		return prev
-			.set('chosen', Set(action.payload.chosen));
+			.set('chosen', Set(action.payload.chosen))
+			.set('submittedChoices', !!action.payload.chosen);
 		case 'CHOOSE-CONTESTANT':
 		if (!prev.get('chosen').has(action.payload.id) && prev.get('chosen').size < 4) {
 			console.log('Add');
@@ -123,6 +126,9 @@ var profile = function (prev, action) {
 			console.log('Remove');
 			return prev.set('chosen', prev.get('chosen').remove(action.payload.id));
 		}
+		case 'CONTESTANT-CHOICE-DONE':
+		return prev
+			.set('submitChoices', true);
 		default:
 		return prev;
 	}

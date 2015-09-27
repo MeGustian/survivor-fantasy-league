@@ -50,7 +50,7 @@ var Tribes = React.createClass({
 					<Bs.Panel header={name} eventKey={id}>
 						<Contestant
 							contestant={id}
-							name={contestant.get('firstName') + " " + contestant.get('lastName')}
+							name={name}
 							age={contestant.get('age')}
 							occupation={contestant.get('occupation')}
 							previousSeason={contestant.get('previousSeason')}

@@ -61,6 +61,7 @@ var Fantasy = React.createClass({
 					key="profile"
 					user={p.controller.get('user')}
 					chosen={p.profile.get('chosen')}
+					submittedChoices={p.profile.get('submittedChoices')}
 					info={fullContestants}
 					selector={function (id) {
 						return dispatch(act.chooseContestant(id));

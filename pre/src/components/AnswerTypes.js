@@ -58,7 +58,7 @@ AnswerTypes.Num = React.createClass({
 				next
 				ellipsis
 				items={20}
-				maxButton={5}
+				maxButtons={5}
 				activePage={this.props.answer}
 				onSelect={this.changeAnswer}
 			/>

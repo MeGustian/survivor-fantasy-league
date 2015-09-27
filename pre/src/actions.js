@@ -159,6 +159,12 @@ act.chooseContestant = function (id) {
 	};
 };
 
-// Submit Choices. (Or send each choice live?)
+// Submit Choices.
+act.submitChoices = function (choices) {
+	return actionParser({
+		meta: 'CONTESTANT-CHOICE',
+		chosen: choices
+	}, 'POST', {url: '/'});
+};
 
 module.exports = act;

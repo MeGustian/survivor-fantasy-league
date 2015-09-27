@@ -57882,7 +57882,13 @@ act.chooseContestant = function (id) {
 	};
 };
 
-// Submit Choices. (Or send each choice live?)
+// Submit Choices.
+act.submitChoices = function (choices) {
+	return actionParser({
+		meta: 'CONTESTANT-CHOICE',
+		chosen: choices
+	}, 'POST', {url: '/'});
+};
 
 module.exports = act;
 
@@ -58150,7 +58156,7 @@ AnswerTypes.Num = React.createClass({displayName: "Num",
 				next: true, 
 				ellipsis: true, 
 				items: 20, 
-				maxButton: 5, 
+				maxButtons: 5, 
 				activePage: this.props.answer, 
 				onSelect: this.changeAnswer}
 			)
@@ -58171,13 +58177,24 @@ var Achievements = require('./Achievements');
 
 var Contestant = React.createClass({displayName: "Contestant",
 	shouldComponentUpdate: function (nextProps) {
-		var equal = (
-			this.props.scores.every(function (val, key) {
-				return val === nextProps.scores.get(key);
-			}) &&
-			this.props.votedOut === nextProps.votedOut
-		);
-		return !equal;
+		if (typeof this.props.scores !== 'object') {
+			if (typeof nextProps.scores !== 'object') {
+				return !(this.props.votedOut === nextProps.votedOut);
+			} else {
+				return true;
+			}
+		} else {
+			if (typeof nextProps.scores !== 'object') {
+				return true;
+			} else {
+				return !(
+					this.props.scores.every(function (val, key) {
+						return val === nextProps.scores.get(key);
+					}) &&
+					this.props.votedOut === nextProps.votedOut
+				);
+			}
+		}
 	}
 	,
 	render: function () {
@@ -58197,7 +58214,7 @@ var Contestant = React.createClass({displayName: "Contestant",
 				React.createElement("h3", {className: "text-center", style: {marginRight: '5px'}}, 
 					this.props.votedOut ? React.createElement("span", {className: "badge progress-bar-danger", style: {marginRight: '0.5em'}}, "voted out") : "", 
 					this.props.name, 
-					React.createElement("span", {className: "badge", style: {marginLeft: '0.5em'}}, this.props.scores.get('total'))
+					this.props.score ? React.createElement("span", {className: "badge", style: {marginLeft: '0.5em'}}, this.props.scores.get('total')) : ""
 				), 
 				React.createElement("dl", {className: "dl-horizontal"}, 
 					React.createElement("dt", null, "Age"), 
@@ -58261,24 +58278,37 @@ var Bs = require('react-bootstrap');
 var Navigation = React.createClass({displayName: "Navigation",
 	render: function () {
 		return (
-			React.createElement(Bs.Navbar, {brand: "Survivor Fantasy League"}, 
+			React.createElement(Bs.Navbar, {brand: "Survivor Fantasy League", toggleNavKey: 0}, 
+			React.createElement(Bs.CollapsibleNav, {eventKey: 0}, 
 				React.createElement(Bs.Nav, {onSelect: this.navigate}, 
-					React.createElement(Bs.NavItem, {eventKey: 'profile'}, 
-						"Profile"
+					React.createElement(Bs.Nav, {navbar: true}, 
+						React.createElement(Bs.NavItem, {eventKey: 'profile'}, 
+							"Profile"
+						), 
+						React.createElement(Bs.NavItem, {eventKey: 'weekly'}, 
+							"Weekly"
+						)
 					), 
-					React.createElement(Bs.NavItem, {eventKey: 'weekly'}, 
-						"Weekly"
-					), 
-					React.createElement(Bs.NavItem, {eventKey: 'help'}, 
-						"Help"
+					React.createElement(Bs.Nav, {navbar: true, right: true}, 
+						React.createElement(Bs.NavItem, {eventKey: 'help'}, 
+							"Help"
+						), 
+						React.createElement(Bs.NavItem, {eventKey: 'sign-out'}, 
+							"Sign Out"
+						)
 					)
 				)
+			)
 			)
 		);
 	}
 	,
 	navigate: function (target) {
-		this.props.navigate(target);
+		if (target === 'sign-out') {
+			window.location.replace('/sign-out');
+		} else {
+			this.props.navigate(target);
+		}
 	}
 });
 
@@ -58289,30 +58319,41 @@ var React = require('react/addons');
 var Bs = require('react-bootstrap');
 var I = require('immutable');
 var MyThumbnail = require('./MyThumbnail');
+var Contestant = require('./Contestant');
 
 var Profile = React.createClass({displayName: "Profile",
 	render: function () {
+		if (this.props.submittedChoices) {
+			return (
+				React.createElement("div", null, 
+				React.createElement(Bs.Row, null, 
+					React.createElement(Bs.Col, {sm: 12, md: 10, mdOffset: 1}, 
+					React.createElement("div", {style: {maxWidth: 900, maxHeight: 500, margin: '0 auto'}}, 
+						React.createElement(Final, {key: "final", chosen: this.props.chosen, info: this.props.info})
+					)
+					)
+				)
+				)
+			);
+		}
 		return (
 			React.createElement("div", null, 
 			React.createElement(Bs.Row, null, 
 				React.createElement(Bs.Col, {sm: 12, md: 10, mdOffset: 1}, 
 				React.createElement("div", null, 
 					React.createElement(Bs.Alert, {bsStyle: "info"}, 
-						"Please select the 4 contestants you wish to follow throughout the season."
+						"Please select the ", React.createElement("strong", null, "4"), " contestants you wish to follow throughout the season."
 					), 
 					React.createElement(Bs.Alert, {bsStyle: "warning"}, 
-						React.createElement("strong", null, "Notice:"), " At the stroke of midnight, -date-, your choices will lock." + ' ' +
-						"You will not be able to change them through out the season."
+						React.createElement("strong", null, "Notice:"), " Submitting choices is permanent!"
 					), 
-					React.createElement(Options, {chosen: this.props.chosen, info: this.props.info, selector: this.props.selector})
+					React.createElement(Options, {key: "options", chosen: this.props.chosen, info: this.props.info, selector: this.props.selector})
 				)
 				)
 			), 
 			React.createElement(Bs.Row, null, 
 				React.createElement(Bs.Col, {sm: 12, md: 10, mdOffset: 1}, 
-				React.createElement("div", {style: {maxWidth: 900, maxHeight: 500, margin: '0 auto'}}, 
-					React.createElement(Choices, {chosen: this.props.chosen, info: this.props.info})
-				)
+					React.createElement(Selected, {key: "selected", chosen: this.props.chosen, info: this.props.info})
 				)
 			)
 			)
@@ -58359,9 +58400,51 @@ var Options = React.createClass({displayName: "Options",
 	select: function (id) {
 		this.props.selector(id);
 	}
-})
+});
 
-var Choices = React.createClass({displayName: "Choices",
+var Selected = React.createClass({displayName: "Selected",
+	shouldComponentUpdate: function (prevProps) {
+		return !I.is(this.props.chosen, prevProps.chosen);
+	}
+	,
+	render: function () {
+		return (
+			React.createElement(Bs.Row, null, 
+				this.items()
+			)
+		);
+	}
+	,
+	items: function () {
+		var that = this;
+		return React.addons.createFragment(
+			that.props.info
+				.filter(function (contestant, id) {
+					return that.props.chosen.has(id);
+				})
+				.map(function (contestant, id) {
+					var name = contestant.get('firstName') + " " + contestant.get('lastName');
+					return (
+						React.createElement(Bs.Col, {xs: 12, sm: 6}, 
+						React.createElement(Bs.Panel, {header: name, eventKey: id}, 
+							React.createElement(Contestant, {
+								contestant: id, 
+								name: name, 
+								age: contestant.get('age'), 
+								occupation: contestant.get('occupation'), 
+								previousSeason: contestant.get('previousSeason'), 
+								place: contestant.get('place')}
+							)
+						)
+						)
+					);
+				})
+				.toJS()
+		);
+	}
+});
+
+var Final = React.createClass({displayName: "Final",
 	shouldComponentUpdate: function (prevProps) {
 		return !I.is(this.props.chosen, prevProps.chosen);
 	}
@@ -58413,7 +58496,7 @@ var Choices = React.createClass({displayName: "Choices",
 
 module.exports = Profile;
 
-},{"./MyThumbnail":450,"immutable":1,"react-bootstrap":149,"react/addons":253}],453:[function(require,module,exports){
+},{"./Contestant":449,"./MyThumbnail":450,"immutable":1,"react-bootstrap":149,"react/addons":253}],453:[function(require,module,exports){
 var React = require('react');
 var AdminToolbox = require('./AdminToolbox');
 var AnswerTypes = require('./AnswerTypes');
@@ -58864,7 +58947,7 @@ var Tribes = React.createClass({displayName: "Tribes",
 					React.createElement(Bs.Panel, {header: name, eventKey: id}, 
 						React.createElement(Contestant, {
 							contestant: id, 
-							name: contestant.get('firstName') + " " + contestant.get('lastName'), 
+							name: name, 
 							age: contestant.get('age'), 
 							occupation: contestant.get('occupation'), 
 							previousSeason: contestant.get('previousSeason'), 
@@ -59071,6 +59154,7 @@ var Fantasy = React.createClass({displayName: "Fantasy",
 					key: "profile", 
 					user: p.controller.get('user'), 
 					chosen: p.profile.get('chosen'), 
+					submittedChoices: p.profile.get('submittedChoices'), 
 					info: fullContestants, 
 					selector: function (id) {
 						return dispatch(act.chooseContestant(id));
@@ -59343,6 +59427,8 @@ var initialState = I.fromJS({
 		newbie: true
 		,
 		chosen: Set()
+		,
+		submittedChoices: false
 	}
 	,
 	contestants: {
@@ -59419,7 +59505,8 @@ var profile = function (prev, action) {
 	switch (action.type) {
 		case 'GET-INITIAL-DONE':
 		return prev
-			.set('chosen', Set(action.payload.chosen));
+			.set('chosen', Set(action.payload.chosen))
+			.set('submittedChoices', !!action.payload.chosen);
 		case 'CHOOSE-CONTESTANT':
 		if (!prev.get('chosen').has(action.payload.id) && prev.get('chosen').size < 4) {
 			console.log('Add');
@@ -59428,6 +59515,9 @@ var profile = function (prev, action) {
 			console.log('Remove');
 			return prev.set('chosen', prev.get('chosen').remove(action.payload.id));
 		}
+		case 'CONTESTANT-CHOICE-DONE':
+		return prev
+			.set('submitChoices', true);
 		default:
 		return prev;
 	}
