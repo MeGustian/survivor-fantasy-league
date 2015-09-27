@@ -26,7 +26,7 @@ var admin = require('./routes/admin');
 var app = express();
 
 // ==============CONFIGURARTIONS=============================
-app.use(express.static(__dirname + '/public'));
+
 mongoose.connect('survivoradmin:survivorpass@ds051853.mongolab.com:51853/survivor-fantasy-league');
 require('./config/passport')(passport); // pass passport for configuration
 //require('./routes/index.js')(passport);
@@ -51,7 +51,7 @@ app.use(stylus.middleware(
 // as if public was the root directory.
 // Example: If I want to access `/public/images/logo.png`, I could write
 // `__full-site-URL__/images/logo.png`.
-
+app.use(express.static(__dirname + '/public'));
 // TODO: Understand this.
 app.use(bodyParser.json());
 // TODO: Understand this.
