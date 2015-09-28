@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 var _ = require('lodash');
 var passport = require('passport');
-var weekCount = 1;
+var weekCount = 2;
 
 //// =====================================
 //// LOGIN ROUTES    =====================
@@ -120,6 +120,7 @@ router.get('/initial', function (req, res) {
         });
         responseData['questions'] = questionData;
         console.log('sending');
+        console.log(responseData);
         res.status(200).send(responseData);
       })
     });
