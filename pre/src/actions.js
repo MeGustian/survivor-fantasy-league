@@ -68,6 +68,17 @@ act.navigate = function (target) {
 	};
 };
 
+// Switch question in view.
+act.switchQuestion = function (inc) {
+	return {
+		type: 'SWITCH-QUESTION'
+		,
+		payload: {
+			increment: inc
+		}
+	};
+};
+
 // Player/Admin chose a week to view.
 // act.generateNextWeek = function (circumstances, removedContestants) {
 // 	return actionParser({

@@ -16,6 +16,10 @@ var Achievements = React.createClass({
 	}
 	,
 	render: function () {
+		var scroll = {
+			maxHeight: '150px',
+			overflowY: 'scroll'
+		};
 		return (
 			<Bs.Row>
 			<Bs.Col sm={12} md={6}>
@@ -24,7 +28,7 @@ var Achievements = React.createClass({
 						Good achievements
 						<span className="badge pull-right">{this.props.scores.get('good')}</span>
 					</div>
-					<ul className="list-group">
+					<ul className="list-group" style={scroll}>
 						{this.items('good')}
 					</ul>
 				</div>
@@ -35,7 +39,7 @@ var Achievements = React.createClass({
 						Bad achievements
 						<span className="badge pull-right">{this.props.scores.get('bad')}</span>
 					</div>
-					<ul className="list-group">
+					<ul className="list-group" style={scroll}>
 						{this.items('bad')}
 					</ul>
 				</div>
@@ -50,22 +54,30 @@ var Achievements = React.createClass({
 			that
 				.filterByAlignment(alignment)
 				.filter(function (theAchievement, achievementCode) {
-					var isAdmin = that.props.isAdmin;
 					var hasAchieved = !!that.props.achievements.get(achievementCode);
-					return isAdmin || hasAchieved;
+					return that.props.isAdmin || that.props.isHelp || hasAchieved;
 				})
 				.map(function (theAchievement, achievementCode) {
 					var labelType;
-					var isAdmin = that.props.isAdmin;
 					var hasAchieved = !!that.props.achievements.get(achievementCode);
 					var mult = (theAchievement.get('extra') === '10*(weekNumber)') ? that.props.weekNumber : 1;
+					var badge = hasAchieved ? theAchievement.get('points')*mult : 0;
+					if (that.props.isAdmin) {
+						badge += " / " + theAchievement.get('points')*mult;
+					}
+					if (that.props.isHelp) {
+						badge = theAchievement.get('points');
+						if ((theAchievement.get('extra') === '10*(weekNumber)')) {
+							badge += ' ' + String.fromCharCode(215) + ' episode week';
+						}
+					}
 					return (
 						<li className="list-group-item" key={achievementCode}>
 							<span
 								className={"badge pull-right"}
 								onClick={that.toggleAchievement.bind(that, achievementCode, hasAchieved)}
 							>
-								{(hasAchieved ? theAchievement.get('points')*mult : 0) + (isAdmin ? " / " + theAchievement.get('points')*mult : "")}
+								{badge}
 							</span>
 							<span style={{marginRight: '1em'}}>
 								{theAchievement.get('text')}

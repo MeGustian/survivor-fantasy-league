@@ -12,6 +12,7 @@ var Profile = require('../components/Profile'); // Explain...
 var Tribes = require('../components/Tribes'); // Explain...
 var Quiz = require('../components/Quiz'); // Explain...
 var Admin = require('../components/Admin'); // Explain...
+var Help = require('../components/Help'); // Explain...
 var act = require('../actions'); // Give dispatch an action payload.
 // Handle the phase between passportJS sign-in to when the page loads. will
 // return false once everything is clear.
@@ -124,20 +125,24 @@ var Fantasy = React.createClass({
 					key="quiz"
 					user={p.controller.get('user')}
 					open={p.navigation.get('selectedWeek') === p.navigation.get('weekCount')}
+					selected={p.navigation.get('selectedQuestion')}
 					questions={p.questions.filter(function (q, id) {return q.get('weekNumber') === p.navigation.get('selectedWeek')})}
 					contestants={p.contestants}
 					dispatcher={{
 						userAnswer: function (questionId, answer) {
 							return dispatch(act.userAnswer(circumstances, questionId, answer));
 						},
-						update: function (questionId, question, answer, type) {
-							return dispatch(act.updateQuestion(circumstances, questionId, question, answer, type));
-						},
-						edit: function (questionId, isEditing) {
-							return dispatch(act.editQuestion(questionId, isEditing));
-						},
-						remove: function (questionId) {
-							return dispatch(act.removeQuestion(circumstances, questionId));
+						// update: function (questionId, question, answer, type) {
+						// 	return dispatch(act.updateQuestion(circumstances, questionId, question, answer, type));
+						// },
+						// edit: function (questionId, isEditing) {
+						// 	return dispatch(act.editQuestion(questionId, isEditing));
+						// },
+						// remove: function (questionId) {
+						// 	return dispatch(act.removeQuestion(circumstances, questionId));
+						// },
+						switchQuestion: function (inc) {
+							return dispatch(act.switchQuestion(inc));
 						}
 					}}
 				/>
@@ -145,12 +150,16 @@ var Fantasy = React.createClass({
 					key="tribes"
 					user={p.controller.get('user')}
 					weekNumber={p.navigation.get('selectedWeek')}
+					chosen={p.profile.get('chosen')}
 					contestants={p.contestants}
 					scores={computedState.scores}
 					toggleAchievement={function (achievementCode, contestantId, hasAchieved) {
 						return dispatch(act.toggleAchievement(circumstances, achievementCode, contestantId, hasAchieved));
 					}}
 				/>
+				</div>
+				<div style={{display: p.navigation.get('location') === 'help' ? 'initial' : 'none'}}>
+				<Help />
 				</div>
 			</div>
 		);

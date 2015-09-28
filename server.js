@@ -1,10 +1,10 @@
 var ini = {
 	"isAdmin":"false",
 	weekNumber:"2",
-	// chosen:[
-	// 	"56029683b2c3b5601f976290", "560296b7b2c3b5601f976291",
-	// 	"560296e1b2c3b5601f976292", "56029707b2c3b5601f976293"
-	// ],
+	chosen:[
+		"56029683b2c3b5601f976290", "560296b7b2c3b5601f976291",
+		"560296e1b2c3b5601f979999", "56029707b2c3b5601f971111"
+	],
 	questions: {
 		"125f": {
 			weekNumber: "1",
@@ -63,7 +63,6 @@ var ini = {
 				"2": {
 					"tribe":"Ta-Keo",
 					"votedFor":"",
-					"votedOut":true,
 					"achievements":{
 						"VOTED-OUT": true,
 						"HASHTAG": true
@@ -98,7 +97,34 @@ var ini = {
 				}
 			}
 		},
-		"560296b7b2c3b5601f979999":{
+		"560296b7ass3b5601f976291":{
+			"_id":"560296b7ass3b5601f976291",
+			"firstName":"K",
+			"lastName":"B",
+			"age":"49",
+			"occupation":"Internet Projects Manager",
+			"previousSeason":"The Australian Outback",
+			"place":"10/16",
+			"weeks": {
+				"1": {
+					"tribe":"Ta-Keo",
+					"votedFor":"",
+					"achievements":{
+						"CRIED": true,
+						"HASHTAG": true
+					}
+				},
+				"2": {
+					"tribe":"Ta-Keo",
+					"votedFor":"",
+					"achievements":{
+						"CRIED": true,
+						"HASHTAG": true
+					}
+				}
+			}
+		},
+		"560296e1b2c3b5601f979999":{
 			"_id":"560296b7b2c3b5601f979999",
 			"firstName":"Rob",
 			"lastName":"Stark",
@@ -121,6 +147,31 @@ var ini = {
 					"achievements":{
 						"CRIED": true,
 						"HASHTAG": true
+					}
+				}
+			}
+		},
+		"56029707b2c3b5601f971111":{
+			"_id":"560296b7b2c3b5601f971111",
+			"firstName":"Tony",
+			"lastName":"Anderson",
+			"age":"24",
+			"occupation":"Lala Projects Manager",
+			"previousSeason":"The African Outback",
+			"place":"11/16",
+			"weeks": {
+				"1": {
+					"tribe":"Bada",
+					"votedFor":"",
+					"achievements":{
+						"VOTED-OUT": true,
+						"TREE-MAIL": true
+					}
+				},
+				"2": {
+					"tribe":"",
+					"votedFor":"",
+					"achievements":{
 					}
 				}
 			}

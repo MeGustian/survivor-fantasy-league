@@ -6,16 +6,11 @@ var Contestants = AnswerTypes.Contestants;
 var Num = AnswerTypes.Num;
 
 var now;
+function mod(n, m) {
+	return ((n % m) + m) % m;
+}
 
 var Quiz = React.createClass({
-	getInitialState: function () {
-		var listed = this.props.questions.flip().toList();
-		return {
-			listed: listed,
-			selected: 0
-		};
-	}
-	,
 	componentWillUpdate: function () {
 		now = Date.now();
 	}
@@ -40,22 +35,22 @@ var Quiz = React.createClass({
 	}
 	,
 	changeQuestion: function (inc) {
-		var selected = this.state.selected;
-		var size = this.state.listed.size;
-		this.setState({selected: (selected + inc) % size});
+		this.props.dispatcher.switchQuestion(inc);
 	}
 	,
 	questions: function () {
 		var p = this.props;
-		var s = this.state;
+		var selected = mod(p.selected, p.questions.size);
+		var count = -1;
 		return React.addons.createFragment(
 			p.questions
 				.filter(function (details, id) {
 					return (id !== 'removed') && !details.get('removed');
 				})
 				.map(function (details, id) {
+					count++;
 					return (
-						<div style={{display: s.listed.get(s.selected) === id ? 'initial' : 'none'}}>
+						<div style={{display: count === selected ? 'initial' : 'none'}}>
 						<Question
 							key={id}
 							questionId={id}
@@ -131,7 +126,7 @@ var Question = React.createClass({
 			var yes = answer ? " active" : "",
 				no = !answer ? " active" : "";
 			return (
-				<Bs.ButtonGroup justified>
+				<Bs.ButtonGroup>
 					<Bs.Button bsStyle="success" active={answer} onClick={this.changeAnswer.bind(this, true)} disabled={this.props.open}>Yes</Bs.Button>
 					<Bs.Button bsStyle="danger" active={!answer} onClick={this.changeAnswer.bind(this, false)} disabled={this.props.open}>No</Bs.Button>
 				</Bs.ButtonGroup>
