@@ -58172,7 +58172,9 @@ AnswerTypes.Contestants = React.createClass({displayName: "Contestants",
 	}
 	,
 	changeAnswer: function (alreadySelected, id) {
-		this.props.changeAnswer(alreadySelected ? null : id);
+		if (!this.props.disabled) {
+			this.props.changeAnswer(alreadySelected ? null : id);
+		}
 	}
 });
 
@@ -58187,7 +58189,7 @@ AnswerTypes.Num = React.createClass({displayName: "Num",
 		var answer = this.props.answer > 0 ? this.props.answer : 0;
 		return (
 			React.createElement("div", {style: {display: 'flex', justifyContent: 'space-around'}}, 
-				React.createElement("input", {type: "range", value: answer.toString(), min: "0", max: "13", step: "1", onChange: this.changeAnswer, 
+				React.createElement("input", {disabled: this.props.disabled, type: "range", value: answer.toString(), min: "0", max: "13", step: "1", onChange: this.changeAnswer, 
 				style: {maxWidth: '300px'}}), 
 				React.createElement(Bs.Badge, {pullRight: true}, answer.toString())
 			)
@@ -58410,6 +58412,7 @@ var Bs = require('react-bootstrap');
 var I = require('immutable');
 var MyThumbnail = require('./MyThumbnail');
 var Contestant = require('./Contestant');
+var nameToImg = require('../helpers/image-name')('slides');
 
 var Profile = React.createClass({displayName: "Profile",
 	render: function () {
@@ -58573,7 +58576,7 @@ var Final = React.createClass({displayName: "Final",
 					return (
 						React.createElement(Bs.CarouselItem, {key: id}, 
 							React.createElement("img", {width: 900, height: 500, style: {width: 900, height: 500}, alt: name, 
-								src: "/images/contestants/slides/" + name + ".jpg"}
+								src: nameToImg(name)}
 							), 
 							React.createElement("div", {className: "carousel-caption"}, 
 								React.createElement("h3", null, name)
@@ -58600,7 +58603,7 @@ var Final = React.createClass({displayName: "Final",
 
 module.exports = Profile;
 
-},{"./Contestant":449,"./MyThumbnail":451,"immutable":1,"react-bootstrap":149,"react/addons":253}],454:[function(require,module,exports){
+},{"../helpers/image-name":460,"./Contestant":449,"./MyThumbnail":451,"immutable":1,"react-bootstrap":149,"react/addons":253}],454:[function(require,module,exports){
 var React = require('react/addons');
 var Bs = require('react-bootstrap');
 var AdminToolbox = require('./AdminToolbox');
@@ -58687,8 +58690,8 @@ var Question = React.createClass({displayName: "Question",
 		return (
 			React.createElement(Bs.Panel, {eventKey: this.props.id, header: 
 				React.createElement("div", {style: stylePanelHeadingInner}, 
-					this.questionRender(), 
-					this.tools()
+					this.questionRender()
+					/*this.tools()*/
 				)
 			}, 
 					this.bodyRender()
@@ -58730,14 +58733,15 @@ var Question = React.createClass({displayName: "Question",
 				no = !answer ? " active" : "";
 			return (
 				React.createElement(Bs.ButtonGroup, null, 
-					React.createElement(Bs.Button, {bsStyle: "success", active: answer, onClick: this.changeAnswer.bind(this, true), disabled: this.props.open}, "Yes"), 
-					React.createElement(Bs.Button, {bsStyle: "danger", active: !answer, onClick: this.changeAnswer.bind(this, false), disabled: this.props.open}, "No")
+					React.createElement(Bs.Button, {bsStyle: "success", active: answer, onClick: this.changeAnswer.bind(this, true), disabled: !this.props.open}, "Yes"), 
+					React.createElement(Bs.Button, {bsStyle: "danger", active: !answer, onClick: this.changeAnswer.bind(this, false), disabled: !this.props.open}, "No")
 				)
 			);
 			case 'contestant':
 			return (
 				React.createElement(Contestants, {
 					answer: answer, 
+					disabled: !this.props.open, 
 					contestants: this.props.contestants, 
 					changeAnswer: this.changeAnswer}
 				)
@@ -58746,6 +58750,7 @@ var Question = React.createClass({displayName: "Question",
 			return (
 				React.createElement(Num, {
 					answer: answer, 
+					disabled: !this.props.open, 
 					changeAnswer: this.changeAnswer}
 				)
 			);
@@ -58962,6 +58967,7 @@ module.exports = App;
 
 },{"../reducers":464,"./Fantasy":457,"lodash":5,"react":425,"react-redux":247,"redux":432,"redux-logger":427,"redux-promise-middleware":429}],457:[function(require,module,exports){
 var React = require('react');
+var Bs = require('react-bootstrap');
 var PropTypes = React.PropTypes;
 var I = require('immutable');
 var ImmutablePropTypes = require('react-immutable-proptypes');
@@ -59084,6 +59090,7 @@ var Fantasy = React.createClass({displayName: "Fantasy",
 				)
 				), 
 				React.createElement("div", {style: {display: p.navigation.get('location') === 'weekly' ? 'initial' : 'none'}}, 
+				React.createElement(Bs.PageHeader, null, "Week #" + p.navigation.get('selectedWeek')), 
 				React.createElement(Quiz, {
 					key: "quiz", 
 					user: p.controller.get('user'), 
@@ -59144,7 +59151,7 @@ var select = function (state) {
 
 module.exports = connect(select)(Fantasy);
 
-},{"../actions":444,"../components/Admin":446,"../components/Help":450,"../components/Navigation":452,"../components/Profile":453,"../components/Quiz":454,"../components/Tribes":455,"../helpers/compute-state":458,"../helpers/forced-logger":459,"../helpers/user-loading":461,"immutable":1,"react":425,"react-immutable-proptypes":243,"react-redux":247,"redux":432}],458:[function(require,module,exports){
+},{"../actions":444,"../components/Admin":446,"../components/Help":450,"../components/Navigation":452,"../components/Profile":453,"../components/Quiz":454,"../components/Tribes":455,"../helpers/compute-state":458,"../helpers/forced-logger":459,"../helpers/user-loading":461,"immutable":1,"react":425,"react-bootstrap":149,"react-immutable-proptypes":243,"react-redux":247,"redux":432}],458:[function(require,module,exports){
 var I = require('immutable');
 var _ = require('lodash');
 var AchievementsObj = require('../objects/Achievements');
@@ -59805,7 +59812,10 @@ var questions = function (prev, action) {
 		case 'GET-INITIAL-DONE':
 		return I.fromJS(action.payload.questions)
 				.map(function (details, id) {
-					return details.set('answer', action.payload.userAnswers[id]);
+					if (typeof action.payload.userAnswers === 'object') {
+						return details.set('answer', action.payload.userAnswers[id]);
+					}
+					return details;
 				})
 				.map(function (details, id) { // Fix booleans...
 					if (details.get('type') !== 'boolean' || !details.has('answer')) {

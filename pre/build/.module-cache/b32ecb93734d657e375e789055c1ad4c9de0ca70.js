@@ -167,7 +167,7 @@ var Final = React.createClass({displayName: "Final",
 					return (
 						React.createElement(Bs.CarouselItem, {key: id}, 
 							React.createElement("img", {width: 900, height: 500, style: {width: 900, height: 500}, alt: name, 
-								src: nameToImg(name)}
+								src: "/images/contestants/slides/" + name + ".jpg"}
 							), 
 							React.createElement("div", {className: "carousel-caption"}, 
 								React.createElement("h3", null, name)

@@ -12,8 +12,9 @@ var ini = {
 			answer: "56029683b2c3b5601f976290",
 			type: 'contestant'
 		},
-		"345646a": {
-			question: '-Num?',
+		"34564sda6a": {
+			weekNumber: "1",
+			question: '1Num?',
 			type: 'number'
 		},
 		"12asf5f": {
@@ -29,18 +30,25 @@ var ini = {
 		"345646a": {
 			weekNumber: "2",
 			question: '2Num?',
-			answer: 4,
+			answer: "4",
 			type: 'number'
 		},
 		"4576e": {
 			weekNumber: "1",
 			question: '1Bool?',
-			answer: true,
+			answer: "true",
+			type: 'boolean'
+		},
+		"4570006f": {
+			weekNumber: "2",
+			question: '2Bool?',
+			answer: "true",
 			type: 'boolean'
 		}
 	},
 	userAnswers: {
-		"12asf5f": "56029683b2c3b5601f976290"
+		"12asf5f": "56029683b2c3b5601f976290",
+		"34564sda6a": "5"
 	},
 	"contestants":{
 		"56029683b2c3b5601f976290":{

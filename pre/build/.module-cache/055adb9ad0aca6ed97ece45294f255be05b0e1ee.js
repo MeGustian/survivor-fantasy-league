@@ -10,7 +10,7 @@ function mod(n, m) {
 	return ((n % m) + m) % m;
 }
 
-var Quiz = React.createClass({
+var Quiz = React.createClass({displayName: "Quiz",
 	componentWillUpdate: function () {
 		now = Date.now();
 	}
@@ -22,15 +22,15 @@ var Quiz = React.createClass({
 	render: function () {
 		console.info('Quiz');
 		return (
-			<Bs.Row>
-				<Bs.Col xs={12} sm={10} smOffset={1} md={8} mdOffset={2}>
-					<Bs.Pager>
-						<Bs.PageItem onClick={this.changeQuestion.bind(this, -1)}>Previous</Bs.PageItem>
-						<Bs.PageItem onClick={this.changeQuestion.bind(this, +1)}>Next</Bs.PageItem>
-					</Bs.Pager>
-					{this.questions()}
-				</Bs.Col>
-			</Bs.Row>
+			React.createElement(Bs.Row, null, 
+				React.createElement(Bs.Col, {xs: 12, sm: 10, smOffset: 1, md: 8, mdOffset: 2}, 
+					React.createElement(Bs.Pager, null, 
+						React.createElement(Bs.PageItem, {onClick: this.changeQuestion.bind(this, -1)}, "Previous"), 
+						React.createElement(Bs.PageItem, {onClick: this.changeQuestion.bind(this, +1)}, "Next")
+					), 
+					this.questions()
+				)
+			)
 		);
 	}
 	,
@@ -50,17 +50,17 @@ var Quiz = React.createClass({
 				.map(function (details, id) {
 					count++;
 					return (
-						<div style={{display: count === selected ? 'initial' : 'none'}}>
-						<Question
-							key={id}
-							questionId={id}
-							details={details}
-							contestants={p.contestants}
-							user={p.user}
-							open={p.open}
-							handlers={p.dispatcher}
-						/>
-						</div>
+						React.createElement("div", {style: {display: count === selected ? 'initial' : 'none'}}, 
+						React.createElement(Question, {
+							key: id, 
+							questionId: id, 
+							details: details, 
+							contestants: p.contestants, 
+							user: p.user, 
+							open: p.open, 
+							handlers: p.dispatcher}
+						)
+						)
 					);
 				})
 				.toJS()
@@ -68,7 +68,7 @@ var Quiz = React.createClass({
 	}
 });
 
-var Question = React.createClass({
+var Question = React.createClass({displayName: "Question",
 	getInitialState: function () {
 		// State represents the editing mode.
 		return this.props.details.toJS();
@@ -82,14 +82,17 @@ var Question = React.createClass({
 			alignItems: 'center'
 		};
 		return (
-			<Bs.Panel eventKey={this.props.id} header={
-				<div style={stylePanelHeadingInner}>
-					{this.questionRender()}
-					{/*this.tools()*/}
-				</div>
-			}>
-					{this.bodyRender()}
-			</Bs.Panel>
+			React.createElement(Bs.Panel, {eventKey: this.props.id, header: 
+				React.createElement("div", {style: stylePanelHeadingInner}, 
+				console.info('qR'), 
+					this.questionRender(), 
+					console.info('tools'), 
+					this.tools()
+				)
+			}, 
+			console.info('bR'), 
+					this.bodyRender()
+			)
 		);
 	}
 	,
@@ -101,17 +104,17 @@ var Question = React.createClass({
 			marginRight: '10px'
 		}
 		if (!details.get('isEditing')) {
-			return <h3 className="panel-title" style={style}>{details.get('question')}</h3>;
+			return React.createElement("h3", {className: "panel-title", style: style}, details.get('question'));
 		} else {
 			return (
-				<input
-					type="text"
-					className="form-control"
-					placeholder="question"
-					style={style}
-					value={this.state.question}
-					onChange={this.onText}
-				/>
+				React.createElement("input", {
+					type: "text", 
+					className: "form-control", 
+					placeholder: "question", 
+					style: style, 
+					value: this.state.question, 
+					onChange: this.onText}
+				)
 			);
 		}
 	}
@@ -126,30 +129,28 @@ var Question = React.createClass({
 			var yes = answer ? " active" : "",
 				no = !answer ? " active" : "";
 			return (
-				<Bs.ButtonGroup>
-					<Bs.Button bsStyle="success" active={answer} onClick={this.changeAnswer.bind(this, true)} disabled={!this.props.open}>Yes</Bs.Button>
-					<Bs.Button bsStyle="danger" active={!answer} onClick={this.changeAnswer.bind(this, false)} disabled={!this.props.open}>No</Bs.Button>
-				</Bs.ButtonGroup>
+				React.createElement(Bs.ButtonGroup, null, 
+					React.createElement(Bs.Button, {bsStyle: "success", active: answer, onClick: this.changeAnswer.bind(this, true), disabled: this.props.open}, "Yes"), 
+					React.createElement(Bs.Button, {bsStyle: "danger", active: !answer, onClick: this.changeAnswer.bind(this, false), disabled: this.props.open}, "No")
+				)
 			);
 			case 'contestant':
 			return (
-				<Contestants
-					answer={answer}
-					disabled={!this.props.open}
-					contestants={this.props.contestants}
-					changeAnswer={this.changeAnswer}
-				/>
+				React.createElement(Contestants, {
+					answer: answer, 
+					contestants: this.props.contestants, 
+					changeAnswer: this.changeAnswer}
+				)
 			);
 			case 'number':
 			return (
-				<Num
-					answer={answer}
-					disabled={!this.props.open}
-					changeAnswer={this.changeAnswer}
-				/>
+				React.createElement(Num, {
+					answer: answer, 
+					changeAnswer: this.changeAnswer}
+				)
 			);
 			default:
-			return <div>Bad type specified</div>
+			return React.createElement("div", null, "Bad type specified")
 		}
 	}
 	,
@@ -167,16 +168,16 @@ var Question = React.createClass({
 			return;
 		}
 		return (
-			<div className="btn-group" role="group" aria-label="..." style={style}>
-				<AdminToolbox
-					tool={isEditing ? "discard" : "edit"}
-					handleClick={handlers.edit.bind(null, questionId, !!isEditing)}
-				/>
-				<AdminToolbox
-					tool={isEditing ? "approve" : "remove"}
-					handleClick={isEditing ? handlers.update.bind(null, questionId, this.state.question, this.state.answer, this.state.type) : handlers.remove.bind(null, questionId)}
-				/>
-			</div>
+			React.createElement("div", {className: "btn-group", role: "group", "aria-label": "...", style: style}, 
+				React.createElement(AdminToolbox, {
+					tool: isEditing ? "discard" : "edit", 
+					handleClick: handlers.edit.bind(null, questionId, !!isEditing)}
+				), 
+				React.createElement(AdminToolbox, {
+					tool: isEditing ? "approve" : "remove", 
+					handleClick: isEditing ? handlers.update.bind(null, questionId, this.state.question, this.state.answer, this.state.type) : handlers.remove.bind(null, questionId)}
+				)
+			)
 		);
 	}
 	,

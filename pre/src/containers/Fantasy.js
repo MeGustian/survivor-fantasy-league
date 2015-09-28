@@ -1,4 +1,5 @@
 var React = require('react');
+var Bs = require('react-bootstrap');
 var PropTypes = React.PropTypes;
 var I = require('immutable');
 var ImmutablePropTypes = require('react-immutable-proptypes');
@@ -121,6 +122,7 @@ var Fantasy = React.createClass({
 				/>
 				</div>
 				<div style={{display: p.navigation.get('location') === 'weekly' ? 'initial' : 'none'}}>
+				<Bs.PageHeader>{"Week #" + p.navigation.get('selectedWeek')}</Bs.PageHeader>
 				<Quiz
 					key="quiz"
 					user={p.controller.get('user')}

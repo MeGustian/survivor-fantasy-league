@@ -3,6 +3,7 @@ var Bs = require('react-bootstrap');
 var I = require('immutable');
 var MyThumbnail = require('./MyThumbnail');
 var Contestant = require('./Contestant');
+var nameToImg = require('../helpers/image-name')('slides');
 
 var Profile = React.createClass({
 	render: function () {
@@ -166,7 +167,7 @@ var Final = React.createClass({
 					return (
 						<Bs.CarouselItem key={id}>
 							<img width={900} height={500} style={{width: 900, height: 500}} alt={name}
-								src={"/images/contestants/slides/" + name + ".jpg"}
+								src={nameToImg(name)}
 							/>
 							<div className="carousel-caption">
 								<h3>{name}</h3>
