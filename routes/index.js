@@ -15,6 +15,29 @@ router.get('/', function(req, res, next) {
 
 });
 
+/* POST user choices */
+router.post('/', function(req, res){
+  var data = req.body;
+  if (data['meta'] === 'CONTESTANT-CHOICE'){
+    console.log('CONTESTANT-CHOICE');
+    var db = req.db;
+    var collection = db.get('users');
+    var choices = data['chosen'];
+    collection.update(
+        {'local.username' : req.user.local.username },
+        {
+          $set: {'choices' : choices}
+        },
+        { upsert : true }
+    )
+    res.json(data);
+  }
+  else {
+    res.send('error');
+  }
+
+})
+
 /* GET user page */
 router.get('/home', function(req, res, next) {
 
@@ -85,6 +108,7 @@ router.get('/initial', function (req, res) {
       survivorData = _.mapKeys(survivorData, function (value, key) {
         return value['_id'].toHexString();
       });
+      console.log(survivorData);
       responseData['contestants'] = survivorData;
       questions.find({'week': '' + weekCount}, function(err, docs){
         console.log('inserting weekly questions');
@@ -95,7 +119,6 @@ router.get('/initial', function (req, res) {
         });
         responseData['questions'] = questionData;
         console.log('sending');
-        console.log(responseData);
         res.status(200).send(responseData);
       })
     });
@@ -202,18 +225,6 @@ router.post('/:weekNumber', function(req, res) {
       res.json({'questionId' : data['questionId']})
 
       break;
-
-    case 'CONTESTANT-CHOICES':
-      var db = req.db;
-      var collection = db.get('users');
-      var choices = data['chosen'];
-        collection.update(
-            {'username' : req.user.local.username },
-            {
-              $set: {'choices' : choices}
-            }
-        )
-      res.json(data);
 
     default:
       console.log('Bad Request');
