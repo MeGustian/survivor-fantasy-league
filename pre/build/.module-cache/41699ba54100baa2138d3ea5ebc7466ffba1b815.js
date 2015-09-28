@@ -7,73 +7,22 @@ var bindActionCreators = require('redux').bindActionCreators;
 var connect = require('react-redux').connect; // Connect react container to redux.
 
 // Components. // TODO: Add proptypes to components (in their files).
+var Week = require('../components/Week'); // Explain...
 var Navigation = require('../components/Navigation'); // Explain...
 var Profile = require('../components/Profile'); // Explain...
 var Tribes = require('../components/Tribes'); // Explain...
 var Quiz = require('../components/Quiz'); // Explain...
+var Questions = require('../components/Questions'); // Explain...
 var Admin = require('../components/Admin'); // Explain...
+var computerOfState = require('../helpers/compute-state');
 var act = require('../actions'); // Give dispatch an action payload.
 // Handle the phase between passportJS sign-in to when the page loads. will
 // return false once everything is clear.
-var computerOfState = require('../helpers/compute-state');
 var userLoading = require('../helpers/user-loading');
 var forcedLogger = require('../helpers/forced-logger');
 
 
 var Fantasy = React.createClass({displayName: "Fantasy",
-	propTypes: {
-		controller: ImmutablePropTypes.contains({
-			user: ImmutablePropTypes.contains({
-				signedIn: PropTypes.bool.isRequired,
-				attempting: PropTypes.bool.isRequired,
-				isAdmin: PropTypes.bool.isRequired
-			}),
-			error: ImmutablePropTypes.contains({
-				is: PropTypes.bool.isRequired,
-				details: ImmutablePropTypes.contains({
-					action: PropTypes.string,
-					details: PropTypes.string
-				})
-			})
-		})
-		,
-		navigation: ImmutablePropTypes.contains({
-			location: PropTypes.string.isRequired,
-			selectedWeek: PropTypes.string.isRequired,
-			weekCount: PropTypes.string.isRequired
-		}).isRequired
-		,
-		profile: ImmutablePropTypes.contains({
-			chosen: ImmutablePropTypes.set.isRequired
-		}).isRequired
-		,
-		contestants: ImmutablePropTypes.mapOf(
-			ImmutablePropTypes.contains({
-				firstName: PropTypes.string.isRequired,
-				lastName: PropTypes.string.isRequired,
-				age: PropTypes.string.isRequired,
-				occupation: PropTypes.string.isRequired,
-				previousSeason: PropTypes.string.isRequired,
-				place: PropTypes.string.isRequired,
-				weeks: ImmutablePropTypes.mapOf(
-					ImmutablePropTypes.contains({
-						tribe: PropTypes.string,
-						votedFor: PropTypes.string,
-						achievements: ImmutablePropTypes.mapOf(PropTypes.bool)
-					})
-				)
-			})
-		)
-		,
-		questions: ImmutablePropTypes.mapOf(
-			ImmutablePropTypes.contains({
-				question: PropTypes.string.isRequired,
-				answer: PropTypes.oneOfType([PropTypes.string, PropTypes.bool, PropTypes.number]),
-				type: PropTypes.string.isRequired
-			})
-		).isRequired
-	}
-	,
 	render: function () {
 		var p = this.props;
 		forcedLogger(p);
@@ -157,6 +106,61 @@ var Fantasy = React.createClass({displayName: "Fantasy",
 				)
 			)
 		);
+	}
+	,
+	propTypes: {
+		controller: ImmutablePropTypes.contains({
+			user: ImmutablePropTypes.contains({
+				signedIn: PropTypes.bool.isRequired,
+				attempting: PropTypes.bool.isRequired,
+				isAdmin: PropTypes.bool.isRequired
+			}),
+			error: ImmutablePropTypes.contains({
+				is: PropTypes.bool.isRequired,
+				details: ImmutablePropTypes.contains({
+					action: PropTypes.string,
+					details: PropTypes.string
+				})
+			})
+		})
+		,
+		navigation: ImmutablePropTypes.contains({
+			location: PropTypes.string.isRequired,
+			selectedWeek: PropTypes.string.isRequired,
+			weekCount: PropTypes.number.isRequired
+		}).isRequired
+		,
+		profile: ImmutablePropTypes.contains({
+			chosen: ImmutablePropTypes.set.isRequired
+		}).isRequired
+		,
+		contestants: ImmutablePropTypes.contains({
+			info: ImmutablePropTypes.mapOf(
+				ImmutablePropTypes.contains({
+					firstName: PropTypes.string.isRequired,
+					lastName: PropTypes.string.isRequired,
+					age: PropTypes.string.isRequired,
+					occupation: PropTypes.string.isRequired,
+					previousSeason: PropTypes.string.isRequired,
+					place: PropTypes.string.isRequired
+				})
+			).isRequired,
+			statuses: ImmutablePropTypes.mapOf(
+				ImmutablePropTypes.contains({
+					tribe: PropTypes.string,
+					votedFor: PropTypes.string,
+					achievements: ImmutablePropTypes.mapOf(PropTypes.bool)
+				})
+			).isRequired
+		})
+		,
+		questions: ImmutablePropTypes.mapOf(
+			ImmutablePropTypes.contains({
+				question: PropTypes.string.isRequired,
+				answer: PropTypes.oneOfType([PropTypes.string, PropTypes.bool, PropTypes.number]),
+				type: PropTypes.string.isRequired
+			})
+		).isRequired
 	}
 });
 

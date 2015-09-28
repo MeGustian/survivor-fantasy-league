@@ -29,9 +29,9 @@ var initialState = I.fromJS({
 		 // NOTE: Use `display: none` when switching to avoid remounting!
 		location: 'profile'
 		,
-		weekCount: "0"
+		weekCount: 0
 		,
-		selectedWeek: "0"
+		selectedWeek: 0
 	}
 	,
 	profile: {

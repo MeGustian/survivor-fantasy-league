@@ -29,9 +29,9 @@ var initialState = I.fromJS({
 		 // NOTE: Use `display: none` when switching to avoid remounting!
 		location: 'profile'
 		,
-		weekCount: "0"
+		weekCount: 0
 		,
-		selectedWeek: "0"
+		selectedWeek: 0
 	}
 	,
 	profile: {
@@ -90,8 +90,8 @@ var navigation = function (prev, action) {
 	switch (action.type) {
 		case 'GET-INITIAL-DONE':
 		return prev
-			.set('selectedWeek', action.payload.weekNumber.toString())
-			.set('weekCount', action.payload.weekNumber.toString());
+			.set('selectedWeek', action.payload.weekNumber)
+			.set('weekCount', action.payload.weekNumber);
 		case 'NAVIGATE':
 		return prev
 			.set('location', action.payload.target);
