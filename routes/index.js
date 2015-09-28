@@ -26,7 +26,7 @@ router.post('/', function(req, res){
     collection.update(
         {'local.username' : req.user.local.username },
         {
-          $set: {'choices' : choices}
+          $set: {'chosen' : choices}
         },
         { upsert : true }
     )
@@ -99,18 +99,19 @@ router.get('/initial', function (req, res) {
   var survivors = db.get('survivors');
   var questions = db.get('questions')
   users.findOne( { 'local.username' : req.user.local.username}, function(err, userData){
+    responseData['userAnswers'] = userData.questions;
     responseData['username'] = userData.local.username;
-    responseData['isAdmin'] = userData.local.isAdmin;
+    responseData['isAdmin'] = userData.isAdmin;
     responseData['weekNumber'] = weekCount;
+    responseData['chosen'] = userData.chosen;
     survivors.find({}, {}, function(err, docs) {
       console.log('inserting all contestants');
       var survivorData = toObject(docs);
       survivorData = _.mapKeys(survivorData, function (value, key) {
         return value['_id'].toHexString();
       });
-      console.log(survivorData);
       responseData['contestants'] = survivorData;
-      questions.find({'week': '' + weekCount}, function(err, docs){
+      questions.find({}, {}, function(err, docs){
         console.log('inserting weekly questions');
         //console.log(docs);
         var questionData = toObject(docs);
@@ -140,15 +141,16 @@ router.post('/:weekNumber', function(req, res) {
     case 'USER-ANSWER':
       var db = req.db;
       var collection = db.get('users');
-      query[data['questionId']] = data['answer'];
+      var setModifier = { $set: {}};
+      setModifier.$set['questions.' + data['questionId']] = data['answer'];
       collection.update(
           { 'local.username' : req.user.local.username},
+          setModifier
+          ,
           {
-            $set: query
-          },
-          { upsert : true }
+            upsert : true
+          }
       );
-        console.log(query);
       res.json({'questionId' : data['questionId']});
 
       break;
