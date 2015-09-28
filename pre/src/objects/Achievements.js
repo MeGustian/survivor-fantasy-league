@@ -227,6 +227,15 @@ var Achievements = Map({
 		text: 'Won First Place!!!',
 		points: 300
 	})
+})
+.sort(function (a, b) {
+	if (a.has('extra')) {
+		return -1;
+	}
+	if (b.has('extra')) {
+		return +1;
+	}
+	return Math.abs(a.get('points')) < Math.abs(b.get('points')) ? +1 : -1;
 });
 
 module.exports = Achievements;

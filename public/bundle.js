@@ -58165,20 +58165,21 @@ AnswerTypes.Contestants = React.createClass({displayName: "Contestants",
 					var name = contestant.get('firstName') + " " + contestant.get('lastName');
 					var isAnswer = id === that.props.answer;
 					return (
-						React.createElement(MyThumbnail, {key: id, id: id, selected: isAnswer, name: name, choose: that.changeAnswer.bind(that, isAnswer)})
+						React.createElement(MyThumbnail, {key: id, id: id, selected: isAnswer, disabled: that.props.disabled, name: name, choose: that.changeAnswer.bind(that, isAnswer)})
 					);
 				}).toJS()
 		);
 	}
 	,
 	changeAnswer: function (alreadySelected, id) {
-		this.props.changeAnswer(alreadySelected ? null : id);
+		if (!this.props.disabled) {
+			this.props.changeAnswer(alreadySelected ? null : id);
+		}
 	}
 });
 
 AnswerTypes.Num = React.createClass({displayName: "Num",
 	shouldComponentUpdate: function (nextProps) {
-		console.log(this.props.answer);
 		var equal = this.props.answer === nextProps.answer;
 		return !equal;
 	}
@@ -58187,7 +58188,7 @@ AnswerTypes.Num = React.createClass({displayName: "Num",
 		var answer = this.props.answer > 0 ? this.props.answer : 0;
 		return (
 			React.createElement("div", {style: {display: 'flex', justifyContent: 'space-around'}}, 
-				React.createElement("input", {type: "range", value: answer.toString(), min: "0", max: "13", step: "1", onChange: this.changeAnswer, 
+				React.createElement("input", {disabled: this.props.disabled, type: "range", value: answer.toString(), min: "0", max: "13", step: "1", onChange: this.changeAnswer, 
 				style: {maxWidth: '300px'}}), 
 				React.createElement(Bs.Badge, {pullRight: true}, answer.toString())
 			)
@@ -58279,8 +58280,8 @@ var Help = React.createClass({displayName: "Help",
 			React.createElement("p", null, "Compete against your friends in the ultimate Survivor League manager and fight" + ' ' +
 			"for the title of sole survivor!"), 
 			React.createElement("h2", null, React.createElement("a", {id: "The_Rules_5"}), "The Rules:"), 
-			React.createElement("p", null, "You will need to select FOUR castaways to make up your team. You do NOT have to select both men and women, nor people from both tribes - though, of course, you can if you want to!" + ' ' +
-			"There is no limit to how many people can select a single contestant, but no two people can have the EXACT SAME line-up." + ' ' +
+			React.createElement("p", null, "In your profile page, select ", React.createElement("strong", null, "four"), " castaways to make up your team. You do ", React.createElement("strong", null, "not"), " have to select both men and women, nor people from both tribes - though, of course, you can if you want to!" + ' ' +
+			"There is no limit to how many people can select a single contestant, but no two people can have the ", React.createElement("strong", null, "exact same"), " line-up." + ' ' +
 			"For instance, everybody can have Spencer on their team if they want, but only one person could have the team of Spencer, Kelly, Joe and Andrew."), 
 			React.createElement("p", null, "The four people on your team will score points on a weekly basis, based on the achievements below." + ' ' +
 			"There are points on offer for post-elimination events, so just because one of your castaways is eliminated, it doesn’t mean they’ll stop scoring you points!"), 
@@ -58309,7 +58310,7 @@ var Help = React.createClass({displayName: "Help",
 			React.createElement("li", null, "Will the clue to the Hidden Immunity Idol be found?"), 
 			React.createElement("li", null, "Will a Hidden Immunity Idol be found?")
 			), 
-			React.createElement("p", null, "For more information and exciting news, please visit ", React.createElement("a", {href: "https://www.youtube.com/watch?v=dQw4w9WgXcQ"}, "Survivor Fantasy League - Extended"), ".")
+			React.createElement("p", null, "For more information and exciting news, please visit ", React.createElement("a", {href: "https://www.youtube.com/watch?v=dQw4w9WgXcQ", target: "_blank"}, "Survivor Fantasy League - Extended"), ".")
 			)
 			)
 		);
@@ -58341,7 +58342,7 @@ var MyThumbnail = React.createClass({displayName: "MyThumbnail",
 					onClick: that.props.choose.bind(null, p.id), 
 					src: nameToImg(p.name), 
 					alt: p.name, 
-					style: {display: 'inline-block', border: (p.selected ? "3px solid green" : ""), width: '80px', marginRight: '10px', marginLeft: '10px'}}
+					style: {display: 'inline-block', border: (p.selected ? "3px solid green" : ""), width: '80px', marginRight: '10px', marginLeft: '10px', opacity: this.props.disabled ? '0.5' : ''}}
 				)
 			)
 		);
@@ -58410,6 +58411,7 @@ var Bs = require('react-bootstrap');
 var I = require('immutable');
 var MyThumbnail = require('./MyThumbnail');
 var Contestant = require('./Contestant');
+var nameToImg = require('../helpers/image-name')('slides');
 
 var Profile = React.createClass({displayName: "Profile",
 	render: function () {
@@ -58434,7 +58436,8 @@ var Profile = React.createClass({displayName: "Profile",
 				React.createElement(Bs.Col, {sm: 12, md: 10, mdOffset: 1}, 
 				React.createElement("div", null, 
 					React.createElement(Bs.Alert, {bsStyle: "info"}, 
-						React.createElement("p", null, "Please select the ", React.createElement("strong", null, "4"), " contestants you wish to follow throughout the season.")
+						React.createElement("p", null, "Please select the ", React.createElement("strong", null, "4"), " contestants you wish to follow throughout the season."), 
+						React.createElement("p", {style: {textAlign: 'center'}}, React.createElement(Bs.Button, {onClick: this.help}, "Need help?"))
 					), 
 					React.createElement(Bs.Alert, {pullRight: true, bsStyle: "warning"}, 
 						React.createElement("p", null, React.createElement("strong", null, "Notice:"), " Submitting choices is permanent! Make sure the selected contestants are the ones you wish to choose."), 
@@ -58455,6 +58458,10 @@ var Profile = React.createClass({displayName: "Profile",
 	,
 	submit: function () {
 		this.props.submit(this.props.chosen);
+	}
+	,
+	help: function () {
+		this.props.navigate('help');
 	}
 	,
 	full: function () {
@@ -58573,7 +58580,7 @@ var Final = React.createClass({displayName: "Final",
 					return (
 						React.createElement(Bs.CarouselItem, {key: id}, 
 							React.createElement("img", {width: 900, height: 500, style: {width: 900, height: 500}, alt: name, 
-								src: "/images/contestants/slides/" + name + ".jpg"}
+								src: nameToImg(name)}
 							), 
 							React.createElement("div", {className: "carousel-caption"}, 
 								React.createElement("h3", null, name)
@@ -58600,7 +58607,7 @@ var Final = React.createClass({displayName: "Final",
 
 module.exports = Profile;
 
-},{"./Contestant":449,"./MyThumbnail":451,"immutable":1,"react-bootstrap":149,"react/addons":253}],454:[function(require,module,exports){
+},{"../helpers/image-name":460,"./Contestant":449,"./MyThumbnail":451,"immutable":1,"react-bootstrap":149,"react/addons":253}],454:[function(require,module,exports){
 var React = require('react/addons');
 var Bs = require('react-bootstrap');
 var AdminToolbox = require('./AdminToolbox');
@@ -58658,7 +58665,9 @@ var Quiz = React.createClass({displayName: "Quiz",
 							key: id, 
 							questionId: id, 
 							details: details, 
-							contestants: p.contestants, 
+							contestants: p.contestants.filter(function (contestant) {
+								return contestant.getIn(['weeks', p.weekNumber, 'tribe']);
+							}), 
 							user: p.user, 
 							open: p.open, 
 							handlers: p.dispatcher}
@@ -58687,8 +58696,8 @@ var Question = React.createClass({displayName: "Question",
 		return (
 			React.createElement(Bs.Panel, {eventKey: this.props.id, header: 
 				React.createElement("div", {style: stylePanelHeadingInner}, 
-					this.questionRender(), 
-					this.tools()
+					this.questionRender()
+					/*this.tools()*/
 				)
 			}, 
 					this.bodyRender()
@@ -58729,15 +58738,18 @@ var Question = React.createClass({displayName: "Question",
 			var yes = answer ? " active" : "",
 				no = !answer ? " active" : "";
 			return (
+				React.createElement("div", {style: {display: 'flex', justifyContent: 'space-around'}}, 
 				React.createElement(Bs.ButtonGroup, null, 
-					React.createElement(Bs.Button, {bsStyle: "success", active: answer, onClick: this.changeAnswer.bind(this, true), disabled: this.props.open}, "Yes"), 
-					React.createElement(Bs.Button, {bsStyle: "danger", active: !answer, onClick: this.changeAnswer.bind(this, false), disabled: this.props.open}, "No")
+					React.createElement(Bs.Button, {bsStyle: "success", active: answer, onClick: this.changeAnswer.bind(this, true), disabled: !this.props.open}, "Yes"), 
+					React.createElement(Bs.Button, {bsStyle: "danger", active: !answer, onClick: this.changeAnswer.bind(this, false), disabled: !this.props.open}, "No")
+				)
 				)
 			);
 			case 'contestant':
 			return (
 				React.createElement(Contestants, {
 					answer: answer, 
+					disabled: !this.props.open, 
 					contestants: this.props.contestants, 
 					changeAnswer: this.changeAnswer}
 				)
@@ -58746,6 +58758,7 @@ var Question = React.createClass({displayName: "Question",
 			return (
 				React.createElement(Num, {
 					answer: answer, 
+					disabled: !this.props.open, 
 					changeAnswer: this.changeAnswer}
 				)
 			);
@@ -58962,6 +58975,7 @@ module.exports = App;
 
 },{"../reducers":464,"./Fantasy":457,"lodash":5,"react":425,"react-redux":247,"redux":432,"redux-logger":427,"redux-promise-middleware":429}],457:[function(require,module,exports){
 var React = require('react');
+var Bs = require('react-bootstrap');
 var PropTypes = React.PropTypes;
 var I = require('immutable');
 var ImmutablePropTypes = require('react-immutable-proptypes');
@@ -59074,6 +59088,9 @@ var Fantasy = React.createClass({displayName: "Fantasy",
 					user: p.controller.get('user'), 
 					chosen: p.profile.get('chosen'), 
 					submittedChoices: p.profile.get('submittedChoices'), 
+					navigate: function (target) {
+						return dispatch(act.navigate(target));
+					}, 
 					submit: function (choices) {
 						return dispatch(act.submitChoices(choices));
 					}, 
@@ -59084,11 +59101,13 @@ var Fantasy = React.createClass({displayName: "Fantasy",
 				)
 				), 
 				React.createElement("div", {style: {display: p.navigation.get('location') === 'weekly' ? 'initial' : 'none'}}, 
+				React.createElement(Bs.PageHeader, null, "Week #" + p.navigation.get('selectedWeek')), 
 				React.createElement(Quiz, {
 					key: "quiz", 
 					user: p.controller.get('user'), 
 					open: p.navigation.get('selectedWeek') === p.navigation.get('weekCount'), 
 					selected: p.navigation.get('selectedQuestion'), 
+					weekNumber: p.navigation.get('selectedWeek'), 
 					questions: p.questions.filter(function (q, id) {return q.get('weekNumber') === p.navigation.get('selectedWeek')}), 
 					contestants: p.contestants, 
 					dispatcher: {
@@ -59144,7 +59163,7 @@ var select = function (state) {
 
 module.exports = connect(select)(Fantasy);
 
-},{"../actions":444,"../components/Admin":446,"../components/Help":450,"../components/Navigation":452,"../components/Profile":453,"../components/Quiz":454,"../components/Tribes":455,"../helpers/compute-state":458,"../helpers/forced-logger":459,"../helpers/user-loading":461,"immutable":1,"react":425,"react-immutable-proptypes":243,"react-redux":247,"redux":432}],458:[function(require,module,exports){
+},{"../actions":444,"../components/Admin":446,"../components/Help":450,"../components/Navigation":452,"../components/Profile":453,"../components/Quiz":454,"../components/Tribes":455,"../helpers/compute-state":458,"../helpers/forced-logger":459,"../helpers/user-loading":461,"immutable":1,"react":425,"react-bootstrap":149,"react-immutable-proptypes":243,"react-redux":247,"redux":432}],458:[function(require,module,exports){
 var I = require('immutable');
 var _ = require('lodash');
 var AchievementsObj = require('../objects/Achievements');
@@ -59576,6 +59595,15 @@ var Achievements = Map({
 		text: 'Won First Place!!!',
 		points: 300
 	})
+})
+.sort(function (a, b) {
+	if (a.has('extra')) {
+		return -1;
+	}
+	if (b.has('extra')) {
+		return +1;
+	}
+	return Math.abs(a.get('points')) < Math.abs(b.get('points')) ? +1 : -1;
 });
 
 module.exports = Achievements;
@@ -59805,7 +59833,10 @@ var questions = function (prev, action) {
 		case 'GET-INITIAL-DONE':
 		return I.fromJS(action.payload.questions)
 				.map(function (details, id) {
-					return details.set('answer', action.payload.userAnswers[id]);
+					if (typeof action.payload.userAnswers === 'object') {
+						return details.set('answer', action.payload.userAnswers[id]);
+					}
+					return details;
 				})
 				.map(function (details, id) { // Fix booleans...
 					if (details.get('type') !== 'boolean' || !details.has('answer')) {

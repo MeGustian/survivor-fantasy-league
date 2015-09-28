@@ -55,7 +55,9 @@ var Quiz = React.createClass({
 							key={id}
 							questionId={id}
 							details={details}
-							contestants={p.contestants}
+							contestants={p.contestants.filter(function (contestant) {
+								return contestant.getIn(['weeks', p.weekNumber, 'tribe']);
+							})}
 							user={p.user}
 							open={p.open}
 							handlers={p.dispatcher}
@@ -85,7 +87,7 @@ var Question = React.createClass({
 			<Bs.Panel eventKey={this.props.id} header={
 				<div style={stylePanelHeadingInner}>
 					{this.questionRender()}
-					{this.tools()}
+					{/*this.tools()*/}
 				</div>
 			}>
 					{this.bodyRender()}
@@ -126,15 +128,18 @@ var Question = React.createClass({
 			var yes = answer ? " active" : "",
 				no = !answer ? " active" : "";
 			return (
+				<div style={{display: 'flex', justifyContent: 'space-around'}}>
 				<Bs.ButtonGroup>
-					<Bs.Button bsStyle="success" active={answer} onClick={this.changeAnswer.bind(this, true)} disabled={this.props.open}>Yes</Bs.Button>
-					<Bs.Button bsStyle="danger" active={!answer} onClick={this.changeAnswer.bind(this, false)} disabled={this.props.open}>No</Bs.Button>
+					<Bs.Button bsStyle="success" active={answer} onClick={this.changeAnswer.bind(this, true)} disabled={!this.props.open}>Yes</Bs.Button>
+					<Bs.Button bsStyle="danger" active={!answer} onClick={this.changeAnswer.bind(this, false)} disabled={!this.props.open}>No</Bs.Button>
 				</Bs.ButtonGroup>
+				</div>
 			);
 			case 'contestant':
 			return (
 				<Contestants
 					answer={answer}
+					disabled={!this.props.open}
 					contestants={this.props.contestants}
 					changeAnswer={this.changeAnswer}
 				/>
@@ -143,6 +148,7 @@ var Question = React.createClass({
 			return (
 				<Num
 					answer={answer}
+					disabled={!this.props.open}
 					changeAnswer={this.changeAnswer}
 				/>
 			);

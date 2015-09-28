@@ -3,6 +3,7 @@ var Bs = require('react-bootstrap');
 var I = require('immutable');
 var MyThumbnail = require('./MyThumbnail');
 var Contestant = require('./Contestant');
+var nameToImg = require('../helpers/image-name')('slides');
 
 var Profile = React.createClass({
 	render: function () {
@@ -28,6 +29,7 @@ var Profile = React.createClass({
 				<div>
 					<Bs.Alert bsStyle="info">
 						<p>Please select the <strong>4</strong> contestants you wish to follow throughout the season.</p>
+						<p style={{textAlign: 'center'}}><Bs.Button onClick={this.help}>Need help?</Bs.Button></p>
 					</Bs.Alert>
 					<Bs.Alert pullRight bsStyle="warning">
 						<p><strong>Notice:</strong> Submitting choices is permanent! Make sure the selected contestants are the ones you wish to choose.</p>
@@ -48,6 +50,10 @@ var Profile = React.createClass({
 	,
 	submit: function () {
 		this.props.submit(this.props.chosen);
+	}
+	,
+	help: function () {
+		this.props.navigate('help');
 	}
 	,
 	full: function () {
@@ -166,7 +172,7 @@ var Final = React.createClass({
 					return (
 						<Bs.CarouselItem key={id}>
 							<img width={900} height={500} style={{width: 900, height: 500}} alt={name}
-								src={"/images/contestants/slides/" + name + ".jpg"}
+								src={nameToImg(name)}
 							/>
 							<div className="carousel-caption">
 								<h3>{name}</h3>

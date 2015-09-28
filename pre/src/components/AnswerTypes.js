@@ -34,20 +34,21 @@ AnswerTypes.Contestants = React.createClass({
 					var name = contestant.get('firstName') + " " + contestant.get('lastName');
 					var isAnswer = id === that.props.answer;
 					return (
-						<MyThumbnail key={id} id={id} selected={isAnswer} name={name} choose={that.changeAnswer.bind(that, isAnswer)} />
+						<MyThumbnail key={id} id={id} selected={isAnswer} disabled={that.props.disabled} name={name} choose={that.changeAnswer.bind(that, isAnswer)} />
 					);
 				}).toJS()
 		);
 	}
 	,
 	changeAnswer: function (alreadySelected, id) {
-		this.props.changeAnswer(alreadySelected ? null : id);
+		if (!this.props.disabled) {
+			this.props.changeAnswer(alreadySelected ? null : id);
+		}
 	}
 });
 
 AnswerTypes.Num = React.createClass({
 	shouldComponentUpdate: function (nextProps) {
-		console.log(this.props.answer);
 		var equal = this.props.answer === nextProps.answer;
 		return !equal;
 	}
@@ -56,7 +57,7 @@ AnswerTypes.Num = React.createClass({
 		var answer = this.props.answer > 0 ? this.props.answer : 0;
 		return (
 			<div style={{display: 'flex', justifyContent: 'space-around'}}>
-				<input type="range" value={answer.toString()} min="0" max="13" step="1" onChange={this.changeAnswer}
+				<input disabled={this.props.disabled} type="range" value={answer.toString()} min="0" max="13" step="1" onChange={this.changeAnswer}
 				style={{maxWidth: '300px'}} />
 				<Bs.Badge pullRight>{answer.toString()}</Bs.Badge>
 			</div>

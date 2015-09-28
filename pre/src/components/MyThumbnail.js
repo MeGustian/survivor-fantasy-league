@@ -20,7 +20,7 @@ var MyThumbnail = React.createClass({
 					onClick={that.props.choose.bind(null, p.id)}
 					src={nameToImg(p.name)}
 					alt={p.name}
-					style={{display: 'inline-block', border: (p.selected ? "3px solid green" : ""), width: '80px', marginRight: '10px', marginLeft: '10px'}}
+					style={{display: 'inline-block', border: (p.selected ? "3px solid green" : ""), width: '80px', marginRight: '10px', marginLeft: '10px', opacity: this.props.disabled ? '0.5' : ''}}
 				/>
 			</Bs.OverlayTrigger>
 		);

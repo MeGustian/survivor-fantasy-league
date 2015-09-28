@@ -222,7 +222,10 @@ var questions = function (prev, action) {
 		case 'GET-INITIAL-DONE':
 		return I.fromJS(action.payload.questions)
 				.map(function (details, id) {
-					return details.set('answer', action.payload.userAnswers[id]);
+					if (typeof action.payload.userAnswers === 'object') {
+						return details.set('answer', action.payload.userAnswers[id]);
+					}
+					return details;
 				})
 				.map(function (details, id) { // Fix booleans...
 					if (details.get('type') !== 'boolean' || !details.has('answer')) {
