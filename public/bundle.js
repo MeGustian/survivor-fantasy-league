@@ -58165,7 +58165,7 @@ AnswerTypes.Contestants = React.createClass({displayName: "Contestants",
 					var name = contestant.get('firstName') + " " + contestant.get('lastName');
 					var isAnswer = id === that.props.answer;
 					return (
-						React.createElement(MyThumbnail, {key: id, id: id, selected: isAnswer, name: name, choose: that.changeAnswer.bind(that, isAnswer)})
+						React.createElement(MyThumbnail, {key: id, id: id, selected: isAnswer, disabled: that.props.disabled, name: name, choose: that.changeAnswer.bind(that, isAnswer)})
 					);
 				}).toJS()
 		);
@@ -58342,7 +58342,7 @@ var MyThumbnail = React.createClass({displayName: "MyThumbnail",
 					onClick: that.props.choose.bind(null, p.id), 
 					src: nameToImg(p.name), 
 					alt: p.name, 
-					style: {display: 'inline-block', border: (p.selected ? "3px solid green" : ""), width: '80px', marginRight: '10px', marginLeft: '10px'}}
+					style: {display: 'inline-block', border: (p.selected ? "3px solid green" : ""), width: '80px', marginRight: '10px', marginLeft: '10px', opacity: this.props.disabled ? '0.5' : ''}}
 				)
 			)
 		);
@@ -58665,7 +58665,9 @@ var Quiz = React.createClass({displayName: "Quiz",
 							key: id, 
 							questionId: id, 
 							details: details, 
-							contestants: p.contestants, 
+							contestants: p.contestants.filter(function (contestant) {
+								return contestant.getIn(['weeks', p.weekNumber, 'tribe']);
+							}), 
 							user: p.user, 
 							open: p.open, 
 							handlers: p.dispatcher}
@@ -58736,9 +58738,11 @@ var Question = React.createClass({displayName: "Question",
 			var yes = answer ? " active" : "",
 				no = !answer ? " active" : "";
 			return (
+				React.createElement("div", {style: {display: 'flex', justifyContent: 'space-around'}}, 
 				React.createElement(Bs.ButtonGroup, null, 
 					React.createElement(Bs.Button, {bsStyle: "success", active: answer, onClick: this.changeAnswer.bind(this, true), disabled: !this.props.open}, "Yes"), 
 					React.createElement(Bs.Button, {bsStyle: "danger", active: !answer, onClick: this.changeAnswer.bind(this, false), disabled: !this.props.open}, "No")
+				)
 				)
 			);
 			case 'contestant':
@@ -59103,6 +59107,7 @@ var Fantasy = React.createClass({displayName: "Fantasy",
 					user: p.controller.get('user'), 
 					open: p.navigation.get('selectedWeek') === p.navigation.get('weekCount'), 
 					selected: p.navigation.get('selectedQuestion'), 
+					weekNumber: p.navigation.get('selectedWeek'), 
 					questions: p.questions.filter(function (q, id) {return q.get('weekNumber') === p.navigation.get('selectedWeek')}), 
 					contestants: p.contestants, 
 					dispatcher: {

@@ -131,6 +131,7 @@ var Fantasy = React.createClass({
 					user={p.controller.get('user')}
 					open={p.navigation.get('selectedWeek') === p.navigation.get('weekCount')}
 					selected={p.navigation.get('selectedQuestion')}
+					weekNumber={p.navigation.get('selectedWeek')}
 					questions={p.questions.filter(function (q, id) {return q.get('weekNumber') === p.navigation.get('selectedWeek')})}
 					contestants={p.contestants}
 					dispatcher={{

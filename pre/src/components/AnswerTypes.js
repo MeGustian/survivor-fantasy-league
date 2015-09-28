@@ -34,7 +34,7 @@ AnswerTypes.Contestants = React.createClass({
 					var name = contestant.get('firstName') + " " + contestant.get('lastName');
 					var isAnswer = id === that.props.answer;
 					return (
-						<MyThumbnail key={id} id={id} selected={isAnswer} name={name} choose={that.changeAnswer.bind(that, isAnswer)} />
+						<MyThumbnail key={id} id={id} selected={isAnswer} disabled={that.props.disabled} name={name} choose={that.changeAnswer.bind(that, isAnswer)} />
 					);
 				}).toJS()
 		);
