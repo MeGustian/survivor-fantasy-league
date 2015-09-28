@@ -8,6 +8,14 @@ var Num = AnswerTypes.Num;
 var now;
 
 var Quiz = React.createClass({
+	getInitialState: function () {
+		var listed = this.props.questions.flip().toList();
+		return {
+			listed: listed,
+			selected: 0
+		};
+	}
+	,
 	componentWillUpdate: function () {
 		now = Date.now();
 	}
@@ -21,16 +29,25 @@ var Quiz = React.createClass({
 		return (
 			<Bs.Row>
 				<Bs.Col xs={12} sm={10} smOffset={1} md={8} mdOffset={2}>
-					<Bs.Accordion>
-						{this.questions()}
-					</Bs.Accordion>
+					<Bs.Pager>
+						<Bs.PageItem onClick={this.changeQuestion.bind(this, -1)}>Previous</Bs.PageItem>
+						<Bs.PageItem onClick={this.changeQuestion.bind(this, +1)}>Next</Bs.PageItem>
+					</Bs.Pager>
+					{this.questions()}
 				</Bs.Col>
 			</Bs.Row>
 		);
 	}
 	,
+	changeQuestion: function (inc) {
+		var selected = this.state.selected;
+		var size = this.state.listed.size;
+		this.setState({selected: (selected + inc) % size});
+	}
+	,
 	questions: function () {
 		var p = this.props;
+		var s = this.state;
 		return React.addons.createFragment(
 			p.questions
 				.filter(function (details, id) {
@@ -38,14 +55,17 @@ var Quiz = React.createClass({
 				})
 				.map(function (details, id) {
 					return (
+						<div style={{display: s.listed.get(s.selected) === id ? 'initial' : 'none'}}>
 						<Question
 							key={id}
 							questionId={id}
 							details={details}
 							contestants={p.contestants}
 							user={p.user}
+							open={p.open}
 							handlers={p.dispatcher}
 						/>
+						</div>
 					);
 				})
 				.toJS()
@@ -111,9 +131,9 @@ var Question = React.createClass({
 			var yes = answer ? " active" : "",
 				no = !answer ? " active" : "";
 			return (
-				<Bs.ButtonGroup>
-					<Bs.Button bsStyle="success" active={answer} onClick={this.changeAnswer.bind(this, true)}>Yes</Bs.Button>
-					<Bs.Button bsStyle="danger" active={!answer} onClick={this.changeAnswer.bind(this, false)}>No</Bs.Button>
+				<Bs.ButtonGroup justified>
+					<Bs.Button bsStyle="success" active={answer} onClick={this.changeAnswer.bind(this, true)} disabled={this.props.open}>Yes</Bs.Button>
+					<Bs.Button bsStyle="danger" active={!answer} onClick={this.changeAnswer.bind(this, false)} disabled={this.props.open}>No</Bs.Button>
 				</Bs.ButtonGroup>
 			);
 			case 'contestant':

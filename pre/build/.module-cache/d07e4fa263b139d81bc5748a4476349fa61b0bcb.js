@@ -98,6 +98,7 @@ var navigation = function (prev, action) {
 		case 'WEEK-SELECT':
 		return prev
 			.set('selectedWeek', action.payload.weekNumber.toString());
+		case 'QUESTION-SELECT':
 		default:
 		return prev;
 	}
@@ -202,9 +203,11 @@ var questions = function (prev, action) {
 		case 'GET-INITIAL-DONE':
 		return I.fromJS(action.payload.questions)
 				.map(function (details, id) {
+					console.info(details.toString());
 					return details.set('answer', action.payload.userAnswers[id]);
 				})
 				.map(function (details, id) { // Fix booleans...
+					console.info(details.toString());
 					if (details.get('type') !== 'boolean' || !details.has('answer')) {
 						return details;
 					}

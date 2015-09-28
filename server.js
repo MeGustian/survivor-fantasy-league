@@ -7,7 +7,7 @@ var ini = {
 	// ],
 	questions: {
 		"125f": {
-			weekNumber: 1,
+			weekNumber: "1",
 			question: '1Cont?',
 			answer: "56029683b2c3b5601f976290",
 			type: 'contestant'
@@ -17,27 +17,30 @@ var ini = {
 			type: 'number'
 		},
 		"12asf5f": {
-			weekNumber: 2,
+			weekNumber: "2",
 			question: '2Cont?',
 			type: 'contestant'
 		},
 		"1ab25f": {
-			weekNumber: 2,
+			weekNumber: "2",
 			question: '2Cont?',
 			type: 'contestant'
 		},
 		"345646a": {
-			weekNumber: 2,
+			weekNumber: "2",
 			question: '2Num?',
 			answer: 4,
 			type: 'number'
 		},
 		"4576e": {
-			weekNumber: 1,
+			weekNumber: "1",
 			question: '1Bool?',
 			answer: true,
 			type: 'boolean'
 		}
+	},
+	userAnswers: {
+		"12asf5f": "56029683b2c3b5601f976290"
 	},
 	"contestants":{
 		"56029683b2c3b5601f976290":{

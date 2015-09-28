@@ -57738,12 +57738,12 @@ var requestParser = function (data, requestType, url) {
 		case 'POST':
 		return request('POST', url)
 			.send(data)
-			.timeout(1000)
+			.timeout(5000)
 			.end();
 		case 'GET':
 		return request('GET', url)
 			.query(data)
-			.timeout(1000)
+			.timeout(5000)
 			.end();
 		default:
 		throw 'requestParser unknown error';
@@ -58533,6 +58533,14 @@ var Num = AnswerTypes.Num;
 var now;
 
 var Quiz = React.createClass({displayName: "Quiz",
+	getInitialState: function () {
+		var listed = this.props.questions.flip().toList();
+		return {
+			listed: listed,
+			selected: 0
+		};
+	}
+	,
 	componentWillUpdate: function () {
 		now = Date.now();
 	}
@@ -58546,16 +58554,25 @@ var Quiz = React.createClass({displayName: "Quiz",
 		return (
 			React.createElement(Bs.Row, null, 
 				React.createElement(Bs.Col, {xs: 12, sm: 10, smOffset: 1, md: 8, mdOffset: 2}, 
-					React.createElement(Bs.Accordion, null, 
-						this.questions()
-					)
+					React.createElement(Bs.Pager, null, 
+						React.createElement(Bs.PageItem, {onClick: this.changeQuestion.bind(this, -1)}, "Previous"), 
+						React.createElement(Bs.PageItem, {onClick: this.changeQuestion.bind(this, +1)}, "Next")
+					), 
+					this.questions()
 				)
 			)
 		);
 	}
 	,
+	changeQuestion: function (inc) {
+		var selected = this.state.selected;
+		var size = this.state.listed.size;
+		this.setState({selected: (selected + inc) % size});
+	}
+	,
 	questions: function () {
 		var p = this.props;
+		var s = this.state;
 		return React.addons.createFragment(
 			p.questions
 				.filter(function (details, id) {
@@ -58563,13 +58580,16 @@ var Quiz = React.createClass({displayName: "Quiz",
 				})
 				.map(function (details, id) {
 					return (
+						React.createElement("div", {style: {display: s.listed.get(s.selected) === id ? 'initial' : 'none'}}, 
 						React.createElement(Question, {
 							key: id, 
 							questionId: id, 
 							details: details, 
 							contestants: p.contestants, 
 							user: p.user, 
+							open: p.open, 
 							handlers: p.dispatcher}
+						)
 						)
 					);
 				})
@@ -58636,9 +58656,9 @@ var Question = React.createClass({displayName: "Question",
 			var yes = answer ? " active" : "",
 				no = !answer ? " active" : "";
 			return (
-				React.createElement(Bs.ButtonGroup, null, 
-					React.createElement(Bs.Button, {bsStyle: "success", active: answer, onClick: this.changeAnswer.bind(this, true)}, "Yes"), 
-					React.createElement(Bs.Button, {bsStyle: "danger", active: !answer, onClick: this.changeAnswer.bind(this, false)}, "No")
+				React.createElement(Bs.ButtonGroup, {justified: true}, 
+					React.createElement(Bs.Button, {bsStyle: "success", active: answer, onClick: this.changeAnswer.bind(this, true), disabled: this.props.open}, "Yes"), 
+					React.createElement(Bs.Button, {bsStyle: "danger", active: !answer, onClick: this.changeAnswer.bind(this, false), disabled: this.props.open}, "No")
 				)
 			);
 			case 'contestant':
@@ -58955,9 +58975,6 @@ var Fantasy = React.createClass({displayName: "Fantasy",
 			return whatIsLoading;
 		}
 		var computedState = computerOfState(p);
-		// var fullContestants = p.contestants
-		// 	.getIn(['statuses', p.navigation.get('selectedWeek')])
-		// 	.mergeDeep(p.contestants.get('info'));
 		var circumstances = {
 			weekNumber: p.navigation.get('selectedWeek')
 		};
@@ -58988,7 +59005,7 @@ var Fantasy = React.createClass({displayName: "Fantasy",
 					submit: function (choices) {
 						return dispatch(act.submitChoices(choices));
 					}, 
-					info: p.contestants, // XXX: should work the same
+					info: p.contestants, 
 					selector: function (id) {
 						return dispatch(act.chooseContestant(id));
 					}}
@@ -58997,10 +59014,10 @@ var Fantasy = React.createClass({displayName: "Fantasy",
 				React.createElement("div", {style: {display: p.navigation.get('location') === 'weekly' ? 'initial' : 'none'}}, 
 				React.createElement(Quiz, {
 					key: "quiz", 
-					display: p.navigation.get('location') === 'weekly', 
 					user: p.controller.get('user'), 
-					questions: p.questions.filter(function (q, id) {return q.get('weekNumber') == p.navigation.get('selectedWeek')}), 
-					contestants: p.contestants, // XXX: should work the same
+					open: p.navigation.get('selectedWeek') === p.navigation.get('weekCount'), 
+					questions: p.questions.filter(function (q, id) {return q.get('weekNumber') === p.navigation.get('selectedWeek')}), 
+					contestants: p.contestants, 
 					dispatcher: {
 						userAnswer: function (questionId, answer) {
 							return dispatch(act.userAnswer(circumstances, questionId, answer));
@@ -59019,8 +59036,8 @@ var Fantasy = React.createClass({displayName: "Fantasy",
 				React.createElement(Tribes, {
 					key: "tribes", 
 					user: p.controller.get('user'), 
-					weekNumber: p.navigation.get('selectedWeek'), // XXX: added for modi
-					contestants: p.contestants, // XXX: this needs modi
+					weekNumber: p.navigation.get('selectedWeek'), 
+					contestants: p.contestants, 
 					scores: computedState.scores, 
 					toggleAchievement: function (achievementCode, contestantId, hasAchieved) {
 						return dispatch(act.toggleAchievement(circumstances, achievementCode, contestantId, hasAchieved));
@@ -59623,6 +59640,9 @@ var questions = function (prev, action) {
 	switch (action.type) {
 		case 'GET-INITIAL-DONE':
 		return I.fromJS(action.payload.questions)
+				.map(function (details, id) {
+					return details.set('answer', action.payload.userAnswers[id]);
+				})
 				.map(function (details, id) { // Fix booleans...
 					if (details.get('type') !== 'boolean' || !details.has('answer')) {
 						return details;

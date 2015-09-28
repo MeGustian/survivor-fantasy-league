@@ -201,6 +201,9 @@ var questions = function (prev, action) {
 	switch (action.type) {
 		case 'GET-INITIAL-DONE':
 		return I.fromJS(action.payload.questions)
+				.map(function (details, id) {
+					return details.set('answer', action.payload.userAnswers[id]);
+				})
 				.map(function (details, id) { // Fix booleans...
 					if (details.get('type') !== 'boolean' || !details.has('answer')) {
 						return details;

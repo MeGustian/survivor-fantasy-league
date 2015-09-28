@@ -12,7 +12,7 @@ var Quiz = React.createClass({displayName: "Quiz",
 		var listed = this.props.questions.flip().toList();
 		return {
 			listed: listed,
-			selected: 0
+			selected: 1
 		};
 	}
 	,
@@ -31,7 +31,7 @@ var Quiz = React.createClass({displayName: "Quiz",
 				React.createElement(Bs.Col, {xs: 12, sm: 10, smOffset: 1, md: 8, mdOffset: 2}, 
 					React.createElement(Bs.Pager, null, 
 						React.createElement(Bs.PageItem, {onClick: this.changeQuestion.bind(this, -1)}, "Previous"), 
-						React.createElement(Bs.PageItem, {onClick: this.changeQuestion.bind(this, +1)}, "Next")
+						React.createElement(Bs.PageItem, {onClick: this.changeQuestion.bind(this, 1)}, "Next")
 					), 
 					this.questions()
 				)
@@ -40,9 +40,10 @@ var Quiz = React.createClass({displayName: "Quiz",
 	}
 	,
 	changeQuestion: function (inc) {
+		console.log(inc);
 		var selected = this.state.selected;
-		var size = this.state.listed.size;
-		this.setState({selected: (selected + inc) % size});
+		this.setState({selected: selected + inc});
+		console.log(this.state);
 	}
 	,
 	questions: function () {

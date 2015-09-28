@@ -12,7 +12,7 @@ var Quiz = React.createClass({displayName: "Quiz",
 		var listed = this.props.questions.flip().toList();
 		return {
 			listed: listed,
-			selected: 0
+			selected: 1
 		};
 	}
 	,
@@ -41,13 +41,12 @@ var Quiz = React.createClass({displayName: "Quiz",
 	,
 	changeQuestion: function (inc) {
 		var selected = this.state.selected;
-		var size = this.state.listed.size;
-		this.setState({selected: (selected + inc) % size});
+		this.setState({selected: selected + inc});
+		console.log(this.state);
 	}
 	,
 	questions: function () {
 		var p = this.props;
-		var s = this.state;
 		return React.addons.createFragment(
 			p.questions
 				.filter(function (details, id) {
@@ -55,7 +54,6 @@ var Quiz = React.createClass({displayName: "Quiz",
 				})
 				.map(function (details, id) {
 					return (
-						React.createElement("div", {style: {display: s.listed.get(s.selected) === id ? 'initial' : 'none'}}, 
 						React.createElement(Question, {
 							key: id, 
 							questionId: id, 
@@ -64,7 +62,6 @@ var Quiz = React.createClass({displayName: "Quiz",
 							user: p.user, 
 							open: p.open, 
 							handlers: p.dispatcher}
-						)
 						)
 					);
 				})

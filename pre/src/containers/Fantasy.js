@@ -83,9 +83,6 @@ var Fantasy = React.createClass({
 			return whatIsLoading;
 		}
 		var computedState = computerOfState(p);
-		// var fullContestants = p.contestants
-		// 	.getIn(['statuses', p.navigation.get('selectedWeek')])
-		// 	.mergeDeep(p.contestants.get('info'));
 		var circumstances = {
 			weekNumber: p.navigation.get('selectedWeek')
 		};
@@ -116,7 +113,7 @@ var Fantasy = React.createClass({
 					submit={function (choices) {
 						return dispatch(act.submitChoices(choices));
 					}}
-					info={p.contestants} // XXX: should work the same
+					info={p.contestants}
 					selector={function (id) {
 						return dispatch(act.chooseContestant(id));
 					}}
@@ -125,10 +122,10 @@ var Fantasy = React.createClass({
 				<div style={{display: p.navigation.get('location') === 'weekly' ? 'initial' : 'none'}}>
 				<Quiz
 					key="quiz"
-					display={p.navigation.get('location') === 'weekly'}
 					user={p.controller.get('user')}
-					questions={p.questions.filter(function (q, id) {return q.get('weekNumber') == p.navigation.get('selectedWeek')})}
-					contestants={p.contestants} // XXX: should work the same
+					open={p.navigation.get('selectedWeek') === p.navigation.get('weekCount')}
+					questions={p.questions.filter(function (q, id) {return q.get('weekNumber') === p.navigation.get('selectedWeek')})}
+					contestants={p.contestants}
 					dispatcher={{
 						userAnswer: function (questionId, answer) {
 							return dispatch(act.userAnswer(circumstances, questionId, answer));
@@ -147,8 +144,8 @@ var Fantasy = React.createClass({
 				<Tribes
 					key="tribes"
 					user={p.controller.get('user')}
-					weekNumber={p.navigation.get('selectedWeek')} // XXX: added for modi
-					contestants={p.contestants} // XXX: this needs modi
+					weekNumber={p.navigation.get('selectedWeek')}
+					contestants={p.contestants}
 					scores={computedState.scores}
 					toggleAchievement={function (achievementCode, contestantId, hasAchieved) {
 						return dispatch(act.toggleAchievement(circumstances, achievementCode, contestantId, hasAchieved));

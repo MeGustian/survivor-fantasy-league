@@ -15,12 +15,12 @@ var requestParser = function (data, requestType, url) {
 		case 'POST':
 		return request('POST', url)
 			.send(data)
-			.timeout(1000)
+			.timeout(5000)
 			.end();
 		case 'GET':
 		return request('GET', url)
 			.query(data)
-			.timeout(1000)
+			.timeout(5000)
 			.end();
 		default:
 		throw 'requestParser unknown error';

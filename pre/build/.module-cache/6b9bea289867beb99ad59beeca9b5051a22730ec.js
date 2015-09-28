@@ -123,8 +123,8 @@ var Fantasy = React.createClass({displayName: "Fantasy",
 				React.createElement(Quiz, {
 					key: "quiz", 
 					user: p.controller.get('user'), 
-					open: p.navigation.get('selectedWeek') === p.navigation.get('weekCount'), 
-					questions: p.questions.filter(function (q, id) {return q.get('weekNumber') === p.navigation.get('selectedWeek')}), 
+					weekNumber: p.navigation.get('selectedWeek'), 
+					questions: p.questions.filter(function (q, id) {return q.get('weekNumber') == p.navigation.get('selectedWeek')}), 
 					contestants: p.contestants, 
 					dispatcher: {
 						userAnswer: function (questionId, answer) {

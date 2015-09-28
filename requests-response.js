@@ -20,9 +20,16 @@
 				<QuestionId>: {
 					weekNumber: <Number>,
 					question: <String>,
-					answer: <String|Number|ContestantId>, // The user's answer, not the actual answer.
+					answer: <String|Number|ContestantId>, // Actual answer.
 					type: <String>
 				}
+				.
+				.
+				.
+			}
+			,
+			userAnswers: {
+				<QuestionId>: <String|Number|ContestantId> // User's answer.
 				.
 				.
 				.

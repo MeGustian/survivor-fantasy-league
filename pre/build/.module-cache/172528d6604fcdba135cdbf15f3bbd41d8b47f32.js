@@ -12,7 +12,7 @@ var Quiz = React.createClass({displayName: "Quiz",
 		var listed = this.props.questions.flip().toList();
 		return {
 			listed: listed,
-			selected: 0
+			selected: 1
 		};
 	}
 	,
