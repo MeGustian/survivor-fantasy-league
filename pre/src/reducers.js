@@ -32,6 +32,8 @@ var initialState = I.fromJS({
 		weekCount: "0"
 		,
 		selectedWeek: "0"
+		,
+		selectedQuestion: 0
 	}
 	,
 	profile: {
@@ -94,10 +96,28 @@ var navigation = function (prev, action) {
 			.set('weekCount', action.payload.weekNumber.toString());
 		case 'NAVIGATE':
 		return prev
-			.set('location', action.payload.target);
-		case 'WEEK-SELECT':
+			.update(function (itself) {
+				var target = action.payload.target
+				if (target === 'week-last') {
+					return itself
+						.set('location', 'weekly')
+						.set('selectedWeek', (parseInt(prev.get('weekCount')) - 1).toString())
+						.set('selectedQuestion', 0);
+				}
+				if (target === 'week-upcoming') {
+					return itself
+						.set('location', 'weekly')
+						.set('selectedWeek', prev.get('weekCount'))
+						.set('selectedQuestion', 0);
+				}
+				return itself.set('location', target);
+			});
+		case 'SWITCH-QUESTION':
 		return prev
-			.set('selectedWeek', action.payload.weekNumber.toString());
+			.update('selectedQuestion', function (n) {return n + action.payload.increment});
+		// case 'WEEK-SELECT':
+		// return prev
+		// 	.set('selectedWeek', action.payload.weekNumber.toString());
 		default:
 		return prev;
 	}
@@ -201,14 +221,24 @@ var questions = function (prev, action) {
 	switch (action.type) {
 		case 'GET-INITIAL-DONE':
 		return I.fromJS(action.payload.questions)
+				.map(function (details, id) {
+					return details.set('answer', action.payload.userAnswers[id]);
+				})
 				.map(function (details, id) { // Fix booleans...
 					if (details.get('type') !== 'boolean' || !details.has('answer')) {
+						if (details.get('type') === 'number') {
+							return details.update('answer', function (numString) {
+								var num = parseInt(numString);
+								return num > 0 ? num : 0;
+							})
+						}
 						return details;
 					}
 					return details.update('answer', function (boolString) {
 						return truthiness(boolString);
 					});
-				});
+				})
+				.toOrderedMap();
 		// case 'CREATE-QUESTION-DONE':
 		// return prev
 		// 	.set(action.payload.questionId, Map({

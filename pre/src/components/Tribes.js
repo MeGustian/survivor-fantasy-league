@@ -5,7 +5,7 @@ var Achievements = require('./Achievements');
 
 var Tribes = React.createClass({
 	shouldComponentUpdate: function (nextProps) {
-		return !!this.props.user.get('isAdmin');
+		return !!this.props.user.get('isAdmin') || this.props.weekNumber !== nextProps.weekNumber;
 	}
 	,
 	render: function () {
@@ -22,17 +22,15 @@ var Tribes = React.createClass({
 		var byTribe = that.props.contestants
 			.groupBy(function (contestant) {
 				return contestant.getIn(['weeks', that.props.weekNumber, 'tribe']);
-			});
+			})
+			.filter(function (tribe, name) {return !!name;}); // Works for empty string and undefined.
 		return React.addons.createFragment(
 			byTribe
-				.filter(function (tribe, name) {return !!name;}) // Works for empty string and undefined.
 				.map(function (tribe, name) {
-					var hasVotedOutees = 0;
 					if (!name) { // Remove filter for this to not be vacant.
-						hasVotedOutees = 1;
 						name = "Voted Out";
 					}
-					var columns = byTribe.count() - hasVotedOutees; // Remove -1 when removing filter.
+					var columns = byTribe.count(); // Remove -1 when removing filter.
 					return (
 						<Bs.Col sm={12} md={12/columns} key={name}>
 							<h2>{name}</h2>
@@ -51,7 +49,7 @@ var Tribes = React.createClass({
 			tribe.map(function (contestant, id) {
 				var name = contestant.get('firstName') + " " + contestant.get('lastName');
 				return (
-					<Bs.Panel header={name} eventKey={id}>
+					<Bs.Panel bsStyle={that.props.chosen.has(id) ? 'primary' : 'default'} header={name} eventKey={id}>
 						<Contestant
 							contestant={id}
 							name={name}
@@ -60,7 +58,7 @@ var Tribes = React.createClass({
 							previousSeason={contestant.get('previousSeason')}
 							place={contestant.get('place')}
 							scores={that.props.scores.get(id)}
-							votedOut={contestant.getIn(['weeks', that.props.weekNumber, 'votedOut'])}
+							votedOut={contestant.getIn(['weeks', that.props.weekNumber, 'achievements', 'VOTED-OUT'])}
 						/>
 						<Achievements
 							contestant={id}

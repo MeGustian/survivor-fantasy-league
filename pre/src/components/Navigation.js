@@ -11,8 +11,11 @@ var Navigation = React.createClass({
 						<Bs.NavItem eventKey={'profile'}>
 							Profile
 						</Bs.NavItem>
-						<Bs.NavItem eventKey={'weekly'}>
-							Weekly
+						<Bs.NavItem eventKey={'week-upcoming'}>
+							Upcoming Week
+						</Bs.NavItem>
+						<Bs.NavItem eventKey={'week-last'}>
+							Last Week
 						</Bs.NavItem>
 					</Bs.Nav>
 					<Bs.Nav navbar right>

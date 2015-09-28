@@ -47,26 +47,24 @@ AnswerTypes.Contestants = React.createClass({
 
 AnswerTypes.Num = React.createClass({
 	shouldComponentUpdate: function (nextProps) {
+		console.log(this.props.answer);
 		var equal = this.props.answer === nextProps.answer;
 		return !equal;
 	}
 	,
 	render: function () {
+		var answer = this.props.answer > 0 ? this.props.answer : 0;
 		return (
-			<Bs.Pagination
-				prev
-				next
-				ellipsis
-				items={20}
-				maxButtons={5}
-				activePage={this.props.answer}
-				onSelect={this.changeAnswer}
-			/>
+			<div style={{display: 'flex', justifyContent: 'space-around'}}>
+				<input type="range" value={answer.toString()} min="0" max="13" step="1" onChange={this.changeAnswer}
+				style={{maxWidth: '300px'}} />
+				<Bs.Badge pullRight>{answer.toString()}</Bs.Badge>
+			</div>
 		);
 	}
 	,
-	changeAnswer: function (e, selectedEvent) {
-		this.props.changeAnswer(selectedEvent.eventKey);
+	changeAnswer: function (event) {
+		this.props.changeAnswer(event.target.value);
 	}
 });
 

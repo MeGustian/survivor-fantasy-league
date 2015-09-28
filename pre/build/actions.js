@@ -15,12 +15,12 @@ var requestParser = function (data, requestType, url) {
 		case 'POST':
 		return request('POST', url)
 			.send(data)
-			.timeout(1000)
+			.timeout(5000)
 			.end();
 		case 'GET':
 		return request('GET', url)
 			.query(data)
-			.timeout(1000)
+			.timeout(5000)
 			.end();
 		default:
 		throw 'requestParser unknown error';
@@ -64,6 +64,17 @@ act.navigate = function (target) {
 		,
 		payload: {
 			target: target
+		}
+	};
+};
+
+// Switch question in view.
+act.switchQuestion = function (inc) {
+	return {
+		type: 'SWITCH-QUESTION'
+		,
+		payload: {
+			increment: inc
 		}
 	};
 };
