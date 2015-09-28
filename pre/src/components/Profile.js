@@ -3,7 +3,7 @@ var Bs = require('react-bootstrap');
 var I = require('immutable');
 var MyThumbnail = require('./MyThumbnail');
 var Contestant = require('./Contestant');
-var nameToImg = require('../helpers/image-name')('slides');
+var nameToImg = require('../helpers/image-name')('slide');
 
 var Profile = React.createClass({
 	render: function () {
