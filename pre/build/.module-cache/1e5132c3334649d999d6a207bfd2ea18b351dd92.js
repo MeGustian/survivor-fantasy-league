@@ -9,83 +9,83 @@ var sizeToNameToImgUrl = function (size) {
 	var codes = {
 		"Abi-Maria Gomes": {
 			contestant: 'hwXOfa5',
-			slide: 'HtA1rsL'
+			slide: undefined
 		},
 		"Andrew Savage": {
 			contestant: 'kaINUJx',
-			slide: 'FcOhGUH'
+			slide: undefined
 		},
 		"Ciera Eastin": {
 			contestant: 'qSeTatq',
-			slide: 'muSotkg'
+			slide: undefined
 		},
 		"Jeff Varner": {
 			contestant: 'fP0vhbn',
-			slide: 'w8H2OZ8'
+			slide: undefined
 		},
 		"Jeremy Collins": {
 			contestant: 'UZ0fQ1Q',
-			slide: 'CeuGLM3'
+			slide: undefined
 		},
 		"Kelley Wentworth": {
 			contestant: 'YAbIoZs',
-			slide: 'M9NDaAp'
+			slide: undefined
 		},
 		"Kelly Wiglesworth": {
 			contestant: 'kPEL1hg',
-			slide: 'HFhCDAI'
+			slide: undefined
 		},
 		"Joe Anglim": {
 			contestant: 'wmkLj0S',
-			slide: 'Gl3q86V'
+			slide: undefined
 		},
 		"Peih-Gee Law": {
 			contestant: 'gXUjJIf',
-			slide: 'Z52gwGU'
+			slide: undefined
 		},
 		"Kass McQuillen": {
 			contestant: 'UyWnr0R',
-			slide: 'crUsEYI'
+			slide: undefined
 		},
 		"Keith Nale": {
 			contestant: 'sh1wzVU',
-			slide: 'A0VIELi'
+			slide: undefined
 		},
 		"Kimmi Kappenberg": {
 			contestant: 'yqq23cF',
-			slide: 'LLfPZw6'
+			slide: undefined
 		},
 		"Monica Padilla": {
 			contestant: 'sMjL9Ii',
-			slide: 'QbHEoM7'
+			slide: undefined
 		},
 		"Shirin Oskooi": {
 			contestant: 'OGBz0Gy',
-			slide: '8BBk0z0'
+			slide: undefined
 		},
 		"Spencer Bledsoe": {
 			contestant: 'srmXAnp',
-			slide: 'p2BvnR8'
+			slide: undefined
 		},
 		"Stephen Fishbach": {
 			contestant: 'lLfWAhQ',
-			slide: 'n4BgFwl'
+			slide: undefined
 		},
 		"Tasha Fox": {
 			contestant: 'FKM6qGw',
-			slide: 'zlPOkS9'
+			slide: undefined
 		},
 		"Terry Deitz": {
 			contestant: '2DFBXXy',
-			slide: 'v9PTsTy'
+			slide: undefined
 		},
 		"Vytas Baskauskas": {
 			contestant: 'qYXoO3s',
-			slide: 'AM2Z7jc'
+			slide: undefined
 		},
 		"Woo Hwang": {
 			contestant: 'OYXuHVz',
-			slide: '6ceNHzS'
+			slide: undefined
 		}
 	};
 	// Uncomment 2 lines below if you wish to use local files.
