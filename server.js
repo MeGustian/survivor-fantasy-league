@@ -1,5 +1,5 @@
 var ini = {
-	"isAdmin":"true",
+	"isAdmin":"false",
 	weekNumber:"2",
 	// chosen:[
 	// 	"56029683b2c3b5601f976290", "560296b7b2c3b5601f976291",
