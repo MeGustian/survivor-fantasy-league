@@ -49,7 +49,6 @@ AnswerTypes.Contestants = React.createClass({
 
 AnswerTypes.Num = React.createClass({
 	shouldComponentUpdate: function (nextProps) {
-		console.log(this.props.answer);
 		var equal = this.props.answer === nextProps.answer;
 		return !equal;
 	}

@@ -229,13 +229,7 @@ var Achievements = Map({
 	})
 })
 .sort(function (a, b) {
-	if (a.has('extra')) {
-		return -1;
-	}
-	if (b.has('extra')) {
-		return +1;
-	}
-	return Math.abs(a.get('points')) < Math.abs(b.get('points')) ? +1 : -1;
+	return Math.abs(a) < Math.abs(b) ? 1 : -1;
 });
 
 module.exports = Achievements;

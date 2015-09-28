@@ -42,7 +42,7 @@ var Help = React.createClass({displayName: "Help",
 			React.createElement("li", null, "Will the clue to the Hidden Immunity Idol be found?"), 
 			React.createElement("li", null, "Will a Hidden Immunity Idol be found?")
 			), 
-			React.createElement("p", null, "For more information and exciting news, please visit ", React.createElement("a", {href: "https://www.youtube.com/watch?v=dQw4w9WgXcQ", target: "_blank"}, "Survivor Fantasy League - Extended"), ".")
+			React.createElement("p", null, "For more information and exciting news, please visit ", React.createElement("a", {href: "https://www.youtube.com/watch?v=dQw4w9WgXcQ"}, "Survivor Fantasy League - Extended"), ".")
 			)
 			)
 		);

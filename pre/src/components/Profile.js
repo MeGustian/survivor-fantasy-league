@@ -29,6 +29,7 @@ var Profile = React.createClass({
 				<div>
 					<Bs.Alert bsStyle="info">
 						<p>Please select the <strong>4</strong> contestants you wish to follow throughout the season.</p>
+						<p style={{textAlign: 'center'}}><Bs.Button onClick={this.help}>Need help?</Bs.Button></p>
 					</Bs.Alert>
 					<Bs.Alert pullRight bsStyle="warning">
 						<p><strong>Notice:</strong> Submitting choices is permanent! Make sure the selected contestants are the ones you wish to choose.</p>
@@ -49,6 +50,10 @@ var Profile = React.createClass({
 	,
 	submit: function () {
 		this.props.submit(this.props.chosen);
+	}
+	,
+	help: function () {
+		this.props.navigate('help');
 	}
 	,
 	full: function () {

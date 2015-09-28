@@ -52,10 +52,6 @@ var Profile = React.createClass({displayName: "Profile",
 		this.props.submit(this.props.chosen);
 	}
 	,
-	help: function () {
-		this.props.navigate('help');
-	}
-	,
 	full: function () {
 		if (I.Set.isSet(this.props.chosen)) {
 			return this.props.chosen.size !== 4;

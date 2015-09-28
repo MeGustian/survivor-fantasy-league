@@ -112,6 +112,9 @@ var Fantasy = React.createClass({
 					user={p.controller.get('user')}
 					chosen={p.profile.get('chosen')}
 					submittedChoices={p.profile.get('submittedChoices')}
+					navigate={function (target) {
+						return dispatch(act.navigate(target));
+					}}
 					submit={function (choices) {
 						return dispatch(act.submitChoices(choices));
 					}}

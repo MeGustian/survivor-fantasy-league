@@ -12,8 +12,8 @@ var Help = React.createClass({
 			<p>Compete against your friends in the ultimate Survivor League manager and fight
 			for the title of sole survivor!</p>
 			<h2><a id="The_Rules_5"></a>The Rules:</h2>
-			<p>You will need to select FOUR castaways to make up your team. You do NOT have to select both men and women, nor people from both tribes - though, of course, you can if you want to!
-			There is no limit to how many people can select a single contestant, but no two people can have the EXACT SAME line-up.
+			<p>In your profile page, select <strong>four</strong> castaways to make up your team. You do <strong>not</strong> have to select both men and women, nor people from both tribes - though, of course, you can if you want to!
+			There is no limit to how many people can select a single contestant, but no two people can have the <strong>exact same</strong> line-up.
 			For instance, everybody can have Spencer on their team if they want, but only one person could have the team of Spencer, Kelly, Joe and Andrew.</p>
 			<p>The four people on your team will score points on a weekly basis, based on the achievements below.
 			There are points on offer for post-elimination events, so just because one of your castaways is eliminated, it doesn’t mean they’ll stop scoring you points!</p>
@@ -42,7 +42,7 @@ var Help = React.createClass({
 			<li>Will the clue to the Hidden Immunity Idol be found?</li>
 			<li>Will a Hidden Immunity Idol be found?</li>
 			</ul>
-			<p>For more information and exciting news, please visit <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">Survivor Fantasy League - Extended</a>.</p>
+			<p>For more information and exciting news, please visit <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" target="_blank">Survivor Fantasy League - Extended</a>.</p>
 			</Bs.Col>
 			</Bs.Row>
 		);

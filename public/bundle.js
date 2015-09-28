@@ -58180,7 +58180,6 @@ AnswerTypes.Contestants = React.createClass({displayName: "Contestants",
 
 AnswerTypes.Num = React.createClass({displayName: "Num",
 	shouldComponentUpdate: function (nextProps) {
-		console.log(this.props.answer);
 		var equal = this.props.answer === nextProps.answer;
 		return !equal;
 	}
@@ -58281,8 +58280,8 @@ var Help = React.createClass({displayName: "Help",
 			React.createElement("p", null, "Compete against your friends in the ultimate Survivor League manager and fight" + ' ' +
 			"for the title of sole survivor!"), 
 			React.createElement("h2", null, React.createElement("a", {id: "The_Rules_5"}), "The Rules:"), 
-			React.createElement("p", null, "You will need to select FOUR castaways to make up your team. You do NOT have to select both men and women, nor people from both tribes - though, of course, you can if you want to!" + ' ' +
-			"There is no limit to how many people can select a single contestant, but no two people can have the EXACT SAME line-up." + ' ' +
+			React.createElement("p", null, "In your profile page, select ", React.createElement("strong", null, "four"), " castaways to make up your team. You do ", React.createElement("strong", null, "not"), " have to select both men and women, nor people from both tribes - though, of course, you can if you want to!" + ' ' +
+			"There is no limit to how many people can select a single contestant, but no two people can have the ", React.createElement("strong", null, "exact same"), " line-up." + ' ' +
 			"For instance, everybody can have Spencer on their team if they want, but only one person could have the team of Spencer, Kelly, Joe and Andrew."), 
 			React.createElement("p", null, "The four people on your team will score points on a weekly basis, based on the achievements below." + ' ' +
 			"There are points on offer for post-elimination events, so just because one of your castaways is eliminated, it doesn’t mean they’ll stop scoring you points!"), 
@@ -58311,7 +58310,7 @@ var Help = React.createClass({displayName: "Help",
 			React.createElement("li", null, "Will the clue to the Hidden Immunity Idol be found?"), 
 			React.createElement("li", null, "Will a Hidden Immunity Idol be found?")
 			), 
-			React.createElement("p", null, "For more information and exciting news, please visit ", React.createElement("a", {href: "https://www.youtube.com/watch?v=dQw4w9WgXcQ"}, "Survivor Fantasy League - Extended"), ".")
+			React.createElement("p", null, "For more information and exciting news, please visit ", React.createElement("a", {href: "https://www.youtube.com/watch?v=dQw4w9WgXcQ", target: "_blank"}, "Survivor Fantasy League - Extended"), ".")
 			)
 			)
 		);
@@ -58437,7 +58436,8 @@ var Profile = React.createClass({displayName: "Profile",
 				React.createElement(Bs.Col, {sm: 12, md: 10, mdOffset: 1}, 
 				React.createElement("div", null, 
 					React.createElement(Bs.Alert, {bsStyle: "info"}, 
-						React.createElement("p", null, "Please select the ", React.createElement("strong", null, "4"), " contestants you wish to follow throughout the season.")
+						React.createElement("p", null, "Please select the ", React.createElement("strong", null, "4"), " contestants you wish to follow throughout the season."), 
+						React.createElement("p", {style: {textAlign: 'center'}}, React.createElement(Bs.Button, {onClick: this.help}, "Need help?"))
 					), 
 					React.createElement(Bs.Alert, {pullRight: true, bsStyle: "warning"}, 
 						React.createElement("p", null, React.createElement("strong", null, "Notice:"), " Submitting choices is permanent! Make sure the selected contestants are the ones you wish to choose."), 
@@ -58458,6 +58458,10 @@ var Profile = React.createClass({displayName: "Profile",
 	,
 	submit: function () {
 		this.props.submit(this.props.chosen);
+	}
+	,
+	help: function () {
+		this.props.navigate('help');
 	}
 	,
 	full: function () {
@@ -59080,6 +59084,9 @@ var Fantasy = React.createClass({displayName: "Fantasy",
 					user: p.controller.get('user'), 
 					chosen: p.profile.get('chosen'), 
 					submittedChoices: p.profile.get('submittedChoices'), 
+					navigate: function (target) {
+						return dispatch(act.navigate(target));
+					}, 
 					submit: function (choices) {
 						return dispatch(act.submitChoices(choices));
 					}, 
@@ -59583,6 +59590,15 @@ var Achievements = Map({
 		text: 'Won First Place!!!',
 		points: 300
 	})
+})
+.sort(function (a, b) {
+	if (a.has('extra')) {
+		return -1;
+	}
+	if (b.has('extra')) {
+		return +1;
+	}
+	return Math.abs(a.get('points')) < Math.abs(b.get('points')) ? +1 : -1;
 });
 
 module.exports = Achievements;
