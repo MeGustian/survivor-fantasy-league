@@ -9,6 +9,7 @@ var connect = require('react-redux').connect; // Connect react container to redu
 
 // Components. // TODO: Add proptypes to components (in their files).
 var Navigation = require('../components/Navigation'); // Explain...
+var Welcome = require('../components/Welcome'); // Explain...
 var Profile = require('../components/Profile'); // Explain...
 var Tribes = require('../components/Tribes'); // Explain...
 var Quiz = require('../components/Quiz'); // Explain...
@@ -125,7 +126,7 @@ var Fantasy = React.createClass({
 				/>
 				</div>
 				<div style={{display: p.navigation.get('location') === 'weekly' ? 'initial' : 'none'}}>
-				<Bs.PageHeader>{"Week #" + p.navigation.get('selectedWeek')}</Bs.PageHeader>
+				<Welcome selectedWeek={p.navigation.get('selectedWeek')} />
 				<Quiz
 					key="quiz"
 					user={p.controller.get('user')}
