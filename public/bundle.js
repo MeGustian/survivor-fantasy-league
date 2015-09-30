@@ -58677,6 +58677,7 @@ var Quiz = React.createClass({displayName: "Quiz",
 						React.createElement(Question, {
 							key: id, 
 							questionId: id, 
+							numbering: {is: mod(p.selected, p.questions.size)+1, of: p.questions.size}, 
 							details: details, 
 							contestants: p.contestants.filter(function (contestant) {
 								return contestant.getIn(['weeks', p.weekNumber, 'tribe']);
@@ -58709,8 +58710,11 @@ var Question = React.createClass({displayName: "Question",
 		return (
 			React.createElement(Bs.Panel, {eventKey: this.props.id, header: 
 				React.createElement("div", {style: stylePanelHeadingInner}, 
-					this.questionRender()
+					this.questionRender(), 
 					/*this.tools()*/
+					React.createElement("div", {className: "pull-right"}, 
+					this.props.numbering.is + " / " + this.props.numbering.of
+					)
 				)
 			}, 
 					this.bodyRender()
