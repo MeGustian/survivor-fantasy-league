@@ -60100,6 +60100,16 @@ var checkProperties = function (obj, props) {
 module.exports = reducers;
 
 },{"immutable":65,"lodash":71,"promise":134,"redux":430,"superagent":439,"superagent-promise":438}],467:[function(require,module,exports){
+// Disable console methods.
+var DEBUG = true;
+if(!DEBUG){
+	if(!window.console) window.console = {};
+	var methods = ["log", "debug", "warn", "info", "group", "groupCollapsed", "groupEnd"];
+	for(var i=0;i<methods.length;i++){
+		console[methods[i]] = function(){};
+	}
+}
+
 console.log('requiring...');
 require('./build/index');
 console.log('required!');
