@@ -20,11 +20,7 @@ var Tribes = React.createClass({
 	,
 	tribes: function () {
 		var that = this;
-		var byTribe = that.props.contestants
-			.groupBy(function (contestant) {
-				return contestant.getIn(['weeks', that.props.weekNumber, 'tribe']);
-			})
-			.filter(function (tribe, name) {return !!name;}); // Works for empty string and undefined.
+		var byTribe = require('../helpers/tribe-grouping')(that.props.weekNumber, that.props.contestants);
 		return React.addons.createFragment(
 			byTribe
 				.map(function (tribe, name) {
