@@ -1,90 +1,91 @@
-var React = require('react');
+var React = require('react/addons');
+var Bs = require('react-bootstrap');
 var AchievementsObj = require('../objects/Achievements');
 
 var Achievements = React.createClass({
+	shouldComponentUpdate: function (nextProps) {
+		var equal = (
+			this.props.scores.every(function (val, key) {
+				return val === nextProps.scores.get(key);
+			}) &&
+			this.props.achievements.every(function (val, key) {
+				return val === nextProps.achievements.get(key);
+			})
+		);
+		return !equal;
+	}
+	,
 	render: function () {
+		var scroll = {
+			maxHeight: '150px',
+			overflowY: 'scroll'
+		};
 		return (
-			<div className="col-xs-6">
-			<div className="row">
-			<div className="col-xs-12 col-md-6">
+			<Bs.Row>
+			<Bs.Col sm={12} md={6}>
 				<div className="panel panel-success">
 					<div className="panel-heading">
 						Good achievements
 						<span className="badge pull-right">{this.props.scores.get('good')}</span>
 					</div>
-					<ul className="list-group">
+					<ul className="list-group" style={scroll}>
 						{this.items('good')}
 					</ul>
 				</div>
-			</div>
-			<div className="col-xs-12 col-md-6">
+			</Bs.Col>
+			<Bs.Col sm={12} md={6}>
 				<div className="panel panel-danger">
 					<div className="panel-heading">
 						Bad achievements
 						<span className="badge pull-right">{this.props.scores.get('bad')}</span>
 					</div>
-					<ul className="list-group">
+					<ul className="list-group" style={scroll}>
 						{this.items('bad')}
 					</ul>
 				</div>
-			</div>
-			</div>
-			</div>
+			</Bs.Col>
+			</Bs.Row>
 		);
 	}
 	,
 	items: function (alignment) {
 		var that = this;
-		// var alignmentToLabelType = {
-		// 	good: 'success',
-		// 	bad: 'danger'
-		// };
-		return this
-			.filterByAlignment(alignment)
-			.filter(function (theAchievement, achievementCode) {
-				var isAdmin = that.props.isAdmin;
-				var hasAchieved = !!that.props.achievements.get(achievementCode);
-				return isAdmin || hasAchieved;
-			})
-			.map(function (theAchievement, achievementCode) {
-				var labelType;
-				var isAdmin = that.props.isAdmin; // TODO: Remove glyphs for none admins.
-				var hasAchieved = !!that.props.achievements.get(achievementCode);
-				return (
-					<li className="list-group-item" key={achievementCode}>
-						<span
-							className={"badge pull-right"}
-							onClick={that.toggleAchievement.bind(that, achievementCode, hasAchieved)}
-						>
-							{hasAchieved ? theAchievement.get('points') : 0}
-						</span>
-						<span style={{marginRight: '1em'}}>
-							{theAchievement.get('text')}
-						</span>
-					</li>
-				);
-				// if (!hasAchieved) {
-				// 	labelType = 'default';
-				// 	labelGlyph = 'remove-sign';
-				// } else {
-				// 	labelType = alignmentToLabelType[alignment];
-				// 	labelGlyph = 'ok-sign';
-				// }
-				// return (
-				// 	<li className="list-group-item" key={achievementCode}>
-				// 		<span
-				// 			className={"pull-right label label-" + labelType}
-				// 			onClick={that.toggleAchievement.bind(that, achievementCode, hasAchieved)}
-				// 			style={{fontFamily: 'monospace'}}
-				// 		>
-				// 			<span className={"glyphicon glyphicon-" + labelGlyph}></span>
-				// 		</span>
-				// 		<span style={{marginRight: '1em'}}>
-				// 			{theAchievement.get('text')}
-				// 		</span>
-				// 	</li>
-				// );
-			});
+		return React.addons.createFragment(
+			that
+				.filterByAlignment(alignment)
+				.filter(function (theAchievement, achievementCode) {
+					var hasAchieved = !!that.props.achievements.get(achievementCode);
+					return that.props.isAdmin || that.props.isHelp || hasAchieved;
+				})
+				.map(function (theAchievement, achievementCode) {
+					var labelType;
+					var hasAchieved = !!that.props.achievements.get(achievementCode);
+					var mult = (theAchievement.get('extra') === '10*(weekNumber)') ? that.props.weekNumber : 1;
+					var badge = hasAchieved ? theAchievement.get('points')*mult : 0;
+					if (that.props.isAdmin) {
+						badge += " / " + theAchievement.get('points')*mult;
+					}
+					if (that.props.isHelp) {
+						badge = theAchievement.get('points');
+						if ((theAchievement.get('extra') === '10*(weekNumber)')) {
+							badge += ' ' + String.fromCharCode(215) + ' episode week';
+						}
+					}
+					return (
+						<li className="list-group-item" key={achievementCode}>
+							<span
+								className={"badge pull-right"}
+								onClick={that.toggleAchievement.bind(that, achievementCode, hasAchieved)}
+							>
+								{badge}
+							</span>
+							<span style={{marginRight: '1em'}}>
+								{theAchievement.get('text')}
+							</span>
+						</li>
+					);
+				}).toJS()
+		);
 	}
 	,
 	score: function (alignment) {

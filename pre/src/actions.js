@@ -15,12 +15,12 @@ var requestParser = function (data, requestType, url) {
 		case 'POST':
 		return request('POST', url)
 			.send(data)
-			.timeout(1000)
+			.timeout(5000)
 			.end();
 		case 'GET':
 		return request('GET', url)
 			.query(data)
-			.timeout(1000)
+			.timeout(5000)
 			.end();
 		default:
 		throw 'requestParser unknown error';
@@ -43,23 +43,6 @@ var actionParser = function (data, requestType, circumstances) {
 	};
 };
 
-// Sign in.
-// act.signIn = function (username, password, isAdmin) {
-// 	return actionParser({
-// 		meta: 'SIGN-IN',
-// 		username: username,
-// 		password: password,
-// 		isAdmin: isAdmin
-// 	}, 'POST', {url: '/sign-in'});
-// };
-
-// Sign out.
-act.signOut = function () {
-	return actionParser({
-		meta: 'SIGN-OUT'
-	}, 'GET', {url: '/sign-out'});
-};
-
 // Get information after being signed in.
 act.getInitial = function () {
 	return actionParser({
@@ -67,59 +50,92 @@ act.getInitial = function () {
 	}, 'GET', {url: '/initial'});
 };
 
-// Player/Admin chose a week to view.
-act.generateNextWeek = function (circumstances, removedContestants) {
-	return actionParser({
-		meta: 'WEEK-VIEW-SELECT',
-		removedContestants: removedContestants
-	}, 'POST', {weekNumber: circumstances.weekNumber + 1});
-};
+// Get specific week.
+// act.getWeek = function (weekNumber) {
+// 	return actionParser({
+// 		meta: 'GET-WEEK'
+// 	}, 'GET', {weekNumber: weekNumber});
+// };
 
-// Player/Admin chose a week to view.
-act.selectWeekView = function (circumstances, number) {
-	return actionParser({
-		meta: 'WEEK-VIEW-SELECT'
-	}, 'GET', {weekNumber: number});
-};
-
-// Admin creates question.
-act.createQuestion = function (circumstances, type) {
-	return actionParser({
-		meta: 'CREATE-QUESTION',
-		type: type
-	}, 'POST', circumstances);
-};
-
-// Admin removes question.
-act.removeQuestion = function (circumstances, questionId) {
-	return actionParser({
-		meta: 'REMOVE-QUESTION',
-		questionId: questionId
-	}, 'POST', circumstances);
-};
-
-// Admin enters edit mode.
-act.editQuestion = function (questionId, isEditing) {
+// Navigation.
+act.navigate = function (target) {
 	return {
-		type: 'EDIT-QUESTION'
+		type: 'NAVIGATE'
 		,
 		payload: {
-			questionId: questionId,
-			isEditing: isEditing
+			target: target
 		}
 	};
 };
 
-// Admin submits question details.
-act.updateQuestion = function (circumstances, questionId, question, answer, type) {
-	return actionParser({
-		meta: 'UPDATE-QUESTION',
-		questionId: questionId,
-		question: question,
-		answer: answer,
-		type: type
-	}, 'POST', circumstances);
+// Switch question in view.
+act.switchQuestion = function (inc) {
+	return {
+		type: 'SWITCH-QUESTION'
+		,
+		payload: {
+			increment: inc
+		}
+	};
 };
+
+// Player/Admin chose a week to view.
+// act.generateNextWeek = function (circumstances, removedContestants) {
+// 	return actionParser({
+// 		meta: ''
+// 	}, 'POST', {weekNumber: circumstances.weekNumber + 1});
+// };
+
+// Player/Admin chose a week to view.
+act.selectWeek = function (circumstances, weekNumber) {
+	return {
+		type: 'WEEK-SELECT'
+		,
+		payload: {
+			weekNumber: weekNumber
+		}
+	}
+};
+
+// Admin creates question.
+// act.createQuestion = function (circumstances, type) {
+// 	return actionParser({
+// 		meta: 'CREATE-QUESTION',
+// 		type: type,
+// 		weekNumber: circumstances.weekNumber
+// 	}, 'POST', circumstances);
+// };
+
+// Admin removes question.
+// act.removeQuestion = function (circumstances, questionId) {
+// 	return actionParser({
+// 		meta: 'REMOVE-QUESTION',
+// 		questionId: questionId
+// 	}, 'POST', circumstances);
+// };
+
+// Admin enters edit mode.
+// act.editQuestion = function (questionId, isEditing) {
+// 	return {
+// 		type: 'EDIT-QUESTION'
+// 		,
+// 		payload: {
+// 			questionId: questionId,
+// 			isEditing: isEditing
+// 		}
+// 	};
+// };
+
+// Admin submits question details.
+// act.updateQuestion = function (circumstances, questionId, question, answer, type) {
+// 	return actionParser({
+// 		meta: 'UPDATE-QUESTION',
+// 		questionId: questionId,
+// 		question: question,
+// 		answer: answer,
+// 		type: type
+// 	}, 'POST', circumstances);
+// };
 
 // User submit answer to questions.
 act.userAnswer = function (circumstances, questionId, answer) {
@@ -136,17 +152,37 @@ act.toggleAchievement = function (circumstances, achievement, contestantId, hasA
 		meta: 'TOGGLE-ACHIEVEMENT',
 		achievement: achievement,
 		contestantId: contestantId,
-		value: !hasAchieved
+		value: !hasAchieved,
+		weekNumber: circumstances.weekNumber
 	}, 'POST', circumstances);
 };
 
-// Player choses contestants. // TODO: Make this work.
-act.choose = function (listOfContestants) {
+// Admin toggles voted out of contestant.
+// act.toggleVotedOut = function (circumstances, contestantId, votedOut) {
+// 	return actionParser({
+// 		meta: 'TOGGLE-ACHIEVEMENT',
+// 		contestantId: contestantId,
+// 		value: !votedOut
+// 	}, 'POST', circumstances);
+// };
+
+// Player choses contestants.
+act.chooseContestant = function (id) {
 	return {
-		type: 'PLAYER-CHOOSE-CONTESTANTS'
+		type: 'CHOOSE-CONTESTANT'
 		,
-		payload: listOfContestants
+		payload: {
+			id: id
+		}
 	};
+};
+
+// Submit Choices.
+act.submitChoices = function (choices) {
+	return actionParser({
+		meta: 'CONTESTANT-CHOICE',
+		chosen: choices.toArray()
+	}, 'POST', {url: '/'});
 };
 
 module.exports = act;

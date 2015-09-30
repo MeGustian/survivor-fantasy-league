@@ -1,5 +1,6 @@
-body {
-  padding-top: 120px;
+.badge {
+  margin-left: 0.5em;
+  vertical-align: middle;
 }
 #root {
   margin-left: 5%;
