@@ -58,19 +58,13 @@ var Tribes = React.createClass({displayName: "Tribes",
 				return (
 					React.createElement(Bs.Panel, {bsStyle: that.props.chosen.has(id) ? 'primary' : 'default', header: 
 						React.createElement("div", null, 
-						React.createElement(Bs.OverlayTrigger, {trigger: "hover", placement: "top", overlay: 
-							React.createElement(Bs.Popover, null, 
+						React.createElement("div", {style: stylePanelHeadingInner}, 
 							React.createElement(Bs.Thumbnail, {
 								src: nameToImg(name), 
 								alt: name, 
 								style: {display: 'inline-block', marginBottom: '3px', opacity: '0.4'}}
-							)
-							)
-						}, 
-						React.createElement("div", {style: stylePanelHeadingInner}, 
-
+							), 
 							name, React.createElement("div", {className: "badge"}, that.props.scores.get(id) && that.props.scores.get(id).get('total'))
-						)
 						)
 						), 
 					eventKey: id}, 

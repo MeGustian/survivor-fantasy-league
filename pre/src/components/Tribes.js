@@ -2,6 +2,7 @@ var React = require('react/addons');
 var Bs = require('react-bootstrap');
 var Contestant = require('./Contestant');
 var Achievements = require('./Achievements');
+var nameToImg = require('../helpers/image-name')('contestant');
 
 var Tribes = React.createClass({
 	shouldComponentUpdate: function (nextProps) {
@@ -45,12 +46,33 @@ var Tribes = React.createClass({
 	,
 	membersOf: function (tribe) {
 		var that = this;
+		var stylePanelHeadingInner = {
+			display: 'flex',
+			flexDirection: 'row',
+			justifyContent: 'space-between',
+			alignItems: 'center'
+		};
 		return React.addons.createFragment(
 			tribe.map(function (contestant, id) {
 				var name = contestant.get('firstName') + " " + contestant.get('lastName');
 				return (
 					<Bs.Panel bsStyle={that.props.chosen.has(id) ? 'primary' : 'default'} header={
-						<div>{name}<div className="badge pull-right">{that.props.scores.get(id) && that.props.scores.get(id).get('total')}</div></div>
+						<div>
+						<Bs.OverlayTrigger trigger="hover" placement="top" overlay={
+							<Bs.Popover>
+							<Bs.Thumbnail
+								src={nameToImg(name)}
+								alt={name}
+								style={{display: 'inline-block', marginBottom: '3px', opacity: '0.4'}}
+							/>
+							</Bs.Popover>
+						}>
+						<div style={stylePanelHeadingInner}>
+
+							{name}<div className="badge">{that.props.scores.get(id) && that.props.scores.get(id).get('total')}</div>
+						</div>
+						</Bs.OverlayTrigger>
+						</div>
 					} eventKey={id}>
 						<Contestant
 							contestant={id}

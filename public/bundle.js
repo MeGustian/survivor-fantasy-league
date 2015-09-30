@@ -58351,21 +58351,25 @@ var MyThumbnail = React.createClass({displayName: "MyThumbnail",
 		return (
 			React.createElement(Bs.OverlayTrigger, {placement: "top", overlay: tooltip, key: p.id, id: p.name}, 
 				React.createElement(Bs.Thumbnail, {
-					onClick: that.props.choose.bind(null, p.id), 
+					onClick: that.props.choose && that.props.choose.bind(null, p.id), 
 					src: nameToImg(p.name), 
 					alt: p.name, 
-					style: {display: 'inline-block', border: (p.selected ? "3px solid green" : ""), width: '80px', marginRight: '10px', marginLeft: '10px', opacity: this.props.disabled ? '0.5' : ''}}
+					style: {display: 'inline-block', border: (p.selected ? "3px solid green" : ""), width: '80px', marginBottom: '3px', marginRight: '10px', marginLeft: '10px', opacity: p.disabled ? '0.5' : ''}}
 				)
 			)
 		);
 	}
 	,
 	propTypes: {
-		selected: PropTypes.bool.isRequired
+		selected: PropTypes.bool
+		,
+		disabled: PropTypes.bool
 		,
 		name: PropTypes.string.isRequired
 		,
 		id: PropTypes.any.isRequired
+		,
+		choose: PropTypes.func
 	}
 });
 
@@ -58870,6 +58874,7 @@ var React = require('react/addons');
 var Bs = require('react-bootstrap');
 var Contestant = require('./Contestant');
 var Achievements = require('./Achievements');
+var nameToImg = require('../helpers/image-name')('contestant');
 
 var Tribes = React.createClass({displayName: "Tribes",
 	shouldComponentUpdate: function (nextProps) {
@@ -58913,12 +58918,33 @@ var Tribes = React.createClass({displayName: "Tribes",
 	,
 	membersOf: function (tribe) {
 		var that = this;
+		var stylePanelHeadingInner = {
+			display: 'flex',
+			flexDirection: 'row',
+			justifyContent: 'space-between',
+			alignItems: 'center'
+		};
 		return React.addons.createFragment(
 			tribe.map(function (contestant, id) {
 				var name = contestant.get('firstName') + " " + contestant.get('lastName');
 				return (
 					React.createElement(Bs.Panel, {bsStyle: that.props.chosen.has(id) ? 'primary' : 'default', header: 
-						React.createElement("div", null, name, React.createElement("div", {className: "badge pull-right"}, that.props.scores.get(id) && that.props.scores.get(id).get('total'))), 
+						React.createElement("div", null, 
+						React.createElement(Bs.OverlayTrigger, {trigger: "hover", placement: "top", overlay: 
+							React.createElement(Bs.Popover, null, 
+							React.createElement(Bs.Thumbnail, {
+								src: nameToImg(name), 
+								alt: name, 
+								style: {display: 'inline-block', marginBottom: '3px', opacity: '0.4'}}
+							)
+							)
+						}, 
+						React.createElement("div", {style: stylePanelHeadingInner}, 
+
+							name, React.createElement("div", {className: "badge"}, that.props.scores.get(id) && that.props.scores.get(id).get('total'))
+						)
+						)
+						), 
 					eventKey: id}, 
 						React.createElement(Contestant, {
 							contestant: id, 
@@ -58947,7 +58973,7 @@ var Tribes = React.createClass({displayName: "Tribes",
 
 module.exports = Tribes;
 
-},{"./Achievements":446,"./Contestant":450,"react-bootstrap":215,"react/addons":251}],457:[function(require,module,exports){
+},{"../helpers/image-name":462,"./Achievements":446,"./Contestant":450,"react-bootstrap":215,"react/addons":251}],457:[function(require,module,exports){
 var React = require('react/addons');
 var PropTypes = React.PropTypes;
 var ImmutablePropTypes = require('react-immutable-proptypes');

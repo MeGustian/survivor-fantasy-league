@@ -2,7 +2,7 @@ var React = require('react/addons');
 var Bs = require('react-bootstrap');
 var Contestant = require('./Contestant');
 var Achievements = require('./Achievements');
-var nameToImg = require('../helpers/image-name')('contestant');
+var MyThumbnail = require('./MyThumbnail');
 
 var Tribes = React.createClass({displayName: "Tribes",
 	shouldComponentUpdate: function (nextProps) {
@@ -46,32 +46,14 @@ var Tribes = React.createClass({displayName: "Tribes",
 	,
 	membersOf: function (tribe) {
 		var that = this;
-		var stylePanelHeadingInner = {
-			display: 'flex',
-			flexDirection: 'row',
-			justifyContent: 'space-between',
-			alignItems: 'center'
-		};
 		return React.addons.createFragment(
 			tribe.map(function (contestant, id) {
 				var name = contestant.get('firstName') + " " + contestant.get('lastName');
 				return (
 					React.createElement(Bs.Panel, {bsStyle: that.props.chosen.has(id) ? 'primary' : 'default', header: 
 						React.createElement("div", null, 
-						React.createElement(Bs.OverlayTrigger, {trigger: "hover", placement: "top", overlay: 
-							React.createElement(Bs.Popover, null, 
-							React.createElement(Bs.Thumbnail, {
-								src: nameToImg(name), 
-								alt: name, 
-								style: {display: 'inline-block', marginBottom: '3px', opacity: '0.4'}}
-							)
-							)
-						}, 
-						React.createElement("div", {style: stylePanelHeadingInner}, 
-
-							name, React.createElement("div", {className: "badge"}, that.props.scores.get(id) && that.props.scores.get(id).get('total'))
-						)
-						)
+							React.createElement(MyThumbnail, {name: name, id: id, selected: false}), 
+							name, React.createElement("div", {className: "badge pull-right"}, that.props.scores.get(id) && that.props.scores.get(id).get('total'))
 						), 
 					eventKey: id}, 
 						React.createElement(Contestant, {

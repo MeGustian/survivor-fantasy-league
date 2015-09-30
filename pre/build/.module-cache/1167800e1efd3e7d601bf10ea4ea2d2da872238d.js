@@ -20,7 +20,7 @@ var MyThumbnail = React.createClass({displayName: "MyThumbnail",
 					onClick: that.props.choose && that.props.choose.bind(null, p.id), 
 					src: nameToImg(p.name), 
 					alt: p.name, 
-					style: {display: 'inline-block', border: (p.selected ? "3px solid green" : ""), width: '80px', marginBottom: '3px', marginRight: '10px', marginLeft: '10px', opacity: p.disabled ? '0.5' : ''}}
+					style: {display: 'inline-block', border: (p.selected ? "3px solid green" : ""), width: '80px', marginRight: '10px', marginLeft: '10px', opacity: p.disabled ? '0.5' : ''}}
 				)
 			)
 		);
