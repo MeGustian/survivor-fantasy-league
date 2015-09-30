@@ -58258,9 +58258,8 @@ var Contestant = React.createClass({displayName: "Contestant",
 			), 
 			React.createElement(Bs.Col, {sm: 12, md: 8}, 
 				React.createElement("h3", {className: "text-center", style: {marginRight: '5px'}}, 
-					this.props.votedOut ? React.createElement("span", {className: "label label-danger", style: {marginRight: '0.5em'}}, "voted out") : "", 
 					this.props.name, 
-					this.props.scores ? React.createElement("span", {className: "badge", style: {marginLeft: '0.5em'}}, this.props.scores.get('total')) : ""
+					this.props.votedOut ? React.createElement("span", {className: "label label-danger", style: {marginRight: '0.5em'}}, "voted out") : ""
 				), 
 				React.createElement("dl", {className: "dl-horizontal"}, 
 					React.createElement("dt", null, "Age"), 
@@ -58707,16 +58706,22 @@ var Question = React.createClass({displayName: "Question",
 			justifyContent: 'space-between',
 			alignItems: 'center'
 		};
+		var stylePanelFooterInner = {
+			display: 'flex',
+			flexDirection: 'row',
+			justifyContent: 'center',
+			alignItems: 'center'
+		};
 		return (
 			React.createElement(Bs.Panel, {eventKey: this.props.id, header: 
 				React.createElement("div", {style: stylePanelHeadingInner}, 
 					this.questionRender(), 
 					/*this.tools()*/
-					React.createElement("div", {className: "pull-right"}, 
+					React.createElement("div", {className: "badge pull-right"}, 
 					this.props.numbering.is + " / " + this.props.numbering.of
 					)
-				)
-			}, 
+				), 
+			footer: React.createElement("div", {style: stylePanelFooterInner}, this.footerRender())}, 
 					this.bodyRender()
 			)
 		);
@@ -58756,10 +58761,8 @@ var Question = React.createClass({displayName: "Question",
 				no = !answer ? " active" : "";
 			return (
 				React.createElement("div", {style: {display: 'flex', justifyContent: 'space-around'}}, 
-				React.createElement(Bs.ButtonGroup, null, 
 					React.createElement(Bs.Button, {bsStyle: "success", active: answer, onClick: this.changeAnswer.bind(this, true), disabled: !this.props.open}, "Yes"), 
 					React.createElement(Bs.Button, {bsStyle: "danger", active: !answer, onClick: this.changeAnswer.bind(this, false), disabled: !this.props.open}, "No")
-				)
 				)
 			);
 			case 'contestant':
@@ -58781,6 +58784,39 @@ var Question = React.createClass({displayName: "Question",
 			);
 			default:
 			return React.createElement("div", null, "Bad type specified")
+		}
+	}
+	,
+	footerRender: function () {
+		var details = this.props.details;
+		var answer = details.get('answer');
+		switch (details.get('type')) {
+			case 'boolean':
+			if (typeof answer !== 'boolean') {
+				return false;
+			}
+			if (answer) {
+				return React.createElement("div", null, "You answered ", React.createElement("strong", null, "Yes"));
+			} else {
+				return React.createElement("div", null, "You answered ", React.createElement("strong", null, "No"));
+			}
+			case 'contestant':
+			if (answer) {
+				var contestant = this.props.contestants.get(answer);
+				return React.createElement("div", null, "You answered ", React.createElement("strong", null, contestant.get('firstName') + " " + contestant.get('lastName')));
+			}
+			return false;
+			case 'number':
+			if (typeof answer !== 'number') {
+				return false;
+			}
+			if (answer) {
+				return React.createElement("div", null, "You answered ", React.createElement("strong", null, answer));
+			} else {
+				return false;
+			}
+			default:
+			return false;
 		}
 	}
 	,
@@ -58881,7 +58917,9 @@ var Tribes = React.createClass({displayName: "Tribes",
 			tribe.map(function (contestant, id) {
 				var name = contestant.get('firstName') + " " + contestant.get('lastName');
 				return (
-					React.createElement(Bs.Panel, {bsStyle: that.props.chosen.has(id) ? 'primary' : 'default', header: name, eventKey: id}, 
+					React.createElement(Bs.Panel, {bsStyle: that.props.chosen.has(id) ? 'primary' : 'default', header: 
+						React.createElement("div", null, name, React.createElement("div", {className: "badge pull-right"}, that.props.scores.get(id) && that.props.scores.get(id).get('total'))), 
+					eventKey: id}, 
 						React.createElement(Contestant, {
 							contestant: id, 
 							name: name, 

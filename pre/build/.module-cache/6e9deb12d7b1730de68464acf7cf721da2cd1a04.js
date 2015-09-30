@@ -84,22 +84,16 @@ var Question = React.createClass({displayName: "Question",
 			justifyContent: 'space-between',
 			alignItems: 'center'
 		};
-		var stylePanelFooterInner = {
-			display: 'flex',
-			flexDirection: 'row',
-			justifyContent: 'center',
-			alignItems: 'center'
-		};
 		return (
 			React.createElement(Bs.Panel, {eventKey: this.props.id, header: 
 				React.createElement("div", {style: stylePanelHeadingInner}, 
 					this.questionRender(), 
 					/*this.tools()*/
-					React.createElement("div", {className: "badge pull-right"}, 
+					React.createElement("div", {className: "pull-right"}, 
 					this.props.numbering.is + " / " + this.props.numbering.of
 					)
 				), 
-			footer: React.createElement("div", {style: stylePanelFooterInner}, this.footerRender())}, 
+			footer: this.footerRender()}, 
 					this.bodyRender()
 			)
 		);
@@ -180,16 +174,14 @@ var Question = React.createClass({displayName: "Question",
 			}
 			case 'contestant':
 			if (answer) {
-				var contestant = this.props.contestants.get(answer);
-				return React.createElement("div", null, "You answered ", React.createElement("strong", null, contestant.get('firstName') + " " + contestant.get('lastName')));
+				return React.createElement("div", null, "You answered ", React.createElement("strong", null, this.props.contestants.get(answer)));
 			}
-			return false;
 			case 'number':
 			if (typeof answer !== 'number') {
 				return false;
 			}
 			if (answer) {
-				return React.createElement("div", null, "You answered ", React.createElement("strong", null, answer));
+				return React.createElement("div", null, "You answered ", React.createElement("strong", null, this.props.contestants.get(answer)));
 			} else {
 				return false;
 			}

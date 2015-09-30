@@ -50,7 +50,7 @@ var Tribes = React.createClass({displayName: "Tribes",
 				var name = contestant.get('firstName') + " " + contestant.get('lastName');
 				return (
 					React.createElement(Bs.Panel, {bsStyle: that.props.chosen.has(id) ? 'primary' : 'default', header: 
-						React.createElement("div", null, name, React.createElement("div", {className: "badge pull-right"}, that.props.scores.get(id) && that.props.scores.get(id).get('total'))), 
+						React.createElement("div", null, name, React.createElement("div", {className: "badge pull-right"}, that.props.scores.get(id).get('total'))), 
 					eventKey: id}, 
 						React.createElement(Contestant, {
 							contestant: id, 

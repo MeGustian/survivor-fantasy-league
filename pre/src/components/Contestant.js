@@ -40,9 +40,8 @@ var Contestant = React.createClass({
 			</Bs.Col>
 			<Bs.Col sm={12} md={8}>
 				<h3 className="text-center" style={{marginRight: '5px'}}>
-					{this.props.votedOut ? <span className="label label-danger" style={{marginRight: '0.5em'}}>voted out</span> : ""}
 					{this.props.name}
-					{this.props.scores ? <span className="badge" style={{marginLeft: '0.5em'}}>{this.props.scores.get('total')}</span> : ""}
+					{this.props.votedOut ? <span className="label label-danger" style={{marginRight: '0.5em'}}>voted out</span> : ""}
 				</h3>
 				<dl className="dl-horizontal">
 					<dt>{"Age"}</dt>

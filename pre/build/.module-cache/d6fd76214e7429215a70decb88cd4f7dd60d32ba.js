@@ -84,22 +84,16 @@ var Question = React.createClass({displayName: "Question",
 			justifyContent: 'space-between',
 			alignItems: 'center'
 		};
-		var stylePanelFooterInner = {
-			display: 'flex',
-			flexDirection: 'row',
-			justifyContent: 'center',
-			alignItems: 'center'
-		};
 		return (
 			React.createElement(Bs.Panel, {eventKey: this.props.id, header: 
 				React.createElement("div", {style: stylePanelHeadingInner}, 
 					this.questionRender(), 
 					/*this.tools()*/
-					React.createElement("div", {className: "badge pull-right"}, 
+					React.createElement("div", {className: "pull-right"}, 
 					this.props.numbering.is + " / " + this.props.numbering.of
 					)
 				), 
-			footer: React.createElement("div", {style: stylePanelFooterInner}, this.footerRender())}, 
+			footer: React.createElement("div", {style: stylePanelHeadingInner}, this.footerRender())}, 
 					this.bodyRender()
 			)
 		);

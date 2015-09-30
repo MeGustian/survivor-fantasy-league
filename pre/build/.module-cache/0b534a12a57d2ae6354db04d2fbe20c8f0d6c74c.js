@@ -95,7 +95,7 @@ var Question = React.createClass({displayName: "Question",
 				React.createElement("div", {style: stylePanelHeadingInner}, 
 					this.questionRender(), 
 					/*this.tools()*/
-					React.createElement("div", {className: "badge pull-right"}, 
+					React.createElement("div", {className: "pull-right"}, 
 					this.props.numbering.is + " / " + this.props.numbering.of
 					)
 				), 

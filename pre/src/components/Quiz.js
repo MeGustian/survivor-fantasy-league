@@ -84,16 +84,22 @@ var Question = React.createClass({
 			justifyContent: 'space-between',
 			alignItems: 'center'
 		};
+		var stylePanelFooterInner = {
+			display: 'flex',
+			flexDirection: 'row',
+			justifyContent: 'center',
+			alignItems: 'center'
+		};
 		return (
 			<Bs.Panel eventKey={this.props.id} header={
 				<div style={stylePanelHeadingInner}>
 					{this.questionRender()}
 					{/*this.tools()*/}
-					<div className="pull-right">
+					<div className="badge pull-right">
 					{this.props.numbering.is + " / " + this.props.numbering.of}
 					</div>
 				</div>
-			}>
+			} footer={<div style={stylePanelFooterInner}>{this.footerRender()}</div>}>
 					{this.bodyRender()}
 			</Bs.Panel>
 		);
@@ -133,10 +139,8 @@ var Question = React.createClass({
 				no = !answer ? " active" : "";
 			return (
 				<div style={{display: 'flex', justifyContent: 'space-around'}}>
-				<Bs.ButtonGroup>
 					<Bs.Button bsStyle="success" active={answer} onClick={this.changeAnswer.bind(this, true)} disabled={!this.props.open}>Yes</Bs.Button>
 					<Bs.Button bsStyle="danger" active={!answer} onClick={this.changeAnswer.bind(this, false)} disabled={!this.props.open}>No</Bs.Button>
-				</Bs.ButtonGroup>
 				</div>
 			);
 			case 'contestant':
@@ -158,6 +162,39 @@ var Question = React.createClass({
 			);
 			default:
 			return <div>Bad type specified</div>
+		}
+	}
+	,
+	footerRender: function () {
+		var details = this.props.details;
+		var answer = details.get('answer');
+		switch (details.get('type')) {
+			case 'boolean':
+			if (typeof answer !== 'boolean') {
+				return false;
+			}
+			if (answer) {
+				return <div>You answered <strong>Yes</strong></div>;
+			} else {
+				return <div>You answered <strong>No</strong></div>;
+			}
+			case 'contestant':
+			if (answer) {
+				var contestant = this.props.contestants.get(answer);
+				return <div>You answered <strong>{contestant.get('firstName') + " " + contestant.get('lastName')}</strong></div>;
+			}
+			return false;
+			case 'number':
+			if (typeof answer !== 'number') {
+				return false;
+			}
+			if (answer) {
+				return <div>You answered <strong>{answer}</strong></div>;
+			} else {
+				return false;
+			}
+			default:
+			return false;
 		}
 	}
 	,

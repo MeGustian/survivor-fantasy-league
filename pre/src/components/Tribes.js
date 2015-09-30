@@ -49,7 +49,9 @@ var Tribes = React.createClass({
 			tribe.map(function (contestant, id) {
 				var name = contestant.get('firstName') + " " + contestant.get('lastName');
 				return (
-					<Bs.Panel bsStyle={that.props.chosen.has(id) ? 'primary' : 'default'} header={name} eventKey={id}>
+					<Bs.Panel bsStyle={that.props.chosen.has(id) ? 'primary' : 'default'} header={
+						<div>{name}<div className="badge pull-right">{that.props.scores.get(id) && that.props.scores.get(id).get('total')}</div></div>
+					} eventKey={id}>
 						<Contestant
 							contestant={id}
 							name={name}
