@@ -5,7 +5,7 @@ var MyThumbnail = require('./MyThumbnail');
 
 var AnswerTypes = {};
 
-AnswerTypes.Contestants = React.createClass({
+AnswerTypes.Contestants = React.createClass({displayName: "Contestants",
 	shouldComponentUpdate: function (nextProps) {
 		var equal = this.props.answer === nextProps.answer;
 		return !equal;
@@ -20,9 +20,9 @@ AnswerTypes.Contestants = React.createClass({
 			alignItems: 'flex-basis'
 		};
 		return (
-			<div style={{margin: 'auto'}}>
-				{this.thumbnails()}
-			</div>
+			React.createElement("div", {style: {margin: 'auto'}}, 
+				this.thumbnails()
+			)
 		);
 	}
 	,
@@ -34,7 +34,7 @@ AnswerTypes.Contestants = React.createClass({
 					var name = contestant.get('firstName') + " " + contestant.get('lastName');
 					var isAnswer = id === that.props.answer;
 					return (
-						<MyThumbnail key={id} id={id} selected={isAnswer} disabled={that.props.disabled} name={name} choose={that.changeAnswer.bind(that, isAnswer)} />
+						React.createElement(MyThumbnail, {key: id, id: id, selected: isAnswer, disabled: that.props.disabled, name: name, choose: that.changeAnswer.bind(that, isAnswer)})
 					);
 				}).toJS()
 		);
@@ -47,17 +47,24 @@ AnswerTypes.Contestants = React.createClass({
 	}
 });
 
-AnswerTypes.Tribes = React.createClass({
+AnswerTypes.Tribes = React.createClass({displayName: "Tribes",
 	shouldComponentUpdate: function (nextProps) {
 		var equal = this.props.answer === nextProps.answer;
 		return !equal;
 	}
 	,
 	render: function () {
+		var style = {
+			display: 'flex',
+			flexDirection: 'row',
+			justifyContent: 'space-around',
+			flexWrap: 'wrap',
+			alignItems: 'flex-basis'
+		};
 		return (
-			<div style={{display: 'flex', justifyContent: 'space-around'}}>
-				{this.tribes()}
-			</div>
+			React.createElement("div", {style: {margin: 'auto'}}, 
+				this.tribes()
+			)
 		);
 	}
 	,
@@ -68,36 +75,21 @@ AnswerTypes.Tribes = React.createClass({
 				.map(function (tribe, name) {
 					var isAnswer = name === that.props.answer;
 					return (
-						<Bs.OverlayTrigger trigger="hover" placement="top" overlay={
-							<Bs.Popover title={"Members of " + name}>
-								{that.popoverMembers(tribe)}
-							</Bs.Popover>
-						}>
-						<Bs.Button active={isAnswer} id={name} onClick={that.changeAnswer.bind(that, isAnswer, name)}>{name}</Bs.Button>
-						</Bs.OverlayTrigger>
-
+						React.createElement(Bs.Button, {active: isAnswer, id: name, onClick: that.changeAnswer.bind(that, isAnswer, name)}, name)
 					);
 				}).toJS()
 		);
 	}
 	,
-	popoverMembers: function (tribe) {
-		return React.addons.createFragment(
-			tribe
-			.map(function (contestant, id) {
-				return <div id={id}>{contestant.get('firstName') + " " + contestant.get('lastName')}</div>;
-			}).toJS()
-		);
-	}
-	,
 	changeAnswer: function (alreadySelected, name) {
+		console.log('answering: ' + name);
 		if (!this.props.disabled) {
 			this.props.changeAnswer(alreadySelected ? null : name);
 		}
 	}
 });
 
-AnswerTypes.Num = React.createClass({
+AnswerTypes.Num = React.createClass({displayName: "Num",
 	shouldComponentUpdate: function (nextProps) {
 		var equal = this.props.answer === nextProps.answer;
 		return !equal;
@@ -106,11 +98,11 @@ AnswerTypes.Num = React.createClass({
 	render: function () {
 		var answer = this.props.answer > 0 ? this.props.answer : 0;
 		return (
-			<div style={{display: 'flex', justifyContent: 'space-around'}}>
-				<input disabled={this.props.disabled} type="range" value={answer.toString()} min="0" max="13" step="1" onChange={this.changeAnswer}
-				style={{maxWidth: '300px'}} />
-				<Bs.Badge pullRight>{answer.toString()}</Bs.Badge>
-			</div>
+			React.createElement("div", {style: {display: 'flex', justifyContent: 'space-around'}}, 
+				React.createElement("input", {disabled: this.props.disabled, type: "range", value: answer.toString(), min: "0", max: "13", step: "1", onChange: this.changeAnswer, 
+				style: {maxWidth: '300px'}}), 
+				React.createElement(Bs.Badge, {pullRight: true}, answer.toString())
+			)
 		);
 	}
 	,

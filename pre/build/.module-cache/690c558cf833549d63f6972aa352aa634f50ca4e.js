@@ -153,6 +153,7 @@ var Question = React.createClass({displayName: "Question",
 				)
 			);
 			case 'tribe':
+			console.log('got a tribe question');
 			return (
 				React.createElement(Tribes, {
 					answer: answer, 

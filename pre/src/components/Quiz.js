@@ -3,6 +3,7 @@ var Bs = require('react-bootstrap');
 var AdminToolbox = require('./AdminToolbox');
 var AnswerTypes = require('./AnswerTypes');
 var Contestants = AnswerTypes.Contestants;
+var Tribes = AnswerTypes.Tribes;
 var Num = AnswerTypes.Num;
 
 var now;
@@ -59,6 +60,7 @@ var Quiz = React.createClass({
 							contestants={p.contestants.filter(function (contestant) {
 								return contestant.getIn(['weeks', p.weekNumber, 'tribe']);
 							})}
+							tribes={require('../helpers/tribe-grouping')(p.weekNumber, p.contestants)}
 							user={p.user}
 							open={p.open}
 							handlers={p.dispatcher}
@@ -135,8 +137,6 @@ var Question = React.createClass({
 		// NOTE: Changing the type is supported, but not implemented here.
 		switch (details.get('type')) {
 			case 'boolean':
-			var yes = answer ? " active" : "",
-				no = !answer ? " active" : "";
 			return (
 				<div style={{display: 'flex', justifyContent: 'space-around'}}>
 					<Bs.Button bsStyle="success" active={answer} onClick={this.changeAnswer.bind(this, true)} disabled={!this.props.open}>Yes</Bs.Button>
@@ -149,6 +149,15 @@ var Question = React.createClass({
 					answer={answer}
 					disabled={!this.props.open}
 					contestants={this.props.contestants}
+					changeAnswer={this.changeAnswer}
+				/>
+			);
+			case 'tribe':
+			return (
+				<Tribes
+					answer={answer}
+					disabled={!this.props.open}
+					tribes={this.props.tribes}
 					changeAnswer={this.changeAnswer}
 				/>
 			);

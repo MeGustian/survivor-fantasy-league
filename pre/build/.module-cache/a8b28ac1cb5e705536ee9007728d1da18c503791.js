@@ -137,6 +137,8 @@ var Question = React.createClass({displayName: "Question",
 		// NOTE: Changing the type is supported, but not implemented here.
 		switch (details.get('type')) {
 			case 'boolean':
+			var yes = answer ? " active" : "",
+				no = !answer ? " active" : "";
 			return (
 				React.createElement("div", {style: {display: 'flex', justifyContent: 'space-around'}}, 
 					React.createElement(Bs.Button, {bsStyle: "success", active: answer, onClick: this.changeAnswer.bind(this, true), disabled: !this.props.open}, "Yes"), 
@@ -152,7 +154,7 @@ var Question = React.createClass({displayName: "Question",
 					changeAnswer: this.changeAnswer}
 				)
 			);
-			case 'tribe':
+			case 'tribes':
 			return (
 				React.createElement(Tribes, {
 					answer: answer, 
