@@ -58865,10 +58865,17 @@ var Question = React.createClass({displayName: "Question",
 			}
 			case 'contestant':
 			if (answer) {
-				var contestant = this.props.contestants.get(answer);
-				return React.createElement("div", null, "You answered ", React.createElement("strong", null, contestant.get('firstName') + " " + contestant.get('lastName')));
+				answer = this.props.contestants.get(answer);
+				return React.createElement("div", null, "You answered ", React.createElement("strong", null, answer.get('firstName') + " " + answer.get('lastName')));
+			} else {
+				return React.createElement("div", null, "You answered ", React.createElement("strong", null, "No One"));
 			}
-			return false;
+			case 'tribe':
+			if (answer) {
+				return React.createElement("div", null, "You answered ", React.createElement("strong", null, answer));
+			} else {
+				return React.createElement("div", null, "You answered ", React.createElement("strong", null, "No Tribe"));
+			}
 			case 'number':
 			if (typeof answer !== 'number') {
 				return false;

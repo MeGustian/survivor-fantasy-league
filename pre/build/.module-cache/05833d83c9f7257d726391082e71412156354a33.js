@@ -189,8 +189,8 @@ var Question = React.createClass({displayName: "Question",
 			}
 			case 'contestant':
 			if (answer) {
-				answer = this.props.contestants.get(answer);
-				return React.createElement("div", null, "You answered ", React.createElement("strong", null, answer.get('firstName') + " " + answer.get('lastName')));
+				var contestant = this.props.contestants.get(answer);
+				return React.createElement("div", null, "You answered ", React.createElement("strong", null, contestant.get('firstName') + " " + contestant.get('lastName')));
 			} else {
 				return React.createElement("div", null, "You answered ", React.createElement("strong", null, "No One"));
 			}

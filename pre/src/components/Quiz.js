@@ -189,10 +189,17 @@ var Question = React.createClass({
 			}
 			case 'contestant':
 			if (answer) {
-				var contestant = this.props.contestants.get(answer);
-				return <div>You answered <strong>{contestant.get('firstName') + " " + contestant.get('lastName')}</strong></div>;
+				answer = this.props.contestants.get(answer);
+				return <div>You answered <strong>{answer.get('firstName') + " " + answer.get('lastName')}</strong></div>;
+			} else {
+				return <div>You answered <strong>No One</strong></div>;
 			}
-			return false;
+			case 'tribe':
+			if (answer) {
+				return <div>You answered <strong>{answer}</strong></div>;
+			} else {
+				return <div>You answered <strong>No Tribe</strong></div>;
+			}
 			case 'number':
 			if (typeof answer !== 'number') {
 				return false;
