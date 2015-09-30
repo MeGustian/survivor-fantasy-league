@@ -1,66 +1,77 @@
-var React = require('react');
+var React = require('react/addons');
+var Bs = require('react-bootstrap');
 var Contestant = require('./Contestant');
 var Achievements = require('./Achievements');
 
 var Tribes = React.createClass({
+	shouldComponentUpdate: function (nextProps) {
+		return !!this.props.user.get('isAdmin') || this.props.weekNumber !== nextProps.weekNumber;
+	}
+	,
 	render: function () {
+		console.info('Tribes');
 		return (
-			<div className="row">
+			<Bs.Row>
 				{this.tribes()}
-			</div>
+			</Bs.Row>
 		);
 	}
 	,
 	tribes: function () {
 		var that = this;
-		return this.props.contestants
+		var byTribe = that.props.contestants
 			.groupBy(function (contestant) {
-				return contestant.get('tribe');
-			}).map(function (tribe, name) {
-				return (
-					<div className="col-xs-12" key={name}>
-						<div className="row"><div className="col-xs-12"><h2>{name}</h2></div></div>
-						{that.membersOf(tribe)}
-					</div>
-				);
-			});
+				return contestant.getIn(['weeks', that.props.weekNumber, 'tribe']);
+			})
+			.filter(function (tribe, name) {return !!name;}); // Works for empty string and undefined.
+		return React.addons.createFragment(
+			byTribe
+				.map(function (tribe, name) {
+					if (!name) { // Remove filter for this to not be vacant.
+						name = "Voted Out";
+					}
+					var columns = byTribe.count(); // Remove -1 when removing filter.
+					return (
+						<Bs.Col sm={12} md={12/columns} key={name}>
+							<h2>{name}</h2>
+							<Bs.Accordion>
+								{that.membersOf(tribe)}
+							</Bs.Accordion>
+						</Bs.Col>
+					);
+				}).toJS()
+		);
 	}
 	,
 	membersOf: function (tribe) {
 		var that = this;
-		// var gotVotesFrom = tribe
-		// 	.groupBy(function (contestant) {
-		// 		return contestant.get('votedFor');
-		// 	})
-		// 	.map(function (voteOrigins) {
-		// 		return voteOrigins.keySeq();
-		// 	});
-		// var votedOut = gotVotesFrom
-		// 	.maxBy(function (voteOrigins) {
-		// 		return voteOrigin.count();
-		// 	}, function (a, b) {
-		// 		a > b;
-		// 	});
-		// console.log(gotVotesFrom.toString());
-		// console.log(votedOut);
-		return tribe.map(function (contestant, id) {
-			return (
-				<div className="row" key={id}>
-					<Contestant
-						contestant={id}
-						name={contestant.get('firstName') + " " + contestant.get('lastName')}
-						scores={that.props.scores.get(id)}
-					/>
-					<Achievements
-						contestant={id}
-						isAdmin={that.props.user.get('isAdmin')}
-						achievements={contestant.get('achievements')}
-						scores={that.props.scores.get(id)}
-						toggleAchievement={that.props.toggleAchievement}
-					/>
-				</div>
-			);
-		});
+		return React.addons.createFragment(
+			tribe.map(function (contestant, id) {
+				var name = contestant.get('firstName') + " " + contestant.get('lastName');
+				return (
+					<Bs.Panel bsStyle={that.props.chosen.has(id) ? 'primary' : 'default'} header={name} eventKey={id}>
+						<Contestant
+							contestant={id}
+							name={name}
+							age={contestant.get('age')}
+							occupation={contestant.get('occupation')}
+							previousSeason={contestant.get('previousSeason')}
+							place={contestant.get('place')}
+							scores={that.props.scores.get(id)}
+							votedOut={contestant.getIn(['weeks', that.props.weekNumber, 'achievements', 'VOTED-OUT'])}
+						/>
+						<Achievements
+							contestant={id}
+							weekNumber={that.props.weekNumber} // For `VOTED-OUT` achievement
+							isAdmin={that.props.user.get('isAdmin')}
+							achievements={contestant.getIn(['weeks', that.props.weekNumber, 'achievements'])}
+							scores={that.props.scores.get(id)}
+							toggleAchievement={that.props.toggleAchievement}
+						/>
+					</Bs.Panel>
+				);
+			}).toJS()
+		);
 	}
 });
 

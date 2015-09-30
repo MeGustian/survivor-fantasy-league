@@ -1,124 +1,53 @@
 var React = require('react');
+var Bs = require('react-bootstrap');
 var PropTypes = React.PropTypes;
-// TODO: Do I need `bindActionCreators`? Should I use it?
-var bindActionCreators = require('redux').bindActionCreators;
-var ReactRedux = require('react-redux');
-var connect = ReactRedux.connect; // Connect react container to redux.
-// TODO: Add proptypes to components (in their files).
-var SignIn = require('../components/SignIn'); // Explain...
-var Week = require('../components/Week'); // Explain...
-var Tribes = require('../components/Tribes'); // Explain...
-var Questions = require('../components/Questions'); // Explain...
-var computerOfState = require('../compute-state');
-var act = require('../actions'); // Give dispatch an action payload.
-// TODO: Do I need `immutable`?
 var I = require('immutable');
 var ImmutablePropTypes = require('react-immutable-proptypes');
+// TODO: Do I need `bindActionCreators`? Should I use it?
+var bindActionCreators = require('redux').bindActionCreators;
+var connect = require('react-redux').connect; // Connect react container to redux.
+
+// Components. // TODO: Add proptypes to components (in their files).
+var Navigation = require('../components/Navigation'); // Explain...
+var Welcome = require('../components/Welcome'); // Explain...
+var Profile = require('../components/Profile'); // Explain...
+var Tribes = require('../components/Tribes'); // Explain...
+var Quiz = require('../components/Quiz'); // Explain...
+var Admin = require('../components/Admin'); // Explain...
+var Help = require('../components/Help'); // Explain...
+var act = require('../actions'); // Give dispatch an action payload.
+// Handle the phase between passportJS sign-in to when the page loads. will
+// return false once everything is clear.
+var computerOfState = require('../helpers/compute-state');
+var userLoading = require('../helpers/user-loading');
+var forcedLogger = require('../helpers/forced-logger');
 
 
 var Fantasy = React.createClass({
-	render: function () {
-		console.groupCollapsed('rendering with...');
-		// console.group('contestants');
-		// 	console.log(this.props.contestants.toString());
-		// console.groupEnd();
-		// console.group('week');
-		// 	console.log(this.props.week.toString());
-		// console.groupEnd();
-		// console.group('questions');
-		// 	console.log(this.props.questions.toString());
-		// console.groupEnd();
-		// console.group('user');
-		// 	console.log(this.props.user.toString());
-		// console.groupEnd();
-		console.group('compute-state');
-			var computedState = computerOfState(this.props);
-			console.log(computedState.scores.toString());
-		console.groupEnd();
-		console.groupEnd();
-		var p = this.props;
-		var dispatch = p.dispatch;
-		var fullContestants = p.week.get('contestantStatus').mergeDeep(p.contestants);
-		var circumstances = {
-			weekNumber: p.week.get('selected')
-		};
-		// console.log(fullContestants.toString());
-		// if (!p.user.get('userId')) {
-		// 	return <SignIn user={p.user} submit={function (username, password, isAdmin) {
-		// 		return dispatch(act.signIn(username, password, isAdmin));
-		// 	}}/>
-		// }
-		if (p.user.get('error')) {
-			return <div className="alert alert-danger" role="alert">{"failed!"}</div>;
-		}
-		if (p.user.get('attempting')) {
-			return <div className="alert alert-info" role="alert">{"loading..."}</div>;
-		}
-		if (!p.user.get('signedIn')) {
-			dispatch(act.getInitial());
-			return <div className="alert alert-info" role="alert">{"signing in..."}</div>;
-		}
-		return (
-			<div>
-				<Week
-					user={p.user}
-					selected={p.week.get('selected')}
-					count={p.week.get('count')}
-					key="week"
-					signOut={function () {
-						return dispatch(act.signOut());
-					}}
-					onWeekChoice={function (number) {
-						return dispatch(act.selectWeekView(circumstances, number));
-					}}
-				/>
-				<Questions
-					user={p.user}
-					questions={p.questions}
-					contestants={fullContestants}
-					key="questions"
-					dispatcher={{
-						userAnswer: function (questionId, answer) {
-							return dispatch(act.userAnswer(circumstances, questionId, answer));
-						},
-						create: function (type) {
-							return dispatch(act.createQuestion(circumstances, type));
-						},
-						update: function (questionId, question, answer, type) {
-							return dispatch(act.updateQuestion(circumstances, questionId, question, answer, type));
-						},
-						edit: function (questionId, isEditing) {
-							return dispatch(act.editQuestion(questionId, isEditing));
-						},
-						remove: function (questionId) {
-							return dispatch(act.removeQuestion(circumstances, questionId));
-						}
-					}}
-				/>
-				<Tribes
-					user={p.user}
-					contestants={fullContestants}
-					scores={computedState.scores}
-					toggleAchievement={function (achievementCode, contestantId, hasAchieved) {
-						return dispatch(act.toggleAchievement(circumstances, achievementCode, contestantId, hasAchieved));
-					}}
-					key="tribes"
-				/>
-			</div>
-		);
-	}
-	,
 	propTypes: {
-		week: ImmutablePropTypes.contains({
-			selected: PropTypes.number,
-			count: PropTypes.number,
-			contestantStatus: ImmutablePropTypes.mapOf(
-				ImmutablePropTypes.contains({
-					tribe: PropTypes.string.isRequired,
-					votedFor: PropTypes.string.isRequired,
-					achievements: ImmutablePropTypes.mapOf(PropTypes.bool).isRequired
+		controller: ImmutablePropTypes.contains({
+			user: ImmutablePropTypes.contains({
+				signedIn: PropTypes.bool.isRequired,
+				attempting: PropTypes.bool.isRequired,
+				isAdmin: PropTypes.bool.isRequired
+			}),
+			error: ImmutablePropTypes.contains({
+				is: PropTypes.bool.isRequired,
+				details: ImmutablePropTypes.contains({
+					action: PropTypes.string,
+					details: PropTypes.string
 				})
-			)
+			})
+		})
+		,
+		navigation: ImmutablePropTypes.contains({
+			location: PropTypes.string.isRequired,
+			selectedWeek: PropTypes.string.isRequired,
+			weekCount: PropTypes.string.isRequired
+		}).isRequired
+		,
+		profile: ImmutablePropTypes.contains({
+			chosen: ImmutablePropTypes.set.isRequired
 		}).isRequired
 		,
 		contestants: ImmutablePropTypes.mapOf(
@@ -128,23 +57,119 @@ var Fantasy = React.createClass({
 				age: PropTypes.string.isRequired,
 				occupation: PropTypes.string.isRequired,
 				previousSeason: PropTypes.string.isRequired,
-				place: PropTypes.string.isRequired
+				place: PropTypes.string.isRequired,
+				weeks: ImmutablePropTypes.mapOf(
+					ImmutablePropTypes.contains({
+						tribe: PropTypes.string,
+						votedFor: PropTypes.string,
+						achievements: ImmutablePropTypes.mapOf(PropTypes.bool)
+					})
+				)
 			})
-		).isRequired
+		)
 		,
 		questions: ImmutablePropTypes.mapOf(
 			ImmutablePropTypes.contains({
 				question: PropTypes.string.isRequired,
-				answer: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
+				answer: PropTypes.oneOfType([PropTypes.string, PropTypes.bool, PropTypes.number]),
 				type: PropTypes.string.isRequired
 			})
 		).isRequired
-		,
-		user: ImmutablePropTypes.contains({
-			userId: PropTypes.string,
-			isAdmin: PropTypes.bool,
-			attempting: PropTypes.bool
-		}).isRequired
+	}
+	,
+	render: function () {
+		var p = this.props;
+		forcedLogger(p);
+		var dispatch = p.dispatch;
+		var whatIsLoading = userLoading(p.controller, dispatch, act);
+		if (whatIsLoading) {
+			return whatIsLoading;
+		}
+		var computedState = computerOfState(p);
+		var circumstances = {
+			weekNumber: p.navigation.get('selectedWeek')
+		};
+		return (
+			<div>
+				<Navigation
+					key="navigation"
+					user={p.controller.get('user')}
+					navigation={p.navigation}
+					navigate={function (target) {
+						return dispatch(act.navigate(target));
+					}}
+				/>
+				<Admin
+					key="admin"
+					user={p.controller.get('user')}
+					serverFail={p.controller.get('error')}
+					createQuestion={function (type) {
+						return dispatch(act.createQuestion(circumstances, type));
+					}}
+				/>
+				<div style={{display: p.navigation.get('location') === 'profile' ? 'initial' : 'none'}}>
+				<Profile
+					key="profile"
+					user={p.controller.get('user')}
+					chosen={p.profile.get('chosen')}
+					submittedChoices={p.profile.get('submittedChoices')}
+					navigate={function (target) {
+						return dispatch(act.navigate(target));
+					}}
+					submit={function (choices) {
+						return dispatch(act.submitChoices(choices));
+					}}
+					info={p.contestants}
+					selector={function (id) {
+						return dispatch(act.chooseContestant(id));
+					}}
+				/>
+				</div>
+				<div style={{display: p.navigation.get('location') === 'weekly' ? 'initial' : 'none'}}>
+				<Welcome selectedWeek={p.navigation.get('selectedWeek')} />
+				<Quiz
+					key="quiz"
+					user={p.controller.get('user')}
+					open={p.navigation.get('selectedWeek') === p.navigation.get('weekCount')}
+					selected={p.navigation.get('selectedQuestion')}
+					weekNumber={p.navigation.get('selectedWeek')}
+					questions={p.questions.filter(function (q, id) {return q.get('weekNumber') === p.navigation.get('selectedWeek')})}
+					contestants={p.contestants}
+					dispatcher={{
+						userAnswer: function (questionId, answer) {
+							return dispatch(act.userAnswer(circumstances, questionId, answer));
+						},
+						// update: function (questionId, question, answer, type) {
+						// 	return dispatch(act.updateQuestion(circumstances, questionId, question, answer, type));
+						// },
+						// edit: function (questionId, isEditing) {
+						// 	return dispatch(act.editQuestion(questionId, isEditing));
+						// },
+						// remove: function (questionId) {
+						// 	return dispatch(act.removeQuestion(circumstances, questionId));
+						// },
+						switchQuestion: function (inc) {
+							return dispatch(act.switchQuestion(inc));
+						}
+					}}
+				/>
+				<Tribes
+					key="tribes"
+					user={p.controller.get('user')}
+					weekNumber={p.navigation.get('selectedWeek')}
+					chosen={p.profile.get('chosen')}
+					contestants={p.contestants}
+					scores={computedState.scores}
+					toggleAchievement={function (achievementCode, contestantId, hasAchieved) {
+						return dispatch(act.toggleAchievement(circumstances, achievementCode, contestantId, hasAchieved));
+					}}
+				/>
+				</div>
+				<div style={{display: p.navigation.get('location') === 'help' ? 'initial' : 'none'}}>
+				<Help />
+				</div>
+			</div>
+		);
 	}
 });
 
@@ -153,13 +178,11 @@ var Fantasy = React.createClass({
 // the state.
 var select = function (state) {
 	return {
-		week: state.week
-		,
-		contestants: state.contestants
-		,
+		controller: state.controller,
+		navigation: state.navigation,
+		profile: state.profile,
+		contestants: state.contestants,
 		questions: state.questions
-		,
-		user: state.user
 	}
 };
 
