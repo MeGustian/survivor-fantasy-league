@@ -1,215 +1,39 @@
-var ini = {
-	"isAdmin":"false",
-	weekNumber:"2",
-	// chosen:[
-	// 	"56029683b2c3b5601f976290", "560296b7b2c3b5601f976291",
-	// 	"560296e1b2c3b5601f979999", "56029707b2c3b5601f971111"
-	// ],
-	questions: {
-		"125f": {
-			weekNumber: "1",
-			question: '1Cont?',
-			answer: "56029683b2c3b5601f976290",
-			type: 'contestant'
-		},
-		"34564sda6a": {
-			weekNumber: "1",
-			question: '1Num?',
-			type: 'number'
-		},
-		"12asf5f": {
-			weekNumber: "2",
-			question: '2Cont?',
-			type: 'contestant'
-		},
-		"1ab25f": {
-			weekNumber: "2",
-			question: '2Cont?',
-			type: 'contestant'
-		},
-		"345646a": {
-			weekNumber: "2",
-			question: '2Num?',
-			answer: "4",
-			type: 'number'
-		},
-		"4576e": {
-			weekNumber: "1",
-			question: '1Bool?',
-			answer: "true",
-			type: 'boolean'
-		},
-		"4570006f": {
-			weekNumber: "2",
-			question: '2Bool?',
-			answer: "true",
-			type: 'boolean'
-		}
-	},
-	userAnswers: {
-		"12asf5f": "56029683b2c3b5601f976290",
-		"34564sda6a": "5"
-	},
-	"contestants":{
-		"56029683b2c3b5601f976290":{
-			"_id":"56029683b2c3b5601f976290",
-			"firstName":"Abi-Maria",
-			"lastName":"Gomes",
-			"age":"35",
-			"occupation":"Business Student",
-			"previousSeason":"Philippines",
-			"place":"5/18",
-			"weeks": {
-				"1": {
-					"tribe":"Ta-Keo",
-					"votedFor":"",
-					"achievements":{
-						"CRIED": true,
-						"HASHTAG": true
-					}
-				},
-				"2": {
-					"tribe":"Ta-Keo",
-					"votedFor":"",
-					"achievements":{
-						"VOTED-OUT": true,
-						"HASHTAG": true
-					}
-				}
-			}
-		},
-		"560296b7b2c3b5601f976291":{
-			"_id":"560296b7b2c3b5601f976291",
-			"firstName":"Jeff",
-			"lastName":"Varner",
-			"age":"49",
-			"occupation":"Internet Projects Manager",
-			"previousSeason":"The Australian Outback",
-			"place":"10/16",
-			"weeks": {
-				"1": {
-					"tribe":"Ta-Keo",
-					"votedFor":"",
-					"achievements":{
-						"CRIED": true,
-						"HASHTAG": true
-					}
-				},
-				"2": {
-					"tribe":"Ta-Keo",
-					"votedFor":"",
-					"achievements":{
-						"CRIED": true,
-						"HASHTAG": true
-					}
-				}
-			}
-		},
-		"560296b7ass3b5601f976291":{
-			"_id":"560296b7ass3b5601f976291",
-			"firstName":"K",
-			"lastName":"B",
-			"age":"49",
-			"occupation":"Internet Projects Manager",
-			"previousSeason":"The Australian Outback",
-			"place":"10/16",
-			"weeks": {
-				"1": {
-					"tribe":"Ta-Keo",
-					"votedFor":"",
-					"achievements":{
-						"CRIED": true,
-						"HASHTAG": true
-					}
-				},
-				"2": {
-					"tribe":"Ta-Keo",
-					"votedFor":"",
-					"achievements":{
-						"CRIED": true,
-						"HASHTAG": true
-					}
-				}
-			}
-		},
-		"560296e1b2c3b5601f979999":{
-			"_id":"560296b7b2c3b5601f979999",
-			"firstName":"Rob",
-			"lastName":"Stark",
-			"age":"24",
-			"occupation":"Lala Projects Manager",
-			"previousSeason":"The African Outback",
-			"place":"11/16",
-			"weeks": {
-				"1": {
-					"tribe":"Bada",
-					"votedFor":"",
-					"achievements":{
-						"CRIED": true,
-						"TREE-MAIL": true
-					}
-				},
-				"2": {
-					"tribe":"Bada",
-					"votedFor":"",
-					"achievements":{
-						"CRIED": true,
-						"HASHTAG": true
-					}
-				}
-			}
-		},
-		"56029707b2c3b5601f971111":{
-			"_id":"560296b7b2c3b5601f971111",
-			"firstName":"Tony",
-			"lastName":"Anderson",
-			"age":"24",
-			"occupation":"Lala Projects Manager",
-			"previousSeason":"The African Outback",
-			"place":"11/16",
-			"weeks": {
-				"1": {
-					"tribe":"Bada",
-					"votedFor":"",
-					"achievements":{
-						"VOTED-OUT": true,
-						"TREE-MAIL": true
-					}
-				},
-				"2": {
-					"tribe":"",
-					"votedFor":"",
-					"achievements":{
-					}
-				}
-			}
-		}
-	}
-};
-
 // TODO: Remove unecessary packages from package.json (including all the other
 // scripts).
-var fs = require('fs'),
-path = require('path'),
-express = require('express'),
-stylus = require('stylus'),
-nib = require('nib'),
-bodyParser = require('body-parser');
-// A lot of express in the server side. I cannot even tell which functions are
-// part of express and which are just vanilla node.
-var app = module.exports = express();
+var fs = require('fs');
+var stylus = require('stylus');
+var nib = require('nib');
+var express = require('express');
+var path = require('path');
+var favicon = require('serve-favicon');
+var logger = require('morgan');
+var cookieParser = require('cookie-parser');
+var bodyParser = require('body-parser');
+var passport = require('passport');
+var flash = require('connect-flash');
+var session = require('express-session');
 
-// The name of the dummy JSON file.
-// var jsonFileName = 'possibles';
+// Database
+var mongo = require('mongodb');
+var monk = require('monk');
+var mongoose = require('mongoose');
+var db = monk('survivoradmin:survivorpass@ds051853.mongolab.com:51853/survivor-fantasy-league');
 
-// TODO: Understand this. Also see app.listen below.
-app.set('port', (process.env.PORT || 3000));
+var routes = require('./routes/index');
+
+var app = express();
+
+// ==============CONFIGURARTIONS=============================
+
+mongoose.connect('survivoradmin:survivorpass@ds051853.mongolab.com:51853/survivor-fantasy-league');
+require('./config/passport')(passport); // pass passport for configuration
+//require('./routes/index.js')(passport);
 
 function compile(str, path) {
 	return stylus(str)
-	.set('filename', path)
-	.use(nib())
-	.import('nib');
+		.set('filename', path)
+		.use(nib())
+		.import('nib');
 }
 // Set views with Jade. Read below to understand the __dirname thing.
 app.set('views', __dirname + '/views');
@@ -217,11 +41,11 @@ app.set('view engine', 'jade');
 // Using Stylus with nib.
 app.use(stylus.middleware(
 	{ src: __dirname + '/public'
-	, compile: compile
-}
+		, compile: compile
+	}
 ));
 
-// Set `/public` as the static resources, which is accessable from the browser
+// Set `/public` as the static resources, which is accessible from the browser
 // as if public was the root directory.
 // Example: If I want to access `/public/images/logo.png`, I could write
 // `__full-site-URL__/images/logo.png`.
@@ -232,62 +56,60 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 // TODO: Understand this.
 // app.use(app.router);
+app.use(cookieParser()); // read cookies (needed for auth)
+// required for passport
+app.use(session({ secret: 'thisisasecrettest' })); // session secret
+app.use(passport.initialize());
+app.use(passport.session()); // persistent login sessions
+app.use(flash()); // use connect-flash for flash messages stored in session
 
-// TODO: Handle errors in the HTTP requests.
-// Performs a GET HTTP request, and (I think) calls the function when done.
-// This one renders `/views/home.jade` with sayHelloTo ready to intepolate.
-app.get('/', function(req, res){
-	res.render('home', {sayHelloTo: 'world'});
-});
-// TODO: Understand this.
-// app.get('/' + jsonFileName + '.json', function(req, res) {
-//	 fs.readFile(jsonFileName + '.json', function(err, data) {
-//		 res.setHeader('Cache-Control', 'no-cache');
-//		 res.json(JSON.parse(data));
-//	 });
-// });
+// Connect to DB
+app.use(function(req,res,next){
+	req.db = db;
+	next();
 
-// Performs a POST HTTP request, and (I think) calls the function when done.
-// This one adds data to the JSON file.
-// app.post('/' + jsonFileName + '.json', function(req, res) {
-//	 fs.readFile(jsonFileName + '.json', function(err, data) {
-//		 var comments = JSON.parse(data);
-//		 comments.push(req.body);
-//		 fs.writeFile(jsonFileName + '.json', JSON.stringify(comments, null, 4), function(err) {
-//			 res.setHeader('Cache-Control', 'no-cache');
-//			 res.json(comments);
-//		 });
-//	 });
-// });
-
-// TODO: Deal with booleans (they are returned as strings!).
-app.post('/', function (req, res) {
-	console.log('GET:');
-	console.log(req.body);
-	if (true) {
-		res.status(200).send(req.body);
-	}
-	if (!true) {
-		res.status(500).send({error: req.body});
-	}
-	// timeout...
-});
-app.get('/initial', function (req, res) {
-	if (true) {
-		res.status(200).send(ini);
-	}
-	if (!true) {
-		res.status(500).send({error: req.body});
-	}
-	// timeout...
-});
-app.post('/:weekNumber', function (req, res) {
-	res.status(200).send(req.body);
 });
 
-// TODO: Understand this.
-if (!module.parent) {
-	app.listen(app.get('port'), function() {
-		console.log('up and running');
+
+app.use('/', routes);
+
+
+
+
+// ==============END CONFIGURARTIONS=============================
+
+
+
+// catch 404 and forward to error handler
+app.use(function(req, res, next) {
+	var err = new Error('Not Found');
+	err.status = 404;
+	next(err);
+});
+
+// error handlers
+
+// development error handler
+// will print stacktrace
+if (app.get('env') === 'development') {
+	app.use(function(err, req, res, next) {
+		res.status(err.status || 500);
+		res.render('error', {
+			message: err.message,
+			error: err
+		});
 	});
 }
+
+// production error handler
+// no stacktraces leaked to user
+app.use(function(err, req, res, next) {
+	res.status(err.status || 500);
+	res.render('error', {
+		message: err.message,
+		error: {}
+	});
+});
+
+
+module.exports = app;
