@@ -15,6 +15,31 @@ router.get('/', function(req, res, next) {
 
 });
 
+router.post('/caps', function(req, res){
+  var db = req.db;
+  var collection = db.get('survivors');
+  collection.update(
+                    {'weeks.1.tribe': 'bayon'},
+                    {$set: {'weeks.1.tribe': 'Bayon'}},
+                    {multi: true}
+                   );
+  collection.update(
+      {'weeks.1.tribe': 'ta-keo'},
+      {$set: {'weeks.1.tribe': 'Ta-Keo'}},
+      {multi: true}
+  );
+  collection.update(
+      {'weeks.2.tribe': 'bayon'},
+      {$set: {'weeks.2.tribe': 'Bayon'}},
+      {multi: true}
+  );
+  collection.update(
+      {'weeks.2.tribe': 'ta-keo'},
+      {$set: {'weeks.2.tribe': 'Ta-Keo'}},
+      {multi: true}
+  );
+});
+
 /* POST user choices */
 router.post('/', function(req, res){
   var data = req.body;
