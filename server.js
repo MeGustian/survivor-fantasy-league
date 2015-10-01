@@ -28,6 +28,7 @@ var app = express();
 mongoose.connect('survivoradmin:survivorpass@ds051853.mongolab.com:51853/survivor-fantasy-league');
 require('./config/passport')(passport); // pass passport for configuration
 //require('./routes/index.js')(passport);
+app.use(favicon(__dirname + '/public/favicon.ico')); // Favicon
 
 function compile(str, path) {
 	return stylus(str)
@@ -94,10 +95,10 @@ app.use(function(req, res, next) {
 if (app.get('env') === 'development') {
 	app.use(function(err, req, res, next) {
 		res.status(err.status || 500);
-		res.render('error', {
-			message: err.message,
-			error: err
-		});
+		// res.render('error', {
+		// 	message: err.message,
+		// 	error: err
+		// });
 	});
 }
 

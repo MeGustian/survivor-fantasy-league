@@ -145,7 +145,6 @@ router.get('/initial', function (req, res) {
         });
         responseData['questions'] = questionData;
         console.log('sending');
-        console.log(responseData);
         res.status(200).send(responseData);
       })
     });
@@ -284,6 +283,3 @@ module.exports = router;
 //      successRedirect : '/home',
 //      failureRedirect : '/'
 //    }));
-
-
-

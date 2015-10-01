@@ -14,6 +14,7 @@ var Profile = require('../components/Profile'); // Explain...
 var Tribes = require('../components/Tribes'); // Explain...
 var Quiz = require('../components/Quiz'); // Explain...
 var Admin = require('../components/Admin'); // Explain...
+var AdminAchievements = require('../components/AdminAchievements'); // Explain...
 var Help = require('../components/Help'); // Explain...
 var act = require('../actions'); // Give dispatch an action payload.
 // Handle the phase between passportJS sign-in to when the page loads. will
@@ -126,7 +127,15 @@ var Fantasy = React.createClass({
 				/>
 				</div>
 				<div style={{display: p.navigation.get('location') === 'weekly' ? 'initial' : 'none'}}>
-				<Welcome selectedWeek={p.navigation.get('selectedWeek')} />
+				{p.controller.getIn(['user', 'isAdmin']) || <Welcome selectedWeek={p.navigation.get('selectedWeek')} />}
+				{p.controller.getIn(['user', 'isAdmin']) && <AdminAchievements
+					weekNumber={p.navigation.get('selectedWeek')}
+					contestants={p.contestants}
+					toggleAchievement={function (achievementCode, contestantId, hasAchieved) {
+						console.log('Was going to toggleAchievement ' + achievementCode + ' which is now ' + hasAchieved + ' for ' + p.contestants.get(contestantId));
+						// return dispatch(act.toggleAchievement(circumstances, achievementCode, contestantId, hasAchieved));
+					}}
+				/>}
 				<Quiz
 					key="quiz"
 					user={p.controller.get('user')}

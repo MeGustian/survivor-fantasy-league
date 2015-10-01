@@ -8,6 +8,9 @@ var nameToImg = require('../helpers/image-name')('slide');
 var Profile = React.createClass({
 	render: function () {
 		console.info('Profile');
+		if (this.props.user.get('isAdmin')) {
+			return <div/>;
+		}
 		if (this.props.submittedChoices) {
 			return (
 				<div>

@@ -336,11 +336,11 @@ var questions = function (prev, action) {
 };
 
 var reducers = combineReducers({
-	controller,
-	navigation,
-	profile,
-	contestants,
-	questions
+	controller: controller,
+	navigation: navigation,
+	profile: profile,
+	contestants: contestants,
+	questions: questions
 });
 
 var truthiness = function (bool) {

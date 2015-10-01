@@ -47,6 +47,56 @@ AnswerTypes.Contestants = React.createClass({
 	}
 });
 
+AnswerTypes.Tribes = React.createClass({
+	shouldComponentUpdate: function (nextProps) {
+		var equal = this.props.answer === nextProps.answer;
+		return !equal;
+	}
+	,
+	render: function () {
+		return (
+			<div style={{display: 'flex', justifyContent: 'space-around'}}>
+				{this.tribes()}
+			</div>
+		);
+	}
+	,
+	tribes: function () {
+		var that = this;
+		return React.addons.createFragment(
+			that.props.tribes
+				.map(function (tribe, name) {
+					var isAnswer = name === that.props.answer;
+					return (
+						<Bs.OverlayTrigger trigger="hover" placement="top" overlay={
+							<Bs.Popover title={"Members of " + name}>
+								{that.popoverMembers(tribe)}
+							</Bs.Popover>
+						}>
+						<Bs.Button active={isAnswer} id={name} onClick={that.changeAnswer.bind(that, isAnswer, name)}>{name}</Bs.Button>
+						</Bs.OverlayTrigger>
+
+					);
+				}).toJS()
+		);
+	}
+	,
+	popoverMembers: function (tribe) {
+		return React.addons.createFragment(
+			tribe
+			.map(function (contestant, id) {
+				return <div id={id}>{contestant.get('firstName') + " " + contestant.get('lastName')}</div>;
+			}).toJS()
+		);
+	}
+	,
+	changeAnswer: function (alreadySelected, name) {
+		if (!this.props.disabled) {
+			this.props.changeAnswer(alreadySelected ? null : name);
+		}
+	}
+});
+
 AnswerTypes.Num = React.createClass({
 	shouldComponentUpdate: function (nextProps) {
 		var equal = this.props.answer === nextProps.answer;

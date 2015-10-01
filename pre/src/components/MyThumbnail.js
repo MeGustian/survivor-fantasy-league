@@ -7,7 +7,12 @@ var nameToImg = require('../helpers/image-name')('contestant');
 
 var MyThumbnail = React.createClass({
 	shouldComponentUpdate: function (nextProps) {
-		return !(this.props.selected === nextProps.selected);
+		return !(
+			this.props.disabled === nextProps.disabled &&
+			this.props.selected === nextProps.selected &&
+			this.props.emphasized === nextProps.emphasized &&
+			this.props.muted === nextProps.muted
+		);
 	}
 	,
 	render: function () {
@@ -17,21 +22,27 @@ var MyThumbnail = React.createClass({
 		return (
 			<Bs.OverlayTrigger placement="top" overlay={tooltip} key={p.id} id={p.name}>
 				<Bs.Thumbnail
-					onClick={that.props.choose.bind(null, p.id)}
+					onClick={that.props.choose && that.props.choose.bind(null, p.id)}
 					src={nameToImg(p.name)}
 					alt={p.name}
-					style={{display: 'inline-block', border: (p.selected ? "3px solid green" : ""), width: '80px', marginRight: '10px', marginLeft: '10px', opacity: this.props.disabled ? '0.5' : ''}}
+					style={{display: 'inline-block', border: (p.selected ? "3px solid green" : ""), width: '80px', marginBottom: '3px', marginRight: '10px', marginLeft: '10px', opacity: p.disabled ? '0.5' : ''}}
 				/>
 			</Bs.OverlayTrigger>
 		);
 	}
 	,
 	propTypes: {
-		selected: PropTypes.bool.isRequired
+		selected: PropTypes.bool
+		,
+		emphasized: PropTypes.bool
+		,
+		disabled: PropTypes.bool
 		,
 		name: PropTypes.string.isRequired
 		,
 		id: PropTypes.any.isRequired
+		,
+		choose: PropTypes.func
 	}
 });
 
