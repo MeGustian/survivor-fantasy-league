@@ -17,7 +17,7 @@ var session = require('express-session');
 var mongo = require('mongodb');
 var monk = require('monk');
 var mongoose = require('mongoose');
-var db = monk('survivoradmin:survivorpass@ds051853.mongolab.com:51853/survivor-fantasy-league');
+var db = monk('survivorfl:survivorpwd@ds051853.mongolab.com:51853/survivor-fantasy-league');
 
 var routes = require('./routes/index');
 
@@ -25,7 +25,7 @@ var app = express();
 
 // ==============CONFIGURARTIONS=============================
 
-mongoose.connect('survivoradmin:survivorpass@ds051853.mongolab.com:51853/survivor-fantasy-league');
+mongoose.connect('survivorfl:survivorpwd@ds051853.mongolab.com:51853/survivor-fantasy-league');
 require('./config/passport')(passport); // pass passport for configuration
 //require('./routes/index.js')(passport);
 app.use(favicon(__dirname + '/public/favicon.ico')); // Favicon
