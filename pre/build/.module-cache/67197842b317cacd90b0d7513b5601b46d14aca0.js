@@ -24,7 +24,7 @@ var userLoading = require('../helpers/user-loading');
 var forcedLogger = require('../helpers/forced-logger');
 
 
-var Fantasy = React.createClass({
+var Fantasy = React.createClass({displayName: "Fantasy",
 	propTypes: {
 		controller: ImmutablePropTypes.contains({
 			user: ImmutablePropTypes.contains({
@@ -91,60 +91,59 @@ var Fantasy = React.createClass({
 			weekNumber: p.navigation.get('selectedWeek')
 		};
 		return (
-			<div>
-				<Navigation
-					key="navigation"
-					user={p.controller.get('user')}
-					navigation={p.navigation}
-					navigate={function (target) {
+			React.createElement("div", null, 
+				React.createElement(Navigation, {
+					key: "navigation", 
+					user: p.controller.get('user'), 
+					navigation: p.navigation, 
+					navigate: function (target) {
 						return dispatch(act.navigate(target));
 					}}
-				/>
-				<Admin
-					key="admin"
-					user={p.controller.get('user')}
-					serverFail={p.controller.get('error')}
-					createQuestion={function (type) {
+				), 
+				React.createElement(Admin, {
+					key: "admin", 
+					user: p.controller.get('user'), 
+					serverFail: p.controller.get('error'), 
+					createQuestion: function (type) {
 						return dispatch(act.createQuestion(circumstances, type));
 					}}
-				/>
-				<div style={{display: p.navigation.get('location') === 'profile' ? 'initial' : 'none'}}>
-				<Profile
-					key="profile"
-					user={p.controller.get('user')}
-					chosen={p.profile.get('chosen')}
-					submittedChoices={p.profile.get('submittedChoices')}
-					navigate={function (target) {
+				), 
+				React.createElement("div", {style: {display: p.navigation.get('location') === 'profile' ? 'initial' : 'none'}}, 
+				React.createElement(Profile, {
+					key: "profile", 
+					user: p.controller.get('user'), 
+					chosen: p.profile.get('chosen'), 
+					submittedChoices: p.profile.get('submittedChoices'), 
+					navigate: function (target) {
 						return dispatch(act.navigate(target));
-					}}
-					submit={function (choices) {
+					}, 
+					submit: function (choices) {
 						return dispatch(act.submitChoices(choices));
-					}}
-					info={p.contestants}
-					selector={function (id) {
+					}, 
+					info: p.contestants, 
+					selector: function (id) {
 						return dispatch(act.chooseContestant(id));
 					}}
-				/>
-				</div>
-				<div style={{display: p.navigation.get('location') === 'weekly' ? 'initial' : 'none'}}>
-				{p.controller.getIn(['user', 'isAdmin']) || <Welcome selectedWeek={p.navigation.get('selectedWeek')} />}
-				{p.controller.getIn(['user', 'isAdmin']) && <AdminAchievements
-					weekNumber={p.navigation.get('selectedWeek')}
-					contestants={p.contestants}
-					toggleAchievement={function (achievementCode, contestantId, hasAchieved) {
-						console.log('Was going to toggleAchievement ' + achievementCode + ' which is now ' + hasAchieved + ' for ' + p.contestants.get(contestantId));
-						// return dispatch(act.toggleAchievement(circumstances, achievementCode, contestantId, hasAchieved));
+				)
+				), 
+				React.createElement("div", {style: {display: p.navigation.get('location') === 'weekly' ? 'initial' : 'none'}}, 
+				p.controller.getIn(['user', 'isAdmin']) || React.createElement(Welcome, {selectedWeek: p.navigation.get('selectedWeek')}), 
+				p.controller.getIn(['user', 'isAdmin']) && React.createElement(AdminAchievements, {
+					weekNumber: p.navigation.get('selectedWeek'), 
+					contestants: p.contestants, 
+					toggleAchievement: function (achievementCode, contestantId, hasAchieved) {
+						return dispatch(act.toggleAchievement(circumstances, achievementCode, contestantId, hasAchieved));
 					}}
-				/>}
-				<Quiz
-					key="quiz"
-					user={p.controller.get('user')}
-					open={p.navigation.get('selectedWeek') === p.navigation.get('weekCount')}
-					selected={p.navigation.get('selectedQuestion')}
-					weekNumber={p.navigation.get('selectedWeek')}
-					questions={p.questions.filter(function (q, id) {return q.get('weekNumber') === p.navigation.get('selectedWeek')})}
-					contestants={p.contestants}
-					dispatcher={{
+				), 
+				React.createElement(Quiz, {
+					key: "quiz", 
+					user: p.controller.get('user'), 
+					open: p.navigation.get('selectedWeek') === p.navigation.get('weekCount'), 
+					selected: p.navigation.get('selectedQuestion'), 
+					weekNumber: p.navigation.get('selectedWeek'), 
+					questions: p.questions.filter(function (q, id) {return q.get('weekNumber') === p.navigation.get('selectedWeek')}), 
+					contestants: p.contestants, 
+					dispatcher: {
 						userAnswer: function (questionId, answer) {
 							return dispatch(act.userAnswer(circumstances, questionId, answer));
 						},
@@ -161,23 +160,23 @@ var Fantasy = React.createClass({
 							return dispatch(act.switchQuestion(inc));
 						}
 					}}
-				/>
-				<Tribes
-					key="tribes"
-					user={p.controller.get('user')}
-					weekNumber={p.navigation.get('selectedWeek')}
-					chosen={p.profile.get('chosen')}
-					contestants={p.contestants}
-					scores={computedState.scores}
-					toggleAchievement={function (achievementCode, contestantId, hasAchieved) {
+				), 
+				React.createElement(Tribes, {
+					key: "tribes", 
+					user: p.controller.get('user'), 
+					weekNumber: p.navigation.get('selectedWeek'), 
+					chosen: p.profile.get('chosen'), 
+					contestants: p.contestants, 
+					scores: computedState.scores, 
+					toggleAchievement: function (achievementCode, contestantId, hasAchieved) {
 						return dispatch(act.toggleAchievement(circumstances, achievementCode, contestantId, hasAchieved));
 					}}
-				/>
-				</div>
-				<div style={{display: p.navigation.get('location') === 'help' ? 'initial' : 'none'}}>
-				<Help />
-				</div>
-			</div>
+				)
+				), 
+				React.createElement("div", {style: {display: p.navigation.get('location') === 'help' ? 'initial' : 'none'}}, 
+				React.createElement(Help, null)
+				)
+			)
 		);
 	}
 });

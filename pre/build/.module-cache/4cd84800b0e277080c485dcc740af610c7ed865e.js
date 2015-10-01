@@ -21,10 +21,10 @@ var Quiz = React.createClass({displayName: "Quiz",
 	}
 	,
 	render: function () {
-		console.info('Quiz');
 		if (this.props.user.get('isAdmin')) {
 			return React.createElement("div", null);
 		}
+		console.info('Quiz');
 		return (
 			React.createElement(Bs.Row, null, 
 				React.createElement(Bs.Col, {xs: 12, sm: 10, smOffset: 1, md: 8, mdOffset: 2}, 

@@ -11,6 +11,9 @@ var Tribes = React.createClass({
 	,
 	render: function () {
 		console.info('Tribes');
+		// if (this.props.user.get('isAdmin')) {
+		// 	return <div/>;
+		// }
 		return (
 			<Bs.Row>
 				{this.tribes()}

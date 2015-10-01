@@ -22,6 +22,9 @@ var Quiz = React.createClass({
 	,
 	render: function () {
 		console.info('Quiz');
+		if (this.props.user.get('isAdmin')) {
+			return <div/>;
+		}
 		return (
 			<Bs.Row>
 				<Bs.Col xs={12} sm={10} smOffset={1} md={8} mdOffset={2}>

@@ -7,12 +7,7 @@ var nameToImg = require('../helpers/image-name')('contestant');
 
 var MyThumbnail = React.createClass({displayName: "MyThumbnail",
 	shouldComponentUpdate: function (nextProps) {
-		return !(
-			this.props.disabled === nextProps.disabled &&
-			this.props.selected === nextProps.selected &&
-			this.props.emphasized === nextProps.emphasized &&
-			this.props.muted === nextProps.muted
-		);
+		return !(this.props.selected === nextProps.selected);
 	}
 	,
 	render: function () {
@@ -25,7 +20,7 @@ var MyThumbnail = React.createClass({displayName: "MyThumbnail",
 					onClick: that.props.choose && that.props.choose.bind(null, p.id), 
 					src: nameToImg(p.name), 
 					alt: p.name, 
-					style: {display: 'inline-block', border: (p.selected ? "3px solid green" : ""), width: '80px', marginBottom: '3px', marginRight: '10px', marginLeft: '10px', opacity: p.disabled ? '0.5' : ''}}
+					style: {display: 'inline-block', border: (p.selected ? "3px solid green" : ""), width: (p.muted ? '40px' : '80px'), marginBottom: '3px', marginRight: '10px', marginLeft: '10px', opacity: p.disabled ? '0.5' : ''}}
 				)
 			)
 		);
@@ -35,6 +30,8 @@ var MyThumbnail = React.createClass({displayName: "MyThumbnail",
 		selected: PropTypes.bool
 		,
 		emphasized: PropTypes.bool
+		,
+		muted: PropTypes.bool
 		,
 		disabled: PropTypes.bool
 		,

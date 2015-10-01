@@ -5,7 +5,7 @@ var PropTypes = React.PropTypes;
 var ImmutablePropTypes = require('react-immutable-proptypes');
 var nameToImg = require('../helpers/image-name')('contestant');
 
-var MyThumbnail = React.createClass({
+var MyThumbnail = React.createClass({displayName: "MyThumbnail",
 	shouldComponentUpdate: function (nextProps) {
 		return !(
 			this.props.disabled === nextProps.disabled &&
@@ -18,16 +18,18 @@ var MyThumbnail = React.createClass({
 	render: function () {
 		var p = this.props;
 		var that = this;
-		var tooltip = <Bs.Tooltip>{p.name}</Bs.Tooltip>;
+		var tooltip = React.createElement(Bs.Tooltip, null, p.name);
 		return (
-			<Bs.OverlayTrigger placement="top" overlay={tooltip} key={p.id} id={p.name}>
-				<Bs.Thumbnail
-					onClick={that.props.choose && that.props.choose.bind(null, p.id)}
-					src={nameToImg(p.name)}
-					alt={p.name}
-					style={{display: 'inline-block', border: (p.selected ? "3px solid green" : ""), width: '80px', marginBottom: '3px', marginRight: '10px', marginLeft: '10px', opacity: p.disabled ? '0.5' : ''}}
-				/>
-			</Bs.OverlayTrigger>
+			React.createElement(Bs.OverlayTrigger, {placement: "top", overlay: tooltip, key: p.id, id: p.name}, 
+			React.createElement("div", {style: {backgroundColor: p.tint}}, 
+				React.createElement(Bs.Thumbnail, {
+					onClick: that.props.choose && that.props.choose.bind(null, p.id), 
+					src: nameToImg(p.name), 
+					alt: p.name, 
+					style: {display: 'inline-block', border: (p.selected ? "3px solid green" : ""), width: '80px', marginBottom: '3px', marginRight: '10px', marginLeft: '10px', opacity: p.disabled ? '0.5' : (p.tint ? '0.8' : '')}}
+				)
+			)
+			)
 		);
 	}
 	,
@@ -35,6 +37,8 @@ var MyThumbnail = React.createClass({
 		selected: PropTypes.bool
 		,
 		emphasized: PropTypes.bool
+		,
+		tint: PropTypes.string
 		,
 		disabled: PropTypes.bool
 		,
